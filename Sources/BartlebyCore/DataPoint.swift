@@ -9,7 +9,7 @@
 import Foundation
 
 // Abstract class
-open class DataPoint:SessionDelegate{
+open class DataPoint : SessionDelegate {
 
     // MARK: -
 
@@ -21,16 +21,23 @@ open class DataPoint:SessionDelegate{
 
     // MARK: SessionDelegate
 
-    public var credentials: Credentials
+    open var credentials: Credentials
 
-    public var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
+    open var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
 
-    public var scheme: Scheme = Scheme.https
+    open var scheme: Schemes = Schemes.https
 
-    public var host: String = "NO_HOST"
+    open var host: String = "NO_HOST"
 
-    public var apiBasePath: String = "NO_BASE_API_PATH"
+    open var apiBasePath: String = "NO_BASE_API_PATH"
 
+    // MARK: - URLRequest Provider
+    
+    open func baseRequest(with url:URL, method: HTTPMethod) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpMethod = method.rawValue
+        return request
+    }
     
     // MARK: - Data integration and Operation Life Cycle
 
@@ -38,18 +45,18 @@ open class DataPoint:SessionDelegate{
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    public func integrateResponse<T>(_ response: Response<T>){
+    open func integrateResponse<T>(_ response: Response<T>){
     }
 
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
-    public func deleteOperation<T,P>(_ operation: inout CallOperation<T,P>){
+    open func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
     }
 
     // MARK: -
 
-    public func save(){
+    open func save(){
     }
 
 }

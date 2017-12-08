@@ -8,43 +8,15 @@
 
 import Foundation
 
-public struct Response<T> where T : Codable {
-
-    public var httpStatus: Status
-    public var content: Data?
-    public var result: Array<T>
-    public var error: Error?
-    public var metrics: Metrics
-
-    public var resultString: String? {
-        return self.content != nil ? String(data: self.content!, encoding: .utf8) : ""
-    }
-}
-
-public struct Failure {
-    public var httpStatus: Status?
-    public var error: Error?
-}
-
-public enum HTTPMethod : String {
-    case GET
-    case POST
-    case PUT
-    case DELETE
-    case PATCH
-}
-
-
 enum SessionError : Error {
     case deserializationFailed
 }
-
 
 // Handles a full Session.T
 public class Session {
 
     // The session delegate define the Scheme, Host, Current Credentials, ...
-    var delegate:SessionDelegate
+    var delegate : SessionDelegate
 
     // A shared void Payload instance
     public static let voidPayload = VoidPayload()
@@ -56,7 +28,7 @@ public class Session {
     public var host:String { return self.delegate.host }
     public var apiBasePath: String { return self.delegate.apiBasePath }
 
-    open let startTime=AbsoluteTimeGetCurrent()
+    open let startTime = AbsoluteTimeGetCurrent()
 
     public init(sessionDelegate:SessionDelegate) {
         self.delegate = sessionDelegate
@@ -68,29 +40,6 @@ public class Session {
 
     public func infos() -> String {
         return "Version 0.0.0"
-    }
-
-    func baseRequest(with url:URL, method: HTTPMethod) -> URLRequest {
-        switch self.authenticationMethod {
-        case .basicHTTPAuth:
-            return self.httpBasicAuthRequest(with: url, method: method)
-        }
-    }
-
-    func httpBasicAuthRequest(with url:URL, method: HTTPMethod) -> URLRequest {
-
-        var request: URLRequest = URLRequest(url: url)
-        request.httpMethod = method.rawValue
-
-        let loginString = "\(self.credentials.username):\(self.credentials.password)"
-        if let loginData: Data = loginString.data(using: .utf8) {
-            let base64LoginString: String = loginData.base64EncodedString()
-            request.setValue(base64LoginString, forHTTPHeaderField: "Authorization")
-        }
-        // @todo should be set by the delegate
-        request.setValue(self.credentials.playerId, forHTTPHeaderField: Credentials.playerIdHeaderKey)
-
-        return request
     }
 
     // MARK: - Thread Safety
@@ -121,9 +70,9 @@ public class Session {
 
     // MARK: - Server API
 
-    func auth(username: String, password: String, playerId: String) {
+    func auth(username: String, password: String) {
         // @todo may be we could handle various approach
-        self.delegate.credentials = Credentials(username: username, password: password, playerId: playerId)
+        self.delegate.credentials = Credentials(username: username, password: password)
     }
 
 
@@ -133,42 +82,45 @@ public class Session {
 
     // MARK: - Operations Runtime
 
-    public func execute<T:Codable,P>(_ operation:inout CallOperation<T,P>){
-        self.provisionOperation(&operation)
-        self.runCall(&operation)
+    public func execute<T:Codable,P>(_ operation: CallOperation<T,P>){
+        self.provisionOperation(operation)
+        self.runCall(operation)
     }
-
 
     /// Insure the persistency of the operation
     ///
     /// - Parameters:
     ///   - operationData: the operation data
     ///   - operationName: the classifier
-    public func provisionOperation<T,P>(_ operation: inout CallOperation<T,P>){
+    public func provisionOperation<T,P>(_ operation: CallOperation<T,P>){
         // @todo provisionning
     }
-
 
     /// Run the operation
     ///
     /// - Parameter operation: the operation
-    public func runCall<T:Codable,P>(_ operation: inout CallOperation<T,P>){
-        self.call( path: operation.path, queryString: operation.queryString, method: operation.method, resultType:[T].self, parameter: operation.payload,success: { (response) in
+    public func runCall<T:Codable,P>(_ operation: CallOperation<T,P>){
+        
+        self.call(path: operation.path, queryString: operation.queryString, method: operation.method, resultType:[T].self, parameter: operation.payload,success: { (response) in
             Session.syncOnMain {
+
+                var operation = operation
 
                 operation.executionCounter += 1
                 operation.lastAttemptDate = Date()
 
                 self.delegate.integrateResponse(response)
-
+                
                 let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
                 NotificationCenter.default.post(name:notificationName , object: nil)
 
-                self.delegate.deleteOperation(&operation)
+                self.delegate.deleteOperation(operation)
             }
 
-        },failure:{ (failure) in
+        }, failure:{ (failure) in
             Session.syncOnMain {
+
+                var operation = operation
 
                 operation.executionCounter += 1
                 operation.lastAttemptDate = Date()
@@ -207,7 +159,7 @@ public class Session {
         guard let url = URL(string: self.scheme + self.host + path + queryString) else {
             return
         }
-        var request: URLRequest = self.httpBasicAuthRequest(with: url, method: method)
+        var request: URLRequest = self.delegate.baseRequest(with: url, method: method)
         Logger.log("\(url.absoluteString)", category: Logger.Categories.temporary)
         Logger.log("parameter = \(parameter)")
 

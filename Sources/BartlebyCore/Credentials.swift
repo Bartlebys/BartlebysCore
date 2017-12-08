@@ -13,13 +13,8 @@ open class Credentials:Codable{
     public var username: String
     public var password: String
 
-    //@todo
-    public static let playerIdHeaderKey = "LPPlayerId"
-    public var playerId: String
-
-    public init(username: String, password: String, playerId: String){
+    public init(username: String, password: String){
         self.username = username
         self.password = password
-        self.playerId = playerId
     }
 }

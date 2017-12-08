@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Scheme:String{
+public enum Schemes:String{
 
     case https = "https://"
 

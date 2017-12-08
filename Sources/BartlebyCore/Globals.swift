@@ -8,4 +8,6 @@
 
 import Foundation
 
-public var MODELS_PRIMARY_KEY:String = "_id" // Bartleby for MongodB (can be set-up)
+// Bartleby 1.0 for MongodB (can be set-up uses Model.ModelCodingKeys._id)
+// In Most context Model.ModelCodingKeys.id is relevant.
+public var MODELS_PRIMARY_KEY:Model.ModelCodingKeys = Model.ModelCodingKeys.id

@@ -15,10 +15,10 @@ import Foundation
 /// - without call back.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public struct CallOperation<T,P>:Codable, Collectible where T : Collectible & TolerentDeserialization, P : Payload{
+public struct CallOperation<T,P> : Codable, Collectible where T : Collectible & TolerentDeserialization, P : Payload {
 
     public var id:String = Utilities.createUID()
-    public var operationName:String
+    public var operationName: String
     public var path: String
     public var queryString: String
     public var method: HTTPMethod
@@ -27,7 +27,7 @@ public struct CallOperation<T,P>:Codable, Collectible where T : Collectible & To
     public var executionCounter:Int = 0
     public var lastAttemptDate:Date = Date()
 
-    public init( operationName:String, path: String, queryString: String, method: HTTPMethod, parameter: P){
+    public init(operationName:String, path: String, queryString: String, method: HTTPMethod, parameter: P) {
         self.operationName = operationName
         self.path = path
         self.queryString = queryString
@@ -36,10 +36,9 @@ public struct CallOperation<T,P>:Codable, Collectible where T : Collectible & To
         self.payload = parameter
     }
 
-
     // MARK: - Codable
 
-    public enum CallOperationCodingKeys: String,CodingKey{
+    public enum CallOperationCodingKeys: String, CodingKey {
         case id
         case operationName
         case path

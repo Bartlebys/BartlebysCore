@@ -39,41 +39,41 @@ open class ObjectCollection<T> : Codable where T : Codable & Collectible {
         case fileDirectoryNotFound
     }
     
+    public static func loadFromFile(type: T.Type, fileName: String, sessionIdentifier: String) throws -> ObjectCollection<T> {
+        let data = try Data(contentsOf: self._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier))
+        return try JSONDecoder().decode(ObjectCollection<T>.self, from: data)
+    }
+    
+    public func saveToFile(fileName: String, sessionIdentifier: String) throws {
+        if self.hasChanged {
+            let url = try ObjectCollection._url(type: T.self, fileName: fileName, sessionIdentifier: sessionIdentifier)
+            let data = try JSONEncoder().encode(self)
+            try data.write(to: url)
+            self.hasChanged = false
+        }
+    }
 
-    static func directoryPath(type: T.Type) throws -> NSString {
-        #if os(iOS) && os(macOS)
+    fileprivate static func _url(type: T.Type, fileName: String, sessionIdentifier: String) throws -> URL {
+        let directoryURL = try ObjectCollection._directoryURL(type:type, sessionIdentifier: sessionIdentifier)
+        
+        var isDirectory: ObjCBool = true
+        
+        if !FileManager.default.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
+            try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+        }
+        return directoryURL.appendingPathComponent(type.collectionName + ".data")
+    }
+
+    private static func _directoryURL(type: T.Type, sessionIdentifier: String) throws -> URL {
+        #if os(iOS) || os(macOS)
             let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
             if let _url = urls.first {
-                //@todo add sessional identifier
-                return _url.absoluteString as NSString
+                return _url.appendingPathComponent(sessionIdentifier, isDirectory: true)
             }
         #elseif os(Linux) // linux @todo
             
         #endif
         throw FileSystemError.fileDirectoryNotFound
     }
-    
-    public static func loadFromFile(type: T.Type,fileName:String) throws -> ObjectCollection<T> {
-        let data = try Data(contentsOf: self._url(type: type,fileName:fileName))
-        return try JSONDecoder().decode(ObjectCollection<T>.self, from: data)
-    }
-    
-    public func saveToFile(fileName:String) throws {
-        if self.hasChanged{
-            let url = try ObjectCollection._url(type: T.self,fileName: fileName)
-            let data = try JSONEncoder().encode(self)
-            //@todo create folder if necessary
-            try data.write(to: url)
-            self.hasChanged = false
-        }
-    }
-
-
-    fileprivate static func _url(type: T.Type,fileName:String) throws -> URL {
-        let directoryPath = try ObjectCollection.directoryPath(type:type)
-        let filePath = (directoryPath as NSString).appendingPathComponent(type.collectionName)
-        return URL(fileURLWithPath: "\(filePath).data")
-    }
-
     
 }

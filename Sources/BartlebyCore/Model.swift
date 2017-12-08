@@ -35,23 +35,22 @@ public class Model:Object,Codable,Collectible,CopyingProtocol{
     // MARK: - Codable
 
     public enum ModelCodingKeys: String,CodingKey{
-        case id
+        case id     // the concrete selected value is defined by MODELS_PRIMARY_KEY
+        case _id    // the concrete selected value is defined by MODELS_PRIMARY_KEY
     }
-
 
     public required init(from decoder: Decoder) throws{
         super.init()
         try self.quietThrowingChanges {
             let values = try decoder.container(keyedBy: ModelCodingKeys.self)
-            self.id = try values.decode(String.self,forKey:.id)
+            self.id = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
         }
     }
 
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ModelCodingKeys.self)
-        try container.encode(self.id,forKey:.id)
+        try container.encode(self.id,forKey:MODELS_PRIMARY_KEY)
     }
-
     // MARK: - UniversalType
 
     open class var typeName:String{
