@@ -16,7 +16,7 @@ enum SessionError : Error {
 open class Session {
 
     // The session delegate define the Scheme, Host, Current Credentials, ...
-    var delegate : SessionDelegate
+    public var delegate : SessionDelegate
 
     // A shared void Payload instance
     public static let voidPayload = VoidPayload()
@@ -28,13 +28,13 @@ open class Session {
     public var host:String { return self.delegate.host }
     public var apiBasePath: String { return self.delegate.apiBasePath }
 
-    open let startTime = AbsoluteTimeGetCurrent()
+    public let startTime = AbsoluteTimeGetCurrent()
 
     public init(sessionDelegate:SessionDelegate) {
         self.delegate = sessionDelegate
     }
 
-    open var elapsedTime:Double {
+    public var elapsedTime:Double {
         return AbsoluteTimeGetCurrent() - self.startTime
     }
 
@@ -44,7 +44,7 @@ open class Session {
 
     // MARK: - Thread Safety
 
-    open static func syncOnMain(execute block: () -> Void) {
+    public static func syncOnMain(execute block: () -> Void) {
         if Thread.isMainThread {
             block()
         } else {
@@ -52,7 +52,7 @@ open class Session {
         }
     }
 
-    open static func syncThrowableOnMain(execute block: () throws -> Void) rethrows-> (){
+    public static func syncThrowableOnMain(execute block: () throws -> Void) rethrows-> (){
         if Thread.isMainThread {
             try block()
         } else {
@@ -60,7 +60,7 @@ open class Session {
         }
     }
 
-    open static func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
+    public static func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
         if Thread.isMainThread {
             return try work()
         } else {
