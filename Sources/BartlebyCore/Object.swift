@@ -17,7 +17,7 @@ import Foundation
 
 #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
 
-    public class Object : NSObject{}
+    open class Object : NSObject{}
 
     public typealias CopyingProtocol = NSCopying
 
@@ -28,7 +28,7 @@ import Foundation
 
     #elseif os(Linux)
 
-    public class Object {}
+    open class Object {}
 
     public protocol CopyingProtocol {}
 

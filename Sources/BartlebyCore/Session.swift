@@ -13,7 +13,7 @@ enum SessionError : Error {
 }
 
 // Handles a full Session.T
-public class Session {
+open class Session {
 
     // The session delegate define the Scheme, Host, Current Credentials, ...
     var delegate : SessionDelegate
@@ -67,14 +67,6 @@ public class Session {
             return try DispatchQueue.main.sync(execute: work)
         }
     }
-
-    // MARK: - Server API
-
-    func auth(username: String, password: String) {
-        // @todo may be we could handle various approach
-        self.delegate.credentials = Credentials(username: username, password: password)
-    }
-
 
     // MARK: - Scheduler
 

@@ -12,7 +12,7 @@ extension Model{
 
     // CustomStringConvertible
 
-    public override var description: String {
+    open override var description: String {
         do{
             let data =  try JSON.prettyEncoder.encode(self)
             if let json = String(data:data,encoding:.utf8){

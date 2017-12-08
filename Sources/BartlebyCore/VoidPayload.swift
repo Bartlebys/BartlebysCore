@@ -9,7 +9,7 @@
 import Foundation
 
 public struct VoidPayload : Payload {
-
+    
     public var id: String = Utilities.createUID()
 
     public static var collectionName: String {
@@ -24,4 +24,7 @@ public struct VoidPayload : Payload {
         return "VoidPayload"
     }
 
+    public init() {
+        
+    }
 }

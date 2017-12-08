@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Model:Object,Codable,Collectible,CopyingProtocol{
+open class Model:Object,Codable,Collectible,CopyingProtocol{
 
     // Compatibility layer
     @objc dynamic public var UID:String {

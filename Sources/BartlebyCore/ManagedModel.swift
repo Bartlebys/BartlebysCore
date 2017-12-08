@@ -12,7 +12,7 @@ import Foundation
 	#endif
 
 // MARK: Bartleby's Core base Managed Entity
-public class ManagedModel:Model{
+open class ManagedModel:Model{
 
 	//An external unique identifier
 	@objc dynamic open var externalID:String? {

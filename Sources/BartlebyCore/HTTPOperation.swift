@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Operation{
+public protocol HTTPOperation{
 
     static var operationName:String { get }
 

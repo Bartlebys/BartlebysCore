@@ -8,9 +8,9 @@
 
 import Foundation
 
-extension Model {
+public extension Model {
     
-    func toDictionaryRepresentation() -> Dictionary<String, Any> {
+    public func toDictionaryRepresentation() -> Dictionary<String, Any> {
         do {
             let data = try JSON.encoder.encode(self)
             if let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Dictionary<String, Any> {
