@@ -1,0 +1,60 @@
+{
+  "name": "ManagedModel",
+  "definition": {
+    "description": "Bartleby's Core base Managed Entity",
+    "type": "object",
+    "explicitType":"Model",
+    "baseObject":true,
+    "properties": {
+      "externalID": {
+        "type": "string",
+        "dynamic":true,
+        "description": "An external unique identifier",
+        "required":false
+      },
+      "ownedBy": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "description": "The UIDS of the owners",
+            "type": "String",
+            "default": "[String]()",
+            "supervisable": true,
+            "serializable": false,
+            "dynamic":true,
+            "scope": "public"
+          }
+        }
+      },
+      "freeRelations": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "description": "The UIDS of the free relations",
+            "type": "String",
+            "default": "[String]()",
+            "supervisable": true,
+            "serializable": false,
+            "dynamic":true,
+            "scope": "public"
+          }
+        }
+      },
+      "owns": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "description": "The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)",
+            "type": "String",
+            "default": "[String]()",
+            "supervisable": false,
+            "serializable": false,
+            "scope": "public"
+          }
+        }
+      }
+    },
+    "metadata": {
+    }
+  }
+}

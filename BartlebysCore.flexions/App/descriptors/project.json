@@ -1,0 +1,67 @@
+{
+  "project":{
+    "infos": {
+      "description": "BartlebysCore",
+      "projectName": "Bartleby",
+      "company": "https://bartlebys.org",
+      "author":"Benoit Pereira da Silva https://pereira-da-silva.com/contact",
+      "year":"2018",
+      "version": "1.0.3",
+      "termsOfService": "https://bartlebys.org",
+      "contact": {
+        "email": "Benoit Pereira da Silva https://pereira-da-silva.com/contact"
+      },
+      "license": {
+        "name": "Proprietary",
+        "url": "https://bartlebys.org"
+      }
+    },
+    "host": "https://bartlebys.org/",
+    "tags": [],
+    "basePath": "www/api/v1",
+    "schemes": [
+      "https"
+    ],
+    "externalDocs": {
+      "description": "Find out more about BartlebyCore",
+      "url": "https://bartlebys.org/"
+    },
+    "templates": {
+      "paths": {
+      "path": "${BARTLEBYS_MODULE_DIR}/modeling-meta-templates/project/endPoints.json.template.php",
+      "description": "This template generate endpoints paths by parsing entities. It is used by the app during pre-generation phase.",
+      "uid":""
+      },
+      "all":[
+      ],
+      "entities": [
+        {
+          "path": "${TEMPLATES_DIR}/models/model.swift.php",
+          "description": "Music work's managed model template",
+          "uid":""
+        }
+      ],
+      "project": [
+      ],
+      "actions": [
+      ]
+    },
+    "variables": {
+      "modelsShouldConformToCodable":true,
+      "modelsShouldConformToExposed": true,
+      "modelsShouldConformToNSSecureCoding": false,
+      "modelsShouldConformToMappable": false,
+      "excludeEntitiesWith": [
+      ],
+      "xOSIncludeManagedCollectionForEntityNamed": [
+      ],
+      "excludeActionsWith": [
+      ],
+      "excludeFromServerActionsWith": [],
+      "unDeletableEntitiesWith": [],
+      "unModifiableEntitiesWith": [],
+      "doNotGenerate": []
+    },
+    "postProcessor": "post-processor.php"
+  }
+}
