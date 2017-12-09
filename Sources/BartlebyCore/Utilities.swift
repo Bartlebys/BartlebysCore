@@ -3,7 +3,7 @@
 //  BartlebyCore
 //
 //  Created by Laurent Morvillier on 17/11/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
 import Foundation

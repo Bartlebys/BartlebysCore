@@ -40,6 +40,8 @@
 		4D55FCEA1FDAF7CB001D91CE /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCCA1FDAF7CB001D91CE /* SessionDelegate.swift */; };
 		4D55FCF01FDAF812001D91CE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCEE1FDAF811001D91CE /* Model.swift */; };
 		4D55FCF11FDAF812001D91CE /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCEF1FDAF812001D91CE /* Metrics.swift */; };
+		E5A0E0381FDBEAB800FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */; };
+		E5A0E0401FDC2CF600FB4DE3 /* FilePersitent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E03F1FDC2CF600FB4DE3 /* FilePersitent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +80,8 @@
 		4D55FCCA1FDAF7CB001D91CE /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
 		4D55FCEE1FDAF811001D91CE /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4D55FCEF1FDAF812001D91CE /* Metrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
+		E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
+		E5A0E03F1FDC2CF600FB4DE3 /* FilePersitent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersitent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				4D55FCAC1FDAF7CB001D91CE /* Collectible.swift */,
+				E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */,
+				E5A0E03F1FDC2CF600FB4DE3 /* FilePersitent.swift */,
 				4D55FCC91FDAF7CB001D91CE /* HTTPOperation.swift */,
 				4D55FCC21FDAF7CB001D91CE /* Payload.swift */,
 				4D55FCBA1FDAF7CB001D91CE /* ProvisionChanges.swift */,
@@ -260,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5A0E0401FDC2CF600FB4DE3 /* FilePersitent.swift in Sources */,
 				4D55FCD41FDAF7CB001D91CE /* TolerentDeserialization.swift in Sources */,
 				4D55FCE31FDAF7CB001D91CE /* Status.swift in Sources */,
 				4D55FCE71FDAF7CB001D91CE /* Credentials.swift in Sources */,
@@ -273,6 +280,7 @@
 				4D55FCDD1FDAF7CB001D91CE /* Globals.swift in Sources */,
 				4D55FCE61FDAF7CB001D91CE /* Object.swift in Sources */,
 				4D55FCD51FDAF7CB001D91CE /* Logger.swift in Sources */,
+				E5A0E0381FDBEAB800FB4DE3 /* ConcreteDataPoint.swift in Sources */,
 				4D55FCE91FDAF7CB001D91CE /* HTTPOperation.swift in Sources */,
 				4D55FCEA1FDAF7CB001D91CE /* SessionDelegate.swift in Sources */,
 				4D55FCCC1FDAF7CB001D91CE /* Collectible.swift in Sources */,

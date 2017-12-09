@@ -2,10 +2,9 @@
 //  ManagedModel+ProvisionChanges.swift
 //  BartlebyCore
 //
-//  Created by Benoit Pereira da silva on 13/11/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Created by Benoit Pereira da silva on 06/12/2017.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
-
 import Foundation
 
 

@@ -3,12 +3,12 @@
 //  LPSynciOS
 //
 //  Created by Laurent Morvillier on 08/12/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
 import Foundation
 
-public struct Response<T> where T : Codable {
+public struct Response<T> where T : Codable & Collectible {
     
     public var httpStatus: Status
     public var content: Data?

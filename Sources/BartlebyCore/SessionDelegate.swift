@@ -1,29 +1,19 @@
 //
 //  SessionDelegate.swift
-//  LPSynciOS
+//  BartlebyCore
 //
-//  Created by Benoit Pereira da silva on 07/12/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Created by Benoit Pereira da silva on 06/12/2017.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
-
 import Foundation
 
 public enum AuthenticationMethod {
     case basicHTTPAuth
 }
 
-public protocol SessionDelegate {
 
-    /// Returns the data Point collections
-    /// You can populate with concrete types (polymorphism)
-    /// 
-    /// Concrete return could be for example :
-    ///     return [ events.asCollectionOfModel(), tags.asCollectionOfModel()]
-    /// where
-    ///     public var events: ObjectCollection<Event> = ObjectCollection<Event>()
-    ///
-    /// - Returns: the data Point model collections
-     func getCollections()->[ObjectCollection<Model>]
+/// Base Session Delegate check ConcreteDataPoint
+public protocol SessionDelegate {
 
     /// The credentials should generaly not change during the session
     var credentials:Credentials { get set }
@@ -33,12 +23,6 @@ public protocol SessionDelegate {
 
     /// The current Scheme .https is a must
     var scheme:Schemes { get }
-
-    // The current Host: e.g demo.bartlebys.org
-    var host:String { get }
-
-    // The api base path: e.g /api/v1
-    var apiBasePath: String { get }
 
     // MARK: - URL request
 

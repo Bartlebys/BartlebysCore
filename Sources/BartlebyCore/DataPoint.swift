@@ -3,7 +3,7 @@
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 07/12/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
 import Foundation
@@ -14,42 +14,73 @@ public enum DataPointError:Error{
 }
 
 // Abstract class
-open class DataPoint : SessionDelegate {
+open class DataPoint : ConcreteDataPoint {
 
     // MARK: -
 
+    /// The associated session
+    public lazy var session:Session = Session(delegate: self,sessionIdentifier:self.sessionIdentifier)
+    
+    /// Its session identifier
+    public var sessionIdentifier :String = "NOT_IDENTIFIED"
 
-    public lazy var session:Session = Session(sessionDelegate: self)
-
-    required public init(credentials:Credentials) {
+    /// Initialization of the DataPoint
+    ///
+    /// - Parameters:
+    ///   - credentials: the current credentials
+    ///   - sessionIdentifier: a unique session identifier (should be persistent as it is used to compute serialization paths)
+    /// - Throws: Children may throw while populating the collections
+    required public init(credentials:Credentials,sessionIdentifier:String) throws{
         self.credentials = credentials
+        self.sessionIdentifier = sessionIdentifier
     }
 
-    // MARK: SessionDelegate
 
-    /// Returns the data Point collections
-    /// You can populate with concrete types to allow polymorphism
+    /// Contains all the data Point collections
+    /// You can populate with concrete types (polymorphism)
     ///
     /// Concrete return could be for example :
-    ///     return [ events.asCollectionOfModel(), tags.asCollectionOfModel()]
-    /// where
-    ///     public var events: ObjectCollection<Event> = ObjectCollection<Event>()
-    ///
+    ///     return [ ObjectCollection<Event>(), ObjectCollection<Tag>()]
     /// - Returns: the data Point model collections
-    open func getCollections()->[ObjectCollection<Model>]{
-        return  [ObjectCollection<Model>]()
+    fileprivate var _collectionsOfModels:[Any] = Array<Any>()
+
+    /// We use the same polymorphic approach for the call Operations
+    /// Call operation are also collection of Models
+    //  The concrete type should be `CallOperation<T,P>`
+    fileprivate var _collectionsOfCallOperations:[Any] =  Array<Any>()
+
+    /// Registers the collection in to the data point
+    ///
+    /// - Parameter collection: the collection
+    public func registerCollection<T>(collection:ObjectCollection<T>){
+        self._collectionsOfModels.append(collection)
     }
 
-    open var credentials: Credentials
+    /// Register the the callOperationCollection in to the data point
+    ///
+    /// - Parameter callOperationCollection: the callOperation Collection
+    public func registerCallOperationCollection<T,P>(callOperationCollection:ObjectCollection<CallOperation<T,P>>){
+        self._collectionsOfCallOperations.append(callOperationCollection)
+    }
 
-    open var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
+    // MARK: - ConcreteDataPoint
 
-    open var scheme: Schemes = Schemes.https
-
+    // The current Host: e.g demo.bartlebys.org
     open var host: String = "NO_HOST"
-
+    
+    // The api base path: e.g /api/v1
     open var apiBasePath: String = "NO_BASE_API_PATH"
 
+    // MARK: -  SessionDelegate
+
+    /// The credentials should generaly not change during the session
+    open var credentials: Credentials
+    
+    /// The authentication method
+    open var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
+
+    /// The current Scheme .https is a must
+    open var scheme: Schemes = Schemes.https
 
     ///  Returns the configured URLrequest
     ///  This func is public not open
@@ -118,22 +149,62 @@ open class DataPoint : SessionDelegate {
 
     // MARK: - Data integration and Operation Life Cycle
 
-
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
     open func integrateResponse<T>(_ response: Response<T>){
+        if let firstCollection = self._collectionsOfModels.first(where:{ $0 as? ObjectCollection<T> != nil }) {
+            if let concreteCollection = firstCollection as? ObjectCollection<T>{
+                for instance in response.result {
+                    if let idx = concreteCollection.items.index(where: {$0.id == instance.id}) {
+                        // We have found an existing instance, let's update
+                        concreteCollection.items[idx] = instance
+                    } else {
+                        concreteCollection.items.append(instance)
+                    }
+                    concreteCollection.hasChanged = true
+                }
+            }
+        }
     }
 
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
     open func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
+        /*
+        switch operation.operationName {
+        case GetResorts.operationName:
+            if let idx = self.getResorts.items.index(where: { $0.id == operation.id }) {
+                self.getResorts.items.remove(at: idx)
+                self.getResorts.hasChanged = true
+            }
+        default:
+            break
+        }*/
+
     }
+
 
     // MARK: -
 
-    open func save(){
+
+    /// Saves all the collections.
+    ///
+    /// - Throws: throws an exception if any save operation has failed
+    public func save() throws {
+        for collection in self._collectionsOfModels{
+            if let concreteCollection = collection as? FilePersistent & UniversalType{
+                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier)
+            }
+        }
+        for collection in self._collectionsOfCallOperations{
+              if let concreteCollection = collection as? FilePersistent & UniversalType{
+                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier)
+            }
+        }
     }
+
+    
 
 }

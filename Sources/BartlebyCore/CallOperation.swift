@@ -3,7 +3,7 @@
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 06/12/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
 import Foundation
@@ -15,25 +15,25 @@ import Foundation
 /// - without call back.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public struct CallOperation<T,P> : Codable, Collectible where T : Collectible & TolerentDeserialization, P : Payload {
+public class CallOperation<T,P> : Model where T : Collectible & TolerentDeserialization, P : Payload {
 
-    public var id:String = Utilities.createUID()
-    public var operationName: String
-    public var path: String
-    public var queryString: String
-    public var method: HTTPMethod
-    public var resultType: Array<T>.Type
-    public var payload: P
+    public var operationName: String = "NO_OPERATION_NAME"
+    public var path: String = "NO_PATH"
+    public var queryString: String = "NO_QUERY_STRING"
+    public var method: HTTPMethod = .GET
+    public var resultType: Array<T>.Type = Array<T>.self
+    public var payload: P?
     public var executionCounter:Int = 0
     public var lastAttemptDate:Date = Date()
 
-    public init(operationName:String, path: String, queryString: String, method: HTTPMethod, parameter: P) {
+    public init(operationName:String, path: String, queryString: String, method: HTTPMethod, parameter: P?) {
         self.operationName = operationName
         self.path = path
         self.queryString = queryString
         self.method = method
         self.resultType = Array<T>.self
         self.payload = parameter
+        super.init()
     }
 
     // MARK: - Codable
@@ -50,7 +50,8 @@ public struct CallOperation<T,P> : Codable, Collectible where T : Collectible & 
         case lastAttemptDate
     }
 
-    public init(from decoder: Decoder) throws{
+    public required init(from decoder: Decoder) throws{
+        try super.init(from: decoder)
         let values = try decoder.container(keyedBy: CallOperationCodingKeys.self)
         self.id = try values.decode(String.self,forKey:.id)
         self.operationName = try values.decode(String.self,forKey:.operationName)
@@ -63,7 +64,11 @@ public struct CallOperation<T,P> : Codable, Collectible where T : Collectible & 
         self.lastAttemptDate = try values.decode(Date.self,forKey:.lastAttemptDate)
     }
 
-    public func encode(to encoder: Encoder) throws {
+    required public init() {
+        super.init()
+    }
+
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CallOperationCodingKeys.self)
         try container.encode(self.id,forKey:.id)
         try container.encode(self.operationName,forKey:.operationName)
@@ -78,15 +83,15 @@ public struct CallOperation<T,P> : Codable, Collectible where T : Collectible & 
 
     // MARK: Collectible compatibility
 
-    public static var collectionName: String {
+    override public static var collectionName: String {
         return "CallOperations"
     }
 
-    public var d_collectionName: String {
+    override public var d_collectionName: String {
         return CallOperation.collectionName
     }
 
-    public static var typeName: String{
+    override public static var typeName: String{
         return "CallOperation"
     }
 

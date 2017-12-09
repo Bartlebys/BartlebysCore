@@ -3,12 +3,12 @@
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 08/12/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
 import Foundation
 
-open class Model:Object,Codable,Collectible,CopyingProtocol{
+open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
 
     // Compatibility layer
     @objc dynamic public var UID:String {
@@ -79,4 +79,6 @@ open class Model:Object,Codable,Collectible,CopyingProtocol{
     }
 
 }
+
+
 

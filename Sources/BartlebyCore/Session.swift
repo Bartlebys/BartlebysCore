@@ -3,7 +3,7 @@
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 07/12/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
 import Foundation
@@ -13,13 +13,17 @@ enum SessionError : Error {
 }
 
 // Handles a full Session.T
-open class Session {
-
+public class Session {
+    
+    // The Concrete data point implements the SessionDelegate, and any logic required to perform.
     // The session delegate defines the Scheme, Host, Current Credentials, and configures the requests
-    public var delegate : SessionDelegate
-
+    public var delegate : ConcreteDataPoint
+    
     // A shared void Payload instance
     public static let voidPayload = VoidPayload()
+
+    // The session Identifier
+    public var sessionIdentifier: String
 
     // shortcuts to the delegate
     public var credentials: Credentials { return self.delegate.credentials }
@@ -27,23 +31,25 @@ open class Session {
     public var scheme:String { return self.delegate.scheme.rawValue }
     public var host:String { return self.delegate.host }
     public var apiBasePath: String { return self.delegate.apiBasePath }
-
+    
     public let startTime = AbsoluteTimeGetCurrent()
 
-    public init(sessionDelegate:SessionDelegate) {
-        self.delegate = sessionDelegate
-    }
 
+    public init(delegate:ConcreteDataPoint,sessionIdentifier:String) {
+        self.delegate = delegate
+        self.sessionIdentifier = sessionIdentifier
+    }
+    
     public var elapsedTime:Double {
         return AbsoluteTimeGetCurrent() - self.startTime
     }
-
+    
     public func infos() -> String {
         return "Version 0.0.0"
     }
-
+    
     // MARK: - Thread Safety
-
+    
     public static func syncOnMain(execute block: () -> Void) {
         if Thread.isMainThread {
             block()
@@ -51,7 +57,7 @@ open class Session {
             DispatchQueue.main.sync(execute: block)
         }
     }
-
+    
     public static func syncThrowableOnMain(execute block: () throws -> Void) rethrows-> (){
         if Thread.isMainThread {
             try block()
@@ -59,7 +65,7 @@ open class Session {
             try DispatchQueue.main.sync(execute: block)
         }
     }
-
+    
     public static func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
         if Thread.isMainThread {
             return try work()
@@ -67,18 +73,18 @@ open class Session {
             return try DispatchQueue.main.sync(execute: work)
         }
     }
-
+    
     // MARK: - Scheduler
-
+    
     //@todo: scheduling ==> schedule the next Call Operation Bunch
-
+    
     // MARK: - Operations Runtime
-
+    
     public func execute<T:Codable,P>(_ operation: CallOperation<T,P>){
         self.provisionOperation(operation)
         self.runCall(operation)
     }
-
+    
     /// Insure the persistency of the operation
     ///
     /// - Parameters:
@@ -87,55 +93,55 @@ open class Session {
     public func provisionOperation<T,P>(_ operation: CallOperation<T,P>){
         // @todo provisionning
     }
-
+    
     /// Run the operation
     ///
     /// - Parameter operation: the operation
     public func runCall<T:Codable,P>(_ operation: CallOperation<T,P>){
-
+        
         let request:URLRequest
-
+        
         do{
             request = try self.delegate.requestFor(operation)
         }catch{
-             Logger.log("Failure operation request creation \(error) \(operation)", category: Logger.Categories.critical)
+            Logger.log("Failure operation request creation \(error) \(operation)", category: Logger.Categories.critical)
             return
         }
-
+        
         self.call(request:request, resultType:[T].self,success: { (response) in
             Session.syncOnMain {
-
-                var operation = operation
-
+                
+                let operation = operation
+                
                 operation.executionCounter += 1
                 operation.lastAttemptDate = Date()
-
+                
                 self.delegate.integrateResponse(response)
                 
                 let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
                 NotificationCenter.default.post(name:notificationName , object: nil)
-
+                
                 self.delegate.deleteOperation(operation)
             }
-
+            
         }, failure:{ (failure) in
             Session.syncOnMain {
-
-                var operation = operation
-
+                
+                let operation = operation
+                
                 operation.executionCounter += 1
                 operation.lastAttemptDate = Date()
                 
                 let notificationName = NSNotification.Name.Operation.didFail(operation.operationName)
                 NotificationCenter.default.post(name:notificationName , object: nil)
-
+                
             }
         })
     }
-
+    
     
     // MARK: - HTTP Engine
-
+    
     /// Generic Server call
     ///
     /// - Parameters:
@@ -150,18 +156,18 @@ open class Session {
 
         var metrics = Metrics()
         metrics.elapsed = self.elapsedTime
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-
+            
             let serverHasRespondedTime = AbsoluteTimeGetCurrent()
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
-
+            
             if let httpResponse = response as? HTTPURLResponse {
-
+                
                 if let data = data {
-
+                    
                     let isACollection = self._dataMayContainMultipleJsonObjects(data: data)
-
+                    
                     do {
                         // Try without patching the the data
                         let response = try self._deserialize(httpResponse: httpResponse, isACollection: isACollection, type: T.self, data: data, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
@@ -169,11 +175,15 @@ open class Session {
                             success(response)
                         }
                     } catch {
-
+                        
+                        
+                        
                         // The Json Object are not fully compliant with the Strong Types.
+                        // We gonna try to patch the data
                         do {
                             if isACollection{
                                 // Patch the collection
+                                
                                 let patchedData = try self._patchCollection(data: data, resultType: T.self)
                                 let response = try self._deserialize(httpResponse: httpResponse, isACollection: true, type: T.self, data: patchedData, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
                                 Session.syncOnMain {
@@ -192,10 +202,11 @@ open class Session {
                                 failure(Failure(from : httpResponse.statusCode.status(), and: error))
                             }
                         }
+                        
                     }
-
+                    
                 } else {
-
+                    
                     // There is no data
                     if let error = error {
                         Session.syncOnMain {
@@ -209,12 +220,12 @@ open class Session {
                     }
                 }
             }
-
+            
         }
         task.resume()
     }
-
-
+    
+    
     /// Deserializes the data
     ///
     /// - Parameters:
@@ -239,8 +250,8 @@ open class Session {
             return Response(httpStatus: httpResponse.statusCode.status(), content: data, result: [object], error: nil, metrics: metrics)
         }
     }
-
-
+    
+    
     /// Determinate if a data is possibly a JSON collection
     ///
     /// - Parameter data: the data
@@ -261,9 +272,9 @@ open class Session {
         }
         return false
     }
-
+    
     // MARK: -  TolerentDeserialization Patches
-
+    
     /// Patches JSON data according to the attended Type
     ///
     /// - Parameters:
@@ -280,7 +291,7 @@ open class Session {
             }
         })
     }
-
+    
     /// Patches collection of JSON data according to the attended Type
     ///
     /// - Parameters:
@@ -301,7 +312,7 @@ open class Session {
                 throw SessionError.deserializationFailed
             }
         })
-
+        
     }
-
+    
 }

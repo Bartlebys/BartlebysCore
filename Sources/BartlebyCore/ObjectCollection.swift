@@ -3,28 +3,35 @@
 //  BartlebyCore
 //
 //  Created by Laurent Morvillier on 04/12/2017.
-//  Copyright © 2017 MusicWork. All rights reserved.
+//  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
 import Foundation
 
-open class ObjectCollection<T> : Codable where T : Codable & Collectible {
-    
+
+open class ObjectCollection<T> : Codable,UniversalType,FilePersistent where T : Codable & Collectible {
+
+
+    public static var collectionName:String { return  T.collectionName }
+
+    public var d_collectionName: String { return T.collectionName }
+
+    public static var typeName: String {
+        get{
+            return "ObjectCollection<\(T.typeName)>"
+        }
+        set{}
+    }
+
     public var items: [T] = [T]()
+
+    public var collectionName:String { return T.collectionName }
 
     public var hasChanged:Bool = false
 
     public init() {
     }
     // MARK: -
-
-
-    /// This method allows transform to a polymorphic collection
-    ///
-    /// - Returns: the collection of models
-    public func asCollectionOfModel()-> ObjectCollection<Model>{
-        return self as! ObjectCollection<Model>
-    }
 
     // MARK: - Codable
     
@@ -47,12 +54,21 @@ open class ObjectCollection<T> : Codable where T : Codable & Collectible {
     enum FileSystemError : Error {
         case fileDirectoryNotFound
     }
-    
-    public static func loadFromFile(type: T.Type, fileName: String, sessionIdentifier: String) throws -> ObjectCollection<T> {
-        let data = try Data(contentsOf: self._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier))
-        return try JSONDecoder().decode(ObjectCollection<T>.self, from: data)
+
+
+    // MARK - FilePersistent
+
+    public static func createOrLoadFromFile<T>(type: T.Type, fileName: String, sessionIdentifier: String) throws -> ObjectCollection<T> where T : Collectible & Codable{
+        let url = try ObjectCollection._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier)
+        if FileManager.default.fileExists(atPath: url.absoluteString){
+            let data = try Data(contentsOf: self._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier))
+            return try JSONDecoder().decode(ObjectCollection<T>.self, from: data)
+        }else{
+            return  ObjectCollection<T>()
+        }
     }
-    
+
+
     public func saveToFile(fileName: String, sessionIdentifier: String) throws {
         if self.hasChanged {
             let url = try ObjectCollection._url(type: T.self, fileName: fileName, sessionIdentifier: sessionIdentifier)
@@ -62,9 +78,8 @@ open class ObjectCollection<T> : Codable where T : Codable & Collectible {
         }
     }
 
-    fileprivate static func _url(type: T.Type, fileName: String, sessionIdentifier: String) throws -> URL {
+    fileprivate static func _url<T:Collectible>(type: T.Type, fileName: String, sessionIdentifier: String) throws -> URL {
         let directoryURL = try ObjectCollection._directoryURL(type:type, sessionIdentifier: sessionIdentifier)
-        
         var isDirectory: ObjCBool = true
         
         if !FileManager.default.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
@@ -73,7 +88,7 @@ open class ObjectCollection<T> : Codable where T : Codable & Collectible {
         return directoryURL.appendingPathComponent(type.collectionName + ".data")
     }
 
-    private static func _directoryURL(type: T.Type, sessionIdentifier: String) throws -> URL {
+    private static func _directoryURL<T:Collectible>(type: T.Type, sessionIdentifier: String) throws -> URL {
         #if os(iOS) || os(macOS)
             let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
             if let _url = urls.first {
@@ -84,5 +99,5 @@ open class ObjectCollection<T> : Codable where T : Codable & Collectible {
         #endif
         throw FileSystemError.fileDirectoryNotFound
     }
-    
 }
+
