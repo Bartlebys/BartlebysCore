@@ -15,7 +15,7 @@ enum SessionError : Error {
 // Handles a full Session.T
 open class Session {
 
-    // The session delegate define the Scheme, Host, Current Credentials, ...
+    // The session delegate defines the Scheme, Host, Current Credentials, and configures the requests
     public var delegate : SessionDelegate
 
     // A shared void Payload instance
@@ -92,8 +92,17 @@ open class Session {
     ///
     /// - Parameter operation: the operation
     public func runCall<T:Codable,P>(_ operation: CallOperation<T,P>){
-        
-        self.call(path: operation.path, queryString: operation.queryString, method: operation.method, resultType:[T].self, parameter: operation.payload,success: { (response) in
+
+        let request:URLRequest
+
+        do{
+            request = try self.delegate.requestFor(operation)
+        }catch{
+             Logger.log("Failure operation request creation \(error) \(operation)", category: Logger.Categories.critical)
+            return
+        }
+
+        self.call(request:request, resultType:[T].self,success: { (response) in
             Session.syncOnMain {
 
                 var operation = operation
@@ -130,44 +139,17 @@ open class Session {
     /// Generic Server call
     ///
     /// - Parameters:
-    ///   - path: e.g: /v2/api/resort
-    ///   - queryString: the query string e.g: ?page=0&size=1
-    ///   - method: HTTP method
-    ///   - parameter: define the payload 
+    ///   - request : the URL request
     ///   - resultType: the type of the result
     ///   - completed: the completion handler
-    public func call<T,P>(  path: String,
-                            queryString: String,
-                            method: HTTPMethod,
+    public func call<T>(  request: URLRequest,
                             resultType: Array<T>.Type,
-                            parameter: P,
                             success: @escaping (_ completion: Response<T>)->(),
                             failure: @escaping (_ completion: Failure)->()
-        ) where T : TolerentDeserialization, P : Payload {
+                        ) where T : TolerentDeserialization {
 
         var metrics = Metrics()
         metrics.elapsed = self.elapsedTime
-
-        guard let url = URL(string: self.scheme + self.host + path + queryString) else {
-            return
-        }
-        var request: URLRequest = self.delegate.baseRequest(with: url, method: method)
-        Logger.log("\(url.absoluteString)", category: Logger.Categories.temporary)
-        Logger.log("parameter = \(parameter)")
-
-        // @todo = determine the relevent contety type for each method .
-        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-
-        if !(parameter is VoidPayload) {
-            do {
-                request.httpBody = try JSONEncoder().encode(parameter)
-            }
-            catch {
-                failure(Failure(httpStatus: nil, error: SessionError.deserializationFailed))
-                return
-            }
-        }
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
 
@@ -207,7 +189,7 @@ open class Session {
                             }
                         } catch {
                             Session.syncOnMain {
-                                failure(Failure(httpStatus: httpResponse.statusCode.status(), error: error))
+                                failure(Failure(from : httpResponse.statusCode.status(), and: error))
                             }
                         }
                     }
@@ -217,7 +199,7 @@ open class Session {
                     // There is no data
                     if let error = error {
                         Session.syncOnMain {
-                            failure(Failure(httpStatus: httpResponse.statusCode.status(), error: error))
+                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
                         }
                     } else {
                         let completion: Response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: Array<T>(), error: nil, metrics: metrics)
