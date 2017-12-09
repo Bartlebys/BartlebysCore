@@ -18,6 +18,7 @@ open class DataPoint : SessionDelegate {
 
     // MARK: -
 
+
     public lazy var session:Session = Session(sessionDelegate: self)
 
     required public init(credentials:Credentials) {
@@ -25,6 +26,19 @@ open class DataPoint : SessionDelegate {
     }
 
     // MARK: SessionDelegate
+
+    /// Returns the data Point collections
+    /// You can populate with concrete types to allow polymorphism
+    ///
+    /// Concrete return could be for example :
+    ///     return [ events.asCollectionOfModel(), tags.asCollectionOfModel()]
+    /// where
+    ///     public var events: ObjectCollection<Event> = ObjectCollection<Event>()
+    ///
+    /// - Returns: the data Point model collections
+    open func getCollections()->[ObjectCollection<Model>]{
+        return  [ObjectCollection<Model>]()
+    }
 
     open var credentials: Credentials
 

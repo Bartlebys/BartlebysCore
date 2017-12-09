@@ -14,6 +14,17 @@ public enum AuthenticationMethod {
 
 public protocol SessionDelegate {
 
+    /// Returns the data Point collections
+    /// You can populate with concrete types (polymorphism)
+    /// 
+    /// Concrete return could be for example :
+    ///     return [ events.asCollectionOfModel(), tags.asCollectionOfModel()]
+    /// where
+    ///     public var events: ObjectCollection<Event> = ObjectCollection<Event>()
+    ///
+    /// - Returns: the data Point model collections
+     func getCollections()->[ObjectCollection<Model>]
+
     /// The credentials should generaly not change during the session
     var credentials:Credentials { get set }
 
