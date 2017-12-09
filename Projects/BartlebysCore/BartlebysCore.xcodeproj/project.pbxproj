@@ -41,6 +41,7 @@
 		4D55FC921FDAF690001D91CE /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
 		4D55FC931FDAF690001D91CE /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
 		E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
+		E5A0E0421FDC3A4A00FB4DE3 /* FilePersitent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0411FDC3A4A00FB4DE3 /* FilePersitent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		4D55FC8B1FDAF690001D91CE /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 		4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPOperation.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
+		E5A0E0411FDC3A4A00FB4DE3 /* FilePersitent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePersitent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +176,7 @@
 			children = (
 				4D55FC861FDAF68F001D91CE /* Collectible.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
+				E5A0E0411FDC3A4A00FB4DE3 /* FilePersitent.swift */,
 				4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */,
 				4D55FC8B1FDAF690001D91CE /* Payload.swift */,
 				4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */,
@@ -263,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5A0E0421FDC3A4A00FB4DE3 /* FilePersitent.swift in Sources */,
 				4D55FC8D1FDAF690001D91CE /* Collectible.swift in Sources */,
 				4D55FC851FDAF688001D91CE /* ManagedModel.swift in Sources */,
 				4D55FC761FDAF5D0001D91CE /* Status.swift in Sources */,
