@@ -101,11 +101,11 @@ open class DataPoint : ConcreteDataPoint {
 
         switch self.authenticationMethod {
         case .basicHTTPAuth:
-             let loginString = "\(self.credentials.username):\(self.credentials.password)"
-             if let loginData: Data = loginString.data(using: .utf8) {
+            let loginString = "\(self.credentials.username):\(self.credentials.password)"
+            if let loginData: Data = loginString.data(using: .utf8) {
                 let base64LoginString: String = loginData.base64EncodedString()
                 request.setValue(base64LoginString, forHTTPHeaderField: "Authorization")
-             }
+            }
         }
 
         return request
@@ -172,17 +172,12 @@ open class DataPoint : ConcreteDataPoint {
     ///
     /// - Parameter operation: the targeted Call Operation
     open func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
-        /*
-        switch operation.operationName {
-        case GetResorts.operationName:
-            if let idx = self.getResorts.items.index(where: { $0.id == operation.id }) {
-                self.getResorts.items.remove(at: idx)
-                self.getResorts.hasChanged = true
+        if let pendingCallOperations = self._collectionsOfCallOperations.first(where:{ $0 as? CallOperation<T,P> != nil }) as? ObjectCollection<CallOperation<T,P>> {
+            if let idx = pendingCallOperations.items.index(where: { $0.id == operation.id }) {
+                pendingCallOperations.items.remove(at: idx)
+                pendingCallOperations.hasChanged = true
             }
-        default:
-            break
-        }*/
-
+        }
     }
 
 
@@ -199,12 +194,10 @@ open class DataPoint : ConcreteDataPoint {
             }
         }
         for collection in self._collectionsOfCallOperations{
-              if let concreteCollection = collection as? FilePersistent & UniversalType{
+            if let concreteCollection = collection as? FilePersistent & UniversalType{
                 try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier)
             }
         }
     }
-
-    
 
 }
