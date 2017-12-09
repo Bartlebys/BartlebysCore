@@ -16,7 +16,16 @@ open class ObjectCollection<T> : Codable where T : Codable & Collectible {
 
     public init() {
     }
-    
+    // MARK: -
+
+
+    /// This method allows transform to a polymorphic collection
+    ///
+    /// - Returns: the collection of models
+    public func asCollectionOfModel()-> ObjectCollection<Model>{
+        return self as! ObjectCollection<Model>
+    }
+
     // MARK: - Codable
     
     public enum CollectionCodingKeys: String, CodingKey {
