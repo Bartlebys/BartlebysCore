@@ -10,6 +10,10 @@ import Foundation
 
 public protocol TolerentDeserialization {
 
+    /// You should implement this protocol on any Codable object
+    /// If you want to be able to fix conformity or versioning issues on deserialization.
+    ///
+    /// - Parameter dictionary: the dictionary
     static func patchDictionary(_ dictionary: inout Dictionary<String, Any>)
 
 }
