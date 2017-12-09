@@ -14,17 +14,53 @@ public enum AuthenticationMethod {
 
 public protocol SessionDelegate {
 
+    /// The credentials should generaly not change during the session
     var credentials:Credentials { get set }
 
+    /// The authentication method
     var authenticationMethod: AuthenticationMethod { get }
 
+    /// The current Scheme .https is a must
     var scheme:Schemes { get }
 
+    // The current Host: e.g demo.bartlebys.org
     var host:String { get }
 
+    // The api base path: e.g /api/v1
     var apiBasePath: String { get }
 
-    func baseRequest(with url:URL, method: HTTPMethod) -> URLRequest
+    // MARK: - URL request
+
+    ///  Returns the configured URLrequest
+    ///
+    /// - Parameters:
+    ///   - path: the path e.g: users/
+    ///   - queryString: eg: &page=0&size=10
+    ///   - method: the http Method
+    /// - Returns:  the URL request
+    /// - Throws: url issues
+    func requestFor( path: String, queryString: String, method: HTTPMethod) throws -> URLRequest
+
+    /// Returns the configured URLrequest
+    ///
+    /// - Parameters:
+    ///   - path: the path e.g: users/
+    ///   - queryString: eg: &page=0&size=10
+    ///   - method: the http Method
+    /// - Returns: the URL request
+    /// - Throws: issue on URL creation or Parameters deserialization
+    func requestFor<P:Payload>( path: String, queryString: String, method: HTTPMethod , parameter:P)throws -> URLRequest
+
+
+    /// Returns the relevent request for a given call Operation
+    ///
+    /// - Parameter operation: the operation
+    /// - Returns: the URL request
+    /// - Throws: issue on URL creation and operation Parameters serialization
+    func requestFor<T:Codable,P>(_ operation: CallOperation<T,P>) throws -> URLRequest
+
+
+    // MARK: - Response & CallOperation
 
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
