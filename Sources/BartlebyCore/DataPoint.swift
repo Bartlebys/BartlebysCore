@@ -197,12 +197,12 @@ open class DataPoint : ConcreteDataPoint {
     public func save(using encoder:ConcreteCoder) throws {
         for collection in self._collectionsOfModels{
             if let concreteCollection = collection as? FilePersistentCollection & UniversalType{
-                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier,using: encoder)
+                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, relativeFolderPath: self.sessionIdentifier,using: encoder)
             }
         }
         for collection in self._collectionsOfCallOperations{
             if let concreteCollection = collection as? FilePersistentCollection & UniversalType{
-                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier,using: encoder)
+                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, relativeFolderPath: self.sessionIdentifier,using: encoder)
             }
         }
     }

@@ -78,14 +78,14 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
     /// - Parameters:
     ///   - type: the Type of the FilePersistent instance
     ///   - fileName: the filename to use
-    ///   - sessionIdentifier: the session identifier
+    ///   - relativeFolderPath: the session identifier
     ///   - coder: the coder
     /// - Returns: a FilePersistent instance
     /// - Throws: throws errors on decoding
-    public static func createOrLoadFromFile<T:Codable & Tolerent>(type: T.Type, fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws -> ObjectCollection<T>{
-        let url = try ObjectCollection._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier)
+    public static func createOrLoadFromFile<T:Codable & Tolerent>(type: T.Type, fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws -> ObjectCollection<T>{
+        let url = try ObjectCollection._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath)
         if FileManager.default.fileExists(atPath: url.absoluteString){
-            let data = try Data(contentsOf: self._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier))
+            let data = try Data(contentsOf: self._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath))
             return try coder.decode(ObjectCollection<T>.self, from: data)
         }else{
             return  ObjectCollection<T>()
@@ -94,15 +94,15 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
 
 
     /// Saves to a given file named 'fileName'
-    /// Into a dedicated folder named sessionIdentifier
+    /// Into a dedicated folder named relativeFolderPath
     /// - Parameters:
     ///   - fileName: the file name
-    ///   - sessionIdentifier: the session identifier (used for the folder and the identification of the session)
+    ///   - relativeFolderPath: the session identifier (used for the folder and the identification of the session)
     ///   - coder: the coder
     /// - Throws: throws errors on Coding
-    public func saveToFile(fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws{
+    public func saveToFile(fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws{
         if self.hasChanged {
-            let url = try ObjectCollection._url(type: T.self, fileName: fileName, sessionIdentifier: sessionIdentifier)
+            let url = try ObjectCollection._url(type: T.self, fileName: fileName, relativeFolderPath: relativeFolderPath)
             let data = try coder.encode(self)
             try data.write(to: url)
             self.hasChanged = false
@@ -111,13 +111,13 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
 
 
     /// Saves to a given file named 'fileName'
-    /// Into a dedicated folder named sessionIdentifier
+    /// Into a dedicated folder named relativeFolderPath
     /// - Parameters:
     ///   - fileName: the file name
-    ///   - sessionIdentifier: the session identifier (used for the folder and the identification of the session)
+    ///   - relativeFolderPath: the session identifier (used for the folder and the identification of the session)
     /// - Throws: throws errors on Coding
-    fileprivate static func _url<T>(type: T.Type, fileName: String, sessionIdentifier: String) throws -> URL {
-        let directoryURL = try ObjectCollection._directoryURL(type:type, sessionIdentifier: sessionIdentifier)
+    fileprivate static func _url<T>(type: T.Type, fileName: String, relativeFolderPath: String) throws -> URL {
+        let directoryURL = try ObjectCollection._directoryURL(type:type, relativeFolderPath: relativeFolderPath)
         var isDirectory: ObjCBool = true
         
         if !FileManager.default.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
@@ -127,11 +127,11 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
     }
 
 
-    private static func _directoryURL<T>(type: T.Type, sessionIdentifier: String) throws -> URL {
+    private static func _directoryURL<T>(type: T.Type, relativeFolderPath: String) throws -> URL {
         #if os(iOS) || os(macOS)
             let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
             if let _url = urls.first {
-                return _url.appendingPathComponent(sessionIdentifier, isDirectory: true)
+                return _url.appendingPathComponent(relativeFolderPath, isDirectory: true)
             }
         #elseif os(Linux) // linux @todo
             

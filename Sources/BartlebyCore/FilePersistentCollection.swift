@@ -17,19 +17,19 @@ public protocol FilePersistentCollection {
     /// - Parameters:
     ///   - type: the Type of the FilePersistent instance
     ///   - fileName: the filename to use
-    ///   - sessionIdentifier: the session identifier
+    ///   - relativeFolderPath: the file relative folder path
     ///   - coder: the coder
     /// - Returns: a FilePersistent instance
     /// - Throws: throws errors on decoding
-    static func createOrLoadFromFile<T>(type: T.Type, fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws -> ObjectCollection<T>
+    static func createOrLoadFromFile<T>(type: T.Type, fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws -> ObjectCollection<T>
 
 
     /// Saves to a given file named 'fileName'
-    /// Into a dedicated folder named sessionIdentifier
+    /// Into a dedicated folder named
     /// - Parameters:
     ///   - fileName: the file name
-    ///   - sessionIdentifier: the session identifier (used for the folder and the identification of the session)
+    ///   - relativeFolderPath: the file relative folder path
     ///   - coder: the coder
     /// - Throws: throws errors on Coding
-    func saveToFile(fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws
+    func saveToFile(fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws
 }
