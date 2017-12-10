@@ -47,33 +47,7 @@ public class Session {
     public func infos() -> String {
         return "Version 0.0.0"
     }
-    
-    // MARK: - Thread Safety
-    
-    public static func syncOnMain(execute block: () -> Void) {
-        if Thread.isMainThread {
-            block()
-        } else {
-            DispatchQueue.main.sync(execute: block)
-        }
-    }
-    
-    public static func syncThrowableOnMain(execute block: () throws -> Void) rethrows-> (){
-        if Thread.isMainThread {
-            try block()
-        } else {
-            try DispatchQueue.main.sync(execute: block)
-        }
-    }
-    
-    public static func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
-        if Thread.isMainThread {
-            return try work()
-        } else {
-            return try DispatchQueue.main.sync(execute: work)
-        }
-    }
-    
+
     // MARK: - Scheduler
     
     //@todo: scheduling ==> schedule the next Call Operation Bunch
@@ -109,7 +83,7 @@ public class Session {
         }
         
         self.call(request:request, resultType:[T].self,success: { (response) in
-            Session.syncOnMain {
+            Object.syncOnMain {
                 
                 let operation = operation
                 
@@ -125,7 +99,7 @@ public class Session {
             }
             
         }, failure:{ (failure) in
-            Session.syncOnMain {
+            Object.syncOnMain {
                 
                 let operation = operation
                 
@@ -171,7 +145,7 @@ public class Session {
                     do {
                         // Try without patching the the data
                         let response = try self._deserialize(httpResponse: httpResponse, isACollection: isACollection, type: T.self, data: data, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
-                        Session.syncOnMain {
+                        Object.syncOnMain {
                             success(response)
                         }
                     } catch {
@@ -186,19 +160,19 @@ public class Session {
                                 
                                 let patchedData = try self._patchCollection(data: data, resultType: T.self)
                                 let response = try self._deserialize(httpResponse: httpResponse, isACollection: true, type: T.self, data: patchedData, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
-                                Session.syncOnMain {
+                                Object.syncOnMain {
                                     success(response)
                                 }
                             }else{
                                 // Patch the object
                                 let patchedData = try self._patchObject(data: data, resultType: T.self)
                                 let response = try self._deserialize(httpResponse: httpResponse, isACollection: false, type: T.self, data: patchedData, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
-                                Session.syncOnMain {
+                                Object.syncOnMain {
                                     success(response)
                                 }
                             }
                         } catch {
-                            Session.syncOnMain {
+                            Object.syncOnMain {
                                 failure(Failure(from : httpResponse.statusCode.status(), and: error))
                             }
                         }
@@ -209,12 +183,12 @@ public class Session {
                     
                     // There is no data
                     if let error = error {
-                        Session.syncOnMain {
+                        Object.syncOnMain {
                             failure(Failure(from : httpResponse.statusCode.status(), and: error))
                         }
                     } else {
                         let completion: Response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: Array<T>(), error: nil, metrics: metrics)
-                        Session.syncOnMain {
+                        Object.syncOnMain {
                             success(completion)
                         }
                     }
@@ -282,7 +256,7 @@ public class Session {
     ///   - resultType: the result type
     /// - Returns: the patched data
     fileprivate func _patchObject<T>(data: Data, resultType: T.Type) throws -> Data where T : TolerentDeserialization {
-        return try Session.syncOnMainAndReturn(execute: { () -> Data in
+        return try Object.syncOnMainAndReturn(execute: { () -> Data in
             if var jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Dictionary<String, Any> {
                 resultType.patchDictionary(&jsonDictionary)
                 return try JSONSerialization.data(withJSONObject:jsonDictionary, options:[])
@@ -299,7 +273,7 @@ public class Session {
     ///   - resultType: the result type
     /// - Returns: the patched data
     fileprivate func _patchCollection<T>(data: Data, resultType: T.Type) throws -> Data where T : TolerentDeserialization {
-        return try Session.syncOnMainAndReturn(execute: { () -> Data in
+        return try Object.syncOnMainAndReturn(execute: { () -> Data in
             if var jsonObject = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Array<Dictionary<String, Any>> {
                 var index = 0
                 for var jsonElement in jsonObject {

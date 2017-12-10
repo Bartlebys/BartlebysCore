@@ -38,3 +38,33 @@ import Foundation
 
 #endif
 
+public extension Object{
+
+    // MARK: - Thread Safety?
+
+    public static func syncOnMain(execute block: () -> Void) {
+        if Thread.isMainThread {
+            block()
+        } else {
+            DispatchQueue.main.sync(execute: block)
+        }
+    }
+
+    public static func syncThrowableOnMain(execute block: () throws -> Void) rethrows-> (){
+        if Thread.isMainThread {
+            try block()
+        } else {
+            try DispatchQueue.main.sync(execute: block)
+        }
+    }
+
+    public static func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
+        if Thread.isMainThread {
+            return try work()
+        } else {
+            return try DispatchQueue.main.sync(execute: work)
+        }
+    }
+
+}
+
