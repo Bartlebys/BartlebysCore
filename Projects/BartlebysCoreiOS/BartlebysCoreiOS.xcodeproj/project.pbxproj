@@ -40,6 +40,7 @@
 		4D55FCEA1FDAF7CB001D91CE /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCCA1FDAF7CB001D91CE /* SessionDelegate.swift */; };
 		4D55FCF01FDAF812001D91CE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCEE1FDAF811001D91CE /* Model.swift */; };
 		4D55FCF11FDAF812001D91CE /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCEF1FDAF812001D91CE /* Metrics.swift */; };
+		E516FE021FDDA9C2001AB6A5 /* ConcreteJSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FE011FDDA9C2001AB6A5 /* ConcreteJSONCoder.swift */; };
 		E51E0EF61FDD4C4400414D6C /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF51FDD4C4400414D6C /* ConcreteCoder.swift */; };
 		E51E0EFA1FDD6EC800414D6C /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF91FDD6EC800414D6C /* Initializable.swift */; };
 		E5A0E0381FDBEAB800FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */; };
@@ -82,6 +83,7 @@
 		4D55FCCA1FDAF7CB001D91CE /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
 		4D55FCEE1FDAF811001D91CE /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4D55FCEF1FDAF812001D91CE /* Metrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
+		E516FE011FDDA9C2001AB6A5 /* ConcreteJSONCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteJSONCoder.swift; sourceTree = "<group>"; };
 		E51E0EF51FDD4C4400414D6C /* ConcreteCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteCoder.swift; sourceTree = "<group>"; };
 		E51E0EF91FDD6EC800414D6C /* Initializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
 		E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				4D55FCEC1FDAF7FF001D91CE /* generated */,
 				4D55FCED1FDAF806001D91CE /* Protocols */,
 				4D55FCAF1FDAF7CB001D91CE /* CallOperation.swift */,
+				E516FE011FDDA9C2001AB6A5 /* ConcreteJSONCoder.swift */,
 				4D55FCC71FDAF7CB001D91CE /* Credentials.swift */,
 				4D55FCC01FDAF7CB001D91CE /* DataPoint.swift */,
 				4D55FCAD1FDAF7CB001D91CE /* Failure.swift */,
@@ -285,6 +288,7 @@
 				4D55FCDC1FDAF7CB001D91CE /* Response.swift in Sources */,
 				4D55FCD91FDAF7CB001D91CE /* Int+Padding.swift in Sources */,
 				4D55FCE81FDAF7CB001D91CE /* Model+Equatable.swift in Sources */,
+				E516FE021FDDA9C2001AB6A5 /* ConcreteJSONCoder.swift in Sources */,
 				4D55FCDD1FDAF7CB001D91CE /* Globals.swift in Sources */,
 				4D55FCE61FDAF7CB001D91CE /* Object.swift in Sources */,
 				4D55FCD51FDAF7CB001D91CE /* Logger.swift in Sources */,
