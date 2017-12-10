@@ -18,6 +18,10 @@ open class DataPoint : ConcreteDataPoint {
 
     // MARK: -
 
+
+    /// The file Coder
+    public var fileCoder:ConcreteCoder
+
     /// The associated session
     public lazy var session:Session = Session(delegate: self,sessionIdentifier:self.sessionIdentifier)
     
@@ -30,9 +34,10 @@ open class DataPoint : ConcreteDataPoint {
     ///   - credentials: the current credentials
     ///   - sessionIdentifier: a unique session identifier (should be persistent as it is used to compute serialization paths)
     /// - Throws: Children may throw while populating the collections
-    required public init(credentials:Credentials,sessionIdentifier:String) throws{
+    required public init(credentials:Credentials,sessionIdentifier:String,fileCoder:ConcreteCoder) throws{
         self.credentials = credentials
         self.sessionIdentifier = sessionIdentifier
+        self.fileCoder = fileCoder
     }
 
 
@@ -187,15 +192,15 @@ open class DataPoint : ConcreteDataPoint {
     /// Saves all the collections.
     ///
     /// - Throws: throws an exception if any save operation has failed
-    public func save() throws {
+    public func save(using encoder:ConcreteCoder) throws {
         for collection in self._collectionsOfModels{
-            if let concreteCollection = collection as? FilePersistent & UniversalType{
-                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier)
+            if let concreteCollection = collection as? FilePersistentCollection & UniversalType{
+                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier,using: encoder)
             }
         }
         for collection in self._collectionsOfCallOperations{
-            if let concreteCollection = collection as? FilePersistent & UniversalType{
-                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier)
+            if let concreteCollection = collection as? FilePersistentCollection & UniversalType{
+                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, sessionIdentifier: self.sessionIdentifier,using: encoder)
             }
         }
     }

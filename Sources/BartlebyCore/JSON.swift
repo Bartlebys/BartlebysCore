@@ -9,9 +9,9 @@
 import Foundation
 
 // A bunch of preconfigured encoder and decoders
-public struct JSON{
+open class JSON{
 
-    public static var encoder:JSONEncoder{
+    open static var encoder:JSONEncoder{
         get{
             let encoder = JSONEncoder()
             encoder.nonConformingFloatEncodingStrategy = .throw
@@ -27,20 +27,20 @@ public struct JSON{
         }
     }
 
-    public static var prettyEncoder:JSONEncoder{
+    open static var prettyEncoder:JSONEncoder{
         let encoder = JSON.encoder
         encoder.outputFormatting = .prettyPrinted
         return encoder
     }
 
 
-    public static var base64Encoder:JSONEncoder{
+    open static var base64Encoder:JSONEncoder{
         let encoder = JSON.encoder
         encoder.dataEncodingStrategy = .base64
         return encoder
     }
 
-    public static var decoder:JSONDecoder{
+    open static var decoder:JSONDecoder{
         get{
             let decoder = JSONDecoder()
             decoder.nonConformingFloatDecodingStrategy = .throw
@@ -57,10 +57,60 @@ public struct JSON{
     }
 
 
-    public static var base64Decoder:JSONDecoder{
+    open static var base64Decoder:JSONDecoder{
         let decoder = JSON.decoder
         decoder.dataDecodingStrategy = .base64
         return decoder
     }
 
 }
+
+// MARK: - ConcreteJSONCoder
+
+open class ConcreteJSONCoder:ConcreteCoder{
+
+    // MARK : - ConcreteCoder
+    /// Encodes the given top-level value and returns its representation.
+    ///
+    /// - parameter value: The value to encode.
+    /// - returns: A new `Data` value containing the encoded data.
+    /// - throws: `EncodingError.invalidValue` if a non-conforming floating-point value is encountered during encoding, and the encoding strategy is `.throw`.
+    /// - throws: An error if any value throws an error during encoding.
+    open func encode<T : Encodable>(_ value: T) throws -> Data{
+        return try JSON.encoder.encode(value)
+    }
+
+    // MARK : - ConcreteDecoder
+
+    /// Decodes a top-level value of the given type from the given  representation.
+    ///
+    /// - parameter type: The type of the value to decode.
+    /// - parameter data: The data to decode from.
+    /// - returns: A value of the requested type.
+    /// - throws: `DecodingError.dataCorrupted` if values requested from the payload are corrupted, or if the given data is not valid .
+    /// - throws: An error if any value throws an error during decoding.
+    open func decode<T : Decodable>(_ type: T.Type, from data: Data) throws -> T{
+        return try JSON.decoder.decode(type, from: data)
+    }
+
+    public init(){
+    }
+
+}
+
+// MARK: - ConcretePrettyJSONCoder
+
+open class ConcretePrettyJSONCoder:ConcreteJSONCoder{
+
+    // MARK : - ConcreteCoder
+    /// Encodes the given top-level value and returns its representation.
+    ///
+    /// - parameter value: The value to encode.
+    /// - returns: A new `Data` value containing the encoded data.
+    /// - throws: `EncodingError.invalidValue` if a non-conforming floating-point value is encountered during encoding, and the encoding strategy is `.throw`.
+    /// - throws: An error if any value throws an error during encoding.
+    override open func encode<T : Encodable>(_ value: T) throws -> Data{
+        return try JSON.prettyEncoder.encode(value)
+    }
+}
+

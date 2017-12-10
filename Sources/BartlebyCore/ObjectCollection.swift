@@ -9,8 +9,10 @@
 import Foundation
 
 
-open class ObjectCollection<T> : Codable,UniversalType,FilePersistent where T : Codable & Collectible {
+open class ObjectCollection<T> : Codable,UniversalType,FilePersistentCollection where T : Codable & Collectible {
 
+
+    // MARK: - UniversalType
 
     public static var collectionName:String { return  T.collectionName }
 
@@ -22,6 +24,8 @@ open class ObjectCollection<T> : Codable,UniversalType,FilePersistent where T : 
         }
         set{}
     }
+
+    // MARK: -
 
     public var items: [T] = [T]()
 
@@ -56,28 +60,52 @@ open class ObjectCollection<T> : Codable,UniversalType,FilePersistent where T : 
     }
 
 
-    // MARK - FilePersistent
+    // MARK - FilePersistentCollection
 
-    public static func createOrLoadFromFile<T>(type: T.Type, fileName: String, sessionIdentifier: String) throws -> ObjectCollection<T> where T : Collectible & Codable{
+    /// Loads from a file
+    /// Creates the persistent instance if there is no file.
+    ///
+    /// - Parameters:
+    ///   - type: the Type of the FilePersistent instance
+    ///   - fileName: the filename to use
+    ///   - sessionIdentifier: the session identifier
+    ///   - coder: the coder
+    /// - Returns: a FilePersistent instance
+    /// - Throws: throws errors on decoding
+    public static func createOrLoadFromFile<T>(type: T.Type, fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws -> ObjectCollection<T> where T : Collectible & Codable{
         let url = try ObjectCollection._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier)
         if FileManager.default.fileExists(atPath: url.absoluteString){
             let data = try Data(contentsOf: self._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier))
-            return try JSONDecoder().decode(ObjectCollection<T>.self, from: data)
+            return try coder.decode(ObjectCollection<T>.self, from: data)
         }else{
             return  ObjectCollection<T>()
         }
     }
 
 
-    public func saveToFile(fileName: String, sessionIdentifier: String) throws {
+    /// Saves to a given file named 'fileName'
+    /// Into a dedicated folder named sessionIdentifier
+    /// - Parameters:
+    ///   - fileName: the file name
+    ///   - sessionIdentifier: the session identifier (used for the folder and the identification of the session)
+    ///   - coder: the coder
+    /// - Throws: throws errors on Coding
+    public func saveToFile(fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws{
         if self.hasChanged {
             let url = try ObjectCollection._url(type: T.self, fileName: fileName, sessionIdentifier: sessionIdentifier)
-            let data = try JSONEncoder().encode(self)
+            let data = try coder.encode(self)
             try data.write(to: url)
             self.hasChanged = false
         }
     }
 
+
+    /// Saves to a given file named 'fileName'
+    /// Into a dedicated folder named sessionIdentifier
+    /// - Parameters:
+    ///   - fileName: the file name
+    ///   - sessionIdentifier: the session identifier (used for the folder and the identification of the session)
+    /// - Throws: throws errors on Coding
     fileprivate static func _url<T:Collectible>(type: T.Type, fileName: String, sessionIdentifier: String) throws -> URL {
         let directoryURL = try ObjectCollection._directoryURL(type:type, sessionIdentifier: sessionIdentifier)
         var isDirectory: ObjCBool = true
@@ -87,6 +115,7 @@ open class ObjectCollection<T> : Codable,UniversalType,FilePersistent where T : 
         }
         return directoryURL.appendingPathComponent(type.collectionName + ".data")
     }
+
 
     private static func _directoryURL<T:Collectible>(type: T.Type, sessionIdentifier: String) throws -> URL {
         #if os(iOS) || os(macOS)
