@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Response<T> where T : Codable & Collectible {
+public struct Response<T> where T : Codable & Collectible{
     
     public var httpStatus: Status
     public var content: Data?

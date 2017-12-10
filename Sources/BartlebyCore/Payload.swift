@@ -8,6 +8,6 @@
 
 import Foundation
 
-public protocol Payload : Codable, Collectible {
+public protocol Payload : Codable {
     
 }

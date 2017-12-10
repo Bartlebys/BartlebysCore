@@ -54,7 +54,7 @@ public class Session {
     
     // MARK: - Operations Runtime
     
-    public func execute<T:Codable,P>(_ operation: CallOperation<T,P>){
+    public func execute<T:Collectible,P>(_ operation: CallOperation<T,P>){
         self.provisionOperation(operation)
         self.runCall(operation)
     }
@@ -71,7 +71,7 @@ public class Session {
     /// Run the operation
     ///
     /// - Parameter operation: the operation
-    public func runCall<T:Codable,P>(_ operation: CallOperation<T,P>){
+    public func runCall<T:Collectible,P>(_ operation: CallOperation<T,P>){
         
         let request:URLRequest
         
@@ -82,7 +82,7 @@ public class Session {
             return
         }
         
-        self.call(request:request, resultType:[T].self,success: { (response) in
+        self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection,success: { (response) in
             Object.syncOnMain {
                 
                 let operation = operation
@@ -121,14 +121,16 @@ public class Session {
     /// - Parameters:
     ///   - request : the URL request
     ///   - resultType: the type of the result
+    ///   - multiple: if set to true we try to deserialize a collection
     ///   - completed: the completion handler
-    public func call<T>(  request: URLRequest,
-                            resultType: Array<T>.Type,
-                            success: @escaping (_ completion: Response<T>)->(),
-                            failure: @escaping (_ completion: Failure)->()
-                        ) where T : TolerentDeserialization {
+    public func call<T:Tolerent>(  request: URLRequest,
+                                   resultType: T.Type,
+                                   resultIsACollection:Bool,
+                                   success: @escaping (_ completion: Response<T>)->(),
+                                   failure: @escaping (_ completion: Failure)->()
+        ){
 
-        var metrics = Metrics()
+        let metrics = Metrics()
         metrics.elapsed = self.elapsedTime
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -139,154 +141,47 @@ public class Session {
             if let httpResponse = response as? HTTPURLResponse {
                 
                 if let data = data {
-                    
-                    let isACollection = self._dataMayContainMultipleJsonObjects(data: data)
-                    
                     do {
-                        // Try without patching the the data
-                        let response = try self._deserialize(httpResponse: httpResponse, isACollection: isACollection, type: T.self, data: data, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
-                        Object.syncOnMain {
-                            success(response)
-                        }
-                    } catch {
-                        
-                        
-                        
-                        // The Json Object are not fully compliant with the Strong Types.
-                        // We gonna try to patch the data
-                        do {
-                            if isACollection{
-                                // Patch the collection
-                                
-                                let patchedData = try self._patchCollection(data: data, resultType: T.self)
-                                let response = try self._deserialize(httpResponse: httpResponse, isACollection: true, type: T.self, data: patchedData, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
-                                Object.syncOnMain {
-                                    success(response)
-                                }
-                            }else{
-                                // Patch the object
-                                let patchedData = try self._patchObject(data: data, resultType: T.self)
-                                let response = try self._deserialize(httpResponse: httpResponse, isACollection: false, type: T.self, data: patchedData, metrics: &metrics, serverHasRespondedTime: serverHasRespondedTime)
-                                Object.syncOnMain {
-                                    success(response)
-                                }
-                            }
-                        } catch {
+                        if resultIsACollection{
+                            let decoded = try self.delegate.fileCoder.decodeArrayOf(T.self, from: data)
+                            metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
+                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
+                            let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result:decoded, error: nil, metrics: metrics)
                             Object.syncOnMain {
-                                failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                                success(response)
+                            }
+                        }else{
+                            let decoded = try self.delegate.fileCoder.decode(T.self, from: data)
+                            metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
+                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
+                            let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: [decoded], error: nil, metrics: metrics)
+                            Object.syncOnMain {
+                                success(response)
                             }
                         }
                         
+                    } catch {
+                        Object.syncOnMain {
+                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                        }
                     }
-                    
                 } else {
-                    
                     // There is no data
                     if let error = error {
                         Object.syncOnMain {
                             failure(Failure(from : httpResponse.statusCode.status(), and: error))
                         }
                     } else {
-                        let completion: Response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: Array<T>(), error: nil, metrics: metrics)
                         Object.syncOnMain {
+                            let completion: Response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: Array<T>(), error: nil, metrics: metrics)
                             success(completion)
                         }
                     }
                 }
             }
-            
         }
         task.resume()
     }
-    
-    
-    /// Deserializes the data
-    ///
-    /// - Parameters:
-    ///   - httpResponse: the reference to the httpResponse
-    ///   - isACollection: is it a possibly a collection?
-    ///   - type: the type
-    ///   - data: the data
-    /// - Returns: the response
-    /// - Throws: JSON
-    fileprivate func _deserialize<T:Codable>(httpResponse:HTTPURLResponse,isACollection:Bool, type:T.Type ,data: Data,metrics:inout Metrics,serverHasRespondedTime:Double) throws -> Response<T> {
-        let currentTime = AbsoluteTimeGetCurrent()
-        if isACollection{
-            let collection: Array<T> = try JSON.decoder.decode(Array<T>.self, from: data) as Array<T>
-            metrics.serializationDuration = currentTime - serverHasRespondedTime
-            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-            return Response(httpStatus: httpResponse.statusCode.status(), content: data, result: collection, error: nil, metrics: metrics)
-        }else{
-            let object: T = try JSON.decoder.decode(T.self, from: data) as T
-            // Pack the Object in an Array and return the response
-            metrics.serializationDuration = currentTime - serverHasRespondedTime
-            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-            return Response(httpStatus: httpResponse.statusCode.status(), content: data, result: [object], error: nil, metrics: metrics)
-        }
-    }
-    
-    
-    /// Determinate if a data is possibly a JSON collection
-    ///
-    /// - Parameter data: the data
-    /// - Returns: true if the JSON is posssibly a collection (there is no semantic validation of the JSON)
-    fileprivate func _dataMayContainMultipleJsonObjects(data: Data)->Bool{
-        // this implementation is sub-optimal.
-        if let string = String(data: data, encoding: String.Encoding.utf8){
-            // We have the string let's log it
-            Logger.log(string,category: .temporary)
-            for c in string{
-                if c == "["{
-                    return true
-                }
-                if c == "{"{
-                    break
-                }
-            }
-        }
-        return false
-    }
-    
-    // MARK: -  TolerentDeserialization Patches
-    
-    /// Patches JSON data according to the attended Type
-    ///
-    /// - Parameters:
-    ///   - data: the data
-    ///   - resultType: the result type
-    /// - Returns: the patched data
-    fileprivate func _patchObject<T>(data: Data, resultType: T.Type) throws -> Data where T : TolerentDeserialization {
-        return try Object.syncOnMainAndReturn(execute: { () -> Data in
-            if var jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Dictionary<String, Any> {
-                resultType.patchDictionary(&jsonDictionary)
-                return try JSONSerialization.data(withJSONObject:jsonDictionary, options:[])
-            }else{
-                throw SessionError.deserializationFailed
-            }
-        })
-    }
-    
-    /// Patches collection of JSON data according to the attended Type
-    ///
-    /// - Parameters:
-    ///   - data: the data
-    ///   - resultType: the result type
-    /// - Returns: the patched data
-    fileprivate func _patchCollection<T>(data: Data, resultType: T.Type) throws -> Data where T : TolerentDeserialization {
-        return try Object.syncOnMainAndReturn(execute: { () -> Data in
-            if var jsonObject = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Array<Dictionary<String, Any>> {
-                var index = 0
-                for var jsonElement in jsonObject {
-                    resultType.patchDictionary(&jsonElement)
-                    jsonObject[index] = jsonElement
-                    index += 1
-                }
-                return try JSONSerialization.data(withJSONObject: jsonObject, options:[])
-            }else{
-                throw SessionError.deserializationFailed
-            }
-        })
-        
-    }
-    
+
+
 }

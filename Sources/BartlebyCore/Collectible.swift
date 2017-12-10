@@ -13,3 +13,4 @@ public protocol Collectible : UniversalType {
     var id:String { get set }
 
 }
+

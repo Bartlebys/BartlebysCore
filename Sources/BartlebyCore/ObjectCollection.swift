@@ -9,27 +9,37 @@
 import Foundation
 
 
-open class ObjectCollection<T> : Codable,UniversalType,FilePersistentCollection where T : Codable & Collectible {
+open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentCollection where T : Codable & Collectible & Tolerent {
+
 
 
     // MARK: - UniversalType
 
-    public static var collectionName:String { return  T.collectionName }
+    public static var collectionName:String { return ObjectCollection._collectionName() }
 
-    public var d_collectionName: String { return T.collectionName }
+    public var d_collectionName: String { return ObjectCollection._collectionName() }
+
+    fileprivate static func _collectionName()->String{
+        return T.collectionName
+    }
 
     public static var typeName: String {
         get{
-            return "ObjectCollection<\(T.typeName)>"
+           return "ObjectCollection<\(T.typeName)>"
         }
         set{}
     }
 
+    // MARK: - Tolerent
+
+    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
+        // No implementation
+    }
+
+
     // MARK: -
 
     public var items: [T] = [T]()
-
-    public var collectionName:String { return T.collectionName }
 
     public var hasChanged:Bool = false
 
@@ -72,7 +82,7 @@ open class ObjectCollection<T> : Codable,UniversalType,FilePersistentCollection 
     ///   - coder: the coder
     /// - Returns: a FilePersistent instance
     /// - Throws: throws errors on decoding
-    public static func createOrLoadFromFile<T>(type: T.Type, fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws -> ObjectCollection<T> where T : Collectible & Codable{
+    public static func createOrLoadFromFile<T:Codable & Tolerent>(type: T.Type, fileName: String, sessionIdentifier: String, using coder:ConcreteCoder) throws -> ObjectCollection<T>{
         let url = try ObjectCollection._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier)
         if FileManager.default.fileExists(atPath: url.absoluteString){
             let data = try Data(contentsOf: self._url(type: type, fileName:fileName, sessionIdentifier: sessionIdentifier))
@@ -106,18 +116,18 @@ open class ObjectCollection<T> : Codable,UniversalType,FilePersistentCollection 
     ///   - fileName: the file name
     ///   - sessionIdentifier: the session identifier (used for the folder and the identification of the session)
     /// - Throws: throws errors on Coding
-    fileprivate static func _url<T:Collectible>(type: T.Type, fileName: String, sessionIdentifier: String) throws -> URL {
+    fileprivate static func _url<T>(type: T.Type, fileName: String, sessionIdentifier: String) throws -> URL {
         let directoryURL = try ObjectCollection._directoryURL(type:type, sessionIdentifier: sessionIdentifier)
         var isDirectory: ObjCBool = true
         
         if !FileManager.default.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
             try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
         }
-        return directoryURL.appendingPathComponent(type.collectionName + ".data")
+        return directoryURL.appendingPathComponent(fileName + ".data")
     }
 
 
-    private static func _directoryURL<T:Collectible>(type: T.Type, sessionIdentifier: String) throws -> URL {
+    private static func _directoryURL<T>(type: T.Type, sessionIdentifier: String) throws -> URL {
         #if os(iOS) || os(macOS)
             let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
             if let _url = urls.first {

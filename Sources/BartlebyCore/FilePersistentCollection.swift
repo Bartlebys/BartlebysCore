@@ -10,6 +10,7 @@ import Foundation
 
 public protocol FilePersistentCollection {
 
+
     /// Loads from a file
     /// Creates the persistent instance if there is no file.
     ///

@@ -12,8 +12,11 @@ public enum AuthenticationMethod {
 }
 
 
-/// Base Session Delegate check ConcreteDataPoint
+/// Base Session Delegate check also ConcreteDataPoint
 public protocol SessionDelegate {
+
+    /// The file Coder
+    var fileCoder:ConcreteCoder { get set }
 
     /// The credentials should generaly not change during the session
     var credentials:Credentials { get set }
@@ -52,15 +55,16 @@ public protocol SessionDelegate {
     /// - Parameter operation: the operation
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
-    func requestFor<T:Codable,P>(_ operation: CallOperation<T,P>) throws -> URLRequest
+    func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest
 
 
+    
     // MARK: - Response & CallOperation
 
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    func integrateResponse<T>(_ response:Response<T>)
+    func integrateResponse<T:Tolerent>(_ response:Response<T>)
 
     /// Implements the concrete Removal of the CallOperation on success
     ///

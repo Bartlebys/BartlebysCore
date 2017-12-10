@@ -16,10 +16,12 @@ public enum DataPointError:Error{
 // Abstract class
 open class DataPoint : ConcreteDataPoint {
 
+
+
     // MARK: -
 
 
-    /// The file Coder
+    /// The file 
     public var fileCoder:ConcreteCoder
 
     /// The associated session
@@ -147,7 +149,7 @@ open class DataPoint : ConcreteDataPoint {
     /// - Parameter operation: the operation
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
-    open func requestFor<T:Codable,P>(_ operation: CallOperation<T,P>) throws -> URLRequest{
+    open func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest{
         throw DataPointError.voidURLRequest
     }
 
@@ -157,7 +159,7 @@ open class DataPoint : ConcreteDataPoint {
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    open func integrateResponse<T>(_ response: Response<T>){
+    open func integrateResponse<T:Tolerent>(_ response: Response<T>) {
         if let firstCollection = self._collectionsOfModels.first(where:{ $0 as? ObjectCollection<T> != nil }) {
             if let concreteCollection = firstCollection as? ObjectCollection<T>{
                 for instance in response.result {
