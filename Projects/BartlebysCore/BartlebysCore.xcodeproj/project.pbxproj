@@ -40,7 +40,7 @@
 		4D55FC911FDAF690001D91CE /* UniversalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */; };
 		4D55FC921FDAF690001D91CE /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
 		4D55FC931FDAF690001D91CE /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
-		E516FE001FDDA9A4001AB6A5 /* ConcreteJSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* ConcreteJSONCoder.swift */; };
+		E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */; };
 		E51E0EF41FDD47AC00414D6C /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */; };
 		E51E0EF81FDD6E9700414D6C /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
 		E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
@@ -83,7 +83,7 @@
 		4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalType.swift; sourceTree = "<group>"; };
 		4D55FC8B1FDAF690001D91CE /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 		4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPOperation.swift; sourceTree = "<group>"; };
-		E516FDFF1FDDA9A4001AB6A5 /* ConcreteJSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteJSONCoder.swift; sourceTree = "<group>"; };
+		E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoder.swift; sourceTree = "<group>"; };
 		E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteCoder.swift; sourceTree = "<group>"; };
 		E51E0EF71FDD6E9700414D6C /* Initializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 				4D55FC801FDAF65A001D91CE /* generated */,
 				4D55FC811FDAF672001D91CE /* Protocols */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
-				E516FDFF1FDDA9A4001AB6A5 /* ConcreteJSONCoder.swift */,
+				E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				4D55FC401FDAF5CF001D91CE /* Failure.swift */,
 				4D55FC501FDAF5CF001D91CE /* Globals.swift */,
@@ -288,7 +288,7 @@
 				4D55FC6B1FDAF5D0001D91CE /* HTTPMethod.swift in Sources */,
 				4D55FC721FDAF5D0001D91CE /* Model+Description.swift in Sources */,
 				4D55FC6F1FDAF5D0001D91CE /* Response.swift in Sources */,
-				E516FE001FDDA9A4001AB6A5 /* ConcreteJSONCoder.swift in Sources */,
+				E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */,
 				4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */,
 				4D55FC841FDAF688001D91CE /* Metrics.swift in Sources */,
 				4D55FC7B1FDAF5D0001D91CE /* Model+Equatable.swift in Sources */,
