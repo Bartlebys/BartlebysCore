@@ -16,13 +16,11 @@ public enum DataPointError:Error{
 // Abstract class
 open class DataPoint : ConcreteDataPoint {
 
-
-
     // MARK: -
 
 
     /// The file 
-    public var fileCoder:ConcreteCoder
+    public var coder:ConcreteCoder
 
     /// The associated session
     public lazy var session:Session = Session(delegate: self,sessionIdentifier:self.sessionIdentifier)
@@ -39,7 +37,7 @@ open class DataPoint : ConcreteDataPoint {
     required public init(credentials:Credentials,sessionIdentifier:String,fileCoder:ConcreteCoder) throws{
         self.credentials = credentials
         self.sessionIdentifier = sessionIdentifier
-        self.fileCoder = fileCoder
+        self.coder = fileCoder
     }
 
 
@@ -163,11 +161,11 @@ open class DataPoint : ConcreteDataPoint {
         if let firstCollection = self._collectionsOfModels.first(where:{ $0 as? ObjectCollection<T> != nil }) {
             if let concreteCollection = firstCollection as? ObjectCollection<T>{
                 for instance in response.result {
-                    if let idx = concreteCollection.items.index(where: {$0.id == instance.id}) {
+                    if let idx = concreteCollection.index(where: {$0.id == instance.id}) {
                         // We have found an existing instance, let's update
-                        concreteCollection.items[idx] = instance
+                        concreteCollection[idx] = instance
                     } else {
-                        concreteCollection.items.append(instance)
+                        concreteCollection.storage.append(instance)
                     }
                     concreteCollection.hasChanged = true
                 }
@@ -180,8 +178,8 @@ open class DataPoint : ConcreteDataPoint {
     /// - Parameter operation: the targeted Call Operation
     open func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
         if let pendingCallOperations = self._collectionsOfCallOperations.first(where:{ $0 as? CallOperation<T,P> != nil }) as? ObjectCollection<CallOperation<T,P>> {
-            if let idx = pendingCallOperations.items.index(where: { $0.id == operation.id }) {
-                pendingCallOperations.items.remove(at: idx)
+            if let idx = pendingCallOperations.storage.index(where: { $0.id == operation.id }) {
+                pendingCallOperations.storage.remove(at: idx)
                 pendingCallOperations.hasChanged = true
             }
         }

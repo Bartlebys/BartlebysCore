@@ -1,5 +1,5 @@
 //
-//  ConcreteJSONCoder.swift
+//  JSONCoder.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 10/12/2017.
@@ -8,10 +8,8 @@
 
 import Foundation
 
-// MARK: - ConcreteJSONCoder
-
-
-open class ConcreteJSONCoder:ConcreteCoder{
+// Tolerent Json encoder and decoder
+open class JSONCoder:ConcreteCoder{
 
 
     // MARK : - ConcreteCoder

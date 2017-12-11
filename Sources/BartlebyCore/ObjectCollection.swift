@@ -9,7 +9,7 @@
 import Foundation
 
 
-open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentCollection where T : Codable & Collectible & Tolerent {
+open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentCollection,Collection,Sequence where T : Codable & Collectible & Tolerent {
 
 
 
@@ -36,10 +36,32 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
         // No implementation
     }
 
-
     // MARK: -
 
-    public var items: [T] = [T]()
+    //@todo privatize
+
+    public var storage: [T] = [T]()
+
+    public var startIndex: Int { return self.storage.startIndex }
+
+    public var endIndex: Int { return self.storage.endIndex }
+
+    public func index(after i: Int) -> Int {
+        return storage.index(after: i)
+    }
+
+    public subscript(index: Int) -> T {
+        get {
+            return self.storage[index]
+        }
+        set(newValue) {
+           self.storage.insert(newValue, at: index)
+           self.hasChanged = true
+        }
+    }
+
+
+
 
     public var hasChanged:Bool = false
 
@@ -55,12 +77,12 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
     
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
-        self.items = try values.decode([T].self, forKey:.items)
+        self.storage = try values.decode([T].self, forKey:.items)
     }
     
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CollectionCodingKeys.self)
-        try container.encode(self.items, forKey:.items)
+        try container.encode(self.storage, forKey:.items)
     }
     
     // MARK: - IO

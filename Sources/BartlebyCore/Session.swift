@@ -143,7 +143,7 @@ public class Session {
                 if let data = data {
                     do {
                         if resultIsACollection{
-                            let decoded = try self.delegate.fileCoder.decodeArrayOf(T.self, from: data)
+                            let decoded = try self.delegate.coder.decodeArrayOf(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
                             let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result:decoded, error: nil, metrics: metrics)
@@ -151,7 +151,7 @@ public class Session {
                                 success(response)
                             }
                         }else{
-                            let decoded = try self.delegate.fileCoder.decode(T.self, from: data)
+                            let decoded = try self.delegate.coder.decode(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
                             let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: [decoded], error: nil, metrics: metrics)
