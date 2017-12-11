@@ -33,11 +33,12 @@ open class DataPoint : ConcreteDataPoint {
     /// - Parameters:
     ///   - credentials: the current credentials
     ///   - sessionIdentifier: a unique session identifier (should be persistent as it is used to compute serialization paths)
+    ///   - coder: the persistency layer a coder == a consistent Encoder / Decoder pair.
     /// - Throws: Children may throw while populating the collections
-    required public init(credentials:Credentials,sessionIdentifier:String,fileCoder:ConcreteCoder) throws{
+    required public init(credentials:Credentials,sessionIdentifier:String,coder:ConcreteCoder) throws{
         self.credentials = credentials
         self.sessionIdentifier = sessionIdentifier
-        self.coder = fileCoder
+        self.coder = coder
     }
 
 
