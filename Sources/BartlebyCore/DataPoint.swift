@@ -20,10 +20,10 @@ open class DataPoint : ConcreteDataPoint {
 
 
     /// The file 
-    public var coder:ConcreteCoder
+    public var coder: ConcreteCoder
 
     /// The associated session
-    public lazy var session:Session = Session(delegate: self,sessionIdentifier:self.sessionIdentifier)
+    public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)
     
     /// Its session identifier
     public var sessionIdentifier :String = "NOT_IDENTIFIED"
@@ -35,12 +35,11 @@ open class DataPoint : ConcreteDataPoint {
     ///   - sessionIdentifier: a unique session identifier (should be persistent as it is used to compute serialization paths)
     ///   - coder: the persistency layer a coder == a consistent Encoder / Decoder pair.
     /// - Throws: Children may throw while populating the collections
-    required public init(credentials:Credentials,sessionIdentifier:String,coder:ConcreteCoder) throws{
+    required public init(credentials:Credentials, sessionIdentifier:String, coder: ConcreteCoder) throws{
         self.credentials = credentials
         self.sessionIdentifier = sessionIdentifier
         self.coder = coder
     }
-
 
     /// Contains all the data Point collections
     /// You can populate with concrete types (polymorphism)
@@ -96,7 +95,7 @@ open class DataPoint : ConcreteDataPoint {
     ///   - method: the http Method
     /// - Returns:  the URL request
     /// - Throws: url issues
-    open func requestFor( path: String, queryString: String, method: HTTPMethod) throws -> URLRequest{
+    open func requestFor(path: String, queryString: String, method: HTTPMethod) throws -> URLRequest {
 
         guard let url = URL(string: self.scheme.rawValue + self.host + path + queryString) else {
             throw DataPointError.invalidURL
@@ -126,7 +125,7 @@ open class DataPoint : ConcreteDataPoint {
     ///   - method: the http Method
     /// - Returns: the URL request
     /// - Throws: issue on URL creation or Parameters deserialization
-    open func requestFor<P:Payload>( path: String, queryString: String, method: HTTPMethod , parameter:P)throws -> URLRequest{
+    open func requestFor<P:Payload>(path: String, queryString: String, method: HTTPMethod , parameter:P) throws -> URLRequest {
 
         var request = try self.requestFor(path: path, queryString: queryString, method: method)
 
@@ -148,7 +147,7 @@ open class DataPoint : ConcreteDataPoint {
     /// - Parameter operation: the operation
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
-    open func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest{
+    open func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest {
         throw DataPointError.voidURLRequest
     }
 
@@ -166,7 +165,7 @@ open class DataPoint : ConcreteDataPoint {
                         // We have found an existing instance, let's update
                         concreteCollection[idx] = instance
                     } else {
-                        concreteCollection.storage.append(instance)
+                        concreteCollection.append(instance)
                     }
                     concreteCollection.hasChanged = true
                 }
@@ -179,9 +178,9 @@ open class DataPoint : ConcreteDataPoint {
     /// - Parameter operation: the targeted Call Operation
     open func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
         if let pendingCallOperations = self._collectionsOfCallOperations.first(where:{ $0 as? CallOperation<T,P> != nil }) as? ObjectCollection<CallOperation<T,P>> {
-            if let idx = pendingCallOperations.storage.index(where: { $0.id == operation.id }) {
-                pendingCallOperations.storage.remove(at: idx)
-                pendingCallOperations.hasChanged = true
+            
+            if let idx = pendingCallOperations.index(where: { $0.id == operation.id }) {
+                let _ = pendingCallOperations.remove(at: idx)
             }
         }
     }

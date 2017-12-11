@@ -9,9 +9,7 @@
 import Foundation
 
 
-open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentCollection,Collection,Sequence where T : Codable & Collectible & Tolerent {
-
-
+open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersistentCollection, Collection, Sequence where T : Codable & Collectible & Tolerent {
 
     // MARK: - UniversalType
 
@@ -42,29 +40,45 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
     // We will try to add a Btree storage.
     // reference : https://github.com/objcio/OptimizingCollections
 
-    public var storage: [T] = [T]()
+    private var _storage: [T] = [T]()
 
-    public var startIndex: Int { return self.storage.startIndex }
+    public var startIndex: Int { return self._storage.startIndex }
 
-    public var endIndex: Int { return self.storage.endIndex }
+    public var endIndex: Int { return self._storage.endIndex }
 
     public func index(after i: Int) -> Int {
-        return storage.index(after: i)
+        return _storage.index(after: i)
     }
 
     public subscript(index: Int) -> T {
         get {
-            return self.storage[index]
+            return self._storage[index]
         }
         set(newValue) {
-           self.storage.insert(newValue, at: index)
+           self._storage.insert(newValue, at: index)
            self.hasChanged = true
         }
     }
 
-
-
-
+    @discardableResult public func remove(at index: Int) -> T {
+        self.hasChanged = true
+        return self._storage.remove(at: index)
+    }
+    
+    public func append(_ newElement: T) {
+        self.hasChanged = true
+        self._storage.append(newElement)
+    }
+    
+    public func append<S>(contentsOf newElements: S) where S : Sequence, Element == S.Element {
+        self.hasChanged = true
+        self._storage.append(contentsOf: newElements)
+    }
+    
+    public var first: Element? { return self._storage.first }
+    
+    public var count: Int { return self._storage.count }
+    
     public var hasChanged:Bool = false
 
     public init() {
@@ -79,12 +93,12 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
     
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
-        self.storage = try values.decode([T].self, forKey:.items)
+        self._storage = try values.decode([T].self, forKey:.items)
     }
     
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CollectionCodingKeys.self)
-        try container.encode(self.storage, forKey:.items)
+        try container.encode(self._storage, forKey:.items)
     }
     
     // MARK: - IO

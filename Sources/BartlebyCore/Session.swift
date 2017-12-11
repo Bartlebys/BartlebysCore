@@ -75,14 +75,14 @@ public class Session {
         
         let request:URLRequest
         
-        do{
+        do {
             request = try self.delegate.requestFor(operation)
-        }catch{
+        } catch {
             Logger.log("Failure operation request creation \(error) \(operation)", category: Logger.Categories.critical)
             return
         }
         
-        self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection,success: { (response) in
+        self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: { (response) in
             Object.syncOnMain {
                 
                 let operation = operation
