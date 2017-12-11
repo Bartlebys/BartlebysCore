@@ -39,6 +39,8 @@ open class ObjectCollection<T> : Codable,UniversalType,Tolerent, FilePersistentC
     // MARK: -
 
     //@todo privatize
+    // We will try to add a Btree storage.
+    // reference : https://github.com/objcio/OptimizingCollections
 
     public var storage: [T] = [T]()
 
