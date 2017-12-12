@@ -80,22 +80,6 @@ public class Session {
         let request: URLRequest
         request = try self.delegate.requestFor(operation)
 
-        let successClosure: ((Response<T>) -> ()) = { response in
-            Object.syncOnMain {
-                
-                let operation = operation
-                
-                operation.executionCounter += 1
-                operation.lastAttemptDate = Date()
-                
-                self.delegate.integrateResponse(response)
-                
-                let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
-                NotificationCenter.default.post(name:notificationName , object: nil)
-                
-                self.delegate.deleteOperation(operation)
-            }
-        }
         
         let failureClosure: ((Failure) -> ()) = { response in
             Object.syncOnMain {
@@ -113,6 +97,21 @@ public class Session {
         
         switch T.self {
         case is Download.Type, is Upload.Type:
+            let successClosure: ((HTTPResponse) -> ()) = { response in
+                Object.syncOnMain {
+                    
+                    let operation = operation
+                    
+                    operation.executionCounter += 1
+                    operation.lastAttemptDate = Date()
+                    
+                    let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
+                    NotificationCenter.default.post(name:notificationName , object: nil)
+                    
+                    self.delegate.deleteOperation(operation)
+                }
+            }
+            
             guard let fileReference = operation.payload as? FileReference else {
                 throw DataPointError.payloadShouldBeOfFileReferenceType
             }
@@ -123,7 +122,23 @@ public class Session {
                 self.callUpload(request: request, resultType: T.self, localFileReference: fileReference, success: successClosure, failure: failureClosure)
             }
         default:
-            self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: successClosure, failure: failureClosure)
+            
+            self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: { response in
+                Object.syncOnMain {
+                    
+                    let operation = operation
+                    
+                    operation.executionCounter += 1
+                    operation.lastAttemptDate = Date()
+                    
+                    self.delegate.integrateResponse(response)
+                    
+                    let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
+                    NotificationCenter.default.post(name:notificationName , object: nil)
+                    
+                    self.delegate.deleteOperation(operation)
+                }
+            }, failure: failureClosure)
         }
 
     }
@@ -153,7 +168,11 @@ public class Session {
                             let decoded = try self.delegate.coder.decodeArrayOf(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result:decoded, error: nil, metrics: metrics)
+                            let response = Response(result: decoded)
+                            response.metrics = metrics
+                            response.httpStatus = httpResponse.statusCode.status()
+                            response.content = data
+                            
                             Object.syncOnMain {
                                 success(response)
                             }
@@ -161,7 +180,11 @@ public class Session {
                             let decoded = try self.delegate.coder.decode(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: [decoded], error: nil, metrics: metrics)
+                            let response = Response(result: [decoded])
+                            response.metrics = metrics
+                            response.httpStatus = httpResponse.statusCode.status()
+                            response.content = data
+
                             Object.syncOnMain {
                                 success(response)
                             }
@@ -180,8 +203,14 @@ public class Session {
                         }
                     } else {
                         Object.syncOnMain {
-                            let completion: Response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: Array<T>(), error: nil, metrics: metrics)
-                            success(completion)
+                            metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
+                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
+
+                            let response: Response = Response(result: Array<T>())
+                            response.httpStatus = httpResponse.statusCode.status()
+                            response.content = data
+                            response.metrics = metrics
+                            success(response)
                         }
                     }
                 }
@@ -194,7 +223,7 @@ public class Session {
     func callDownload<T>(  request: URLRequest,
                         resultType: T.Type,
                         localFileReference: FileReference,
-                        success: @escaping (_ completion: Response<T>)->(),
+                        success: @escaping (_ completion: HTTPResponse)->(),
                         failure: @escaping (_ completion: Failure)->()
         ) {
 
@@ -214,7 +243,10 @@ public class Session {
                     do {
                         let localFileURL = try localFileReference.urlFromSession(session: self)
                         try FileManager.default.moveItem(at: tempURL, to: localFileURL)
-                        let response = Response(httpStatus: httpResponse.statusCode.status(), content: nil, result: Array<T>(), error: nil, metrics: metrics)
+                        
+                        let response = HTTPResponse()
+                        response.httpStatus = httpResponse.statusCode.status()
+                        response.metrics = metrics
                         Object.syncOnMain {
                             success(response)
                         }
@@ -234,7 +266,9 @@ public class Session {
                         }
                     } else {
                         Object.syncOnMain {
-                            let response: Response = Response(httpStatus: httpResponse.statusCode.status(), content: nil, result: Array<T>(), error: nil, metrics: metrics)
+                            let response = HTTPResponse()
+                            response.httpStatus = httpResponse.statusCode.status()
+                            response.metrics = metrics
                             success(response)
                         }
                     }
@@ -247,10 +281,9 @@ public class Session {
     func callUpload<T>(  request: URLRequest,
                       resultType: T.Type,
                       localFileReference: FileReference,
-                      success: @escaping (_ completion: Response<T>)->(),
+                      success: @escaping (_ completion: HTTPResponse)->(),
                       failure: @escaping (_ completion: Failure)->()
-        ) { // on attend juste un http status
-
+        ) {
         
         let metrics = Metrics()
         metrics.elapsed = self.elapsedTime
@@ -267,7 +300,9 @@ public class Session {
                 if let httpResponse = response as? HTTPURLResponse {
                     
                     if let data = data {
-                        let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: Array<T>(), error: nil, metrics: metrics)
+                        let response = HTTPResponse()
+                        response.httpStatus = httpResponse.statusCode.status()
+                        response.metrics = metrics
                         Object.syncOnMain {
                             success(response)
                         }
@@ -279,7 +314,9 @@ public class Session {
                             }
                         } else {
                             Object.syncOnMain {
-                                let response: Response = Response(httpStatus: httpResponse.statusCode.status(), content: nil, result: Array<T>(), error: nil, metrics: metrics)
+                                let response = HTTPResponse()
+                                response.httpStatus = httpResponse.statusCode.status()
+                                response.metrics = metrics
                                 success(response)
                             }
                         }
