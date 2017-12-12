@@ -1,6 +1,6 @@
 //
 //  UniversalType.swift
-//  LPSync
+//  BartlebysCore
 //
 //  Created by Benoit Pereira da Silva on 04/12/2017.
 //  Copyright © 2017 B. All rights reserved.

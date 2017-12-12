@@ -10,6 +10,8 @@
 		4D1F372A1FDEE87100DA10AB /* FileReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37291FDEE87100DA10AB /* FileReference.swift */; };
 		4D1F372C1FDFC72500DA10AB /* DownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F372B1FDFC72500DA10AB /* DownloadOperation.swift */; };
 		4D1F372E1FDFC73000DA10AB /* UploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F372D1FDFC73000DA10AB /* UploadOperation.swift */; };
+		4D1F374F1FDFE6D700DA10AB /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D55FC311FDAF5AC001D91CE /* BartlebysCore.framework */; };
+		4D1F37571FDFE71D00DA10AB /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37561FDFE71C00DA10AB /* BartlebyCoreTests.swift */; };
 		4D55FC361FDAF5AC001D91CE /* BartlebysCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D55FC341FDAF5AC001D91CE /* BartlebysCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D55FC5E1FDAF5D0001D91CE /* Schemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */; };
 		4D55FC601FDAF5D0001D91CE /* Failure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC401FDAF5CF001D91CE /* Failure.swift */; };
@@ -43,6 +45,8 @@
 		4D55FC911FDAF690001D91CE /* UniversalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */; };
 		4D55FC921FDAF690001D91CE /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
 		4D55FC931FDAF690001D91CE /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
+		4D8A0C841FDFE98900AC6A21 /* ObjectCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */; };
+		4D8A0CAB1FDFF08400AC6A21 /* Metrics+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */; };
 		E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */; };
 		E51E0EF41FDD47AC00414D6C /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */; };
 		E51E0EF81FDD6E9700414D6C /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
@@ -50,10 +54,24 @@
 		E5A0E0421FDC3A4A00FB4DE3 /* FilePersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0411FDC3A4A00FB4DE3 /* FilePersistentCollection.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4D1F37501FDFE6D700DA10AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D55FC281FDAF5AC001D91CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4D55FC301FDAF5AC001D91CE;
+			remoteInfo = BartlebysCore;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		4D1F37291FDEE87100DA10AB /* FileReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReference.swift; sourceTree = "<group>"; };
 		4D1F372B1FDFC72500DA10AB /* DownloadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadOperation.swift; sourceTree = "<group>"; };
 		4D1F372D1FDFC73000DA10AB /* UploadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadOperation.swift; sourceTree = "<group>"; };
+		4D1F374A1FDFE6D700DA10AB /* BartlebysCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartlebysCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D1F374E1FDFE6D700DA10AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D1F37551FDFE71B00DA10AB /* BartlebysCoreTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BartlebysCoreTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		4D1F37561FDFE71C00DA10AB /* BartlebyCoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BartlebyCoreTests.swift; path = ../../../Tests/BartlebyCoreTests/BartlebyCoreTests.swift; sourceTree = "<group>"; };
 		4D55FC311FDAF5AC001D91CE /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D55FC341FDAF5AC001D91CE /* BartlebysCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore.h; sourceTree = "<group>"; };
 		4D55FC351FDAF5AC001D91CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -89,6 +107,8 @@
 		4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalType.swift; sourceTree = "<group>"; };
 		4D55FC8B1FDAF690001D91CE /* Payload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Payload.swift; sourceTree = "<group>"; };
 		4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPOperation.swift; sourceTree = "<group>"; };
+		4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectCollectionTests.swift; path = ../../../Tests/BartlebyCoreTests/ObjectCollectionTests.swift; sourceTree = "<group>"; };
+		4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Metrics+Tolerent.swift"; sourceTree = "<group>"; };
 		E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoder.swift; sourceTree = "<group>"; };
 		E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteCoder.swift; sourceTree = "<group>"; };
 		E51E0EF71FDD6E9700414D6C /* Initializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
@@ -97,6 +117,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4D1F37471FDFE6D700DA10AB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D1F374F1FDFE6D700DA10AB /* BartlebysCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D55FC2D1FDAF5AC001D91CE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -107,11 +135,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D1F374B1FDFE6D700DA10AB /* BartlebysCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */,
+				4D1F37561FDFE71C00DA10AB /* BartlebyCoreTests.swift */,
+				4D1F374E1FDFE6D700DA10AB /* Info.plist */,
+				4D1F37551FDFE71B00DA10AB /* BartlebysCoreTests-Bridging-Header.h */,
+			);
+			path = BartlebysCoreTests;
+			sourceTree = "<group>";
+		};
 		4D55FC271FDAF5AC001D91CE = {
 			isa = PBXGroup;
 			children = (
 				4D55FC3C1FDAF5CF001D91CE /* Sources */,
 				4D55FC331FDAF5AC001D91CE /* BartlebysCore */,
+				4D1F374B1FDFE6D700DA10AB /* BartlebysCoreTests */,
 				4D55FC321FDAF5AC001D91CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				4D55FC311FDAF5AC001D91CE /* BartlebysCore.framework */,
+				4D1F374A1FDFE6D700DA10AB /* BartlebysCoreTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,6 +199,7 @@
 				4D55FC4A1FDAF5CF001D91CE /* JSON.swift */,
 				E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */,
 				4D55FC481FDAF5CF001D91CE /* Logger.swift */,
+				4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */,
 				4D55FC441FDAF5CF001D91CE /* Model.swift */,
 				4D55FC521FDAF5CF001D91CE /* Model+Description.swift */,
 				4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */,
@@ -219,6 +261,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4D1F37491FDFE6D700DA10AB /* BartlebysCoreTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D1F37521FDFE6D700DA10AB /* Build configuration list for PBXNativeTarget "BartlebysCoreTests" */;
+			buildPhases = (
+				4D1F37461FDFE6D700DA10AB /* Sources */,
+				4D1F37471FDFE6D700DA10AB /* Frameworks */,
+				4D1F37481FDFE6D700DA10AB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4D1F37511FDFE6D700DA10AB /* PBXTargetDependency */,
+			);
+			name = BartlebysCoreTests;
+			productName = BartlebysCoreTests;
+			productReference = 4D1F374A1FDFE6D700DA10AB /* BartlebysCoreTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4D55FC301FDAF5AC001D91CE /* BartlebysCore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4D55FC391FDAF5AC001D91CE /* Build configuration list for PBXNativeTarget "BartlebysCore" */;
@@ -247,6 +307,11 @@
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Bartleby;
 				TargetAttributes = {
+					4D1F37491FDFE6D700DA10AB = {
+						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Automatic;
+					};
 					4D55FC301FDAF5AC001D91CE = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
@@ -266,11 +331,19 @@
 			projectRoot = "";
 			targets = (
 				4D55FC301FDAF5AC001D91CE /* BartlebysCore */,
+				4D1F37491FDFE6D700DA10AB /* BartlebysCoreTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4D1F37481FDFE6D700DA10AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D55FC2F1FDAF5AC001D91CE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -281,6 +354,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4D1F37461FDFE6D700DA10AB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D8A0C841FDFE98900AC6A21 /* ObjectCollectionTests.swift in Sources */,
+				4D1F37571FDFE71D00DA10AB /* BartlebyCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4D55FC2C1FDAF5AC001D91CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -307,6 +389,7 @@
 				E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */,
 				4D55FC701FDAF5D0001D91CE /* Globals.swift in Sources */,
 				4D55FC921FDAF690001D91CE /* Payload.swift in Sources */,
+				4D8A0CAB1FDFF08400AC6A21 /* Metrics+Tolerent.swift in Sources */,
 				4D55FC791FDAF5D0001D91CE /* Object.swift in Sources */,
 				4D55FC681FDAF5D0001D91CE /* Logger.swift in Sources */,
 				4D55FC641FDAF5D0001D91CE /* Model.swift in Sources */,
@@ -330,7 +413,50 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4D1F37511FDFE6D700DA10AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4D55FC301FDAF5AC001D91CE /* BartlebysCore */;
+			targetProxy = 4D1F37501FDFE6D700DA10AB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4D1F37531FDFE6D700DA10AB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = STSVL75Z8B;
+				INFOPLIST_FILE = BartlebysCoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = org.bartlebys.BartlebysCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BartlebysCoreTests/BartlebysCoreTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		4D1F37541FDFE6D700DA10AB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = STSVL75Z8B;
+				INFOPLIST_FILE = BartlebysCoreTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = org.bartlebys.BartlebysCoreTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BartlebysCoreTests/BartlebysCoreTests-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		4D55FC371FDAF5AC001D91CE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -490,6 +616,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D1F37521FDFE6D700DA10AB /* Build configuration list for PBXNativeTarget "BartlebysCoreTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D1F37531FDFE6D700DA10AB /* Debug */,
+				4D1F37541FDFE6D700DA10AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4D55FC2B1FDAF5AC001D91CE /* Build configuration list for PBXProject "BartlebysCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

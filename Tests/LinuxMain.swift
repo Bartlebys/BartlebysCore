@@ -3,4 +3,5 @@ import XCTest
 
 XCTMain([
     testCase(BartlebyCoreTests.allTests),
+    testCase(ObjectCollectionTests.allTests)
 ])

@@ -145,7 +145,7 @@ public class Session {
     
     // MARK: - HTTP Engine
     
-    func call<T:Tolerent>(  request: URLRequest,
+    public func call<T:Tolerent>(  request: URLRequest,
                                 resultType: T.Type,
                                 resultIsACollection:Bool,
                                 success: @escaping (_ completion: Response<T>)->(),
@@ -220,7 +220,7 @@ public class Session {
 
     }
 
-    func callDownload<T>(  request: URLRequest,
+    public func callDownload<T>(  request: URLRequest,
                         resultType: T.Type,
                         localFileReference: FileReference,
                         success: @escaping (_ completion: HTTPResponse)->(),
@@ -278,7 +278,7 @@ public class Session {
         task.resume()
     }
     
-    func callUpload<T>(  request: URLRequest,
+    public func callUpload<T>(  request: URLRequest,
                       resultType: T.Type,
                       localFileReference: FileReference,
                       success: @escaping (_ completion: HTTPResponse)->(),
