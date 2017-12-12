@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4D1F37321FDFE33000DA10AB /* FileReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F372F1FDFE33000DA10AB /* FileReference.swift */; };
-		4D1F37331FDFE33000DA10AB /* UploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37301FDFE33000DA10AB /* UploadOperation.swift */; };
-		4D1F37341FDFE33000DA10AB /* DownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37311FDFE33000DA10AB /* DownloadOperation.swift */; };
 		4D55FCA31FDAF7B1001D91CE /* BartlebysCoreiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D55FCA11FDAF7B1001D91CE /* BartlebysCoreiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D55FCCB1FDAF7CB001D91CE /* Schemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCAB1FDAF7CB001D91CE /* Schemes.swift */; };
 		4D55FCCC1FDAF7CB001D91CE /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCAC1FDAF7CB001D91CE /* Collectible.swift */; };
@@ -43,6 +41,9 @@
 		4D55FCEA1FDAF7CB001D91CE /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCCA1FDAF7CB001D91CE /* SessionDelegate.swift */; };
 		4D55FCF01FDAF812001D91CE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCEE1FDAF811001D91CE /* Model.swift */; };
 		4D55FCF11FDAF812001D91CE /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCEF1FDAF812001D91CE /* Metrics.swift */; };
+		4D65E6761FDFFA4C00034787 /* HTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6751FDFFA4C00034787 /* HTTPResponse.swift */; };
+		4D65E6781FDFFA6C00034787 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6771FDFFA6C00034787 /* Download.swift */; };
+		4D65E67A1FDFFA7B00034787 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6791FDFFA7B00034787 /* Upload.swift */; };
 		4D8A0CA51FDFEE3D00AC6A21 /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA31FDFEE3D00AC6A21 /* BartlebyCoreTests.swift */; };
 		4D8A0CA61FDFEE3D00AC6A21 /* ObjectCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA41FDFEE3D00AC6A21 /* ObjectCollectionTests.swift */; };
 		4D8A0CAD1FDFF09B00AC6A21 /* Metrics+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CAC1FDFF09A00AC6A21 /* Metrics+Tolerent.swift */; };
@@ -65,9 +66,6 @@
 
 /* Begin PBXFileReference section */
 		4D1F372F1FDFE33000DA10AB /* FileReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileReference.swift; sourceTree = "<group>"; };
-		4D1F37301FDFE33000DA10AB /* UploadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadOperation.swift; sourceTree = "<group>"; };
-		4D1F37311FDFE33000DA10AB /* DownloadOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadOperation.swift; sourceTree = "<group>"; };
-		4D55FC9E1FDAF7B1001D91CE /* BartlebysCoreiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = BartlebysCoreiOS.framework; path = "/Users/laurent/dev/lp-swift-app/BartlebysCore/Projects/BartlebysCoreiOS/build/Debug-iphoneos/BartlebysCoreiOS.framework"; sourceTree = "<absolute>"; };
 		4D55FCA11FDAF7B1001D91CE /* BartlebysCoreiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCoreiOS.h; sourceTree = "<group>"; };
 		4D55FCA21FDAF7B1001D91CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D55FCAB1FDAF7CB001D91CE /* Schemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schemes.swift; sourceTree = "<group>"; };
@@ -102,9 +100,13 @@
 		4D55FCCA1FDAF7CB001D91CE /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
 		4D55FCEE1FDAF811001D91CE /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4D55FCEF1FDAF812001D91CE /* Metrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
+		4D65E6561FDFF54300034787 /* BartlebysCoreiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCoreiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D65E6571FDFF54300034787 /* BartlebysCoreiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartlebysCoreiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D65E6751FDFFA4C00034787 /* HTTPResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
+		4D65E6771FDFFA6C00034787 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
+		4D65E6791FDFFA7B00034787 /* Upload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		4D8A0C991FDFED2F00AC6A21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D8A0CA11FDFEE3B00AC6A21 /* BartlebysCoreiOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BartlebysCoreiOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
-		4D8A0CA21FDFEE3B00AC6A21 /* BartlebysCoreiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = BartlebysCoreiOSTests.xctest; path = "/Users/laurent/dev/lp-swift-app/BartlebysCore/Projects/BartlebysCoreiOS/build/Debug-iphoneos/BartlebysCoreiOSTests.xctest"; sourceTree = "<absolute>"; };
 		4D8A0CA31FDFEE3D00AC6A21 /* BartlebyCoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BartlebyCoreTests.swift; path = ../../../Tests/BartlebyCoreTests/BartlebyCoreTests.swift; sourceTree = "<group>"; };
 		4D8A0CA41FDFEE3D00AC6A21 /* ObjectCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectCollectionTests.swift; path = ../../../Tests/BartlebyCoreTests/ObjectCollectionTests.swift; sourceTree = "<group>"; };
 		4D8A0CAC1FDFF09A00AC6A21 /* Metrics+Tolerent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Metrics+Tolerent.swift"; sourceTree = "<group>"; };
@@ -139,6 +141,8 @@
 				4D55FCA91FDAF7CB001D91CE /* Sources */,
 				4D55FCA01FDAF7B1001D91CE /* BartlebysCoreiOS */,
 				4D8A0C961FDFED2F00AC6A21 /* BartlebysCoreiOSTests */,
+				4D65E6561FDFF54300034787 /* BartlebysCoreiOS.framework */,
+				4D65E6571FDFF54300034787 /* BartlebysCoreiOSTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,11 +172,12 @@
 				4D55FCAF1FDAF7CB001D91CE /* CallOperation.swift */,
 				4D55FCC71FDAF7CB001D91CE /* Credentials.swift */,
 				4D55FCC01FDAF7CB001D91CE /* DataPoint.swift */,
-				4D1F37311FDFE33000DA10AB /* DownloadOperation.swift */,
+				4D65E6771FDFFA6C00034787 /* Download.swift */,
 				4D55FCAD1FDAF7CB001D91CE /* Failure.swift */,
 				4D1F372F1FDFE33000DA10AB /* FileReference.swift */,
 				4D55FCBD1FDAF7CB001D91CE /* Globals.swift */,
 				4D55FCB81FDAF7CB001D91CE /* HTTPMethod.swift */,
+				4D65E6751FDFFA4C00034787 /* HTTPResponse.swift */,
 				4D55FCB91FDAF7CB001D91CE /* Int+Padding.swift */,
 				4D55FCB71FDAF7CB001D91CE /* JSON.swift */,
 				E516FE011FDDA9C2001AB6A5 /* JSONCoder.swift */,
@@ -190,7 +195,7 @@
 				4D55FCAB1FDAF7CB001D91CE /* Schemes.swift */,
 				4D55FCB31FDAF7CB001D91CE /* Session.swift */,
 				4D55FCC31FDAF7CB001D91CE /* Status.swift */,
-				4D1F37301FDFE33000DA10AB /* UploadOperation.swift */,
+				4D65E6791FDFFA7B00034787 /* Upload.swift */,
 				4D55FCAE1FDAF7CB001D91CE /* Utilities.swift */,
 				4D55FCBE1FDAF7CB001D91CE /* VoidPayload.swift */,
 			);
@@ -264,7 +269,7 @@
 			);
 			name = BartlebysCoreiOS;
 			productName = BartlebysCoreiOS;
-			productReference = 4D55FC9E1FDAF7B1001D91CE /* BartlebysCoreiOS.framework */;
+			productReference = 4D65E6561FDFF54300034787 /* BartlebysCoreiOS.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		4D8A0C941FDFED2F00AC6A21 /* BartlebysCoreiOSTests */ = {
@@ -282,7 +287,7 @@
 			);
 			name = BartlebysCoreiOSTests;
 			productName = BartlebysCoreiOSTests;
-			productReference = 4D8A0CA21FDFEE3B00AC6A21 /* BartlebysCoreiOSTests.xctest */;
+			productReference = 4D65E6571FDFF54300034787 /* BartlebysCoreiOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -346,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D65E67A1FDFFA7B00034787 /* Upload.swift in Sources */,
 				E5A0E0401FDC2CF600FB4DE3 /* FilePersistentCollection.swift in Sources */,
 				4D55FCD41FDAF7CB001D91CE /* Tolerent.swift in Sources */,
 				4D55FCE31FDAF7CB001D91CE /* Status.swift in Sources */,
@@ -358,6 +364,8 @@
 				4D55FCDA1FDAF7CB001D91CE /* ProvisionChanges.swift in Sources */,
 				4D55FCDF1FDAF7CB001D91CE /* Model+Description.swift in Sources */,
 				4D55FCDC1FDAF7CB001D91CE /* Response.swift in Sources */,
+				4D65E6761FDFFA4C00034787 /* HTTPResponse.swift in Sources */,
+				4D65E6781FDFFA6C00034787 /* Download.swift in Sources */,
 				4D55FCD91FDAF7CB001D91CE /* Int+Padding.swift in Sources */,
 				4D55FCE81FDAF7CB001D91CE /* Model+Equatable.swift in Sources */,
 				E516FE021FDDA9C2001AB6A5 /* JSONCoder.swift in Sources */,
@@ -379,13 +387,11 @@
 				4D55FCE11FDAF7CB001D91CE /* UniversalType.swift in Sources */,
 				4D55FCE01FDAF7CB001D91CE /* DataPoint.swift in Sources */,
 				4D55FCE21FDAF7CB001D91CE /* Payload.swift in Sources */,
-				4D1F37341FDFE33000DA10AB /* DownloadOperation.swift in Sources */,
 				4D55FCCE1FDAF7CB001D91CE /* Utilities.swift in Sources */,
 				4D55FCDE1FDAF7CB001D91CE /* VoidPayload.swift in Sources */,
 				4D55FCCB1FDAF7CB001D91CE /* Schemes.swift in Sources */,
 				4D55FCD31FDAF7CB001D91CE /* Session.swift in Sources */,
 				4D55FCDB1FDAF7CB001D91CE /* Model+DictionaryRepresentation.swift in Sources */,
-				4D1F37331FDFE33000DA10AB /* UploadOperation.swift in Sources */,
 				4D55FCF11FDAF812001D91CE /* Metrics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

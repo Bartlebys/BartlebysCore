@@ -8,22 +8,6 @@
 
 import Foundation
 
-final class Download : Model, Tolerent {
-    
-    static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-        
-    }
-    
-}
-
-final class Upload : Model, Tolerent {
-    
-    static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-        
-    }
-    
-}
-
 open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
 
     // Compatibility layer

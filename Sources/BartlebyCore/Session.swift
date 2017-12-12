@@ -10,6 +10,7 @@ import Foundation
 
 enum SessionError : Error {
     case deserializationFailed
+    case fileNotFound
 }
 
 // Handles a full Session.T
@@ -236,44 +237,36 @@ public class Session {
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
             metrics.totalDuration = metrics.requestDuration
             
-            if let httpResponse = response as? HTTPURLResponse {
+            if let error = error {
+                Object.syncOnMain {
+                    failure(Failure(from: error))
+                }
+            } else if let httpResponse = response as? HTTPURLResponse {
                 
-                if let tempURL = temporaryURL {
-                    
-                    do {
-                        let localFileURL = try localFileReference.urlFromSession(session: self)
-                        try FileManager.default.moveItem(at: tempURL, to: localFileURL)
-                        
-                        let response = HTTPResponse()
-                        response.httpStatus = httpResponse.statusCode.status()
-                        response.metrics = metrics
-                        Object.syncOnMain {
-                            success(response)
-                        }
-
+                guard let tempURL = temporaryURL else {
+                    Object.syncOnMain {
+                        failure(Failure(from: httpResponse.statusCode.status(), and: SessionError.fileNotFound))
                     }
-                    catch {
-                        Object.syncOnMain {
-                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
-                        }
-                    }
+                    return
+                }
+                
+                do {
+                    let localFileURL = try localFileReference.urlFromSession(session: self)
+                    try FileManager.default.moveItem(at: tempURL, to: localFileURL)
                     
-                } else {
-                    // There is no data
-                    if let error = error {
-                        Object.syncOnMain {
-                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
-                        }
-                    } else {
-                        Object.syncOnMain {
-                            let response = HTTPResponse()
-                            response.httpStatus = httpResponse.statusCode.status()
-                            response.metrics = metrics
-                            success(response)
-                        }
+                    let response = HTTPResponse()
+                    response.httpStatus = httpResponse.statusCode.status()
+                    response.metrics = metrics
+                    Object.syncOnMain {
+                        success(response)
+                    }
+                } catch {
+                    Object.syncOnMain {
+                        failure(Failure(from: httpResponse.statusCode.status(), and: error))
                     }
                 }
             }
+            
         }
         task.resume()
     }
@@ -297,28 +290,23 @@ public class Session {
                 metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
                 metrics.totalDuration = metrics.requestDuration
                 
-                if let httpResponse = response as? HTTPURLResponse {
+                if let error = error {
+                    Object.syncOnMain {
+                        failure(Failure(from: error))
+                    }
+                } else if let httpResponse = response as? HTTPURLResponse {
                     
-                    if let data = data {
+                    switch httpResponse.statusCode {
+                    case 200...299:
                         let response = HTTPResponse()
                         response.httpStatus = httpResponse.statusCode.status()
                         response.metrics = metrics
                         Object.syncOnMain {
                             success(response)
                         }
-                    } else {
-                        // There is no data
-                        if let error = error {
-                            Object.syncOnMain {
-                                failure(Failure(from : httpResponse.statusCode.status(), and: error))
-                            }
-                        } else {
-                            Object.syncOnMain {
-                                let response = HTTPResponse()
-                                response.httpStatus = httpResponse.statusCode.status()
-                                response.metrics = metrics
-                                success(response)
-                            }
+                    default:
+                        Object.syncOnMain {
+                            failure(Failure(from: httpResponse.statusCode.status()))
                         }
                     }
                 }
