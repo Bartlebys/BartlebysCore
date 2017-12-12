@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D1F37231FDEE0EA00DA10AB /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37221FDEE0E900DA10AB /* BartlebyCoreTests.swift */; };
 		4D55FCA31FDAF7B1001D91CE /* BartlebysCoreiOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D55FCA11FDAF7B1001D91CE /* BartlebysCoreiOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D55FCCB1FDAF7CB001D91CE /* Schemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCAB1FDAF7CB001D91CE /* Schemes.swift */; };
 		4D55FCCC1FDAF7CB001D91CE /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FCAC1FDAF7CB001D91CE /* Collectible.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D1F37221FDEE0E900DA10AB /* BartlebyCoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BartlebyCoreTests.swift; sourceTree = "<group>"; };
 		4D55FC9E1FDAF7B1001D91CE /* BartlebysCoreiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCoreiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D55FCA11FDAF7B1001D91CE /* BartlebysCoreiOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCoreiOS.h; sourceTree = "<group>"; };
 		4D55FCA21FDAF7B1001D91CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -101,9 +103,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D1F37241FDEE0ED00DA10AB /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4D1F37221FDEE0E900DA10AB /* BartlebyCoreTests.swift */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
 		4D55FC941FDAF7B1001D91CE = {
 			isa = PBXGroup;
 			children = (
+				4D1F37241FDEE0ED00DA10AB /* Tests */,
 				4D55FCA91FDAF7CB001D91CE /* Sources */,
 				4D55FCA01FDAF7B1001D91CE /* BartlebysCoreiOS */,
 				4D55FC9F1FDAF7B1001D91CE /* Products */,
@@ -310,6 +321,7 @@
 				4D55FCDE1FDAF7CB001D91CE /* VoidPayload.swift in Sources */,
 				4D55FCCB1FDAF7CB001D91CE /* Schemes.swift in Sources */,
 				4D55FCD31FDAF7CB001D91CE /* Session.swift in Sources */,
+				4D1F37231FDEE0EA00DA10AB /* BartlebyCoreTests.swift in Sources */,
 				4D55FCDB1FDAF7CB001D91CE /* Model+DictionaryRepresentation.swift in Sources */,
 				4D55FCF11FDAF812001D91CE /* Metrics.swift in Sources */,
 			);

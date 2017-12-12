@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D1F372A1FDEE87100DA10AB /* FileReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37291FDEE87100DA10AB /* FileReference.swift */; };
+		4D1F372C1FDFC72500DA10AB /* DownloadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F372B1FDFC72500DA10AB /* DownloadOperation.swift */; };
+		4D1F372E1FDFC73000DA10AB /* UploadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F372D1FDFC73000DA10AB /* UploadOperation.swift */; };
 		4D55FC361FDAF5AC001D91CE /* BartlebysCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D55FC341FDAF5AC001D91CE /* BartlebysCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D55FC5E1FDAF5D0001D91CE /* Schemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */; };
 		4D55FC601FDAF5D0001D91CE /* Failure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC401FDAF5CF001D91CE /* Failure.swift */; };
@@ -48,6 +51,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4D1F37291FDEE87100DA10AB /* FileReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReference.swift; sourceTree = "<group>"; };
+		4D1F372B1FDFC72500DA10AB /* DownloadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadOperation.swift; sourceTree = "<group>"; };
+		4D1F372D1FDFC73000DA10AB /* UploadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadOperation.swift; sourceTree = "<group>"; };
 		4D55FC311FDAF5AC001D91CE /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D55FC341FDAF5AC001D91CE /* BartlebysCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore.h; sourceTree = "<group>"; };
 		4D55FC351FDAF5AC001D91CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -164,6 +170,9 @@
 				4D55FC561FDAF5CF001D91CE /* Status.swift */,
 				4D55FC411FDAF5CF001D91CE /* Utilities.swift */,
 				4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */,
+				4D1F37291FDEE87100DA10AB /* FileReference.swift */,
+				4D1F372B1FDFC72500DA10AB /* DownloadOperation.swift */,
+				4D1F372D1FDFC73000DA10AB /* UploadOperation.swift */,
 			);
 			path = BartlebyCore;
 			sourceTree = "<group>";
@@ -276,6 +285,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D1F372E1FDFC73000DA10AB /* UploadOperation.swift in Sources */,
 				E5A0E0421FDC3A4A00FB4DE3 /* FilePersistentCollection.swift in Sources */,
 				4D55FC8D1FDAF690001D91CE /* Collectible.swift in Sources */,
 				4D55FC851FDAF688001D91CE /* ManagedModel.swift in Sources */,
@@ -292,6 +302,7 @@
 				E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */,
 				4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */,
 				4D55FC841FDAF688001D91CE /* Metrics.swift in Sources */,
+				4D1F372A1FDEE87100DA10AB /* FileReference.swift in Sources */,
 				4D55FC7B1FDAF5D0001D91CE /* Model+Equatable.swift in Sources */,
 				E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */,
 				4D55FC701FDAF5D0001D91CE /* Globals.swift in Sources */,
@@ -309,6 +320,7 @@
 				4D55FC611FDAF5D0001D91CE /* Utilities.swift in Sources */,
 				4D55FC711FDAF5D0001D91CE /* VoidPayload.swift in Sources */,
 				4D55FC931FDAF690001D91CE /* HTTPOperation.swift in Sources */,
+				4D1F372C1FDFC72500DA10AB /* DownloadOperation.swift in Sources */,
 				4D55FC5E1FDAF5D0001D91CE /* Schemes.swift in Sources */,
 				4D55FC661FDAF5D0001D91CE /* Session.swift in Sources */,
 				4D55FC6E1FDAF5D0001D91CE /* Model+DictionaryRepresentation.swift in Sources */,

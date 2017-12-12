@@ -15,7 +15,7 @@ import Foundation
 /// - without call back.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public class CallOperation<T,P> : Model,Tolerent where T : Codable & Tolerent, P : Payload {
+public final class CallOperation<T, P> : Model, Tolerent where T : Codable & Tolerent, P : Payload {
 
     public var operationName: String = "NO_OPERATION_NAME"
     public var path: String = "NO_PATH"
@@ -91,8 +91,5 @@ public class CallOperation<T,P> : Model,Tolerent where T : Codable & Tolerent, P
     public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
         // No implementation
     }
-
-
-
 
 }

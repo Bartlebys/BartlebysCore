@@ -56,7 +56,11 @@ public class Session {
     
     public func execute<T:Collectible,P>(_ operation: CallOperation<T,P>){
         self.provisionOperation(operation)
-        self.runCall(operation)
+        do {
+            try self.runCall(operation)
+        } catch {
+            Logger.log("Error: \(error)", category: .critical)
+        }
     }
     
     /// Insure the persistency of the operation
@@ -71,18 +75,12 @@ public class Session {
     /// Run the operation
     ///
     /// - Parameter operation: the operation
-    public func runCall<T:Collectible,P>(_ operation: CallOperation<T,P>){
+    public func runCall<T: Collectible, P>(_ operation: CallOperation<T, P>) throws {
         
-        let request:URLRequest
-        
-        do {
-            request = try self.delegate.requestFor(operation)
-        } catch {
-            Logger.log("Failure operation request creation \(error) \(operation)", category: Logger.Categories.critical)
-            return
-        }
-        
-        self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: { (response) in
+        let request: URLRequest
+        request = try self.delegate.requestFor(operation)
+
+        let successClosure: ((Response<T>) -> ()) = { response in
             Object.syncOnMain {
                 
                 let operation = operation
@@ -97,8 +95,9 @@ public class Session {
                 
                 self.delegate.deleteOperation(operation)
             }
-            
-        }, failure:{ (failure) in
+        }
+        
+        let failureClosure: ((Failure) -> ()) = { response in
             Object.syncOnMain {
                 
                 let operation = operation
@@ -110,26 +109,34 @@ public class Session {
                 NotificationCenter.default.post(name:notificationName , object: nil)
                 
             }
-        })
+        }
+        
+        switch T.self {
+        case is Download.Type, is Upload.Type:
+            guard let fileReference = operation.payload as? FileReference else {
+                throw DataPointError.payloadShouldBeOfFileReferenceType
+            }
+            
+            if T.self is Download.Type {
+                self.callDownload(request: request, resultType: T.self, localFileReference: fileReference, success: successClosure, failure: failureClosure)
+            } else {
+                self.callUpload(request: request, resultType: T.self, localFileReference: fileReference, success: successClosure, failure: failureClosure)
+            }
+        default:
+            self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: successClosure, failure: failureClosure)
+        }
+
     }
-    
     
     // MARK: - HTTP Engine
     
-    /// Generic Server call
-    ///
-    /// - Parameters:
-    ///   - request : the URL request
-    ///   - resultType: the type of the result
-    ///   - multiple: if set to true we try to deserialize a collection
-    ///   - completed: the completion handler
-    public func call<T:Tolerent>(  request: URLRequest,
-                                   resultType: T.Type,
-                                   resultIsACollection:Bool,
-                                   success: @escaping (_ completion: Response<T>)->(),
-                                   failure: @escaping (_ completion: Failure)->()
-        ){
-
+    func call<T:Tolerent>(  request: URLRequest,
+                                resultType: T.Type,
+                                resultIsACollection:Bool,
+                                success: @escaping (_ completion: Response<T>)->(),
+                                failure: @escaping (_ completion: Failure)->()
+        ) {
+        
         let metrics = Metrics()
         metrics.elapsed = self.elapsedTime
         
@@ -181,7 +188,109 @@ public class Session {
             }
         }
         task.resume()
+
     }
 
+    func callDownload<T>(  request: URLRequest,
+                        resultType: T.Type,
+                        localFileReference: FileReference,
+                        success: @escaping (_ completion: Response<T>)->(),
+                        failure: @escaping (_ completion: Failure)->()
+        ) {
+
+        let metrics = Metrics()
+        metrics.elapsed = self.elapsedTime
+        
+        let task = URLSession.shared.downloadTask(with: request) { (temporaryURL, response, error) in
+            
+            let serverHasRespondedTime = AbsoluteTimeGetCurrent()
+            metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
+            metrics.totalDuration = metrics.requestDuration
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                
+                if let tempURL = temporaryURL {
+                    
+                    do {
+                        let localFileURL = try localFileReference.urlFromSession(session: self)
+                        try FileManager.default.moveItem(at: tempURL, to: localFileURL)
+                        let response = Response(httpStatus: httpResponse.statusCode.status(), content: nil, result: Array<T>(), error: nil, metrics: metrics)
+                        Object.syncOnMain {
+                            success(response)
+                        }
+
+                    }
+                    catch {
+                        Object.syncOnMain {
+                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                        }
+                    }
+                    
+                } else {
+                    // There is no data
+                    if let error = error {
+                        Object.syncOnMain {
+                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                        }
+                    } else {
+                        Object.syncOnMain {
+                            let response: Response = Response(httpStatus: httpResponse.statusCode.status(), content: nil, result: Array<T>(), error: nil, metrics: metrics)
+                            success(response)
+                        }
+                    }
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    func callUpload<T>(  request: URLRequest,
+                      resultType: T.Type,
+                      localFileReference: FileReference,
+                      success: @escaping (_ completion: Response<T>)->(),
+                      failure: @escaping (_ completion: Failure)->()
+        ) { // on attend juste un http status
+
+        
+        let metrics = Metrics()
+        metrics.elapsed = self.elapsedTime
+        
+        do {
+            let localFileURL = try localFileReference.urlFromSession(session: self)
+            
+            let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
+                
+                let serverHasRespondedTime = AbsoluteTimeGetCurrent()
+                metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
+                metrics.totalDuration = metrics.requestDuration
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    
+                    if let data = data {
+                        let response = Response(httpStatus: httpResponse.statusCode.status(), content: data, result: Array<T>(), error: nil, metrics: metrics)
+                        Object.syncOnMain {
+                            success(response)
+                        }
+                    } else {
+                        // There is no data
+                        if let error = error {
+                            Object.syncOnMain {
+                                failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                            }
+                        } else {
+                            Object.syncOnMain {
+                                let response: Response = Response(httpStatus: httpResponse.statusCode.status(), content: nil, result: Array<T>(), error: nil, metrics: metrics)
+                                success(response)
+                            }
+                        }
+                    }
+                }
+            }
+            task.resume()
+        } catch {
+            failure(Failure(from: error))
+        }
+
+    }
 
 }

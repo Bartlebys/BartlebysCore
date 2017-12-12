@@ -75,6 +75,18 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         self._storage.append(contentsOf: newElements)
     }
     
+//    func filter(_ isIncluded: (T) throws -> Bool) rethrows -> [T] {
+//        self._storage.filter { (<#Collectible & Tolerent & Decodable & Encodable#>) -> Bool in
+//            <#code#>
+//        }
+//    }
+    
+    // filter, map, reduce, flatmap, contains, index(where)
+    
+    // creer call operation, ajouter et detruire
+    
+    // 
+    
     public var first: Element? { return self._storage.first }
     
     public var count: Int { return self._storage.count }

@@ -8,9 +8,11 @@
 
 import Foundation
 
-public enum DataPointError:Error{
+public enum DataPointError : Error{
     case invalidURL
     case voidURLRequest
+    case payloadIsNil
+    case payloadShouldBeOfFileReferenceType
 }
 
 // Abstract class
@@ -26,7 +28,7 @@ open class DataPoint : ConcreteDataPoint {
     public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)
     
     /// Its session identifier
-    public var sessionIdentifier :String = "NOT_IDENTIFIED"
+    public var sessionIdentifier: String = "NOT_IDENTIFIED"
 
     /// Initialization of the DataPoint
     ///
@@ -125,7 +127,7 @@ open class DataPoint : ConcreteDataPoint {
     ///   - method: the http Method
     /// - Returns: the URL request
     /// - Throws: issue on URL creation or Parameters deserialization
-    open func requestFor<P:Payload>(path: String, queryString: String, method: HTTPMethod , parameter:P) throws -> URLRequest {
+    public final func requestFor<P:Payload>(path: String, queryString: String, method: HTTPMethod , parameter:P) throws -> URLRequest {
 
         var request = try self.requestFor(path: path, queryString: queryString, method: method)
 
@@ -147,8 +149,22 @@ open class DataPoint : ConcreteDataPoint {
     /// - Parameter operation: the operation
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
-    open func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest {
-        throw DataPointError.voidURLRequest
+    public final func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest {
+        
+        if T.self is Download.Type || T.self is Upload.Type {
+            guard let payload = operation.payload else {
+                throw DataPointError.payloadIsNil
+            }
+            guard !(P.self is FileReference.Type) else {
+                throw DataPointError.payloadShouldBeOfFileReferenceType
+            }
+            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
+        }
+
+        if let payload = operation.payload {
+            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
+        }
+        return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method)
     }
 
 
@@ -157,7 +173,7 @@ open class DataPoint : ConcreteDataPoint {
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    open func integrateResponse<T:Tolerent>(_ response: Response<T>) {
+    public final func integrateResponse<T:Tolerent>(_ response: Response<T>) {
         if let firstCollection = self._collectionsOfModels.first(where:{ $0 as? ObjectCollection<T> != nil }) {
             if let concreteCollection = firstCollection as? ObjectCollection<T>{
                 for instance in response.result {
@@ -176,7 +192,7 @@ open class DataPoint : ConcreteDataPoint {
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
-    open func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
+    public final func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
         if let pendingCallOperations = self._collectionsOfCallOperations.first(where:{ $0 as? CallOperation<T,P> != nil }) as? ObjectCollection<CallOperation<T,P>> {
             
             if let idx = pendingCallOperations.index(where: { $0.id == operation.id }) {
