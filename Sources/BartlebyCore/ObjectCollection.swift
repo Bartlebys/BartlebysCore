@@ -22,10 +22,10 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     }
 
     public static var typeName: String {
-        get{
+        get {
            return "ObjectCollection<\(T.typeName)>"
         }
-        set{}
+        set {}
     }
 
     // MARK: - Tolerent
@@ -47,9 +47,13 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     public var endIndex: Int { return self._storage.endIndex }
 
     public func index(after i: Int) -> Int {
-        return _storage.index(after: i)
+        return self._storage.index(after: i)
     }
-
+    
+    public func index(where predicate: (T) throws -> Bool) rethrows -> Int? {
+        return try self._storage.index(where: predicate)
+    }
+    
     public subscript(index: Int) -> T {
         get {
             return self._storage[index]
@@ -75,11 +79,37 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         self._storage.append(contentsOf: newElements)
     }
     
-//    func filter(_ isIncluded: (T) throws -> Bool) rethrows -> [T] {
-//        self._storage.filter { (<#Collectible & Tolerent & Decodable & Encodable#>) -> Bool in
-//            <#code#>
-//        }
-//    }
+    public func filter(_ isIncluded: (T) throws -> Bool) rethrows -> [T] {
+        return try self._storage.filter(isIncluded)
+    }
+    
+    public func map<T>(_ transform: (Element) throws -> T) rethrows -> [T] {
+        return try self._storage.map(transform)
+    }
+    
+    public func reduce<Result>(_ initialResult: Result, _ nextPartialResult: (Result, T) throws -> Result) rethrows -> Result {
+        return try self._storage.reduce(initialResult, nextPartialResult)
+    }
+
+    public func reduce<Result>(into initialResult: Result, _ updateAccumulatingResult: (inout Result, T) throws -> ()) rethrows -> Result {
+        return try self._storage.reduce(into: initialResult, updateAccumulatingResult)
+    }
+    
+    public func flatMap(_ transform: (T) throws -> String?) rethrows -> [String] {
+        return try self._storage.flatMap(transform)
+    }
+    
+    public func flatMap<SegmentOfResult>(_ transform: (T) throws -> SegmentOfResult) rethrows -> [SegmentOfResult.Element] where SegmentOfResult : Sequence {
+        return try self._storage.flatMap(transform)
+    }
+    
+    public func flatMap<ElementOfResult>(_ transform: (T) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
+        return try self._storage.flatMap(transform)
+    }
+    
+    public func contains(where predicate: (T) throws -> Bool) rethrows -> Bool {
+        return try self._storage.contains(where: predicate)
+    }
     
     // filter, map, reduce, flatmap, contains, index(where)
     
@@ -113,12 +143,6 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         try container.encode(self._storage, forKey:.items)
     }
     
-    // MARK: - IO
-    
-    enum FileSystemError : Error {
-        case fileDirectoryNotFound
-    }
-
 
     // MARK - FilePersistentCollection
 
@@ -134,14 +158,14 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     /// - Throws: throws errors on decoding
     public static func createOrLoadFromFile<T:Codable & Tolerent>(type: T.Type, fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws -> ObjectCollection<T>{
         let url = try ObjectCollection._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath)
-        if FileManager.default.fileExists(atPath: url.absoluteString){
+        if FileManager.default.fileExists(atPath: url.path) {
             let data = try Data(contentsOf: self._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath))
-            return try coder.decode(ObjectCollection<T>.self, from: data)
-        }else{
+            let result = try coder.decode(ObjectCollection<T>.self, from: data)
+            return result
+        } else {
             return  ObjectCollection<T>()
         }
     }
-
 
     /// Saves to a given file named 'fileName'
     /// Into a dedicated folder named relativeFolderPath
@@ -156,9 +180,11 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
             let data = try coder.encode(self)
             try data.write(to: url)
             self.hasChanged = false
+            
+            let notificationName = NSNotification.Name.ObjectCollection.saveDidSucceed(fileName)
+            NotificationCenter.default.post(name: notificationName, object: nil)
         }
     }
-
 
     /// Saves to a given file named 'fileName'
     /// Into a dedicated folder named relativeFolderPath
@@ -167,7 +193,7 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     ///   - relativeFolderPath: the session identifier (used for the folder and the identification of the session)
     /// - Throws: throws errors on Coding
     fileprivate static func _url<T>(type: T.Type, fileName: String, relativeFolderPath: String) throws -> URL {
-        let directoryURL = try ObjectCollection._directoryURL(type:type, relativeFolderPath: relativeFolderPath)
+        let directoryURL = try FileSystem.applicationDirectoryURL(relativeFolderPath: relativeFolderPath)
         var isDirectory: ObjCBool = true
         
         if !FileManager.default.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
@@ -176,17 +202,5 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         return directoryURL.appendingPathComponent(fileName + ".data")
     }
 
-
-    private static func _directoryURL<T>(type: T.Type, relativeFolderPath: String) throws -> URL {
-        #if os(iOS) || os(macOS)
-            let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-            if let _url = urls.first {
-                return _url.appendingPathComponent(relativeFolderPath, isDirectory: true)
-            }
-        #elseif os(Linux) // linux @todo
-            
-        #endif
-        throw FileSystemError.fileDirectoryNotFound
-    }
 }
 

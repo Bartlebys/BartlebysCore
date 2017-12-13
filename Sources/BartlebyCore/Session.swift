@@ -80,7 +80,6 @@ public class Session {
         
         let request: URLRequest
         request = try self.delegate.requestFor(operation)
-
         
         let failureClosure: ((Failure) -> ()) = { response in
             Object.syncOnMain {
@@ -91,7 +90,7 @@ public class Session {
                 operation.lastAttemptDate = Date()
                 
                 let notificationName = NSNotification.Name.Operation.didFail(operation.operationName)
-                NotificationCenter.default.post(name:notificationName , object: nil)
+                NotificationCenter.default.post(name:notificationName, object: response.error)
                 
             }
         }
@@ -118,6 +117,11 @@ public class Session {
             }
             
             if T.self is Download.Type {
+                
+//                var request2 = request
+//                let urlstring = request.url!.absoluteString.replacingOccurrences(of: "https", with: "http")
+//                request2.url = URL(string: urlstring)!
+
                 self.callDownload(request: request, resultType: T.self, localFileReference: fileReference, success: successClosure, failure: failureClosure)
             } else {
                 self.callUpload(request: request, resultType: T.self, localFileReference: fileReference, success: successClosure, failure: failureClosure)
@@ -252,6 +256,9 @@ public class Session {
                 
                 do {
                     let localFileURL = try localFileReference.urlFromSession(session: self)
+                    let directoryURL = localFileURL.deletingLastPathComponent()
+                    try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+
                     try FileManager.default.moveItem(at: tempURL, to: localFileURL)
                     
                     let response = HTTPResponse()

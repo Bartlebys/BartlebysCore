@@ -63,7 +63,7 @@ open class ManagedModel:Model{
     }
 
     required public init(from decoder: Decoder) throws{
-		super.init()
+        try super.init(from: decoder)
         try self.quietThrowingChanges {
 			let values = try decoder.container(keyedBy: ManagedModelCodingKeys.self)
 			self.externalID = try values.decodeIfPresent(String.self,forKey:.externalID)
@@ -71,6 +71,7 @@ open class ManagedModel:Model{
     }
 
     override open func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
 		var container = encoder.container(keyedBy: ManagedModelCodingKeys.self)
 		try container.encodeIfPresent(self.externalID,forKey:.externalID)
     }

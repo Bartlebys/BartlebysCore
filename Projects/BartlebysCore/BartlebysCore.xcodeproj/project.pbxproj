@@ -46,6 +46,8 @@
 		4D65E6741FDFF9CA00034787 /* HTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */; };
 		4D65E67D1FDFFA9200034787 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67B1FDFFA9200034787 /* Download.swift */; };
 		4D65E67E1FDFFA9200034787 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
+		4D65E69F1FE02FE300034787 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E69E1FE02FE300034787 /* FileSystem.swift */; };
+		4D65E6A31FE04C3700034787 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6A21FE04C3700034787 /* DataPointTests.swift */; };
 		4D8A0C841FDFE98900AC6A21 /* ObjectCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */; };
 		4D8A0CAB1FDFF08400AC6A21 /* Metrics+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */; };
 		E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */; };
@@ -109,6 +111,8 @@
 		4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
 		4D65E67B1FDFFA9200034787 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		4D65E67C1FDFFA9200034787 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		4D65E69E1FE02FE300034787 /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
+		4D65E6A21FE04C3700034787 /* DataPointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataPointTests.swift; path = ../../../Tests/BartlebyCoreTests/DataPointTests.swift; sourceTree = "<group>"; };
 		4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectCollectionTests.swift; path = ../../../Tests/BartlebyCoreTests/ObjectCollectionTests.swift; sourceTree = "<group>"; };
 		4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Metrics+Tolerent.swift"; sourceTree = "<group>"; };
 		E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoder.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 			children = (
 				4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */,
 				4D1F37561FDFE71C00DA10AB /* BartlebyCoreTests.swift */,
+				4D65E6A21FE04C3700034787 /* DataPointTests.swift */,
 				4D1F374E1FDFE6D700DA10AB /* Info.plist */,
 				4D1F37551FDFE71B00DA10AB /* BartlebysCoreTests-Bridging-Header.h */,
 			);
@@ -195,6 +200,7 @@
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
 				4D55FC401FDAF5CF001D91CE /* Failure.swift */,
 				4D1F37291FDEE87100DA10AB /* FileReference.swift */,
+				4D65E69E1FE02FE300034787 /* FileSystem.swift */,
 				4D55FC501FDAF5CF001D91CE /* Globals.swift */,
 				4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */,
 				4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */,
@@ -361,6 +367,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D65E6A31FE04C3700034787 /* DataPointTests.swift in Sources */,
 				4D8A0C841FDFE98900AC6A21 /* ObjectCollectionTests.swift in Sources */,
 				4D1F37571FDFE71D00DA10AB /* BartlebyCoreTests.swift in Sources */,
 			);
@@ -386,6 +393,7 @@
 				4D65E6741FDFF9CA00034787 /* HTTPResponse.swift in Sources */,
 				4D65E67D1FDFFA9200034787 /* Download.swift in Sources */,
 				4D55FC6F1FDAF5D0001D91CE /* Response.swift in Sources */,
+				4D65E69F1FE02FE300034787 /* FileSystem.swift in Sources */,
 				E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */,
 				4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */,
 				4D55FC841FDAF688001D91CE /* Metrics.swift in Sources */,

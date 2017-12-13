@@ -44,6 +44,8 @@
 		4D65E6761FDFFA4C00034787 /* HTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6751FDFFA4C00034787 /* HTTPResponse.swift */; };
 		4D65E6781FDFFA6C00034787 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6771FDFFA6C00034787 /* Download.swift */; };
 		4D65E67A1FDFFA7B00034787 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6791FDFFA7B00034787 /* Upload.swift */; };
+		4D65E6A11FE0305000034787 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6A01FE0304F00034787 /* FileSystem.swift */; };
+		4D65E6A51FE04FFE00034787 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6A41FE04FFE00034787 /* DataPointTests.swift */; };
 		4D8A0CA51FDFEE3D00AC6A21 /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA31FDFEE3D00AC6A21 /* BartlebyCoreTests.swift */; };
 		4D8A0CA61FDFEE3D00AC6A21 /* ObjectCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA41FDFEE3D00AC6A21 /* ObjectCollectionTests.swift */; };
 		4D8A0CAD1FDFF09B00AC6A21 /* Metrics+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CAC1FDFF09A00AC6A21 /* Metrics+Tolerent.swift */; };
@@ -105,6 +107,8 @@
 		4D65E6751FDFFA4C00034787 /* HTTPResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
 		4D65E6771FDFFA6C00034787 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		4D65E6791FDFFA7B00034787 /* Upload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
+		4D65E6A01FE0304F00034787 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
+		4D65E6A41FE04FFE00034787 /* DataPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataPointTests.swift; path = ../../../Tests/BartlebyCoreTests/DataPointTests.swift; sourceTree = "<group>"; };
 		4D8A0C991FDFED2F00AC6A21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D8A0CA11FDFEE3B00AC6A21 /* BartlebysCoreiOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BartlebysCoreiOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4D8A0CA31FDFEE3D00AC6A21 /* BartlebyCoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BartlebyCoreTests.swift; path = ../../../Tests/BartlebyCoreTests/BartlebyCoreTests.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 				4D65E6771FDFFA6C00034787 /* Download.swift */,
 				4D55FCAD1FDAF7CB001D91CE /* Failure.swift */,
 				4D1F372F1FDFE33000DA10AB /* FileReference.swift */,
+				4D65E6A01FE0304F00034787 /* FileSystem.swift */,
 				4D55FCBD1FDAF7CB001D91CE /* Globals.swift */,
 				4D55FCB81FDAF7CB001D91CE /* HTTPMethod.swift */,
 				4D65E6751FDFFA4C00034787 /* HTTPResponse.swift */,
@@ -232,6 +237,7 @@
 		4D8A0C961FDFED2F00AC6A21 /* BartlebysCoreiOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				4D65E6A41FE04FFE00034787 /* DataPointTests.swift */,
 				4D8A0CA31FDFEE3D00AC6A21 /* BartlebyCoreTests.swift */,
 				4D8A0CA41FDFEE3D00AC6A21 /* ObjectCollectionTests.swift */,
 				4D8A0C991FDFED2F00AC6A21 /* Info.plist */,
@@ -367,6 +373,7 @@
 				4D65E6761FDFFA4C00034787 /* HTTPResponse.swift in Sources */,
 				4D65E6781FDFFA6C00034787 /* Download.swift in Sources */,
 				4D55FCD91FDAF7CB001D91CE /* Int+Padding.swift in Sources */,
+				4D65E6A11FE0305000034787 /* FileSystem.swift in Sources */,
 				4D55FCE81FDAF7CB001D91CE /* Model+Equatable.swift in Sources */,
 				E516FE021FDDA9C2001AB6A5 /* JSONCoder.swift in Sources */,
 				4D55FCDD1FDAF7CB001D91CE /* Globals.swift in Sources */,
@@ -400,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D65E6A51FE04FFE00034787 /* DataPointTests.swift in Sources */,
 				4D8A0CA61FDFEE3D00AC6A21 /* ObjectCollectionTests.swift in Sources */,
 				4D8A0CA51FDFEE3D00AC6A21 /* BartlebyCoreTests.swift in Sources */,
 			);
