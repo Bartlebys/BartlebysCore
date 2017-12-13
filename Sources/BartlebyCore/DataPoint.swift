@@ -12,7 +12,7 @@ public enum DataPointError : Error{
     case invalidURL
     case voidURLRequest
     case payloadIsNil
-    case payloadShouldBeOfFileReferenceType
+    case payloadShouldBeOfFilePathType
 }
 
 // Abstract class
@@ -131,7 +131,7 @@ open class DataPoint : ConcreteDataPoint {
 
         var request = try self.requestFor(path: path, queryString: queryString, method: method)
 
-        if !(parameter is VoidPayload) && !(parameter is FileReference) {
+        if !(parameter is VoidPayload) && !(parameter is FilePath) {
             // By default we encode the JSON parameter in the body
             // If the Parameter is not void
             request.httpBody = try JSONEncoder().encode(parameter)
@@ -155,10 +155,9 @@ open class DataPoint : ConcreteDataPoint {
             guard let payload = operation.payload else {
                 throw DataPointError.payloadIsNil
             }
-            // @todo fix weirldy failing test
-//            guard !(P.self is FileReference.Type) else {
-//                throw DataPointError.payloadShouldBeOfFileReferenceType
-//            }
+            guard (P.self is FilePath.Type) else {
+                throw DataPointError.payloadShouldBeOfFilePathType
+            }
             return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
         }
 

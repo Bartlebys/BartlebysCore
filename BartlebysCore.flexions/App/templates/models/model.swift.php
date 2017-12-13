@@ -34,21 +34,14 @@ foreach ($exclusion as $exclusionString) {
 /////////////////////////
 
 $isBaseObject = $d->isBaseObject();
-/*
+
 $inheritancePrefix = ($isBaseObject ? '' : 'override ');
 $inversedInheritancePrefix = ($isBaseObject ? 'override ':'');
-*/
-
-// We use in this context an Hand Coded Model:Object that implements the base protocols
-$inheritancePrefix = 'override ';
-$inversedInheritancePrefix = $inheritancePrefix;
 
 $blockRepresentation=$d;
 
-// ManagedModel
-$baseObjectBlock='';
-if($isBaseObject && $d->name == GenerativeHelperForSwift::defaultBaseClass($d) ){
-    $baseObjectBlock=stringFromFile(TEMPLATES_DIR.'/blocks/BaseObject.swift.block');
+if (!isset($isBartlebysCore)){
+    $isBartlebysCore = false;
 }
 
 
@@ -142,8 +135,20 @@ if (!defined('_propertyValueString_DEFINED')){
     }
 }
 
-// Include block
-include dirname(__DIR__) . '/blocks/simpleIncludeBlock.swift.php';
+if ($isBartlebysCore) {
+    $imports = "";
+}else{
+    $imports = "
+import Foundation
+#if os(iOS)
+    import BartlebysCoreiOS
+#elseif os(macOS)
+    import BartlebysCore
+#elseif os(Linux)
+    import BartlebysCore
+#endif";
+}
+
 
 //////////////////
 // TEMPLATE

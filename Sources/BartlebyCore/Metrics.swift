@@ -7,16 +7,7 @@
 //
 // Copyright (c) 2016  https://bartlebys.org  All rights reserved.
 //
-import Foundation
-/*
-#if os(iOS)
-    import BartlebysCoreiOS
-#elseif os(macOS)
-    import BartlebysCore
-#elseif os(Linux)
-    import BartlebysCore
-#endif
-*/
+
 // MARK: Bartleby's Core: a value object used to record metrics
 open class Metrics:ManagedModel{
 

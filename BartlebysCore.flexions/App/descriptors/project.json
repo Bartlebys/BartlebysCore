@@ -47,6 +47,7 @@
       ]
     },
     "variables": {
+      "isBartlebysCore":true,
       "modelsShouldConformToCodable":true,
       "modelsShouldConformToExposed": true,
       "modelsShouldConformToNSSecureCoding": false,

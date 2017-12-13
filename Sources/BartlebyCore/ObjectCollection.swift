@@ -202,7 +202,7 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     ///   - relativeFolderPath: the session identifier (used for the folder and the identification of the session)
     /// - Throws: throws errors on Coding
     fileprivate static func _url<T>(type: T.Type, fileName: String, relativeFolderPath: String) throws -> URL {
-        let directoryURL = try FileSystem.applicationDirectoryURL(relativeFolderPath: relativeFolderPath)
+        let directoryURL = try Paths.applicationDirectoryURL(relativeFolderPath: relativeFolderPath)
         var isDirectory: ObjCBool = true
         
         if !FileManager.default.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {

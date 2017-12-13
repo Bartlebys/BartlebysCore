@@ -7,16 +7,7 @@
 //
 // Copyright (c) 2016  https://bartlebys.org  All rights reserved.
 //
-import Foundation
-/*
-#if os(iOS)
-    import BartlebysCoreiOS
-#elseif os(macOS)
-    import BartlebysCore
-#elseif os(Linux)
-    import BartlebysCore
-#endif
-*/
+
 // MARK: Bartleby's Core base Managed Entity
 open class ManagedModel:Model{
 
@@ -50,7 +41,7 @@ open class ManagedModel:Model{
 	//The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
 	@objc dynamic open var owns:[String] = [String]()
 
-    // Base Object implementation
+
     // MARK: - Codable
 
 
@@ -63,7 +54,7 @@ open class ManagedModel:Model{
     }
 
     required public init(from decoder: Decoder) throws{
-        try super.init(from: decoder)
+		try super.init(from: decoder)
         try self.quietThrowingChanges {
 			let values = try decoder.container(keyedBy: ManagedModelCodingKeys.self)
 			self.externalID = try values.decodeIfPresent(String.self,forKey:.externalID)
@@ -71,7 +62,7 @@ open class ManagedModel:Model{
     }
 
     override open func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
+		try super.encode(to:encoder)
 		var container = encoder.container(keyedBy: ManagedModelCodingKeys.self)
 		try container.encodeIfPresent(self.externalID,forKey:.externalID)
     }

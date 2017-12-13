@@ -1,13 +1,6 @@
 <?php echo GenerativeHelperForSwift::defaultHeader($f,$d); ?>
 
-import Foundation
-#if os(iOS)
-    import BartlebysCoreiOS
-#elseif os(macOS)
-    import BartlebysCore
-#elseif os(Linux)
-    import BartlebysCore
-#endif
+<?php echo $imports ?>
 
 // MARK: <?php echo $d->description?>
 
@@ -80,7 +73,6 @@ while ( $d ->iterateOnProperties() === true ) {
 }
 ?>
 
-<?php echo $baseObjectBlock ?>
 <?php echo $codableBlock ?>
 
     // MARK: - Initializable
