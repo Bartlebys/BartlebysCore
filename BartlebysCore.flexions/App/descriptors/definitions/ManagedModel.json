@@ -4,7 +4,7 @@
     "description": "Bartleby's Core base Managed Entity",
     "type": "object",
     "explicitType":"Model",
-    "baseObject":true,
+    "baseObject":false,
     "properties": {
       "externalID": {
         "type": "string",
