@@ -11,41 +11,43 @@ import Foundation
 
 open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersistentCollection, Collection, Sequence where T : Codable & Collectible & Tolerent {
 
-    // MARK: - UniversalType
-
-    public static var collectionName:String { return ObjectCollection._collectionName() }
-
-    public var d_collectionName: String { return ObjectCollection._collectionName() }
-
-    fileprivate static func _collectionName()->String{
-        return T.collectionName
-    }
-
-    public static var typeName: String {
-        get {
-           return "ObjectCollection<\(T.typeName)>"
-        }
-        set {}
-    }
-
-    // MARK: - Tolerent
-
-    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-        // No implementation
-    }
-
     // MARK: -
 
-    //@todo privatize
     // We will try to add a Btree storage.
     // reference : https://github.com/objcio/OptimizingCollections
 
     private var _storage: [T] = [T]()
 
+    public var hasChanged: Bool = false
+
+    // MARK: - UniversalType
+    
+    public static var collectionName:String { return ObjectCollection._collectionName() }
+    
+    public var d_collectionName: String { return ObjectCollection._collectionName() }
+    
+    fileprivate static func _collectionName()->String{
+        return T.collectionName
+    }
+    
+    public static var typeName: String {
+        get {
+            return "ObjectCollection<\(T.typeName)>"
+        }
+        set {}
+    }
+    
+    // MARK: -
+
+    public init() {
+    }
+    
+    // MARK: - Functional Programing Storage layer support
+    
     public var startIndex: Int { return self._storage.startIndex }
-
+    
     public var endIndex: Int { return self._storage.endIndex }
-
+    
     public func index(after i: Int) -> Int {
         return self._storage.index(after: i)
     }
@@ -60,11 +62,11 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         }
         set(newValue) {
             self._storage[index] = newValue
-//            self._storage.insert(newValue, at: index)
+            //            self._storage.insert(newValue, at: index)
             self.hasChanged = true
         }
     }
-
+    
     @discardableResult public func remove(at index: Int) -> T {
         self.hasChanged = true
         return self._storage.remove(at: index)
@@ -72,13 +74,7 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     
     public func append(_ newElement: T) {
         self.hasChanged = true
-        
-        if let idx = self.index(where: {$0.id == newElement.id}) {
-            self[idx] = newElement
-        } else {
-            self._storage.append(newElement)
-        }
-
+        self._storage.append(newElement)
     }
     
     public func append<S>(contentsOf newElements: S) where S : Sequence, Element == S.Element {
@@ -99,7 +95,7 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     public func reduce<Result>(_ initialResult: Result, _ nextPartialResult: (Result, T) throws -> Result) rethrows -> Result {
         return try self._storage.reduce(initialResult, nextPartialResult)
     }
-
+    
     public func reduce<Result>(into initialResult: Result, _ updateAccumulatingResult: (inout Result, T) throws -> ()) rethrows -> Result {
         return try self._storage.reduce(into: initialResult, updateAccumulatingResult)
     }
@@ -120,22 +116,26 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         return try self._storage.contains(where: predicate)
     }
     
-    // filter, map, reduce, flatmap, contains, index(where)
-    
-    // creer call operation, ajouter et detruire
-    
-    // 
-    
     public var first: Element? { return self._storage.first }
     
     public var count: Int { return self._storage.count }
     
-    public var hasChanged:Bool = false
-
-    public init() {
+    // MARK: - Extended behaviour
+    
+    /// Appends or update the element
+    ///
+    /// - Parameter element: the element to be upserted
+    public func upsert(_ element: T) {
+        self.hasChanged = true
+        
+        if let idx = self.index(where: {$0.id == element.id}) {
+            self[idx] = element
+        } else {
+            self._storage.append(element)
+        }
+        
     }
-    // MARK: -
-
+    
     // MARK: - Codable
     
     public enum CollectionCodingKeys: String, CodingKey {
@@ -151,6 +151,8 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         var container = encoder.container(keyedBy: CollectionCodingKeys.self)
         try container.encode(self._storage, forKey:.items)
     }
+    
+    
     
 
     // MARK - FilePersistentCollection
@@ -211,5 +213,11 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         return directoryURL.appendingPathComponent(fileName + ".data")
     }
 
+    // MARK: - Tolerent
+    
+    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
+        // No implementation
+    }
+    
 }
 
