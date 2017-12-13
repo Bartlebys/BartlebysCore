@@ -59,8 +59,9 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
             return self._storage[index]
         }
         set(newValue) {
-           self._storage.insert(newValue, at: index)
-           self.hasChanged = true
+            self._storage[index] = newValue
+//            self._storage.insert(newValue, at: index)
+            self.hasChanged = true
         }
     }
 
@@ -71,12 +72,20 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     
     public func append(_ newElement: T) {
         self.hasChanged = true
-        self._storage.append(newElement)
+        
+        if let idx = self.index(where: {$0.id == newElement.id}) {
+            self[idx] = newElement
+        } else {
+            self._storage.append(newElement)
+        }
+
     }
     
     public func append<S>(contentsOf newElements: S) where S : Sequence, Element == S.Element {
         self.hasChanged = true
-        self._storage.append(contentsOf: newElements)
+        for item in newElements {
+            self.append(item)
+        }
     }
     
     public func filter(_ isIncluded: (T) throws -> Bool) rethrows -> [T] {
@@ -174,7 +183,7 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     ///   - relativeFolderPath: the session identifier (used for the folder and the identification of the session)
     ///   - coder: the coder
     /// - Throws: throws errors on Coding
-    public func saveToFile(fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws{
+    public func saveToFile(fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws {
         if self.hasChanged {
             let url = try ObjectCollection._url(type: T.self, fileName: fileName, relativeFolderPath: relativeFolderPath)
             let data = try coder.encode(self)

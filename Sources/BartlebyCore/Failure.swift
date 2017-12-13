@@ -25,6 +25,6 @@ public struct Failure {
 
     public init(from status:Status, and error:Error) {
         self.httpStatus = status
-        self.error = nil
+        self.error = error
     }
 }

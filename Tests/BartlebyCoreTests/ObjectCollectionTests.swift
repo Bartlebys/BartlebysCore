@@ -119,4 +119,20 @@ class ObjectCollectionTests: XCTestCase {
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
     }
     
+    func test006Unicity() {
+        
+        let collection = ObjectCollection<Metrics>()
+
+        let metrics = Metrics()
+        metrics.operationName = "operation"
+        
+        collection.append(metrics)
+        Logger.log("Collection count = \(collection.count)")
+        XCTAssert(collection.count == 1, "The collection should have exactly one element")
+
+        collection.append(metrics)
+        Logger.log("Collection count = \(collection.count)")
+        XCTAssert(collection.count == 1, "The collection should still have exactly one element")
+        
+    }
 }
