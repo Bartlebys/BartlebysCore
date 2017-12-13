@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D1F372A1FDEE87100DA10AB /* FileReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37291FDEE87100DA10AB /* FileReference.swift */; };
+		4D1F372A1FDEE87100DA10AB /* FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37291FDEE87100DA10AB /* FilePath.swift */; };
 		4D1F374F1FDFE6D700DA10AB /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D55FC311FDAF5AC001D91CE /* BartlebysCore.framework */; };
 		4D1F37571FDFE71D00DA10AB /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37561FDFE71C00DA10AB /* BartlebyCoreTests.swift */; };
 		4D55FC361FDAF5AC001D91CE /* BartlebysCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D55FC341FDAF5AC001D91CE /* BartlebysCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -46,7 +46,7 @@
 		4D65E6741FDFF9CA00034787 /* HTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */; };
 		4D65E67D1FDFFA9200034787 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67B1FDFFA9200034787 /* Download.swift */; };
 		4D65E67E1FDFFA9200034787 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
-		4D65E69F1FE02FE300034787 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E69E1FE02FE300034787 /* FileSystem.swift */; };
+		4D65E69F1FE02FE300034787 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E69E1FE02FE300034787 /* Paths.swift */; };
 		4D65E6A31FE04C3700034787 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6A21FE04C3700034787 /* DataPointTests.swift */; };
 		4D8A0C841FDFE98900AC6A21 /* ObjectCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */; };
 		4D8A0CAB1FDFF08400AC6A21 /* Metrics+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */; };
@@ -68,7 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4D1F37291FDEE87100DA10AB /* FileReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileReference.swift; sourceTree = "<group>"; };
+		4D1F37291FDEE87100DA10AB /* FilePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePath.swift; sourceTree = "<group>"; };
 		4D1F374A1FDFE6D700DA10AB /* BartlebysCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartlebysCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D1F374E1FDFE6D700DA10AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D1F37551FDFE71B00DA10AB /* BartlebysCoreTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BartlebysCoreTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 		4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
 		4D65E67B1FDFFA9200034787 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		4D65E67C1FDFFA9200034787 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
-		4D65E69E1FE02FE300034787 /* FileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
+		4D65E69E1FE02FE300034787 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		4D65E6A21FE04C3700034787 /* DataPointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataPointTests.swift; path = ../../../Tests/BartlebyCoreTests/DataPointTests.swift; sourceTree = "<group>"; };
 		4D8A0C831FDFE98900AC6A21 /* ObjectCollectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectCollectionTests.swift; path = ../../../Tests/BartlebyCoreTests/ObjectCollectionTests.swift; sourceTree = "<group>"; };
 		4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Metrics+Tolerent.swift"; sourceTree = "<group>"; };
@@ -199,8 +199,8 @@
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
 				4D55FC401FDAF5CF001D91CE /* Failure.swift */,
-				4D1F37291FDEE87100DA10AB /* FileReference.swift */,
-				4D65E69E1FE02FE300034787 /* FileSystem.swift */,
+				4D1F37291FDEE87100DA10AB /* FilePath.swift */,
+				4D65E69E1FE02FE300034787 /* Paths.swift */,
 				4D55FC501FDAF5CF001D91CE /* Globals.swift */,
 				4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */,
 				4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */,
@@ -393,11 +393,11 @@
 				4D65E6741FDFF9CA00034787 /* HTTPResponse.swift in Sources */,
 				4D65E67D1FDFFA9200034787 /* Download.swift in Sources */,
 				4D55FC6F1FDAF5D0001D91CE /* Response.swift in Sources */,
-				4D65E69F1FE02FE300034787 /* FileSystem.swift in Sources */,
+				4D65E69F1FE02FE300034787 /* Paths.swift in Sources */,
 				E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */,
 				4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */,
 				4D55FC841FDAF688001D91CE /* Metrics.swift in Sources */,
-				4D1F372A1FDEE87100DA10AB /* FileReference.swift in Sources */,
+				4D1F372A1FDEE87100DA10AB /* FilePath.swift in Sources */,
 				4D55FC7B1FDAF5D0001D91CE /* Model+Equatable.swift in Sources */,
 				E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */,
 				4D55FC701FDAF5D0001D91CE /* Globals.swift in Sources */,

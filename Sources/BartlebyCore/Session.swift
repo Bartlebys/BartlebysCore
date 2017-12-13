@@ -112,8 +112,8 @@ public class Session {
                 }
             }
             
-            guard let fileReference = operation.payload as? FileReference else {
-                throw DataPointError.payloadShouldBeOfFileReferenceType
+            guard let FilePath = operation.payload as? FilePath else {
+                throw DataPointError.payloadShouldBeOfFilePathType
             }
             
             if T.self is Download.Type {
@@ -122,9 +122,9 @@ public class Session {
 //                let urlstring = request.url!.absoluteString.replacingOccurrences(of: "https", with: "http")
 //                request2.url = URL(string: urlstring)!
 
-                self.callDownload(request: request, resultType: T.self, localFileReference: fileReference, success: successClosure, failure: failureClosure)
+                self.callDownload(request: request, resultType: T.self, localFilePath: FilePath, success: successClosure, failure: failureClosure)
             } else {
-                self.callUpload(request: request, resultType: T.self, localFileReference: fileReference, success: successClosure, failure: failureClosure)
+                self.callUpload(request: request, resultType: T.self, localFilePath: FilePath, success: successClosure, failure: failureClosure)
             }
         default:
             
@@ -227,7 +227,7 @@ public class Session {
 
     public func callDownload<T>(  request: URLRequest,
                         resultType: T.Type,
-                        localFileReference: FileReference,
+                        localFilePath: FilePath,
                         success: @escaping (_ completion: HTTPResponse)->(),
                         failure: @escaping (_ completion: Failure)->()
         ) {
@@ -255,7 +255,7 @@ public class Session {
                 }
                 
                 do {
-                    let localFileURL = try localFileReference.urlFromSession(session: self)
+                    let localFileURL = try localFilePath.urlFromSession(session: self)
                     let directoryURL = localFileURL.deletingLastPathComponent()
                     try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
 
@@ -280,7 +280,7 @@ public class Session {
     
     public func callUpload<T>(  request: URLRequest,
                       resultType: T.Type,
-                      localFileReference: FileReference,
+                      localFilePath: FilePath,
                       success: @escaping (_ completion: HTTPResponse)->(),
                       failure: @escaping (_ completion: Failure)->()
         ) {
@@ -289,7 +289,7 @@ public class Session {
         metrics.elapsed = self.elapsedTime
         
         do {
-            let localFileURL = try localFileReference.urlFromSession(session: self)
+            let localFileURL = try localFilePath.urlFromSession(session: self)
             
             let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
                 
