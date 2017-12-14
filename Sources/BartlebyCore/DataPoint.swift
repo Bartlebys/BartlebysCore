@@ -63,6 +63,10 @@ open class DataPoint : ConcreteDataPoint {
         self._collectionsOfModels.append(collection)
     }
 
+    public func collectionOfModelsCount() -> Int {
+        return self._collectionsOfModels.count
+    }
+    
     /// Register the the callOperationCollection in to the data point
     ///
     /// - Parameter callOperationCollection: the callOperation Collection
@@ -138,9 +142,6 @@ open class DataPoint : ConcreteDataPoint {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
 
-        Logger.log("\(request.url?.absoluteString ?? "NO_URL" )", category: Logger.Categories.temporary)
-        Logger.log("parameter = \(parameter)", category: Logger.Categories.temporary)
-
         return request
     }
 
@@ -177,13 +178,7 @@ open class DataPoint : ConcreteDataPoint {
         if let firstCollection = self._collectionsOfModels.first(where:{ $0 as? ObjectCollection<T> != nil }) {
             if let concreteCollection = firstCollection as? ObjectCollection<T>{
                 for instance in response.result {
-                    if let idx = concreteCollection.index(where: {$0.id == instance.id}) {
-                        // We have found an existing instance, let's update
-                        concreteCollection[idx] = instance
-                    } else {
-                        concreteCollection.append(instance)
-                    }
-                    concreteCollection.hasChanged = true
+                    concreteCollection.upsert(instance)
                 }
             }
         }

@@ -95,6 +95,8 @@ public class Session {
             }
         }
         
+        Logger.log("request URL = \(String(describing: request.url))", category: .temporary)
+        
         switch T.self {
         case is Download.Type, is Upload.Type:
             let successClosure: ((HTTPResponse) -> ()) = { response in
