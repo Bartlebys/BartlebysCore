@@ -24,7 +24,7 @@
 		4D55FC6B1FDAF5D0001D91CE /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */; };
 		4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */; };
 		4D55FC6E1FDAF5D0001D91CE /* Model+DictionaryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */; };
-		4D55FC6F1FDAF5D0001D91CE /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4F1FDAF5CF001D91CE /* Response.swift */; };
+		4D55FC6F1FDAF5D0001D91CE /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */; };
 		4D55FC701FDAF5D0001D91CE /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC501FDAF5CF001D91CE /* Globals.swift */; };
 		4D55FC711FDAF5D0001D91CE /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
 		4D55FC721FDAF5D0001D91CE /* Model+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC521FDAF5CF001D91CE /* Model+Description.swift */; };
@@ -89,7 +89,7 @@
 		4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Padding.swift"; sourceTree = "<group>"; };
 		4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+DictionaryRepresentation.swift"; sourceTree = "<group>"; };
-		4D55FC4F1FDAF5CF001D91CE /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataResponse.swift; sourceTree = "<group>"; };
 		4D55FC501FDAF5CF001D91CE /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoidPayload.swift; sourceTree = "<group>"; };
 		4D55FC521FDAF5CF001D91CE /* Model+Description.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+Description.swift"; sourceTree = "<group>"; };
@@ -197,6 +197,7 @@
 				4D55FC811FDAF672001D91CE /* Protocols */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
+				4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */,
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
 				4D55FC401FDAF5CF001D91CE /* Failure.swift */,
 				4D1F37291FDEE87100DA10AB /* FilePath.swift */,
@@ -217,7 +218,6 @@
 				4D55FC591FDAF5CF001D91CE /* Object.swift */,
 				4D55FC491FDAF5CF001D91CE /* ObjectCollection.swift */,
 				4D65E69E1FE02FE300034787 /* Paths.swift */,
-				4D55FC4F1FDAF5CF001D91CE /* Response.swift */,
 				4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */,
 				4D55FC461FDAF5CF001D91CE /* Session.swift */,
 				4D55FC561FDAF5CF001D91CE /* Status.swift */,
@@ -392,7 +392,7 @@
 				4D55FC721FDAF5D0001D91CE /* Model+Description.swift in Sources */,
 				4D65E6741FDFF9CA00034787 /* HTTPResponse.swift in Sources */,
 				4D65E67D1FDFFA9200034787 /* Download.swift in Sources */,
-				4D55FC6F1FDAF5D0001D91CE /* Response.swift in Sources */,
+				4D55FC6F1FDAF5D0001D91CE /* DataResponse.swift in Sources */,
 				4D65E69F1FE02FE300034787 /* Paths.swift in Sources */,
 				E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */,
 				4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */,

@@ -178,7 +178,7 @@ open class DataPoint : ConcreteDataPoint {
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    public final func integrateResponse<T:Tolerent>(_ response: Response<T>) {
+    public final func integrateResponse<T:Tolerent>(_ response: DataResponse<T>) {
         if let firstCollection = self._collectionsOfModels.first(where:{ $0 as? ObjectCollection<T> != nil }) {
             if let concreteCollection = firstCollection as? ObjectCollection<T>{
                 for instance in response.result {

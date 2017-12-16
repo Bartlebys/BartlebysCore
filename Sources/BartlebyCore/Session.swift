@@ -155,7 +155,7 @@ public class Session {
     public func call<T:Tolerent>(  request: URLRequest,
                                 resultType: T.Type,
                                 resultIsACollection:Bool,
-                                success: @escaping (_ completion: Response<T>)->(),
+                                success: @escaping (_ completion: DataResponse<T>)->(),
                                 failure: @escaping (_ completion: Failure)->()
         ) {
         
@@ -175,7 +175,7 @@ public class Session {
                             let decoded = try self.delegate.coder.decodeArrayOf(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let response = Response(result: decoded)
+                            let response = DataResponse(result: decoded)
                             response.metrics = metrics
                             response.httpStatus = httpResponse.statusCode.status()
                             response.content = data
@@ -187,7 +187,7 @@ public class Session {
                             let decoded = try self.delegate.coder.decode(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let response = Response(result: [decoded])
+                            let response = DataResponse(result: [decoded])
                             response.metrics = metrics
                             response.httpStatus = httpResponse.statusCode.status()
                             response.content = data
@@ -213,7 +213,7 @@ public class Session {
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
 
-                            let response: Response = Response(result: Array<T>())
+                            let response: DataResponse = DataResponse(result: Array<T>())
                             response.httpStatus = httpResponse.statusCode.status()
                             response.content = data
                             response.metrics = metrics
