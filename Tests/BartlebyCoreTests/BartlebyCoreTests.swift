@@ -1,6 +1,6 @@
 import XCTest
 #if os(iOS)
-    @testable import BartlebysCore
+    @testable import BartlebysCoreiOS
 #elseif os(macOS)
     @testable import BartlebysCore
 #elseif os(Linux)

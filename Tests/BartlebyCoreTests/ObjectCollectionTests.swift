@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 #if os(iOS)
-    import BartlebysCore
+    import BartlebysCoreiOS
 #elseif os(macOS)
     import BartlebysCore
 #elseif os(Linux)

@@ -8,7 +8,7 @@
 
 import XCTest
 #if os(iOS)
-    @testable import BartlebysCore
+    @testable import BartlebysCoreiOS
 #elseif os(macOS)
     @testable import BartlebysCore
 #elseif os(Linux)
@@ -34,7 +34,7 @@ class MyDataPoint: DataPoint {
         self._registerCollections()
         
         // You Need to register a Collection for any CallOperations you May Call
-        try self._registerCallOperationsCollections(coder) != ()
+        try self._registerCallOperationsCollections(coder)
         
     }
     
