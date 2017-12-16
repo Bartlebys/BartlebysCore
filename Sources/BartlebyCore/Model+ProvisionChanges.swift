@@ -1,5 +1,5 @@
 //
-//  ManagedModel+ProvisionChanges.swift
+//  Model+ProvisionChanges.swift
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 06/12/2017.

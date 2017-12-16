@@ -1,5 +1,5 @@
 //
-//  ManagedModelsCollection.swift
+//  ObjectCollection.swift
 //  BartlebyCore
 //
 //  Created by Laurent Morvillier on 04/12/2017.

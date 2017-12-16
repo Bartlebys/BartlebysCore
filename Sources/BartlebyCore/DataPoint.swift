@@ -159,13 +159,17 @@ open class DataPoint : ConcreteDataPoint {
             guard (P.self is FilePath.Type) else {
                 throw DataPointError.payloadShouldBeOfFilePathType
             }
+            // Return the Download or Upload base request
             return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
         }
 
         if let payload = operation.payload {
+            // There is a payload
             return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
+        }else{
+            // The payload is void
+            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method)
         }
-        return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method)
     }
 
 

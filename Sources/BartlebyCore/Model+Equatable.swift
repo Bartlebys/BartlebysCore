@@ -1,5 +1,5 @@
 //
-//  ManagedModel+Helpers.swift
+//  Model+Helpers.swift
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 13/11/2017.

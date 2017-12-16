@@ -11,8 +11,8 @@ import Foundation
 
 /// A CallOperation is:
 /// - a Network operation runnable in a Session.
-/// - serializable
-/// - without call back.
+/// - that can persist until its execution (Codable)
+/// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
 public final class CallOperation<T, P> : Model, Tolerent where T : Codable & Tolerent, P : Payload {

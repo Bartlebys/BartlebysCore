@@ -1,6 +1,6 @@
 //
 //  FilePersistentCollection.swift
-//  BartlebysCoreiOS
+//  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 09/12/2017.
 //  Copyright © 2017 Bartleby. All rights reserved.

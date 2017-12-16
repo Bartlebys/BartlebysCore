@@ -1,5 +1,5 @@
 //
-//  ManagedModel+DictionaryRepresentation.swift
+//  Model+DictionaryRepresentation.swift
 //  BartlebyCore
 //
 //  Created by Laurent Morvillier on 05/12/2017.

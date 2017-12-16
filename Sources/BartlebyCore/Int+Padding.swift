@@ -15,5 +15,4 @@ public extension Int {
         return String(format: "%0\(digitFormat)d", self)
     }
     
-    
 }
