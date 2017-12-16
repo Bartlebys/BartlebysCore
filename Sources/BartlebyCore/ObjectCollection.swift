@@ -135,6 +135,15 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         }
         
     }
+
+    // MARK: - Accessors
+
+
+    /// Returns all the stored element packaged in an Array
+    public var all:Array<T> {
+        return self._storage
+
+    }
     
     // MARK: - Codable
     
