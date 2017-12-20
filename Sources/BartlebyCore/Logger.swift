@@ -22,7 +22,7 @@ public struct Logger {
     
     static public func log(_ message: Any, category: Categories = .standard, file: String = #file, function: String = #function, line: Int = #line) {
         
-        guard printable.contains(category) else {
+        guard Logger.printable.contains(category) else {
             return
         }
         

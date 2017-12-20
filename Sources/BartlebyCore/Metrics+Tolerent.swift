@@ -11,7 +11,8 @@ import Foundation
 extension Metrics : Tolerent {
     
     public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-        // Metrics is used by unit tests. There is no reason to have a malformed metrics
+        // There is no reason to have a malformed metrics
+        // But we want to be able to insure the Tolerent persistency of Metrics
     }
     
 }
