@@ -55,7 +55,7 @@
 		E51E0EF81FDD6E9700414D6C /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
 		E52ED5C71FEAD75D00D9F7A2 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
 		E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
-		E5A0E0421FDC3A4A00FB4DE3 /* FilePersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0411FDC3A4A00FB4DE3 /* FilePersistentCollection.swift */; };
+		E5A0E0421FDC3A4A00FB4DE3 /* PersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0411FDC3A4A00FB4DE3 /* PersistentCollection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,7 +121,7 @@
 		E51E0EF71FDD6E9700414D6C /* Initializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
 		E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
-		E5A0E0411FDC3A4A00FB4DE3 /* FilePersistentCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePersistentCollection.swift; sourceTree = "<group>"; };
+		E5A0E0411FDC3A4A00FB4DE3 /* PersistentCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentCollection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,7 +246,7 @@
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC861FDAF68F001D91CE /* Collectible.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
-				E5A0E0411FDC3A4A00FB4DE3 /* FilePersistentCollection.swift */,
+				E5A0E0411FDC3A4A00FB4DE3 /* PersistentCollection.swift */,
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
 				E51E0EF71FDD6E9700414D6C /* Initializable.swift */,
 				4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */,
@@ -381,7 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D65E67E1FDFFA9200034787 /* Upload.swift in Sources */,
-				E5A0E0421FDC3A4A00FB4DE3 /* FilePersistentCollection.swift in Sources */,
+				E5A0E0421FDC3A4A00FB4DE3 /* PersistentCollection.swift in Sources */,
 				4D55FC8D1FDAF690001D91CE /* Collectible.swift in Sources */,
 				4D55FC851FDAF688001D91CE /* ManagedModel.swift in Sources */,
 				4D55FC761FDAF5D0001D91CE /* Status.swift in Sources */,

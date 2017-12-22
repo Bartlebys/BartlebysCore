@@ -9,7 +9,7 @@
 import Foundation
 
 
-open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersistentCollection, Collection, Sequence where T : Codable & Collectible & Tolerent {
+public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, PersistentCollection, Collection, Sequence where T : Codable & Collectible & Tolerent {
 
     // MARK: -
 
@@ -17,6 +17,8 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     // reference : https://github.com/objcio/OptimizingCollections
 
     private var _storage: [T] = [T]()
+
+    private var _dataPoint:DataPoint?
 
     public var hasChanged: Bool = false
 
@@ -62,7 +64,6 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
         }
         set(newValue) {
             self._storage[index] = newValue
-            //            self._storage.insert(newValue, at: index)
             self.hasChanged = true
         }
     }
@@ -173,18 +174,21 @@ open class ObjectCollection<T> : Codable, UniversalType, Tolerent, FilePersisten
     ///   - type: the Type of the FilePersistent instance
     ///   - fileName: the filename to use
     ///   - relativeFolderPath: the session identifier
-    ///   - coder: the coder
+    ///   - dataPoint: the dataPoint
     /// - Returns: a FilePersistent instance
     /// - Throws: throws errors on decoding
-    public static func createOrLoadFromFile<T:Codable & Tolerent>(type: T.Type, fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws -> ObjectCollection<T>{
+    public static func createOrLoadFromFile<T:Codable & Tolerent>(type: T.Type, fileName: String, relativeFolderPath: String, using dataPoint:DataPoint) throws -> ObjectCollection<T>{
+        let collection : ObjectCollection<T>
         let url = try ObjectCollection._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath)
         if FileManager.default.fileExists(atPath: url.path) {
             let data = try Data(contentsOf: self._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath))
-            let result = try coder.decode(ObjectCollection<T>.self, from: data)
-            return result
+            collection = try dataPoint.coder.decode(ObjectCollection<T>.self, from: data)
         } else {
-            return  ObjectCollection<T>()
+            collection = ObjectCollection<T>()
         }
+        collection._dataPoint = dataPoint
+        dataPoint.registerCollection(collection: collection)
+        return collection
     }
 
     /// Saves to a given file named 'fileName'

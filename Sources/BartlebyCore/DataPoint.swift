@@ -49,31 +49,21 @@ open class DataPoint : ConcreteDataPoint {
     /// Concrete return could be for example :
     ///     return [ ObjectCollection<Event>(), ObjectCollection<Tag>()]
     /// - Returns: the data Point model collections
-    fileprivate var _collectionsOfModels:[Any] = Array<Any>()
+    fileprivate var _collections:[Any] = Array<Any>()
 
-    /// We use the same polymorphic approach for the call Operations
-    /// Call operation are also collection of Models
-    //  The concrete type should be `CallOperation<T,P>`
-    fileprivate var _collectionsOfCallOperations:[Any] =  Array<Any>()
 
     /// Registers the collection in to the data point
     ///
     /// - Parameter collection: the collection
     public func registerCollection<T>(collection:ObjectCollection<T>){
-        self._collectionsOfModels.append(collection)
+        self._collections.append(collection)
     }
 
-    public func collectionOfModelsCount() -> Int {
-        return self._collectionsOfModels.count
+    public func collectionsCount() -> Int {
+        return self._collections.count
     }
+
     
-    /// Register the the callOperationCollection in to the data point
-    ///
-    /// - Parameter callOperationCollection: the callOperation Collection
-    public func registerCallOperationCollection<T,P>(callOperationCollection:ObjectCollection<CallOperation<T,P>>){
-        self._collectionsOfCallOperations.append(callOperationCollection)
-    }
-
     // MARK: - ConcreteDataPoint
 
     // The current Host: e.g demo.bartlebys.org
@@ -179,7 +169,7 @@ open class DataPoint : ConcreteDataPoint {
     ///
     /// - Parameter response: the call Response
     public final func integrateResponse<T:Tolerent>(_ response: DataResponse<T>) {
-        if let firstCollection = self._collectionsOfModels.first(where:{ $0 as? ObjectCollection<T> != nil }) {
+        if let firstCollection = self._collections.first(where:{ $0 as? ObjectCollection<T> != nil }) {
             if let concreteCollection = firstCollection as? ObjectCollection<T>{
                 for instance in response.result {
                     concreteCollection.upsert(instance)
@@ -192,8 +182,7 @@ open class DataPoint : ConcreteDataPoint {
     ///
     /// - Parameter operation: the targeted Call Operation
     public final func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
-        if let pendingCallOperations = self._collectionsOfCallOperations.first(where:{ $0 as? CallOperation<T,P> != nil }) as? ObjectCollection<CallOperation<T,P>> {
-            
+        if let pendingCallOperations = self._collections.first(where:{ $0 as? CallOperation<T,P> != nil }) as? ObjectCollection<CallOperation<T,P>> {
             if let idx = pendingCallOperations.index(where: { $0.id == operation.id }) {
                 let _ = pendingCallOperations.remove(at: idx)
             }
@@ -211,13 +200,8 @@ open class DataPoint : ConcreteDataPoint {
     ///
     /// - Throws: throws an exception if any save operation has failed
     public final func save(using encoder: ConcreteCoder) throws {
-        for collection in self._collectionsOfModels {
-            if let concreteCollection = collection as? FilePersistentCollection & UniversalType{
-                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, relativeFolderPath: self.sessionIdentifier,using: encoder)
-            }
-        }
-        for collection in self._collectionsOfCallOperations{
-            if let concreteCollection = collection as? FilePersistentCollection & UniversalType{
+        for collection in self._collections {
+            if let concreteCollection = collection as? PersistentCollection & UniversalType{
                 try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, relativeFolderPath: self.sessionIdentifier,using: encoder)
             }
         }

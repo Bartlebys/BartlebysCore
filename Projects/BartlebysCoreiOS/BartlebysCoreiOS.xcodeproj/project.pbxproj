@@ -53,7 +53,7 @@
 		E51E0EF61FDD4C4400414D6C /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF51FDD4C4400414D6C /* ConcreteCoder.swift */; };
 		E51E0EFA1FDD6EC800414D6C /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF91FDD6EC800414D6C /* Initializable.swift */; };
 		E5A0E0381FDBEAB800FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */; };
-		E5A0E0401FDC2CF600FB4DE3 /* FilePersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E03F1FDC2CF600FB4DE3 /* FilePersistentCollection.swift */; };
+		E5A0E0401FDC2CF600FB4DE3 /* PersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E03F1FDC2CF600FB4DE3 /* PersistentCollection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,7 +118,7 @@
 		E51E0EF51FDD4C4400414D6C /* ConcreteCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteCoder.swift; sourceTree = "<group>"; };
 		E51E0EF91FDD6EC800414D6C /* Initializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
 		E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
-		E5A0E03F1FDC2CF600FB4DE3 /* FilePersistentCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistentCollection.swift; sourceTree = "<group>"; };
+		E5A0E03F1FDC2CF600FB4DE3 /* PersistentCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistentCollection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,7 +222,7 @@
 				4D55FCAC1FDAF7CB001D91CE /* Collectible.swift */,
 				E51E0EF51FDD4C4400414D6C /* ConcreteCoder.swift */,
 				E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */,
-				E5A0E03F1FDC2CF600FB4DE3 /* FilePersistentCollection.swift */,
+				E5A0E03F1FDC2CF600FB4DE3 /* PersistentCollection.swift */,
 				E51E0EF91FDD6EC800414D6C /* Initializable.swift */,
 				4D55FCC91FDAF7CB001D91CE /* HTTPOperation.swift */,
 				4D55FCC21FDAF7CB001D91CE /* Payload.swift */,
@@ -358,7 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D65E67A1FDFFA7B00034787 /* Upload.swift in Sources */,
-				E5A0E0401FDC2CF600FB4DE3 /* FilePersistentCollection.swift in Sources */,
+				E5A0E0401FDC2CF600FB4DE3 /* PersistentCollection.swift in Sources */,
 				4D55FCD41FDAF7CB001D91CE /* Tolerent.swift in Sources */,
 				4D55FCE31FDAF7CB001D91CE /* Status.swift in Sources */,
 				4D55FCE71FDAF7CB001D91CE /* Credentials.swift in Sources */,
