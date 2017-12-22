@@ -10,6 +10,7 @@ import Foundation
 
 public protocol Collectible : UniversalType {
 
+    // Universally Unique identifier (check Globals.swift for details on the primary key MODELS_PRIMARY_KEY)
     var id:String { get set }
 
 }

@@ -13,7 +13,7 @@ import Foundation
  - Server side : Primary is now encoded using "id" not "_id" (this may have a large impact server side.
  - We always use Model:Object as ancestor to implement by hand core behaviour.
  - Consequently we have replaced variable $inheritancePrefix in the generative blocks
-*/
+ */
 
 #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
 
@@ -22,11 +22,11 @@ import Foundation
     public typealias CopyingProtocol = NSCopying
 
     public func AbsoluteTimeGetCurrent()->Double{
-       return Double(CFAbsoluteTimeGetCurrent())
+        return Double(CFAbsoluteTimeGetCurrent())
     }
 
 
-    #elseif os(Linux)
+#elseif os(Linux)
 
     open class Object {}
 
