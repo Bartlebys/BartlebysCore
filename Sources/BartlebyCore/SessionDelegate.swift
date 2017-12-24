@@ -69,5 +69,5 @@ public protocol SessionDelegate {
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
-    func deleteOperation<T,P>(_ operation: CallOperation<T,P>)
+    func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>)
 }

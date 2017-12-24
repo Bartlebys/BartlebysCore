@@ -110,7 +110,7 @@ public class Session {
                     let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
                     NotificationCenter.default.post(name:notificationName , object: nil)
                     
-                    self.delegate.deleteOperation(operation)
+                    self.delegate.deleteCallOperation(operation)
                 }
             }
             
@@ -143,7 +143,7 @@ public class Session {
                     let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
                     NotificationCenter.default.post(name:notificationName , object: nil)
                     
-                    self.delegate.deleteOperation(operation)
+                    self.delegate.deleteCallOperation(operation)
                 }
             }, failure: failureClosure)
         }

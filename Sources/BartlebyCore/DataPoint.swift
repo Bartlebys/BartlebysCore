@@ -181,7 +181,7 @@ open class DataPoint : ConcreteDataPoint {
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
-    public final func deleteOperation<T,P>(_ operation: CallOperation<T,P>){
+    public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>){
         if let pendingCallOperations = self._collections.first(where:{
             if let callOp =  $0 as? CallOperation<T,P>{
                  return callOp.operationName == operation.operationName

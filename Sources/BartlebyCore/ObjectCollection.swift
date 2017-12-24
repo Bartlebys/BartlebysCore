@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Dispatch
 
 public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, PersistentCollection, Collection, Sequence where T : Codable & Collectible & Tolerent {
 
