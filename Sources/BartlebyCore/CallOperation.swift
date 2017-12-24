@@ -17,6 +17,8 @@ import Foundation
 /// Check Session.swift for execution details.
 public final class CallOperation<T, P> : Model, Tolerent where T : Codable & Tolerent, P : Payload {
 
+    // The operation name should be unique
+    // E.g: `getTagsWithIds` will refer to a specific endpoint
     public var operationName: String = "NO_OPERATION_NAME"
     public var path: String = "NO_PATH"
     public var queryString: String = "NO_QUERY_STRING"
