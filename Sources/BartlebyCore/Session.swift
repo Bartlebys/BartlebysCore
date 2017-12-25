@@ -89,7 +89,7 @@ public class Session {
                 operation.executionCounter += 1
                 operation.lastAttemptDate = Date()
                 
-                let notificationName = NSNotification.Name.Operation.didFail(operation.operationName)
+                let notificationName = NSNotification.Name.CallOperation.didFail(operation.operationName)
                 NotificationCenter.default.post(name:notificationName, object: response.error)
                 
             }
@@ -107,7 +107,7 @@ public class Session {
                     operation.executionCounter += 1
                     operation.lastAttemptDate = Date()
                     
-                    let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
+                    let notificationName = NSNotification.Name.CallOperation.didSucceed(operation.operationName)
                     NotificationCenter.default.post(name:notificationName , object: nil)
                     
                     self.delegate.deleteCallOperation(operation)
@@ -140,7 +140,7 @@ public class Session {
                     
                     self.delegate.integrateResponse(response)
                     
-                    let notificationName = NSNotification.Name.Operation.didSucceed(operation.operationName)
+                    let notificationName = NSNotification.Name.CallOperation.didSucceed(operation.operationName)
                     NotificationCenter.default.post(name:notificationName , object: nil)
                     
                     self.delegate.deleteCallOperation(operation)

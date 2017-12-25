@@ -8,19 +8,36 @@
 
 import Foundation
 import Dispatch
+enum ObjectCollectionError:Error {
+    case collectionIsNotRegistred
+}
 
-public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, PersistentCollection, Collection, Sequence where T : Codable & Collectible & Tolerent {
+
+public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Collection, Sequence,FilePersistentCollection where T : Codable & Collectible & Tolerent {
 
     // MARK: -
 
-    // We will try to add a Btree storage.
-    // reference : https://github.com/objcio/OptimizingCollections
-
+    // Todo use a Btree storage.
     private var _storage: [T] = [T]()
 
-    private var _dataPoint:DataPoint?
+    // We expose the collection type
+    public var type: (Codable & Collectible & Tolerent).Type { return T.self }
 
+    // You must setup a relativeFolderPath
+    public var relativeFolderPath: String
+
+    // The dataPoint is set on Registration
+    public var dataPoint:DataPoint?
+
+    // If set to true the collection will be saved on the next save operations
     public var hasChanged: Bool = false
+
+    // We can have several collection with the same type (e.g: some CallOperation)
+    // so we we use also a file name to distiguish the collections.
+    // Part of the FilePersistentCollection protocol
+    public var fileName:String
+
+    public var name:String { return self.fileName }
 
     // MARK: - UniversalType
     
@@ -38,12 +55,14 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Persi
         }
         set {}
     }
-    
-    // MARK: -
 
-    public init() {
+    // MARK: - Initializer
+
+    public required init(named:String, relativePath:String){
+        self.fileName = named
+        self.relativeFolderPath = relativePath
     }
-    
+
     // MARK: - Functional Programing Storage layer support
     
     public var startIndex: Int { return self._storage.startIndex }
@@ -143,53 +162,39 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Persi
     /// Returns all the stored element packaged in an Array
     public var all:Array<T> {
         return self._storage
-
     }
-    
+
+
     // MARK: - Codable
     
     public enum CollectionCodingKeys: String, CodingKey {
         case items
+        case fileName
+        case relativeFolderPath
     }
     
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
         self._storage = try values.decode([T].self, forKey:.items)
+        self.fileName =  try values.decode(String.self, forKey:.fileName)
+        self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
     }
     
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CollectionCodingKeys.self)
         try container.encode(self._storage, forKey:.items)
+        try container.encode(self.fileName, forKey:.fileName)
+        try container.encode(self.relativeFolderPath, forKey: .relativeFolderPath)
     }
     
     
+    // MARK: - Tolerent
     
-
-    // MARK - FilePersistentCollection
-
-    /// Loads from a file
-    /// Creates the persistent instance if there is no file.
-    ///
-    /// - Parameters:
-    ///   - type: the Type of the FilePersistent instance
-    ///   - fileName: the filename to use
-    ///   - relativeFolderPath: the session identifier
-    ///   - dataPoint: the dataPoint
-    /// - Returns: a FilePersistent instance
-    /// - Throws: throws errors on decoding
-    public static func createOrLoadFromFile<T:Codable & Tolerent>(type: T.Type, fileName: String, relativeFolderPath: String, using dataPoint:DataPoint) throws -> ObjectCollection<T>{
-        let collection : ObjectCollection<T>
-        let url = try ObjectCollection._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath)
-        if FileManager.default.fileExists(atPath: url.path) {
-            let data = try Data(contentsOf: self._url(type: type, fileName:fileName, relativeFolderPath: relativeFolderPath))
-            collection = try dataPoint.coder.decode(ObjectCollection<T>.self, from: data)
-        } else {
-            collection = ObjectCollection<T>()
-        }
-        collection._dataPoint = dataPoint
-        dataPoint.registerCollection(collection: collection)
-        return collection
+    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
+        // No implementation
     }
+
+    // MARK: - FilePersistentCollection
 
     /// Saves to a given file named 'fileName'
     /// Into a dedicated folder named relativeFolderPath
@@ -200,37 +205,11 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Persi
     /// - Throws: throws errors on Coding
     public func saveToFile(fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws {
         if self.hasChanged {
-            let url = try ObjectCollection._url(type: T.self, fileName: fileName, relativeFolderPath: relativeFolderPath)
-            let data = try coder.encode(self)
-            try data.write(to: url)
-            self.hasChanged = false
-            
-            let notificationName = NSNotification.Name.ObjectCollection.saveDidSucceed(fileName)
-            NotificationCenter.default.post(name: notificationName, object: nil)
+            guard let dataPoint = self.dataPoint else {
+                throw ObjectCollectionError.collectionIsNotRegistred
+            }
+            dataPoint.storage.saveCollectionToFile(collection: self, fileName: fileName, relativeFolderPath: relativeFolderPath, using: dataPoint)
         }
     }
-
-    /// Saves to a given file named 'fileName'
-    /// Into a dedicated folder named relativeFolderPath
-    /// - Parameters:
-    ///   - fileName: the file name
-    ///   - relativeFolderPath: the session identifier (used for the folder and the identification of the session)
-    /// - Throws: throws errors on Coding
-    fileprivate static func _url<T>(type: T.Type, fileName: String, relativeFolderPath: String) throws -> URL {
-        let directoryURL = try Paths.directoryURL(relativeFolderPath: relativeFolderPath)
-        var isDirectory: ObjCBool = true
-        
-        if !FileManager.default.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
-            try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-        }
-        return directoryURL.appendingPathComponent(fileName + ".data")
-    }
-
-    // MARK: - Tolerent
-    
-    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-        // No implementation
-    }
-    
 }
 

@@ -8,6 +8,20 @@
 
 import Foundation
 
+public extension Notification.Name {
+
+    public struct CallOperation {
+
+        public static func didSucceed(_ operationName:String ) -> (Notification.Name) {
+            return Notification.Name(rawValue: "org.barlebys.\(operationName).didSucceed")
+        }
+
+        public static func didFail(_ operationName:String ) -> (Notification.Name) {
+            return Notification.Name(rawValue: "org.barlebys.\(operationName).didFail")
+        }
+    }
+}
+
 
 /// A CallOperation is:
 /// - a Network operation runnable in a Session.

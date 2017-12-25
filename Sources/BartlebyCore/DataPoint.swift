@@ -13,22 +13,33 @@ public enum DataPointError : Error{
     case voidURLRequest
     case payloadIsNil
     case payloadShouldBeOfFilePathType
+    case duplicatedRegistration(fileName:String)
+}
+
+
+public protocol DataPointDelegate{
+    func collectionDidLoadSuccessFully()
+    func collectionDidFailToLoad(message:String)
 }
 
 // Abstract class
-open class DataPoint : ConcreteDataPoint {
+open class DataPoint: ConcreteDataPoint {
     
     // MARK: -
 
-    /// The file 
+    /// The coder: encodes and decodes the Data
     public var coder: ConcreteCoder
+
+    public var delegate: DataPointDelegate
+
+    // The storage IO object: reads an writes the ObjectsCollections
+    public var storage = Storage()
 
     /// The associated session
     public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)
     
     /// Its session identifier
     public var sessionIdentifier: String = "NOT_IDENTIFIED"
-
     
     /// Initialization of the DataPoint
     ///
@@ -37,28 +48,65 @@ open class DataPoint : ConcreteDataPoint {
     ///   - sessionIdentifier: a unique session identifier (should be persistent as it is used to compute serialization paths)
     ///   - coder: the persistency layer a coder == a consistent Encoder / Decoder pair.
     /// - Throws: Children may throw while populating the collections
-    required public init(credentials:Credentials, sessionIdentifier:String, coder: ConcreteCoder) throws{
+    required public init(credentials:Credentials, sessionIdentifier:String, coder: ConcreteCoder,delegate:DataPointDelegate) throws{
+
         self.credentials = credentials
         self.sessionIdentifier = sessionIdentifier
         self.coder = coder
+        self.delegate = delegate
+        
+        // The loading is asynchronous on separate queue.
+        self.storage.setUpObserver { (fileName, success, message, progress) in
+            if !success{
+                self.delegate.collectionDidFailToLoad(message: message ?? "Failure when loading \(fileName)")
+            }else if progress.totalUnitCount == progress.completedUnitCount{
+                self.delegate.collectionDidLoadSuccessFully()
+            }
+        }
+
     }
 
     /// Contains all the data Point collections
-    /// You can populate with concrete types (polymorphism)
-    ///
-    /// Concrete return could be for example :
-    ///     return [ ObjectCollection<Event>(), ObjectCollection<Tag>()]
+    /// Populated by registerCollection
     /// - Returns: the data Point model collections
     fileprivate var _collections:[Any] = Array<Any>()
 
+    /// The collection hashed per fileName
+    fileprivate var _collectionsPerFileName = Dictionary<String,Any>()
 
-    /// Registers the collection in to the data point
+    /// Registers the collection into the data point
     ///
     /// - Parameter collection: the collection
-    public func registerCollection<T>(collection:ObjectCollection<T>){
-        self._collections.append(collection)
+    public func registerCollection<T>(collection:ObjectCollection<T>)throws{
+
+        if !self._collections.contains(where: { (existingCollection) -> Bool in
+            if let c = existingCollection as? ObjectCollection<T>{
+                return c.d_collectionName == collection.d_collectionName && c.fileName == collection.fileName
+            }
+            return false
+        }){
+            self._collections.append(collection)
+            self._collectionsPerFileName[collection.fileName] = collection
+            collection.dataPoint = self
+
+            // Creates or asynchronously load the collection on registration
+            self.storage.load(on: collection)
+
+        }else{
+            throw DataPointError.duplicatedRegistration(fileName: collection.fileName)
+        }
     }
 
+
+    /// Returns the collection by file name
+    ///
+    /// - Parameter fileName: the fileName of the searched collection
+    /// - Returns: the ObjectCollection
+    public func collection<T>(with fileName:String)->ObjectCollection<T>?{
+        return self._collectionsPerFileName[fileName] as? ObjectCollection<T>
+    }
+
+    
     public func collectionsCount() -> Int {
         return self._collections.count
     }
@@ -196,19 +244,20 @@ open class DataPoint : ConcreteDataPoint {
     }
 
 
-    // MARK: -
+    // MARK: - Load and Save
 
     public final func save() throws {
         try self.save(using: self.coder)
     }
+    
 
     /// Saves all the collections.
     ///
     /// - Throws: throws an exception if any save operation has failed
     public final func save(using encoder: ConcreteCoder) throws {
         for collection in self._collections {
-            if let concreteCollection = collection as? PersistentCollection & UniversalType{
-                try concreteCollection.saveToFile(fileName: concreteCollection.d_collectionName, relativeFolderPath: self.sessionIdentifier,using: encoder)
+            if let universallyPersistentCollection = collection as? FilePersistentCollection {
+                try universallyPersistentCollection.saveToFile(fileName: universallyPersistentCollection.fileName, relativeFolderPath: self.sessionIdentifier,using: encoder)
             }
         }
     }

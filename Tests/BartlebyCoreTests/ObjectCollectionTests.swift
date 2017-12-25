@@ -17,7 +17,19 @@ import XCTest
 #endif
 
 
-class ObjectCollectionTests: XCTestCase {
+class ObjectCollectionTests: XCTestCase,DataPointDelegate{
+
+    // MARK: - DataPointDelegate
+    
+    func collectionDidLoadSuccessFully() {
+        print("Did Load")
+    }
+
+    func collectionDidFailToLoad(message: String) {
+        print(message)
+    }
+
+    // MARK: - Tests
     
     static var allTests = [
         ("test001Subscript", test001Subscript),
@@ -27,7 +39,7 @@ class ObjectCollectionTests: XCTestCase {
         ("test005Count", test005Count),
         ]
     
-    var dataPoint : DataPoint? = try? DataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: "d2fe00dcde14425faf4a45c107c8090c", coder: JSONCoder())
+    lazy var dataPoint : DataPoint? = try? DataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: "d2fe00dcde14425faf4a45c107c8090c", coder: JSONCoder(),delegate:self)
 
     
     override func setUp() {
@@ -56,7 +68,7 @@ class ObjectCollectionTests: XCTestCase {
         let metrics3 = Metrics()
         metrics3.operationName = "operation3"
 
-        let collection = ObjectCollection<Metrics>()
+        let collection = ObjectCollection<Metrics>(named:"metrics",relativePath:"")
         collection.append(metrics1)
         collection.append(metrics2)
         collection.append(metrics3)
@@ -74,7 +86,7 @@ class ObjectCollectionTests: XCTestCase {
     
     func test002Append() {
         
-        let collection = ObjectCollection<Metrics>()
+        let collection = ObjectCollection<Metrics>(named:"metrics",relativePath:"")
         let metrics = Metrics()
         collection.append(metrics)
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
@@ -82,7 +94,7 @@ class ObjectCollectionTests: XCTestCase {
     }
     
     func test003Remove() {
-        let collection = ObjectCollection<Metrics>()
+        let collection = ObjectCollection<Metrics>(named:"metrics",relativePath:"")
         let metrics = Metrics()
         collection.append(metrics)
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
@@ -97,7 +109,7 @@ class ObjectCollectionTests: XCTestCase {
         let Metrics2 = Metrics()
         let Metrics3 = Metrics()
         
-        let collection = ObjectCollection<Metrics>()
+        let collection = ObjectCollection<Metrics>(named:"metrics",relativePath:"")
         collection.append(Metrics1)
         collection.append(Metrics2)
         collection.append(Metrics3)
@@ -109,7 +121,7 @@ class ObjectCollectionTests: XCTestCase {
     }
     
     func test005Count() {
-        let collection = ObjectCollection<Metrics>()
+        let collection = ObjectCollection<Metrics>(named:"metrics",relativePath:"")
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
         
         collection.append(Metrics())
@@ -121,16 +133,16 @@ class ObjectCollectionTests: XCTestCase {
     
     func test006Unicity() {
         
-        let collection = ObjectCollection<Metrics>()
+        let collection = ObjectCollection<Metrics>(named:"metrics",relativePath:"")
 
         let metrics = Metrics()
         metrics.operationName = "operation"
         
-        collection.append(metrics)
+        collection.upsert(metrics)
         Logger.log("Collection count = \(collection.count)")
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
 
-        collection.append(metrics)
+        collection.upsert(metrics)
         Logger.log("Collection count = \(collection.count)")
         XCTAssert(collection.count == 1, "The collection should still have exactly one element")
         
