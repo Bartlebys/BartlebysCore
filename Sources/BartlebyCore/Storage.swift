@@ -47,7 +47,7 @@ extension Storage: FileStorage{
         }
         self._progress.totalUnitCount += 1
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
-            self._progress.completedUnitCount += 1
+
             do{
                 let url = try Paths.directoryURL(relativeFolderPath: proxy.relativeFolderPath).appendingPathComponent(proxy.fileName + ".data")
                 if Storage._fileManager.fileExists(atPath: url.path) {
@@ -60,6 +60,7 @@ extension Storage: FileStorage{
                 
                 // The collection has been registered.
                 DispatchQueue.main.async(execute: {
+                    self._progress.completedUnitCount += 1
                     self.observer?(proxy.fileName, true, nil, self._progress)
 
                 })
@@ -100,9 +101,8 @@ extension Storage: FileStorage{
                 try data.write(to: url)
                 collection.hasChanged = false
 
-
-                self._progress.completedUnitCount += 1
                 DispatchQueue.main.async(execute: {
+                    self._progress.completedUnitCount += 1
                     self.observer?(collection.d_collectionName, true, nil, self._progress)
                 })
             }catch{
