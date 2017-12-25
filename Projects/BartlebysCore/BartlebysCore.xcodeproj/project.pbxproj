@@ -198,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				4D55FC801FDAF65A001D91CE /* generated */,
-				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
 				4D55FC811FDAF672001D91CE /* Protocols */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
@@ -249,6 +248,7 @@
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC861FDAF68F001D91CE /* Collectible.swift */,
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
+				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
 				E51E0EF71FDD6E9700414D6C /* Initializable.swift */,
 				E5BC2D121FF133C200EC45F6 /* FileStorage.swift */,
 				E549A3EE1FF1390200178ECA /* FilePersistentCollection.swift */,
