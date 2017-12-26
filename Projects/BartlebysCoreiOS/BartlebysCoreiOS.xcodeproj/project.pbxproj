@@ -54,6 +54,7 @@
 		E549A3F21FF13C5500178ECA /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3F01FF13C5400178ECA /* FileStorage.swift */; };
 		E549A3F31FF13C5500178ECA /* FilePersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3F11FF13C5500178ECA /* FilePersistentCollection.swift */; };
 		E5A0E0381FDBEAB800FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */; };
+		E5ADBAFE1FF24B8F00B6AA28 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFD1FF24B8F00B6AA28 /* StorageProgressDelegates.swift */; };
 		E5BC2D101FF12E5700EC45F6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D0E1FF12E5700EC45F6 /* Storage.swift */; };
 		E5BC2D111FF12E5700EC45F6 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D0F1FF12E5700EC45F6 /* Operators.swift */; };
 /* End PBXBuildFile section */
@@ -121,6 +122,7 @@
 		E549A3F01FF13C5400178ECA /* FileStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		E549A3F11FF13C5500178ECA /* FilePersistentCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePersistentCollection.swift; sourceTree = "<group>"; };
 		E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
+		E5ADBAFD1FF24B8F00B6AA28 /* StorageProgressDelegates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageProgressDelegates.swift; sourceTree = "<group>"; };
 		E5BC2D0E1FF12E5700EC45F6 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		E5BC2D0F1FF12E5700EC45F6 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -205,6 +207,7 @@
 				4D55FCB31FDAF7CB001D91CE /* Session.swift */,
 				4D55FCC31FDAF7CB001D91CE /* Status.swift */,
 				E5BC2D0E1FF12E5700EC45F6 /* Storage.swift */,
+				E5ADBAFD1FF24B8F00B6AA28 /* StorageProgressDelegates.swift */,
 				4D65E6791FDFFA7B00034787 /* Upload.swift */,
 				4D55FCAE1FDAF7CB001D91CE /* Utilities.swift */,
 				4D55FCBE1FDAF7CB001D91CE /* VoidPayload.swift */,
@@ -380,6 +383,7 @@
 				4D65E6761FDFFA4C00034787 /* HTTPResponse.swift in Sources */,
 				4D65E6781FDFFA6C00034787 /* Download.swift in Sources */,
 				E549A3F31FF13C5500178ECA /* FilePersistentCollection.swift in Sources */,
+				E5ADBAFE1FF24B8F00B6AA28 /* StorageProgressDelegates.swift in Sources */,
 				4D55FCD91FDAF7CB001D91CE /* Int+Padding.swift in Sources */,
 				4D65E6A11FE0305000034787 /* Paths.swift in Sources */,
 				4D55FCE81FDAF7CB001D91CE /* Model+Equatable.swift in Sources */,
