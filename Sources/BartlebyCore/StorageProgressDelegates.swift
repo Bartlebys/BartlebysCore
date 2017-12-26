@@ -13,14 +13,24 @@ import Foundation
 /// A base class the handle the storage Progress delegations.
 open class ProgressDelegate:StorageProgressDelegate{
 
+    // This identifier is used to distinguish the Observers
     public let identifier: String = Utilities.createUID()
 
+    // The referent dataPoint
     public let dataPoint:DataPoint
 
+    // The initializer
     init(dataPoint:DataPoint) {
         self.dataPoint = dataPoint
     }
 
+    /// The Progress method
+    ///
+    /// - Parameters:
+    ///   - fileName: the filename
+    ///   - success: is it a success?
+    ///   - message: a contextual messsage
+    ///   - progress: the progress object
     open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
     }
 }
@@ -32,13 +42,27 @@ open class StorageProgressHandler:ProgressDelegate{
 
     public typealias  StorageProgress = (_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress)->()
 
+    // The handler to handle the progress
     public var handler:StorageProgress
 
+
+    /// An initializer with the dataPoint & the Handler
+    ///
+    /// - Parameters:
+    ///   - dataPoint: the dataPoint reference
+    ///   - handler: the handler to use
     init(dataPoint: DataPoint,handler:@escaping StorageProgress) {
         self.handler = handler
         super.init(dataPoint: dataPoint)
     }
 
+    /// The Progress method
+    ///
+    /// - Parameters:
+    ///   - fileName: the filename
+    ///   - success: is it a success?
+    ///   - message: a contextual messsage
+    ///   - progress: the progress object
     override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         self.handler(fileName, success, message, progress)
     }
@@ -50,9 +74,18 @@ open class StorageProgressHandler:ProgressDelegate{
 // A SavingDelegate that call the DataPoint delegate
 public class DataPointSavingDelegate:ProgressDelegate{
 
+
+    /// This Progress method calls the dataPoint delegate method
+    ///     - collectionDifSaveSuccessFully() or collectionDidFailToSave(:)
+    ///     - This observer is auto removed on completion
+    /// - Parameters:
+    ///   - fileName: the filename
+    ///   - success: is it a success?
+    ///   - message: a contextual messsage
+    ///   - progress: the progress object
     override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         if !success{
-            self.dataPoint.delegate.collectionDidFailToSave(message: message ?? "Failure when saving \(fileName)")
+            self.dataPoint.delegate.collectionDidFailToSavemessage ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.delegate.collectionDifSaveSuccessFully()
         }
@@ -67,12 +100,19 @@ public class DataPointSavingDelegate:ProgressDelegate{
 // A LoadingDelegate that call the DataPoint delegate
 public class DataPointLoadingDelegate:ProgressDelegate{
 
+    /// This Progress method calls the dataPoint delegate method
+    ///     - collectionDidLoadSuccessFully() or collectionDidFailToLoad(:)
+    ///     - This observer is auto removed on completion
+    /// - Parameters:
+    ///   - fileName: the filename
+    ///   - success: is it a success?
+    ///   - message: a contextual messsage
+    ///   - progress: the progress object
     override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         if !success{
             self.dataPoint.delegate.collectionDidFailToLoad(message: message ?? "Failure when loading \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.delegate.collectionDidLoadSuccessFully()
-
         }
         if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.storage.removeProgressObserver(observer: self)
