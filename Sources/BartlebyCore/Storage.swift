@@ -65,9 +65,7 @@ extension Storage: FileStorage{
                 if Storage._fileManager.fileExists(atPath: url.path) {
                     let data = try Data(contentsOf: url)
                     let collection = try dataPoint.coder.decode(ObjectCollection<T>.self, from: data)
-                    for item in collection{
-                        proxy.upsert(item)
-                    }
+                    proxy.append(contentsOf: collection)
                 }
                 
                 // The collection has been registered.
