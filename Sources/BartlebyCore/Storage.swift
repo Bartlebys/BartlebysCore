@@ -8,14 +8,20 @@
 
 import Foundation
 
+public protocol StorageProgressDelegate{
+
+    var identifier:String { get }
+
+    func onProgress(_ fileName:String,_ success:Bool,_ message:String?, _ progress:Progress)->()
+}
+
+
 public final class Storage{
 
-    // The Progress closure
-    public typealias OnProgress = (_ fileName:String,_ success:Bool,_ message:String?, _ progress:Progress)->()
 
     /// You can / should register progress observers.
     /// to monitor the storage load and save.
-    public var observer:OnProgress?
+    fileprivate var _observers=[StorageProgressDelegate]()
 
     // We use a static shared serial queue for all our operation
     fileprivate static var _sharedQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.collectionsQueue")
@@ -25,8 +31,14 @@ public final class Storage{
 
     fileprivate var _progress = Progress()
 
-    public func setUpObserver(_ newObserver:@escaping OnProgress){
-        self.observer = newObserver
+    public func addProgressObserver(observer:StorageProgressDelegate){
+        self._observers.append(observer)
+    }
+
+    public func removeProgressObserver(observer:StorageProgressDelegate){
+        if let idx = self._observers.index(where:{ $0.identifier == observer.identifier }) {
+            self._observers.remove(at: idx)
+        }
     }
 
 }
@@ -61,12 +73,15 @@ extension Storage: FileStorage{
                 // The collection has been registered.
                 DispatchQueue.main.async(execute: {
                     self._progress.completedUnitCount += 1
-                    self.observer?(proxy.fileName, true, nil, self._progress)
-
+                    for observer in self._observers{
+                        observer.onProgress(proxy.fileName, true, nil, self._progress)
+                    }
                 })
             }catch{
                 DispatchQueue.main.async(execute: {
-                    self.observer?(proxy.fileName, false, "\(error)", self._progress)
+                    for observer in self._observers{
+                        observer.onProgress(proxy.fileName, false, "\(error)", self._progress)
+                    }
                 })
             }
         }
@@ -103,11 +118,15 @@ extension Storage: FileStorage{
 
                 DispatchQueue.main.async(execute: {
                     self._progress.completedUnitCount += 1
-                    self.observer?(collection.d_collectionName, true, nil, self._progress)
+                    for observer in self._observers{
+                        observer.onProgress(collection.d_collectionName, true, nil, self._progress)
+                    }
                 })
             }catch{
                 DispatchQueue.main.async(execute: {
-                    self.observer?(fileName, false, "\(error)", self._progress)
+                    for observer in self._observers{
+                        observer.onProgress(fileName, false, "\(error)", self._progress)
+                    }
                 })
             }
         }

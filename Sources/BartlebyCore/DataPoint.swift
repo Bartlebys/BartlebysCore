@@ -16,14 +16,16 @@ public enum DataPointError : Error{
     case duplicatedRegistration(fileName:String)
 }
 
-
 public protocol DataPointDelegate{
     func collectionDidLoadSuccessFully()
     func collectionDidFailToLoad(message:String)
+    func collectionDifSaveSuccessFully()
+    func collectionDidFailToSave(message:String)
 }
 
+
 // Abstract class
-open class DataPoint: ConcreteDataPoint {
+open class DataPoint: ConcreteDataPoint{
     
     // MARK: -
 
@@ -56,15 +58,11 @@ open class DataPoint: ConcreteDataPoint {
         self.delegate = delegate
         
         // The loading is asynchronous on separate queue.
-        self.storage.setUpObserver { (fileName, success, message, progress) in
-            if !success{
-                self.delegate.collectionDidFailToLoad(message: message ?? "Failure when loading \(fileName)")
-            }else if progress.totalUnitCount == progress.completedUnitCount{
-                self.delegate.collectionDidLoadSuccessFully()
-            }
-        }
-
+        self.storage.addProgressObserver (observer: DataPointLoadingDelegate(dataPoint: self))
     }
+
+
+
 
     /// Contains all the data Point collections
     /// Populated by registerCollection
