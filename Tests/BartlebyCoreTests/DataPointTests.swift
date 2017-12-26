@@ -41,7 +41,12 @@ class MyDataPoint: DataPoint {
 
 class DataPointTests: XCTestCase,DataPointDelegate{
 
+
     // MARK: - DataPointDelegate
+
+    func collectionDifSaveSuccessFully() {}
+
+    func collectionDidFailToSave(message: String) {}
 
     func collectionDidLoadSuccessFully() {}
 
@@ -73,8 +78,7 @@ class DataPointTests: XCTestCase,DataPointDelegate{
             // -----------------------------------
             // 1# Create or load the collection
 
-            // We set up an observer  the metrics when loaded
-            datapoint.storage.setUpObserver({ (fileName, success, message, progress) in
+            let loadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                 if !success{
                     XCTFail("Metrics loading did fail: \(String(describing: message)) ")
                     expectation.fulfill()
@@ -97,9 +101,8 @@ class DataPointTests: XCTestCase,DataPointDelegate{
                         // 3# Save the data Point
                         // Let's save the DataPoint
 
-                        try datapoint.save()
-                        // We reset the observer
-                        datapoint.storage.setUpObserver({ (fileName,success,message,progress) in
+                        let saveHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
+                            // We reset the observer
                             if !success{
                                 XCTFail("datapoint.save() did fail: \(String(describing: message)) ")
                                 expectation.fulfill()
@@ -113,7 +116,7 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
                                     let dataPointClone =  try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(), delegate: self)
 
-                                    dataPointClone.storage.setUpObserver({ (fileName,success,message,progress) in
+                                    let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                                         if !success{
                                             XCTFail("Metrics createOrLoadCollection did fail: \(String(describing: message)) ")
                                             expectation.fulfill()
@@ -127,18 +130,29 @@ class DataPointTests: XCTestCase,DataPointDelegate{
                                             }
                                         }
                                     })
+                                    
+                                    dataPointClone.storage.addProgressObserver(observer: reloadHandler)
+
                                 }catch{
                                     XCTFail("DataPoint clone creation error: \(error)")
                                     expectation.fulfill()
                                 }
                             }
                         })
+
+                        try datapoint.save()
+                        datapoint.storage.addProgressObserver(observer: saveHandler)
+
                     }catch{
                         XCTFail("Metrics collection save error: \(error)")
                         expectation.fulfill()
                     }
                 }
             })
+
+
+            // We set up an observer  the metrics when loaded
+            datapoint.storage.addProgressObserver(observer:loadHandler)
         } catch {
             XCTFail("Metrics collection error: \(error)")
         }

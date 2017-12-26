@@ -19,8 +19,17 @@ import XCTest
 
 class ObjectCollectionTests: XCTestCase,DataPointDelegate{
 
+
     // MARK: - DataPointDelegate
     
+    func collectionDifSaveSuccessFully() {
+        print("Did Save")
+    }
+
+    func collectionDidFailToSave(message: String) {
+        print(message)
+    }
+
     func collectionDidLoadSuccessFully() {
         print("Did Load")
     }
