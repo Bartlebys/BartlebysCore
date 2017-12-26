@@ -8,8 +8,7 @@
 
 import Foundation
 
-// MARK : - The base ProgressDelegate
-
+// MARK: - The base ProgressDelegate
 
 /// A base class the handle the storage Progress delegations.
 open class ProgressDelegate:StorageProgressDelegate{
@@ -26,7 +25,7 @@ open class ProgressDelegate:StorageProgressDelegate{
     }
 }
 
-// MARK : - StorageProgressHandler
+// MARK: - StorageProgressHandler
 
 // A Storage progress that uses an handler
 open class StorageProgressHandler:ProgressDelegate{
@@ -46,7 +45,7 @@ open class StorageProgressHandler:ProgressDelegate{
 }
 
 
-// MARK : - SavingDelegate
+// MARK: - SavingDelegate
 
 // A SavingDelegate that call the DataPoint delegate
 public class DataPointSavingDelegate:ProgressDelegate{
@@ -63,7 +62,7 @@ public class DataPointSavingDelegate:ProgressDelegate{
     }
 }
 
-// MARK : - LoadingDelegate
+// MARK: - LoadingDelegate
 
 // A LoadingDelegate that call the DataPoint delegate
 public class DataPointLoadingDelegate:ProgressDelegate{

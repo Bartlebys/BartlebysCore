@@ -245,6 +245,8 @@ open class DataPoint: ConcreteDataPoint{
     // MARK: - Load and Save
 
     public final func save() throws {
+        // We add a saving delegate to relay the progression
+        self.storage.addProgressObserver (observer: DataPointSavingDelegate(dataPoint: self))
         try self.save(using: self.coder)
     }
     
