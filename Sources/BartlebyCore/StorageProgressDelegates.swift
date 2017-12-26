@@ -85,7 +85,7 @@ public class DataPointSavingDelegate:ProgressDelegate{
     ///   - progress: the progress object
     override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         if !success{
-            self.dataPoint.delegate.collectionDidFailToSavemessage ?? "Failure when saving \(fileName)")
+            self.dataPoint.delegate.collectionDidFailToSave(message:message ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.delegate.collectionDifSaveSuccessFully()
         }
@@ -101,7 +101,7 @@ public class DataPointSavingDelegate:ProgressDelegate{
 public class DataPointLoadingDelegate:ProgressDelegate{
 
     /// This Progress method calls the dataPoint delegate method
-    ///     - collectionDidLoadSuccessFully() or collectionDidFailToLoad(:)
+    ///     - collectionDifSaveSuccessFully() or collectionDidFailToSave(:)
     ///     - This observer is auto removed on completion
     /// - Parameters:
     ///   - fileName: the filename
