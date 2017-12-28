@@ -140,7 +140,7 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
     }
     
-    func test006Unicity() {
+    func test006UnicityOnUpserts() {
         
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
 

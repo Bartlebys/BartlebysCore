@@ -17,12 +17,17 @@ import XCTest
 
 
 
+extension ManagedModel:Tolerent{
+    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
+    }
+}
 
 
 class MyDataPoint: DataPoint {
 
     public enum FileNames:String{
         case metrics
+        case managedModels
     }
 
     public var playerId: String { return session.sessionIdentifier }
@@ -30,11 +35,14 @@ class MyDataPoint: DataPoint {
 
     // MARK: -  Collections of Models proxys
     public var metricsCollection: CollectionOf<Metrics> =  CollectionOf<Metrics>(named:FileNames.metrics.rawValue,relativePath:"tests")
-    
+
+    public var managedModelsCollection: CollectionOf<ManagedModel> =  CollectionOf<ManagedModel>(named:FileNames.managedModels.rawValue,relativePath:"tests")
+
     // MARK: - Main Initializer
     required public init(credentials: Credentials, sessionIdentifier: String, coder: ConcreteCoder,delegate:DataPointDelegate) throws {
         try super.init(credentials: credentials, sessionIdentifier: sessionIdentifier, coder: coder,delegate:delegate)
-        try self.registerCollection(collection: metricsCollection)
+        try self.registerCollection(collection: self.metricsCollection)
+        try self.registerCollection(collection: self.managedModelsCollection )
     }
 
 }
@@ -63,6 +71,7 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
     func test001SaveDataPointAndReloadItsClone() {
 
+
         let expectation = XCTestExpectation(description: "Save And ReloadADataPoint")
 
         let uid = Utilities.createUID()
@@ -74,6 +83,7 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
             let datapoint = try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
             let metricsFileName = MyDataPoint.FileNames.metrics.rawValue
+            let managedModelsFileName = MyDataPoint.FileNames.managedModels.rawValue
 
             // -----------------------------------
             // 1# Create or load the collection
@@ -83,69 +93,79 @@ class DataPointTests: XCTestCase,DataPointDelegate{
                     XCTFail("Metrics loading did fail: \(String(describing: message)) ")
                     expectation.fulfill()
                 }else{
-                    XCTAssert(fileName == metricsFileName, "file name should be \"\(metricsFileName)\", current value: \(fileName)")
 
-                    // We associate the metricsCollection Proxy with the loaded collection
-                    datapoint.metricsCollection =? datapoint.collection(with: fileName)
+                    if fileName == metricsFileName{
 
-                    // -----------------------------------
-                    // 2# Populate some data
-                    // Let's append a metrics
-                    let metrics = Metrics()
-                    metrics.operationName = "op"
-                    datapoint.metricsCollection.append(metrics)
+                        // We associate the metricsCollection Proxy with the loaded collection
+                        datapoint.metricsCollection =? datapoint.collection(with: fileName)
 
-                    do{
+                        // -----------------------------------
+                        // 2# Populate some data
+                        // Let's append a metrics
+                        let metrics = Metrics()
+                        metrics.operationName = "op"
+                        datapoint.metricsCollection.append(metrics)
 
-                        // __
-                        // 3# Save the data Point
-                        // Let's save the DataPoint
+                        do{
 
-                        let saveHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
-                            // We reset the observer
-                            if !success{
-                                XCTFail("datapoint.save() did fail: \(String(describing: message)) ")
-                                expectation.fulfill()
-                            }else{
-                                XCTAssert(fileName == metricsFileName, "file name should be \"\(metricsFileName)\", current value: \(fileName)")
-                                do{
+                            // __
+                            // 3# Save the data Point
+                            // Let's save the DataPoint
 
-                                    // -----------------------------------
-                                    // 4# create a clone and reload the data
-                                    //we want to load a copy of the dataPoint
-
-                                    let dataPointClone =  try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(), delegate: self)
-
-                                    let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
-                                        if !success{
-                                            XCTFail("Metrics createOrLoadCollection did fail: \(String(describing: message)) ")
-                                            expectation.fulfill()
-                                        }else{
-                                            XCTAssert(fileName == metricsFileName, "file name should be \"\(metricsFileName)\", current value: \(fileName)")
-                                            if let _ = datapoint.metricsCollection.index(where: { $0.id == metrics.id }) {
-                                                expectation.fulfill()
-                                            } else {
-                                                XCTFail("Metrics not found in the clone")
-                                                expectation.fulfill()
-                                            }
-                                        }
-                                    })
-                                    
-                                    dataPointClone.storage.addProgressObserver(observer: reloadHandler)
-
-                                }catch{
-                                    XCTFail("DataPoint clone creation error: \(error)")
+                            let saveHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
+                                // We reset the observer
+                                if !success{
+                                    XCTFail("datapoint.save() did fail: \(String(describing: message)) ")
                                     expectation.fulfill()
+                                }else{
+                                    if fileName == metricsFileName{
+                                        do{
+
+                                            // -----------------------------------
+                                            // 4# create a clone and reload the data
+                                            //we want to load a copy of the dataPoint
+
+                                            let dataPointClone =  try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(), delegate: self)
+
+                                            let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
+                                                if !success{
+                                                    XCTFail("Metrics createOrLoadCollection did fail: \(String(describing: message)) ")
+                                                    expectation.fulfill()
+                                                }else{
+                                                    if fileName == metricsFileName{
+                                                        XCTAssert(fileName == metricsFileName, "file name should be \"\(metricsFileName)\", current value: \(fileName)")
+                                                        if let _ = datapoint.metricsCollection.index(where: { $0.id == metrics.id }) {
+                                                            expectation.fulfill()
+                                                        } else {
+                                                            XCTFail("Metrics not found in the clone")
+                                                            expectation.fulfill()
+                                                        }
+                                                    }else{
+                                                        ///
+                                                    }
+                                                }
+                                            })
+
+                                            dataPointClone.storage.addProgressObserver(observer: reloadHandler)
+
+                                        }catch{
+                                            XCTFail("DataPoint clone creation error: \(error)")
+                                            expectation.fulfill()
+                                        }
+                                    }else{
+                                        XCTAssert(fileName == managedModelsFileName, "file name should be \"\(managedModelsFileName)\", current value: \(fileName)")
+                                    }
+
                                 }
-                            }
-                        })
+                            })
 
-                        try datapoint.save()
-                        datapoint.storage.addProgressObserver(observer: saveHandler)
+                            try datapoint.save()
+                            datapoint.storage.addProgressObserver(observer: saveHandler)
 
-                    }catch{
-                        XCTFail("Metrics collection save error: \(error)")
-                        expectation.fulfill()
+                        }catch{
+                            XCTFail("Metrics collection save error: \(error)")
+                            expectation.fulfill()
+                        }
                     }
                 }
             })
@@ -180,4 +200,122 @@ class DataPointTests: XCTestCase,DataPointDelegate{
             XCTFail("Metrics collection error: \(error)")
         }
     }
+
+
+    func test003SimpleRelations() {
+
+        let uid = Utilities.createUID()
+        do {
+            let datapoint = try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let _ = MyDataPoint.FileNames.metrics.rawValue
+
+            let metrics1 = Metrics()
+            metrics1.operationName = "op1"
+            datapoint.metricsCollection.append(metrics1)
+
+            let o = ManagedModel()
+            datapoint.managedModelsCollection.append(o)
+
+            metrics1.declaresOwnership(of: o)
+
+            guard let ownerOfO:Metrics = o.firstRelation(Relationship.ownedBy) else{
+                XCTFail("o should be owned by a metrics")
+                return
+            }
+            
+            XCTAssert(ownerOfO == metrics1, "metrics1 should be the owner of o")
+        }catch{
+            XCTFail("\(error)")
+        }
+    }
+
+
+    func test004RelationalErasure() {
+
+        let uid = Utilities.createUID()
+        do {
+            let datapoint = try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let _ = MyDataPoint.FileNames.metrics.rawValue
+
+            let metrics1 = Metrics()
+            let mUID = metrics1.UID
+            metrics1.operationName = "op1"
+            datapoint.metricsCollection.append(metrics1)
+
+            let o = ManagedModel()
+            let oUID = o.UID
+            datapoint.managedModelsCollection.append(o)
+
+            metrics1.declaresOwnership(of: o)
+
+            XCTAssert(datapoint.managedModelsCollection.count == 1, "managedModelsCollection should contain one item")
+            XCTAssert(datapoint.metricsCollection.count == 1, "metricsCollection should contain one item")
+
+            // Erasing the metrics should erase the managedModel
+            try metrics1.erase()
+
+            XCTAssert(datapoint.managedModelsCollection.count == 0, "managedModelsCollection should contain 0 item")
+            XCTAssert(datapoint.metricsCollection.count == 0, "metricsCollection should contain 0 item")
+
+
+            do{
+                let _:ManagedModel = try datapoint.registredObjectByUID(oUID)
+                let _:Metrics = try datapoint.registredObjectByUID(mUID)
+                XCTFail("o and metric1 should not be registred")
+            }catch DataPointError.instanceNotFound {
+                // OK
+            }catch{
+                XCTFail("Should be DataPointError.instanceNotFound, current error is: \(error)")
+            }
+
+        }catch{
+            XCTFail("\(error)")
+        }
+    }
+
+
+    func test005RelationalLeafErasure() {
+
+        let uid = Utilities.createUID()
+        do {
+            let datapoint = try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let _ = MyDataPoint.FileNames.metrics.rawValue
+
+            let metrics1 = Metrics()
+            metrics1.operationName = "op1"
+            datapoint.metricsCollection.append(metrics1)
+
+            let o = ManagedModel()
+            datapoint.managedModelsCollection.append(o)
+            metrics1.declaresOwnership(of: o)
+
+            let oUID = o.UID
+
+            let oRef:ManagedModel = try datapoint.registredObjectByUID(oUID)
+            XCTAssert(oRef == o, "o should be registred")
+
+            XCTAssert(datapoint.managedModelsCollection.count == 1, "managedModelsCollection should contain one item")
+            XCTAssert(datapoint.metricsCollection.count == 1, "metricsCollection should contain one item")
+
+            // Erasing the o should not erase the managed model
+            try o.erase()
+
+            XCTAssert(datapoint.managedModelsCollection.count == 0, "managedModelsCollection should contain 0 item")
+            XCTAssert(datapoint.metricsCollection.count == 1, "metricsCollection should contain 1 item")
+
+            do{
+                let _:ManagedModel = try datapoint.registredObjectByUID(oUID)
+                XCTFail("oRef should not be registred")
+            }catch DataPointError.instanceNotFound {
+                // OK
+            }catch{
+                XCTFail("Should be DataPointError.instanceNotFound, current error is: \(error)")
+            }
+
+        }catch{
+            XCTFail("\(error)")
+        }
+    }
+
+
 }

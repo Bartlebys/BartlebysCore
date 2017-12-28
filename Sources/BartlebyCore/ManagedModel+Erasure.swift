@@ -25,53 +25,55 @@ extension ManagedModel{
     /// - Returns: N/A
     public func erase(commit:Bool=true,eraserUID:String="NO_UID")throws->(){
         guard let dataPoint=self.dataPoint else{
-             throw ErasingError.dataPointUndefined
+            throw ErasingError.dataPointUndefined
         }
 
-        let Type = self.self
-
-            // #TODO write specific Unit test for real cases validation (in BSFS and YD)
-            // Co-ownership (used by recursive calls)
-            // Preserves ownees with multiple Owners
-            if self.ownedBy.count > 1 && eraserUID != "NO_UID"{
-                if let idx = self.ownedBy.index(of: eraserUID){
-                    // Remove the homologous relation
-                    if let owner:ManagedModel = try? dataPoint.registredObjectByUID(eraserUID){
-                        owner.removeRelation(Relationship.owns, to:self)
-                        return
-                    }
-                }
-            }
-
-            // Call the overridable cleaning method
-            dataPoint.willErase(self)
-            try self.erasableContainer?.remove(self, commit: commit)
-
-            var erasableUIDS:[String]=[self.UID]
-
-            // Erase recursively
-            func __stageForErasure(_ objectUID:String,eraserUID:String="NO_UID")throws->(){
-                if !erasableUIDS.contains(objectUID){
-                    erasableUIDS.append(objectUID)
-                    let target:ManagedModel = try dataPoint.registredObjectByUID(objectUID)
-                    try target.erase(commit: commit)
-                }
-            }
-
-            try self.owns.forEach({ (objectUID) in
-                try __stageForErasure(objectUID,eraserUID: self.UID)
-            })
-
-
-            self.ownedBy.forEach({ (ownerObjectUID) in
+        // #TODO write specific Unit test for real cases validation (in BSFS and YD)
+        // Co-ownership (used by recursive calls)
+        // Preserves ownees with multiple Owners
+        if self.ownedBy.count > 1 && eraserUID != "NO_UID"{
+            if let idx = self.ownedBy.index(of: eraserUID){
                 // Remove the homologous relation
-                if let owner:ManagedModel = try? dataPoint.registredObjectByUID(ownerObjectUID){
+                if let owner:ManagedModel = try? dataPoint.registredObjectByUID(eraserUID){
                     owner.removeRelation(Relationship.owns, to:self)
+                    return
                 }
-            })
+            }
+        }
 
-            // What should we do for free relations?
-            // That's FreeDom! There is nothing to do with self.free
+        // Call the overridable cleaning method
+        dataPoint.willErase(self)
+        try self.erasableContainer?.remove(self, commit: commit)
+
+        var erasableUIDS:[String]=[self.UID]
+
+        // Erase recursively
+        func __stageForErasure(_ objectUID:String,eraserUID:String="NO_UID")throws->(){
+            if !erasableUIDS.contains(objectUID){
+                erasableUIDS.append(objectUID)
+                let target:ManagedModel = try dataPoint.registredObjectByUID(objectUID)
+                try target.erase(commit: commit)
+            }
+        }
+
+        try self.owns.forEach({ (objectUID) in
+            try __stageForErasure(objectUID,eraserUID: self.UID)
+        })
+
+
+        self.ownedBy.forEach({ (ownerObjectUID) in
+            // Remove the homologous relation
+            if let owner:ManagedModel = try? dataPoint.registredObjectByUID(ownerObjectUID){
+                owner.removeRelation(Relationship.owns, to:self)
+            }
+        })
+
+        // What should we do for free relations?
+        // That's FreeDom! There is nothing to do with self.free
+
+        // Let's unRegister
+        dataPoint.unRegister(self)
+
 
     }
 
