@@ -30,7 +30,26 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4D8A0C941FDFED2F00AC6A21"
+               BuildableName = "BartlebysCoreiOSTests.xctest"
+               BlueprintName = "BartlebysCoreiOSTests"
+               ReferencedContainer = "container:BartlebysCoreiOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4D55FC9D1FDAF7B1001D91CE"
+            BuildableName = "BartlebysCoreiOS.framework"
+            BlueprintName = "BartlebysCoreiOS"
+            ReferencedContainer = "container:BartlebysCoreiOS.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
