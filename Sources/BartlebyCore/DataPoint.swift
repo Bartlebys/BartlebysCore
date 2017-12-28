@@ -37,6 +37,7 @@ open class DataPoint: ConcreteDataPoint{
     // The storage IO object: reads an writes the ObjectsCollections
     public var storage = Storage()
 
+
     /// The associated session
     public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)
     
@@ -75,10 +76,10 @@ open class DataPoint: ConcreteDataPoint{
     /// Registers the collection into the data point
     ///
     /// - Parameter collection: the collection
-    public func registerCollection<T>(collection:ObjectCollection<T>)throws{
+    public func registerCollection<T>(collection:CollectionOf<T>)throws{
 
         if !self._collections.contains(where: { (existingCollection) -> Bool in
-            if let c = existingCollection as? ObjectCollection<T>{
+            if let c = existingCollection as? CollectionOf<T>{
                 return c.d_collectionName == collection.d_collectionName && c.fileName == collection.fileName
             }
             return false
@@ -99,9 +100,9 @@ open class DataPoint: ConcreteDataPoint{
     /// Returns the collection by file name
     ///
     /// - Parameter fileName: the fileName of the searched collection
-    /// - Returns: the ObjectCollection
-    public func collection<T>(with fileName:String)->ObjectCollection<T>?{
-        return self._collectionsPerFileName[fileName] as? ObjectCollection<T>
+    /// - Returns: the CollectionOf
+    public func collection<T>(with fileName:String)->CollectionOf<T>?{
+        return self._collectionsPerFileName[fileName] as? CollectionOf<T>
     }
 
     
@@ -215,8 +216,8 @@ open class DataPoint: ConcreteDataPoint{
     ///
     /// - Parameter response: the call Response
     public final func integrateResponse<T:Tolerent>(_ response: DataResponse<T>) {
-        if let firstCollection = self._collections.first(where:{ $0 as? ObjectCollection<T> != nil }) {
-            if let concreteCollection = firstCollection as? ObjectCollection<T>{
+        if let firstCollection = self._collections.first(where:{ $0 as? CollectionOf<T> != nil }) {
+            if let concreteCollection = firstCollection as? CollectionOf<T>{
                 for instance in response.result {
                     concreteCollection.upsert(instance)
                 }
@@ -234,7 +235,7 @@ open class DataPoint: ConcreteDataPoint{
             }else{
                 return false
             }
-        }) as? ObjectCollection<CallOperation<T,P>> {
+        }) as? CollectionOf<CallOperation<T,P>> {
             if let idx = pendingCallOperations.index(where: { $0.id == operation.id }) {
                 let _ = pendingCallOperations.remove(at: idx)
             }
@@ -256,10 +257,20 @@ open class DataPoint: ConcreteDataPoint{
     /// - Throws: throws an exception if any save operation has failed
     public final func save(using encoder: ConcreteCoder) throws {
         for collection in self._collections {
-            if let universallyPersistentCollection = collection as? FilePersistentCollection {
+            if let universallyPersistentCollection = collection as? FilePersistent {
                 try universallyPersistentCollection.saveToFile(fileName: universallyPersistentCollection.fileName, relativeFolderPath: self.sessionIdentifier,using: encoder)
             }
         }
+    }
+
+}
+
+
+extension DataPoint{
+
+
+    public func register<T:  Codable & Collectible & Tolerent >(_ instance: T) {
+
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  ObjectCollection.swift
+//  CollectionOf.swift
 //  BartlebyCore
 //
 //  Created by Laurent Morvillier on 04/12/2017.
@@ -8,12 +8,13 @@
 
 import Foundation
 import Dispatch
-enum ObjectCollectionError:Error {
+enum CollectionOfError:Error {
     case collectionIsNotRegistred
 }
 
 
-public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Collection, Sequence,FilePersistentCollection where T : Codable & Collectible & Tolerent {
+public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent where T : Codable & Collectible & Tolerent {
+
 
     // MARK: -
 
@@ -21,7 +22,7 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Colle
     private var _storage: [T] = [T]()
 
     // We expose the collection type
-    public var type: (Codable & Collectible & Tolerent).Type { return T.self }
+    public var collectedType:T.Type { return T.self }
 
     // You must setup a relativeFolderPath
     public var relativeFolderPath: String
@@ -41,23 +42,29 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Colle
 
     // MARK: - UniversalType
     
-    public static var collectionName:String { return ObjectCollection._collectionName() }
+    public static var collectionName:String { return CollectionOf._collectionName() }
     
-    public var d_collectionName: String { return ObjectCollection._collectionName() }
+    public var d_collectionName: String { return CollectionOf._collectionName() }
     
     fileprivate static func _collectionName()->String{
         return T.collectionName
     }
-    
+
     public static var typeName: String {
         get {
-            return "ObjectCollection<\(T.typeName)>"
+            return "CollectionOf<\(T.typeName)>"
         }
         set {}
     }
 
     // MARK: - Initializer
 
+
+    /// The designated initializer
+    ///
+    /// - Parameters:
+    ///   - named: the name of the collection is also its fileName
+    ///   - relativePath: a relative path to be able to group/classify collections.
     public required init(named:String, relativePath:String){
         self.fileName = named
         self.relativeFolderPath = relativePath
@@ -84,7 +91,18 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Colle
         set(newValue) {
             self._storage[index] = newValue
             self.hasChanged = true
+            self.reference(newValue)
         }
+    }
+
+    /// References the element into the dataPoint registry
+    ///
+    /// - Parameter element: the element
+    func reference<T: Codable & Collectible & Tolerent >(_ element:T){
+        // We reference the collection
+        element.setCollection(self)
+        // And register globally the element
+        self.dataPoint?.register(element)
     }
     
     @discardableResult public func remove(at index: Int) -> T {
@@ -95,6 +113,7 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Colle
     public func append(_ newElement: T) {
         self.hasChanged = true
         self._storage.append(newElement)
+        self.reference(newElement)
     }
     
     public func append<S>(contentsOf newElements: S) where S : Sequence, Element == S.Element {
@@ -178,6 +197,9 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Colle
         self._storage = try values.decode([T].self, forKey:.items)
         self.fileName =  try values.decode(String.self, forKey:.fileName)
         self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
+        for element in self._storage{
+            self.reference(element)
+        }
     }
     
     open func encode(to encoder: Encoder) throws {
@@ -206,7 +228,7 @@ public final class ObjectCollection<T> : Codable, UniversalType, Tolerent, Colle
     public func saveToFile(fileName: String, relativeFolderPath: String, using coder:ConcreteCoder) throws {
         if self.hasChanged {
             guard let dataPoint = self.dataPoint else {
-                throw ObjectCollectionError.collectionIsNotRegistred
+                throw CollectionOfError.collectionIsNotRegistred
             }
             dataPoint.storage.saveCollectionToFile(collection: self, fileName: fileName, relativeFolderPath: relativeFolderPath, using: dataPoint)
         }

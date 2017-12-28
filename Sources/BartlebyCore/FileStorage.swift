@@ -14,7 +14,7 @@ public protocol FileStorage {
     /// and insert the elements in the collection proxy
     ///
     /// - Parameter proxy: the collection proxy
-    func load<T>(on proxy:ObjectCollection<T>)
+    func load<T>(on proxy:CollectionOf<T>)
 
     /// Saves the collection to a file on a separate queue
     ///
@@ -23,6 +23,6 @@ public protocol FileStorage {
     ///   - fileName: the filename
     ///   - relativeFolderPath: the relative folder path
     ///   - dataPoint: the holding dataPoint
-    func saveCollectionToFile<T>(collection:ObjectCollection<T>,fileName: String, relativeFolderPath: String, using dataPoint:DataPoint)
+    func saveCollectionToFile<T>(collection:CollectionOf<T>,fileName: String, relativeFolderPath: String, using dataPoint:DataPoint)
 
 }

@@ -5,6 +5,9 @@
 // MARK: <?php echo $d->description?>
 
 open class <?php echo ucfirst($d->name)?>:<?php echo GenerativeHelperForSwift::getBaseClass($d); ?>{
+
+    public typealias CollectedType = <?php echo ucfirst($d->name)?>
+
 <?php
 
 while ( $d ->iterateOnProperties() === true ) {
@@ -74,6 +77,7 @@ while ( $d ->iterateOnProperties() === true ) {
 ?>
 
 <?php echo $codableBlock ?>
+
 
     // MARK: - Initializable
 

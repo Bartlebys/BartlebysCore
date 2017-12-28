@@ -11,6 +11,8 @@
 // MARK: Bartleby's Core: a value object used to record metrics
 open class Metrics:ManagedModel{
 
+    public typealias CollectedType = Metrics
+
 	//The action name e.g: UpdateUser
 	@objc dynamic open var operationName:String = "NO_NAME"
 
@@ -69,6 +71,7 @@ open class Metrics:ManagedModel{
 		try container.encode(self.totalDuration,forKey:.totalDuration)
 		try container.encode(self.streamOrientation.rawValue ,forKey:.streamOrientation)
     }
+
 
 
     // MARK: - Initializable

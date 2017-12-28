@@ -11,6 +11,8 @@
 // MARK: Bartleby's Core base Managed Entity
 open class ManagedModel:Model{
 
+    public typealias CollectedType = ManagedModel
+
 	//An external unique identifier
 	@objc dynamic open var externalID:String? {
 	    didSet { 
@@ -66,6 +68,7 @@ open class ManagedModel:Model{
 		var container = encoder.container(keyedBy: ManagedModelCodingKeys.self)
 		try container.encodeIfPresent(self.externalID,forKey:.externalID)
     }
+
 
 
     // MARK: - Initializable

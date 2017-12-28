@@ -19,7 +19,7 @@
 		4D55FC641FDAF5D0001D91CE /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC441FDAF5CF001D91CE /* Model.swift */; };
 		4D55FC661FDAF5D0001D91CE /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC461FDAF5CF001D91CE /* Session.swift */; };
 		4D55FC681FDAF5D0001D91CE /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC481FDAF5CF001D91CE /* Logger.swift */; };
-		4D55FC691FDAF5D0001D91CE /* ObjectCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC491FDAF5CF001D91CE /* ObjectCollection.swift */; };
+		4D55FC691FDAF5D0001D91CE /* CollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */; };
 		4D55FC6A1FDAF5D0001D91CE /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4A1FDAF5CF001D91CE /* JSON.swift */; };
 		4D55FC6B1FDAF5D0001D91CE /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */; };
 		4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */; };
@@ -53,7 +53,7 @@
 		E51E0EF41FDD47AC00414D6C /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */; };
 		E51E0EF81FDD6E9700414D6C /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
 		E52ED5C71FEAD75D00D9F7A2 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
-		E549A3EF1FF1390200178ECA /* FilePersistentCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistentCollection.swift */; };
+		E549A3EF1FF1390200178ECA /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
 		E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
 		E5ADBAFC1FF242F300B6AA28 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
 		E5BC2D131FF133C200EC45F6 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D121FF133C200EC45F6 /* FileStorage.swift */; };
@@ -87,7 +87,7 @@
 		4D55FC441FDAF5CF001D91CE /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4D55FC461FDAF5CF001D91CE /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		4D55FC481FDAF5CF001D91CE /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		4D55FC491FDAF5CF001D91CE /* ObjectCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectCollection.swift; sourceTree = "<group>"; };
+		4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionOf.swift; sourceTree = "<group>"; };
 		4D55FC4A1FDAF5CF001D91CE /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Padding.swift"; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteCoder.swift; sourceTree = "<group>"; };
 		E51E0EF71FDD6E9700414D6C /* Initializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
 		E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
-		E549A3EE1FF1390200178ECA /* FilePersistentCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistentCollection.swift; sourceTree = "<group>"; };
+		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
 		E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProgressDelegates.swift; sourceTree = "<group>"; };
 		E5BC2D121FF133C200EC45F6 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
@@ -202,6 +202,7 @@
 				4D55FC801FDAF65A001D91CE /* generated */,
 				4D55FC811FDAF672001D91CE /* Protocols */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
+				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */,
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
@@ -221,7 +222,7 @@
 				4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */,
 				4D55FC431FDAF5CF001D91CE /* Model+ProvisionChanges.swift */,
 				4D55FC591FDAF5CF001D91CE /* Object.swift */,
-				4D55FC491FDAF5CF001D91CE /* ObjectCollection.swift */,
+				4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */,
 				E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */,
 				4D65E69E1FE02FE300034787 /* Paths.swift */,
 				4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */,
@@ -248,13 +249,12 @@
 		4D55FC811FDAF672001D91CE /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC861FDAF68F001D91CE /* Collectible.swift */,
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
 				E51E0EF71FDD6E9700414D6C /* Initializable.swift */,
 				E5BC2D121FF133C200EC45F6 /* FileStorage.swift */,
-				E549A3EE1FF1390200178ECA /* FilePersistentCollection.swift */,
+				E549A3EE1FF1390200178ECA /* FilePersistent.swift */,
 				4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */,
 				4D55FC8B1FDAF690001D91CE /* Payload.swift */,
 				4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */,
@@ -416,14 +416,14 @@
 				4D55FC791FDAF5D0001D91CE /* Object.swift in Sources */,
 				4D55FC681FDAF5D0001D91CE /* Logger.swift in Sources */,
 				4D55FC641FDAF5D0001D91CE /* Model.swift in Sources */,
-				4D55FC691FDAF5D0001D91CE /* ObjectCollection.swift in Sources */,
+				4D55FC691FDAF5D0001D91CE /* CollectionOf.swift in Sources */,
 				E5BC2D131FF133C200EC45F6 /* FileStorage.swift in Sources */,
 				4D55FC621FDAF5D0001D91CE /* CallOperation.swift in Sources */,
 				4D55FC601FDAF5D0001D91CE /* Failure.swift in Sources */,
 				4D55FC631FDAF5D0001D91CE /* Model+ProvisionChanges.swift in Sources */,
 				4D55FC731FDAF5D0001D91CE /* DataPoint.swift in Sources */,
 				4D55FC911FDAF690001D91CE /* UniversalType.swift in Sources */,
-				E549A3EF1FF1390200178ECA /* FilePersistentCollection.swift in Sources */,
+				E549A3EF1FF1390200178ECA /* FilePersistent.swift in Sources */,
 				4D55FC611FDAF5D0001D91CE /* Utilities.swift in Sources */,
 				4D55FC711FDAF5D0001D91CE /* VoidPayload.swift in Sources */,
 				4D55FC931FDAF690001D91CE /* HTTPOperation.swift in Sources */,

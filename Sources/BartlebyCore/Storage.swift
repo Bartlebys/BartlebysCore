@@ -53,7 +53,7 @@ extension Storage: FileStorage{
     /// and insert the elements
     ///
     /// - Parameter proxy: the collection proxy
-    public func load<T>(on proxy:ObjectCollection<T>){
+    public func load<T>(on proxy:CollectionOf<T>){
         guard let dataPoint = proxy.dataPoint else {
             return
         }
@@ -64,7 +64,7 @@ extension Storage: FileStorage{
                 let url = try Paths.directoryURL(relativeFolderPath: proxy.relativeFolderPath).appendingPathComponent(proxy.fileName + ".data")
                 if Storage._fileManager.fileExists(atPath: url.path) {
                     let data = try Data(contentsOf: url)
-                    let collection = try dataPoint.coder.decode(ObjectCollection<T>.self, from: data)
+                    let collection = try dataPoint.coder.decode(CollectionOf<T>.self, from: data)
                     proxy.append(contentsOf: collection)
                 }
                 
@@ -96,7 +96,7 @@ extension Storage: FileStorage{
     ///   - fileName: the filename
     ///   - relativeFolderPath: the relative folder path
     ///   - dataPoint: the holding dataPoint
-    public func saveCollectionToFile<T>(collection:ObjectCollection<T>,fileName: String, relativeFolderPath: String, using dataPoint:DataPoint){
+    public func saveCollectionToFile<T>(collection:CollectionOf<T>,fileName: String, relativeFolderPath: String, using dataPoint:DataPoint){
         self._progress.totalUnitCount += 1
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
 

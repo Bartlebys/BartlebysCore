@@ -11,9 +11,6 @@ import Foundation
 extension Model{
 
     public static func ==(lhs: Model, rhs: Model) -> Bool {
-        return lhs.id==rhs.id
+        return lhs.id == rhs.id
     }
 }
-
-
-

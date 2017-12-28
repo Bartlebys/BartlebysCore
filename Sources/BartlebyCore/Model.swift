@@ -10,6 +10,33 @@ import Foundation
 
 open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
 
+    // MARK: - Collection support
+
+    public typealias CollectedType = Model
+
+    // The collection reference.
+    fileprivate var _collection:Any?
+
+    /// Registers the collection reference
+    ///
+    /// - Parameter collection: the collection
+    public func setCollection<CollectedType>(_ collection:CollectionOf<CollectedType>){
+        self._collection = collection
+    }
+
+    /// Returns the collection
+    ///
+    /// - Returns: the collection
+    public func getCollection<CollectedType>()->CollectionOf<CollectedType>{
+        guard let collection = self._collection as? CollectionOf<CollectedType> else{
+            // Return a proxy (should not normally occur)
+            return CollectionOf<CollectedType>(named: "ProxyCollectionOf<\(CollectedType.typeName)>", relativePath: "")
+        }
+        return collection
+    }
+
+    // MARK: -
+
     // Compatibility layer
     @objc dynamic public var UID:String {
         set{

@@ -29,7 +29,7 @@ class MyDataPoint: DataPoint {
 
 
     // MARK: -  Collections of Models proxys
-    public var metricsCollection: ObjectCollection<Metrics> =  ObjectCollection<Metrics>(named:FileNames.metrics.rawValue,relativePath:"tests")
+    public var metricsCollection: CollectionOf<Metrics> =  CollectionOf<Metrics>(named:FileNames.metrics.rawValue,relativePath:"tests")
     
     // MARK: - Main Initializer
     required public init(credentials: Credentials, sessionIdentifier: String, coder: ConcreteCoder,delegate:DataPointDelegate) throws {
@@ -158,5 +158,26 @@ class DataPointTests: XCTestCase,DataPointDelegate{
         }
         wait(for: [expectation], timeout: 5.0)
     }
-    
+
+
+
+    func test002CollectionsReferences() {
+
+        let uid = Utilities.createUID()
+        do {
+            let datapoint = try MyDataPoint(credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let _ = MyDataPoint.FileNames.metrics.rawValue
+            let metrics = Metrics()
+            metrics.operationName = "op"
+            datapoint.metricsCollection.append(metrics)
+
+            let collection:CollectionOf<Metrics> = metrics.getCollection()
+            XCTAssert(collection.contains(metrics) , "Retrived Collection should contains the metric")
+
+            XCTAssert(collection.dataPoint?.sessionIdentifier == datapoint.sessionIdentifier , "The collection should be referencing its datapoint")
+
+        }catch{
+            XCTFail("Metrics collection error: \(error)")
+        }
+    }
 }
