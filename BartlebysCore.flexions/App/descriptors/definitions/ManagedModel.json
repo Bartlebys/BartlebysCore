@@ -1,7 +1,7 @@
 {
   "name": "ManagedModel",
   "definition": {
-    "description": "Bartleby's Core base Managed Entity",
+    "description": "Bartleby's Core base Managed Entity is Codable and Collectible but not Tolerent (CollectionOf requires the collected type to be tolerent)",
     "type": "object",
     "explicitType":"Model",
     "baseObject":false,

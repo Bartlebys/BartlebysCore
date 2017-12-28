@@ -14,6 +14,8 @@ public enum DataPointError : Error{
     case payloadIsNil
     case payloadShouldBeOfFilePathType
     case duplicatedRegistration(fileName:String)
+    case instanceNotFound
+    case instanceTypeMissMatch
 }
 
 public protocol DataPointDelegate{
@@ -37,13 +39,31 @@ open class DataPoint: ConcreteDataPoint{
     // The storage IO object: reads an writes the ObjectsCollections
     public var storage = Storage()
 
-
     /// The associated session
     public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)
     
     /// Its session identifier
     public var sessionIdentifier: String = "NOT_IDENTIFIED"
-    
+
+    /// Contains all the data Point collections
+    /// Populated by registerCollection
+    /// - Returns: the data Point model collections
+    fileprivate var _collections:[Any] = Array<Any>()
+
+    /// The collection hashed per fileName
+    fileprivate var _collectionsPerFileName = Dictionary<String,Any>()
+
+    // this centralized dictionary allows to access to any referenced object by its UID
+    // Future versions will use A binary tree.
+    fileprivate var _instancesByUID=Dictionary<String, Any>()
+
+    /// Defered Ownership
+    /// If we receive a Instance that refers to an unexisting Owner
+    /// We store its missing entry is the deferredOwnerships dictionary
+    /// For future resolution (on registration)
+    /// [notAvailableOwnerUID][relatedOwnedUIDS]
+    fileprivate var _deferredOwnerships=[UID:[UID]]()
+
     /// Initialization of the DataPoint
     ///
     /// - Parameters:
@@ -62,16 +82,6 @@ open class DataPoint: ConcreteDataPoint{
         self.storage.addProgressObserver (observer: DataPointLoadingDelegate(dataPoint: self))
     }
 
-
-
-
-    /// Contains all the data Point collections
-    /// Populated by registerCollection
-    /// - Returns: the data Point model collections
-    fileprivate var _collections:[Any] = Array<Any>()
-
-    /// The collection hashed per fileName
-    fileprivate var _collectionsPerFileName = Dictionary<String,Any>()
 
     /// Registers the collection into the data point
     ///
@@ -231,7 +241,7 @@ open class DataPoint: ConcreteDataPoint{
     public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>){
         if let pendingCallOperations = self._collections.first(where:{
             if let callOp =  $0 as? CallOperation<T,P>{
-                 return callOp.operationName == operation.operationName
+                return callOp.operationName == operation.operationName
             }else{
                 return false
             }
@@ -262,15 +272,143 @@ open class DataPoint: ConcreteDataPoint{
             }
         }
     }
-
 }
+
+// MARK: - Centralized Instances Registration
 
 
 extension DataPoint{
 
+    // The number of registred object
+    public var numberOfRegistredObject: Int {
+        get {
+            return self._instancesByUID.count
+        }
+    }
 
-    public func register<T:  Codable & Collectible & Tolerent >(_ instance: T) {
+    /// Registers an instance
+    ///
+    /// - Parameter instance: the instance to be registered
+    public func register<T:  Codable & Collectible >(_ instance: T) {
+        // Store the instance by its UID
+        self._instancesByUID[instance.id]=instance
 
+        // Check if some deferred Ownership has been recorded
+        if let owneesUIDS = self._deferredOwnerships[instance.id] {
+            /// This situation occurs for example
+            /// when the ownee has been triggered but not the owner
+            // or the deserialization of the ownee preceeds the owner
+            if let o=instance as? ManagedModel{
+                for owneeUID in  owneesUIDS{
+                    if let _ = self.registredManagedModelByUID(owneeUID){
+                        // Add the owns entry
+                        if !o.owns.contains(owneeUID){
+                            o.owns.append(owneeUID)
+                        }else{
+                            print("### !")
+                        }
+                    }else{
+                        Logger.log("Deferred ownership has failed to found \(owneeUID) for \(o.id)", category: Logger.Categories.critical)
+                    }
+                }
+            }
+            self._deferredOwnerships.removeValue(forKey: instance.id)
+        }
+    }
+
+
+    /// Removes the registred instance from the registry
+    ///
+    /// - Parameter instance: the instance
+    public func unRegister<T:  Codable & Collectible >(_ instance: T) {
+        self._instancesByUID.removeValue(forKey: instance.id)
+    }
+
+    /// Removes the registred instances from the registry
+    ///
+    /// - Parameter instance: the instance
+    public func unRegister<T:  Codable & Collectible >(_ instances: [T]) {
+        for instance in instances{
+            self.unRegister(instance)
+        }
+    }
+
+    /// Returns the registred instance of by its UID
+    ///
+    /// - Parameter UID: the instance unique identifier
+    /// - Returns: the instance
+    public func registredObjectByUID<T: Codable & Collectible>(_ UID: UID) throws-> T {
+        if let instance=self._instancesByUID[UID]{
+            if let casted=instance as? T{
+                return casted
+            }else{
+                throw DataPointError.instanceTypeMissMatch
+            }
+        }else{
+            throw DataPointError.instanceNotFound
+        }
+    }
+
+    ///  Returns the registred instance of by UIDs
+    ///
+    /// - Parameter UIDs: the UIDs
+    /// - Returns: the registred Instances
+    public func registredObjectsByUIDs<T: Collectible & Collectible >(_ UIDs: [UID]) throws-> [T] {
+        var items:[T]=[T]()
+        for UID in UIDs{
+            if let instance=self._instancesByUID[UID]{
+                if let casted=instance as? T{
+                    items.append(casted)
+                }else{
+                    throw DataPointError.instanceTypeMissMatch
+                }
+            }else{
+                throw DataPointError.instanceNotFound
+            }
+        }
+        return items
+    }
+
+
+    /// Returns a ManagedModel by its UID
+    /// Those instance are not casted.
+    /// You should most of the time use : `registredObjectByUID<T: Collectible>(_ UID: String) throws-> T`
+    /// - parameter UID:
+    /// - returns: the instance
+    public func registredManagedModelByUID(_ UID: UID)-> ManagedModel? {
+        return try? self.registredObjectByUID(UID)
+    }
+
+    /// Returns a collection of ManagedModel by UIDs
+    /// Those instance are not casted.
+    /// You should most of the time use : `registredObjectByUID<T: Collectible>(_ UID: String) throws-> T`
+    /// - parameter UID:
+    /// - returns: the instance
+    public func registredManagedModelByUIDs(_ UIDs: [UID])-> [ManagedModel]? {
+        return try? self.registredObjectsByUIDs(UIDs)
+    }
+
+    ///  Returns the instance by its UID
+    ///
+    /// - Parameter UID: needle
+    /// - Returns: the instance
+    public func collectibleInstanceByUID<T:Codable & Collectible>(_ UID: UID) -> T? {
+        return self._instancesByUID[UID] as? T
+    }
+
+    /// Stores the ownee when the owner is not already available
+    /// This situation may occur for example on collection deserialization
+    /// when the owner is deserialized before the ownee.
+    ///
+    /// - Parameters:
+    ///   - ownee: the ownee
+    ///   - ownerUID: the currently unavailable owner UID
+    public func appendToDeferredOwnershipsList<T:Codable & Collectible>(_ ownee:T,ownerUID:UID){
+        if self._deferredOwnerships.keys.contains(ownerUID) {
+            self._deferredOwnerships[ownerUID]!.append(ownee.id)
+        }else{
+            self._deferredOwnerships[ownerUID]=[ownee.id]
+        }
     }
 
 }

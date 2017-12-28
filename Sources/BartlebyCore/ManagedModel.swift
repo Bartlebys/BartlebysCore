@@ -8,7 +8,7 @@
 // Copyright (c) 2016  https://bartlebys.org  All rights reserved.
 //
 
-// MARK: Bartleby's Core base Managed Entity
+// MARK: Bartleby's Core base Managed Entity is Codable and Collectible but not Tolerent (CollectionOf requires the collected type to be tolerent)
 open class ManagedModel:Model{
 
     public typealias CollectedType = ManagedModel

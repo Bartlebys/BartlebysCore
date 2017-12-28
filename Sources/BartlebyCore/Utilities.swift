@@ -13,7 +13,7 @@ public struct Utilities {
     /// Creates an Universal Unique Identifier
     ///
     /// - Returns: returns the identifier
-    public static func createUID() -> String {
+    public static func createUID() -> UID {
         let uid = UUID.init().uuidString
         let utf8 = uid.data(using: .utf8)!
         return utf8.base64EncodedString()

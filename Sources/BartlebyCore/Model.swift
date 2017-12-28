@@ -38,7 +38,7 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
     // MARK: -
 
     // Compatibility layer
-    @objc dynamic public var UID:String {
+    @objc dynamic public var UID:UID {
         set{
             self.id = UID
         }
@@ -47,7 +47,7 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
         }
     }
 
-    @objc dynamic public var id:String = Utilities.createUID()
+    @objc dynamic public var id:UID = Utilities.createUID()
 
     internal var _quietChanges:Bool = false
 

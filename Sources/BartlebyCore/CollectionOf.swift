@@ -101,8 +101,29 @@ public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collectio
     func reference<T: Codable & Collectible & Tolerent >(_ element:T){
         // We reference the collection
         element.setCollection(self)
+
+        guard let dataPoint = self.dataPoint else{
+            Logger.log("Undefined Datapoint", category: Logger.Categories.critical)
+            return
+        }
+
         // And register globally the element
-        self.dataPoint?.register(element)
+        dataPoint.register(element)
+
+        // Deferred ownership
+        if let item = element as? ManagedModel{
+            // Re-build the own relation.
+            item.ownedBy.forEach({ (ownerUID) in
+                if let o = dataPoint.registredManagedModelByUID(ownerUID){
+                    if !o.owns.contains(item.UID){
+                        o.owns.append(item.UID)
+                    }
+                }else{
+                    // If the owner is not already available defer the homologous ownership registration.
+                    dataPoint.appendToDeferredOwnershipsList(item, ownerUID: ownerUID)
+                }
+            })
+        }
     }
     
     @discardableResult public func remove(at index: Int) -> T {

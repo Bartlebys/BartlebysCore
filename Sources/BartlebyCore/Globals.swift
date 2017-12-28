@@ -11,3 +11,6 @@ import Foundation
 // Bartleby 1.0 for MongodB (can be set-up uses Model.ModelCodingKeys._id)
 // In Most context Model.ModelCodingKeys.id is relevant.
 public var MODELS_PRIMARY_KEY:Model.ModelCodingKeys = Model.ModelCodingKeys.id
+
+// we store the UID
+public typealias UID = String
