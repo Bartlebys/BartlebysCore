@@ -107,6 +107,9 @@ public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collectio
             return
         }
 
+        // Reference the datapoint
+        element.setDataPoint(dataPoint)
+        
         // And register globally the element
         dataPoint.register(element)
 

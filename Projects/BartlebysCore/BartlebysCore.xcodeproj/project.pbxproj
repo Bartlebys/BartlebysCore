@@ -52,6 +52,12 @@
 		E516FE001FDDA9A4001AB6A5 /* JSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */; };
 		E51E0EF41FDD47AC00414D6C /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */; };
 		E51E0EF81FDD6E9700414D6C /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
+		E52A84631FF501D400F2408B /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84621FF501D400F2408B /* Relationship.swift */; };
+		E52A84651FF5021F00F2408B /* Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84641FF5021F00F2408B /* Relational.swift */; };
+		E52A84671FF5025500F2408B /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84661FF5025500F2408B /* Identifiable.swift */; };
+		E52A84691FF5029500F2408B /* RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84681FF5029500F2408B /* RelationsResolution.swift */; };
+		E52A846C1FF5033E00F2408B /* ManagedModel+Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */; };
+		E52A846D1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */; };
 		E52ED5C71FEAD75D00D9F7A2 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
 		E549A3EF1FF1390200178ECA /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
 		E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
@@ -120,6 +126,12 @@
 		E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoder.swift; sourceTree = "<group>"; };
 		E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteCoder.swift; sourceTree = "<group>"; };
 		E51E0EF71FDD6E9700414D6C /* Initializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
+		E52A84621FF501D400F2408B /* Relationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
+		E52A84641FF5021F00F2408B /* Relational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relational.swift; sourceTree = "<group>"; };
+		E52A84661FF5025500F2408B /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
+		E52A84681FF5029500F2408B /* RelationsResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelationsResolution.swift; sourceTree = "<group>"; };
+		E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedModel+Relational.swift"; sourceTree = "<group>"; };
+		E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedModel+RelationsResolution.swift"; sourceTree = "<group>"; };
 		E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
@@ -215,6 +227,8 @@
 				4D55FC4A1FDAF5CF001D91CE /* JSON.swift */,
 				E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */,
 				4D55FC481FDAF5CF001D91CE /* Logger.swift */,
+				E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */,
+				E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */,
 				4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */,
 				4D55FC441FDAF5CF001D91CE /* Model.swift */,
 				4D55FC521FDAF5CF001D91CE /* Model+Description.swift */,
@@ -225,6 +239,7 @@
 				4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */,
 				E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */,
 				4D65E69E1FE02FE300034787 /* Paths.swift */,
+				E52A84621FF501D400F2408B /* Relationship.swift */,
 				4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */,
 				4D55FC461FDAF5CF001D91CE /* Session.swift */,
 				4D55FC561FDAF5CF001D91CE /* Status.swift */,
@@ -252,15 +267,18 @@
 				4D55FC861FDAF68F001D91CE /* Collectible.swift */,
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
+				E52A84661FF5025500F2408B /* Identifiable.swift */,
 				E51E0EF71FDD6E9700414D6C /* Initializable.swift */,
 				E5BC2D121FF133C200EC45F6 /* FileStorage.swift */,
 				E549A3EE1FF1390200178ECA /* FilePersistent.swift */,
 				4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */,
 				4D55FC8B1FDAF690001D91CE /* Payload.swift */,
 				4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */,
+				E52A84641FF5021F00F2408B /* Relational.swift */,
+				E52A84681FF5029500F2408B /* RelationsResolution.swift */,
+				4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */,
 				4D55FC881FDAF68F001D91CE /* SessionDelegate.swift */,
 				4D55FC891FDAF68F001D91CE /* Tolerent.swift */,
-				4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -397,6 +415,7 @@
 				4D55FC901FDAF690001D91CE /* Tolerent.swift in Sources */,
 				4D55FC6A1FDAF5D0001D91CE /* JSON.swift in Sources */,
 				4D55FC6B1FDAF5D0001D91CE /* HTTPMethod.swift in Sources */,
+				E52A84671FF5025500F2408B /* Identifiable.swift in Sources */,
 				4D55FC721FDAF5D0001D91CE /* Model+Description.swift in Sources */,
 				4D65E6741FDFF9CA00034787 /* HTTPResponse.swift in Sources */,
 				E5EF060F1FEFB87800E57AA2 /* Storage.swift in Sources */,
@@ -408,6 +427,7 @@
 				4D55FC6C1FDAF5D0001D91CE /* Int+Padding.swift in Sources */,
 				4D55FC841FDAF688001D91CE /* Metrics.swift in Sources */,
 				4D1F372A1FDEE87100DA10AB /* FilePath.swift in Sources */,
+				E52A84651FF5021F00F2408B /* Relational.swift in Sources */,
 				4D55FC7B1FDAF5D0001D91CE /* Model+Equatable.swift in Sources */,
 				E5A0E03A1FDBEAF300FB4DE3 /* ConcreteDataPoint.swift in Sources */,
 				4D55FC701FDAF5D0001D91CE /* Globals.swift in Sources */,
@@ -416,12 +436,15 @@
 				4D55FC791FDAF5D0001D91CE /* Object.swift in Sources */,
 				4D55FC681FDAF5D0001D91CE /* Logger.swift in Sources */,
 				4D55FC641FDAF5D0001D91CE /* Model.swift in Sources */,
+				E52A84631FF501D400F2408B /* Relationship.swift in Sources */,
 				4D55FC691FDAF5D0001D91CE /* CollectionOf.swift in Sources */,
 				E5BC2D131FF133C200EC45F6 /* FileStorage.swift in Sources */,
 				4D55FC621FDAF5D0001D91CE /* CallOperation.swift in Sources */,
 				4D55FC601FDAF5D0001D91CE /* Failure.swift in Sources */,
 				4D55FC631FDAF5D0001D91CE /* Model+ProvisionChanges.swift in Sources */,
 				4D55FC731FDAF5D0001D91CE /* DataPoint.swift in Sources */,
+				E52A846D1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift in Sources */,
+				E52A846C1FF5033E00F2408B /* ManagedModel+Relational.swift in Sources */,
 				4D55FC911FDAF690001D91CE /* UniversalType.swift in Sources */,
 				E549A3EF1FF1390200178ECA /* FilePersistent.swift in Sources */,
 				4D55FC611FDAF5D0001D91CE /* Utilities.swift in Sources */,
@@ -430,6 +453,7 @@
 				4D55FC5E1FDAF5D0001D91CE /* Schemes.swift in Sources */,
 				E5ADBAFC1FF242F300B6AA28 /* StorageProgressDelegates.swift in Sources */,
 				4D55FC661FDAF5D0001D91CE /* Session.swift in Sources */,
+				E52A84691FF5029500F2408B /* RelationsResolution.swift in Sources */,
 				4D55FC6E1FDAF5D0001D91CE /* Model+DictionaryRepresentation.swift in Sources */,
 				4D55FC8F1FDAF690001D91CE /* SessionDelegate.swift in Sources */,
 			);

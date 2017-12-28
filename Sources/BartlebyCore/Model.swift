@@ -10,12 +10,24 @@ import Foundation
 
 open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
 
+    // A reference to the holding dataPoint
+    public var dataPoint:DataPoint?
+
+    /// Sets the dataPoint Reference
+    ///
+    /// - Parameter dataPoint: the dataPoint
+    public func setDataPoint(_ dataPoint:DataPoint){
+        self.dataPoint = dataPoint
+    }
+
     // MARK: - Collection support
 
     public typealias CollectedType = Model
 
     // The collection reference.
     fileprivate var _collection:Any?
+
+
 
     /// Registers the collection reference
     ///
@@ -35,9 +47,8 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
         return collection
     }
 
-    // MARK: -
+    // MARK: - Identifiable
 
-    // Compatibility layer
     @objc dynamic public var UID:UID {
         set{
             self.id = UID
@@ -46,6 +57,8 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
             return self.id
         }
     }
+
+    // MARK: -
 
     @objc dynamic public var id:UID = Utilities.createUID()
 
