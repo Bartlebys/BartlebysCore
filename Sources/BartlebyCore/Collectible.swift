@@ -34,5 +34,9 @@ public protocol Collectible : UniversalType,Identifiable {
     ///
     /// - Returns: the collection
     func getCollection<CollectedType>()->CollectionOf<CollectedType>
-}
 
+
+    /// The collection as an ErasableContainer
+    var erasableContainer:ErasableContainer? { get }
+
+}

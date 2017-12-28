@@ -47,6 +47,11 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
         return collection
     }
 
+    /// The collection as an ErasableContainer
+    public var erasableContainer:ErasableContainer? {
+        return self._collection as? ErasableContainer
+    }
+
     // MARK: - Identifiable
 
     @objc dynamic public var UID:UID {

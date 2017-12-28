@@ -57,6 +57,8 @@
 		E52A84771FF50C3900F2408B /* ManagedModel+Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84741FF50C3800F2408B /* ManagedModel+Relational.swift */; };
 		E52A84781FF50C3900F2408B /* ManagedModel+RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84751FF50C3800F2408B /* ManagedModel+RelationsResolution.swift */; };
 		E52A84791FF50C3900F2408B /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84761FF50C3900F2408B /* Relationship.swift */; };
+		E52A847F1FF52AE900F2408B /* ErasableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847E1FF52AE900F2408B /* ErasableContainer.swift */; };
+		E52A84811FF52AF400F2408B /* ManagedModel+Erasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84801FF52AF400F2408B /* ManagedModel+Erasure.swift */; };
 		E549A3F21FF13C5500178ECA /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3F01FF13C5400178ECA /* FileStorage.swift */; };
 		E549A3F31FF13C5500178ECA /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3F11FF13C5500178ECA /* FilePersistent.swift */; };
 		E5A0E0381FDBEAB800FB4DE3 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */; };
@@ -131,6 +133,8 @@
 		E52A84741FF50C3800F2408B /* ManagedModel+Relational.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedModel+Relational.swift"; sourceTree = "<group>"; };
 		E52A84751FF50C3800F2408B /* ManagedModel+RelationsResolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedModel+RelationsResolution.swift"; sourceTree = "<group>"; };
 		E52A84761FF50C3900F2408B /* Relationship.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
+		E52A847E1FF52AE900F2408B /* ErasableContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErasableContainer.swift; sourceTree = "<group>"; };
+		E52A84801FF52AF400F2408B /* ManagedModel+Erasure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedModel+Erasure.swift"; sourceTree = "<group>"; };
 		E549A3F01FF13C5400178ECA /* FileStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		E549A3F11FF13C5500178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
@@ -206,6 +210,7 @@
 				4D55FCB71FDAF7CB001D91CE /* JSON.swift */,
 				E516FE011FDDA9C2001AB6A5 /* JSONCoder.swift */,
 				4D55FCB51FDAF7CB001D91CE /* Logger.swift */,
+				E52A84801FF52AF400F2408B /* ManagedModel+Erasure.swift */,
 				E52A84741FF50C3800F2408B /* ManagedModel+Relational.swift */,
 				E52A84751FF50C3800F2408B /* ManagedModel+RelationsResolution.swift */,
 				4D8A0CAC1FDFF09A00AC6A21 /* Metrics+Tolerent.swift */,
@@ -246,6 +251,7 @@
 				4D55FCAC1FDAF7CB001D91CE /* Collectible.swift */,
 				E51E0EF51FDD4C4400414D6C /* ConcreteCoder.swift */,
 				E5A0E0371FDBEAB800FB4DE3 /* ConcreteDataPoint.swift */,
+				E52A847E1FF52AE900F2408B /* ErasableContainer.swift */,
 				E549A3F11FF13C5500178ECA /* FilePersistent.swift */,
 				E549A3F01FF13C5400178ECA /* FileStorage.swift */,
 				4D55FCC91FDAF7CB001D91CE /* HTTPOperation.swift */,
@@ -405,6 +411,7 @@
 				4D55FCD91FDAF7CB001D91CE /* Int+Padding.swift in Sources */,
 				4D65E6A11FE0305000034787 /* Paths.swift in Sources */,
 				4D55FCE81FDAF7CB001D91CE /* Model+Equatable.swift in Sources */,
+				E52A847F1FF52AE900F2408B /* ErasableContainer.swift in Sources */,
 				E516FE021FDDA9C2001AB6A5 /* JSONCoder.swift in Sources */,
 				4D55FCDD1FDAF7CB001D91CE /* Globals.swift in Sources */,
 				4D55FCE61FDAF7CB001D91CE /* Object.swift in Sources */,
@@ -424,6 +431,7 @@
 				4D55FCD21FDAF7CB001D91CE /* ManagedModel.swift in Sources */,
 				4D55FCCD1FDAF7CB001D91CE /* Failure.swift in Sources */,
 				4D55FCD01FDAF7CB001D91CE /* Model+ProvisionChanges.swift in Sources */,
+				E52A84811FF52AF400F2408B /* ManagedModel+Erasure.swift in Sources */,
 				E52A84781FF50C3900F2408B /* ManagedModel+RelationsResolution.swift in Sources */,
 				4D55FCE11FDAF7CB001D91CE /* UniversalType.swift in Sources */,
 				4D55FCE01FDAF7CB001D91CE /* DataPoint.swift in Sources */,

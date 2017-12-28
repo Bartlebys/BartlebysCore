@@ -13,7 +13,7 @@ enum CollectionOfError:Error {
 }
 
 
-public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent where T : Codable & Collectible & Tolerent {
+public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection,ErasableContainer, Sequence, FilePersistent where T : Codable & Collectible & Tolerent {
 
 
     // MARK: -
@@ -257,5 +257,25 @@ public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collectio
             dataPoint.storage.saveCollectionToFile(collection: self, fileName: fileName, relativeFolderPath: relativeFolderPath, using: dataPoint)
         }
     }
+
+
+    // MARK: - ErasableContainer
+
+    /// A remove function with type erasure to enable to performe ManagedModel+Erasure
+    ///
+    /// - Parameters:
+    ///   - item: the item to erase
+    ///   - commit: should we commit the erasure?
+    public func remove(_ item: Any , commit:Bool)throws->(){
+        guard let castedItem = item as? T else{
+            throw ErasingError.typeMissMatch
+        }
+        if let idx = self._storage.index(where:{ return $0.id == castedItem.id }){
+            self._storage.remove(at: idx)
+        }
+        // @todo commit
+    }
+
 }
+
 

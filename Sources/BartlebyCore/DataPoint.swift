@@ -272,6 +272,13 @@ open class DataPoint: ConcreteDataPoint{
             }
         }
     }
+
+    /// Called before erasure by ManagedModel.erase() of a managedModel Descendant
+    /// You should override this method to perform for example associated files deletions...
+    ///
+    /// - Parameter instance: the managedModel
+    open func willErase(_ instance:ManagedModel){}
+
 }
 
 // MARK: - Centralized Instances Registration
@@ -412,3 +419,4 @@ extension DataPoint{
     }
 
 }
+
