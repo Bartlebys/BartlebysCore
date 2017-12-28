@@ -2,6 +2,7 @@
 
 <?php echo $imports ?>
 
+
 // MARK: <?php echo $d->description?>
 
 open class <?php echo ucfirst($d->name)?>:<?php echo GenerativeHelperForSwift::getBaseClass($d); ?>{

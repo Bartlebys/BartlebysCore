@@ -136,7 +136,8 @@ if (!defined('_propertyValueString_DEFINED')){
 }
 
 if ($isBartlebysCore) {
-    $imports = "";
+    $imports = "
+import Foundation";
 }else{
     $imports = "
 import Foundation

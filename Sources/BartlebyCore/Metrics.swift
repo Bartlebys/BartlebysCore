@@ -8,6 +8,8 @@
 // Copyright (c) 2016  https://bartlebys.org  All rights reserved.
 //
 
+import Foundation
+
 // MARK: Bartleby's Core: a value object used to record metrics
 open class Metrics:ManagedModel{
 
