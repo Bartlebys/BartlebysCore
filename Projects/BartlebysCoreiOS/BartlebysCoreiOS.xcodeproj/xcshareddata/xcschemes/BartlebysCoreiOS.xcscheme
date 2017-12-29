@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4D55FC9D1FDAF7B1001D91CE"
-               BuildableName = "BartlebysCoreiOS.framework"
+               BuildableName = "BartlebysCore.framework"
                BlueprintName = "BartlebysCoreiOS"
                ReferencedContainer = "container:BartlebysCoreiOS.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D55FC9D1FDAF7B1001D91CE"
-            BuildableName = "BartlebysCoreiOS.framework"
+            BuildableName = "BartlebysCore.framework"
             BlueprintName = "BartlebysCoreiOS"
             ReferencedContainer = "container:BartlebysCoreiOS.xcodeproj">
          </BuildableReference>
@@ -68,7 +68,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D55FC9D1FDAF7B1001D91CE"
-            BuildableName = "BartlebysCoreiOS.framework"
+            BuildableName = "BartlebysCore.framework"
             BlueprintName = "BartlebysCoreiOS"
             ReferencedContainer = "container:BartlebysCoreiOS.xcodeproj">
          </BuildableReference>
@@ -86,7 +86,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4D55FC9D1FDAF7B1001D91CE"
-            BuildableName = "BartlebysCoreiOS.framework"
+            BuildableName = "BartlebysCore.framework"
             BlueprintName = "BartlebysCoreiOS"
             ReferencedContainer = "container:BartlebysCoreiOS.xcodeproj">
          </BuildableReference>

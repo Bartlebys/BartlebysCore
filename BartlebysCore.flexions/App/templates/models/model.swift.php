@@ -141,13 +141,7 @@ import Foundation";
 }else{
     $imports = "
 import Foundation
-#if os(iOS)
-    import BartlebysCoreiOS
-#elseif os(macOS)
-    import BartlebysCore
-#elseif os(Linux)
-    import BartlebysCore
-#endif";
+import BartlebysCore";
 }
 
 
