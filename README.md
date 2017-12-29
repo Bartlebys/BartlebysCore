@@ -6,7 +6,7 @@
 
 - macOS
 - iOS
-- linux
+- Linux
 - tvOS (partial)
 - watchOS (partial)
 
