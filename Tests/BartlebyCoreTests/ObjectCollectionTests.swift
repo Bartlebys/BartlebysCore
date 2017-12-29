@@ -8,13 +8,7 @@
 
 import Foundation
 import XCTest
-#if os(iOS)
-    import BartlebysCore
-#elseif os(macOS)
-    import BartlebysCore
-#elseif os(Linux)
-    import BartlebysCore
-#endif
+@testable import BartlebysCore
 
 
 class CollectionOfTests: XCTestCase,DataPointDelegate{

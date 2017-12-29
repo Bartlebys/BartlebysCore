@@ -1,11 +1,7 @@
+
+import Foundation
 import XCTest
-#if os(iOS)
-    @testable import BartlebysCore
-#elseif os(macOS)
-    @testable import BartlebysCore
-#elseif os(Linux)
-    @testable import BartlebysCore
-#endif
+@testable import BartlebysCore
 
 class BartlebyCoreTests: XCTestCase {
     func testExample() {
