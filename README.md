@@ -1,8 +1,18 @@
 # BartlebysCore
-A swift 4 Core engine that "Would prefer not to".
+
+**BartlebysCore** is the core Engine of [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit). It is written is Swift 4.x.
+
+## Supported platforms :
+
+- macOS
+- iOS
+- linux
+- tvOS (partial)
+- watchOS (partial)
+
 
 # Integration
 
 ## Using the swift Package manager
 
-## Linking the Projects/BartlebyCore or BartlebyCoreiOS
+## Linking BartlebysCore as a Submodule
