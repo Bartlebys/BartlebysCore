@@ -112,7 +112,7 @@
 		4D55FCCA1FDAF7CB001D91CE /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
 		4D55FCEE1FDAF811001D91CE /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		4D55FCEF1FDAF812001D91CE /* Metrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
-		4D65E6561FDFF54300034787 /* BartlebysCoreiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCoreiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D65E6561FDFF54300034787 /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D65E6571FDFF54300034787 /* BartlebysCoreiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BartlebysCoreiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D65E6751FDFFA4C00034787 /* HTTPResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPResponse.swift; sourceTree = "<group>"; };
 		4D65E6771FDFFA6C00034787 /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 				4D55FCA91FDAF7CB001D91CE /* Sources */,
 				4D55FCA01FDAF7B1001D91CE /* BartlebysCoreiOS */,
 				4D8A0C961FDFED2F00AC6A21 /* BartlebysCoreiOSTests */,
-				4D65E6561FDFF54300034787 /* BartlebysCoreiOS.framework */,
+				4D65E6561FDFF54300034787 /* BartlebysCore.framework */,
 				4D65E6571FDFF54300034787 /* BartlebysCoreiOSTests.xctest */,
 			);
 			sourceTree = "<group>";
@@ -308,7 +308,7 @@
 			);
 			name = BartlebysCoreiOS;
 			productName = BartlebysCoreiOS;
-			productReference = 4D65E6561FDFF54300034787 /* BartlebysCoreiOS.framework */;
+			productReference = 4D65E6561FDFF54300034787 /* BartlebysCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		4D8A0C941FDFED2F00AC6A21 /* BartlebysCoreiOSTests */ = {
@@ -596,7 +596,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bartlebys.BartlebysCoreiOS;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = BartlebysCore;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -618,7 +618,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.bartlebys.BartlebysCoreiOS;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = BartlebysCore;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
