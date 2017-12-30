@@ -8,26 +8,15 @@
 
 import Foundation
 
-#if os(OSX)
-    #if USE_DOCUMENT_ORIENTED_ARCHITECTURE
-        import AppKit
-        open class DataPointBaseClass:NSDocument{}
-    #else
-        open class DataPointBaseClass{}
-    #endif
-#elseif os(iOS)
-    #if USE_DOCUMENT_ORIENTED_ARCHITECTURE
-        import UIKit
-        open class DataPointBaseClass:UIDocument{}
-    #else
-        open class DataPointBaseClass{}
-    #endif
-#elseif os(watchOS)
-    open class DataPointBaseClass{}
-#elseif os(tvOS)
-    open class DataPointBaseClass{}
-#elseif os(Linux)
-    open class DataPointBaseClass{}
+#if os(OSX) && USE_DOCUMENT_ORIENTED_ARCHITECTURE
+    import AppKit
+    open class DataPointBaseClass:NSDocument{}
+#elseif os(iOS) && USE_DOCUMENT_ORIENTED_ARCHITECTURE
+    import UIKit
+    open class DataPointBaseClass:UIDocument{}
+#else
+    // Linux, macOS, iOS, tvOS, watchOS
+    open class DataPointBaseClass:Object{}
 #endif
 
 public enum DataPointError : Error{
@@ -102,17 +91,14 @@ open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
     /// [notAvailableOwnerUID][relatedOwnedUIDS]
     fileprivate var _deferredOwnerships=[UID:[UID]]()
 
+    // MARK: - Convenience Initializers
+    // Currently the designated initializer may be divergent per platform when using Document Arch.
 
-    /// Initialization of the DataPoint
+    /// Initialize the dataPoint
     ///
-    /// - Parameters:
-    ///   - baseURL: the base folder url
-    ///   - credentials: the current credentials
-    ///   - sessionIdentifier: a unique session identifier (should be persistent as it is used to compute serialization paths)
-    ///   - coder: the persistency layer a coder == a consistent Encoder / Decoder pair.
+    /// - Parameter baseURL: the baseURL where to load / save the dataPoint wrapper
     /// - Throws: Children may throw while populating the collections
-    convenience public init(baseURL:URL,credentials:Credentials, sessionIdentifier:String, coder: ConcreteCoder,delegate:DataPointDelegate) throws{
-
+    convenience public init(baseURL:URL) throws {
         #if os(iOS) && USE_DOCUMENT_ORIENTED_ARCHITECTURE
             self.init(fileURL: baseURL)
         #else
@@ -120,10 +106,6 @@ open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
         #endif
 
         self.baseURL = baseURL
-        self.credentials = credentials
-        self.sessionIdentifier = sessionIdentifier
-        self.coder = coder
-        self.delegate = delegate
 
         // The loading is asynchronous on separate queue.
         self.storage.addProgressObserver (observer: DataPointLoadingDelegate(dataPoint: self))
@@ -131,6 +113,9 @@ open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
         // Any collection that should be registred should be in this method
         try self.registerCollections()
     }
+
+
+    // MARK: -
 
     /// That the place where you should call : registerCollection(..)
     open func registerCollections()throws{

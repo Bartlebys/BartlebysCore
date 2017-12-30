@@ -38,24 +38,13 @@ class MyDataPoint: DataPoint {
 
 }
 
-class DataPointTests: XCTestCase,DataPointDelegate{
-
-
-    // MARK: - DataPointDelegate
-
-    func collectionDifSaveSuccessFully() {}
-
-    func collectionDidFailToSave(message: String) {}
-
-    func collectionDidLoadSuccessFully() {}
-
-    func collectionDidFailToLoad(message: String) {}
+class DataPointTests: XCTestCase{
 
     // MARK: - Tests
 
     static var allTests = [
         ("test001SaveDataPointAndReloadItsClone", test001SaveDataPointAndReloadItsClone),
-        ]
+    ]
 
 
     
@@ -65,14 +54,12 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
         let expectation = XCTestExpectation(description: "Save And ReloadADataPoint")
 
-        let uid = Utilities.createUID()
-
         // This test is asynchronous
         // We need to use storage observers
 
         do {
 
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL, credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
             let metricsFileName = MyDataPoint.FileNames.metrics.rawValue
             let managedModelsFileName = MyDataPoint.FileNames.managedModels.rawValue
 
@@ -116,7 +103,7 @@ class DataPointTests: XCTestCase,DataPointDelegate{
                                             // 4# create a clone and reload the data
                                             //we want to load a copy of the dataPoint
 
-                                            let dataPointClone =  try MyDataPoint(baseURL: Paths.baseDirectoryURL, credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(), delegate: self)
+                                            let dataPointClone =  try MyDataPoint(baseURL: Paths.baseDirectoryURL)
 
                                             let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                                                 if !success{
@@ -173,10 +160,8 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
 
     func test002CollectionsReferences() {
-
-        let uid = Utilities.createUID()
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL, credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
             let _ = MyDataPoint.FileNames.metrics.rawValue
             let metrics = Metrics()
             metrics.operationName = "op"
@@ -194,10 +179,8 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
 
     func test003SimpleRelations() {
-
-        let uid = Utilities.createUID()
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL, credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
             let _ = MyDataPoint.FileNames.metrics.rawValue
 
             let metrics1 = Metrics()
@@ -222,10 +205,8 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
 
     func test004RelationalErasure() {
-
-        let uid = Utilities.createUID()
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL, credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
             let _ = MyDataPoint.FileNames.metrics.rawValue
 
             let metrics1 = Metrics()
@@ -266,10 +247,9 @@ class DataPointTests: XCTestCase,DataPointDelegate{
 
 
     func test005RelationalLeafErasure() {
-
-        let uid = Utilities.createUID()
+        
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL, credentials: Credentials(username: "", password: ""), sessionIdentifier: uid, coder: JSONCoder(),delegate:self)
+            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
             let _ = MyDataPoint.FileNames.metrics.rawValue
 
             let metrics1 = Metrics()
