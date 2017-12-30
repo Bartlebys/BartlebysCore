@@ -40,6 +40,7 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         ("test003Remove", test003Remove),
         ("test004Remove", test004Remove),
         ("test005Count", test005Count),
+        ("test006UnicityOnUpserts",test006UnicityOnUpserts),
         ]
     
     lazy var dataPoint : DataPoint? = try? DataPoint(baseURL: Paths.baseDirectoryURL)

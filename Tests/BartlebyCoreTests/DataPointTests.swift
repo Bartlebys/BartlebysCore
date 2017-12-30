@@ -44,7 +44,10 @@ class DataPointTests: XCTestCase{
 
     static var allTests = [
         ("test001SaveDataPointAndReloadItsClone", test001SaveDataPointAndReloadItsClone),
-    ]
+        ("test002CollectionsReferences", test002CollectionsReferences),
+        ("test003SimpleRelations", test003SimpleRelations),
+        ("test004RelationalErasure", test004RelationalErasure),
+        ]
 
 
     
