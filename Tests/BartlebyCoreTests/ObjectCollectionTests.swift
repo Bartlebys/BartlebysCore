@@ -42,7 +42,7 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         ("test005Count", test005Count),
         ]
     
-    lazy var dataPoint : DataPoint? = try? DataPoint(baseURL: Paths.baseDirectoryURL, credentials: Credentials(username: "", password: ""), sessionIdentifier: "d2fe00dcde14425faf4a45c107c8090c", coder: JSONCoder(),delegate:self)
+    lazy var dataPoint : DataPoint? = try? DataPoint(baseURL: Paths.baseDirectoryURL)
 
     
     override func setUp() {

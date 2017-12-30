@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E527D20E1FF7C9BF009EA479"
-               BuildableName = "BartlebysCore_iOS_Document_Oriented.framework"
+               BuildableName = "BartlebysCore.framework"
                BlueprintName = "BartlebysCore iOS Document Oriented"
                ReferencedContainer = "container:BartlebysCore.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E527D20E1FF7C9BF009EA479"
-            BuildableName = "BartlebysCore_iOS_Document_Oriented.framework"
+            BuildableName = "BartlebysCore.framework"
             BlueprintName = "BartlebysCore iOS Document Oriented"
             ReferencedContainer = "container:BartlebysCore.xcodeproj">
          </BuildableReference>
@@ -67,7 +67,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E527D20E1FF7C9BF009EA479"
-            BuildableName = "BartlebysCore_iOS_Document_Oriented.framework"
+            BuildableName = "BartlebysCore.framework"
             BlueprintName = "BartlebysCore iOS Document Oriented"
             ReferencedContainer = "container:BartlebysCore.xcodeproj">
          </BuildableReference>
@@ -85,7 +85,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E527D20E1FF7C9BF009EA479"
-            BuildableName = "BartlebysCore_iOS_Document_Oriented.framework"
+            BuildableName = "BartlebysCore.framework"
             BlueprintName = "BartlebysCore iOS Document Oriented"
             ReferencedContainer = "container:BartlebysCore.xcodeproj">
          </BuildableReference>
