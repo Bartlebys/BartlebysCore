@@ -37,7 +37,7 @@ public class FilePath : Model {
         }
     }
     
-    open override func encode(to encoder: Encoder) throws {
+    public override func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: FilePathCodingKeys.self)
         try container.encode(self.relativePath, forKey:.relativePath)
     }

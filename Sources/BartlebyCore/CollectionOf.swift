@@ -226,7 +226,7 @@ public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collectio
         }
     }
     
-    open func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CollectionCodingKeys.self)
         try container.encode(self._storage, forKey:.items)
         try container.encode(self.fileName, forKey:.fileName)

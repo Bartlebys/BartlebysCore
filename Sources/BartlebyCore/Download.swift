@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Download : Model, Tolerent {
+public class Download : Model, Tolerent {
     
     public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
     

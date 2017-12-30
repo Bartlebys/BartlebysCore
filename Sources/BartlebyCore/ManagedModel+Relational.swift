@@ -35,7 +35,7 @@ extension ManagedModel:Relational{
     ///
     /// - Parameters:
     ///   - object:  object: the owned object
-    open func declaresFreeRelationShip(to object:Relational){
+    public func declaresFreeRelationShip(to object:Relational){
         self.addRelation(.free,to: object)
     }
 
@@ -45,7 +45,7 @@ extension ManagedModel:Relational{
     ///
     /// - Parameters:
     ///   - object:  object: the owned object
-    open func declaresOwnership(of object:Relational){
+    public func declaresOwnership(of object:Relational){
         self.addRelation(.owns,to: object)
         object.addRelation(.ownedBy,to: self)
     }
@@ -57,7 +57,7 @@ extension ManagedModel:Relational{
     /// - Parameters:
     ///   - contract: define the relationship
     ///   - object:  the related object
-    open func addRelation(_ relationship:Relationship,to object:Relational){
+    public func addRelation(_ relationship:Relationship,to object:Relational){
         switch relationship {
         case Relationship.free:
             if !self.freeRelations.contains(object.UID){
@@ -82,14 +82,14 @@ extension ManagedModel:Relational{
     /// The owner renounces to its property
     ///
     /// - Parameter object: the object
-    open func removeOwnerShip(of object:Relational){
+    public func removeOwnerShip(of object:Relational){
         self.removeRelation(Relationship.owns, to: object)
     }
 
     /// Renounces to free relationship
     ///
     /// - Parameter object: the object
-    open func removeFreeRelationShip(to object:Relational){
+    public func removeFreeRelationShip(to object:Relational){
         self.removeRelation(Relationship.free, to: object)
     }
 
@@ -98,7 +98,7 @@ extension ManagedModel:Relational{
     /// Remove a relation to another object
     ///
     /// - Parameter object: the object
-    open func removeRelation(_ relationship:Relationship,to object:Relational){
+    public func removeRelation(_ relationship:Relationship,to object:Relational){
         switch relationship {
         case Relationship.free:
             if let idx=self.freeRelations.index(of:object.UID){
@@ -125,7 +125,7 @@ extension ManagedModel:Relational{
     /// - Parameters:
     ///   - relationship:  the nature of the contract
     /// - Returns: the relations
-    open func getContractedRelations(_ relationship:Relationship)->[UID]{
+    public func getContractedRelations(_ relationship:Relationship)->[UID]{
         switch relationship {
         case Relationship.free:
             return self.freeRelations
