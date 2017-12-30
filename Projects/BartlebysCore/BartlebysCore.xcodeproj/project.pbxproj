@@ -1880,7 +1880,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_OSACOMPILEFLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
+				OTHER_OSACOMPILEFLAGS = "";
+				OTHER_SWIFT_FLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS-Document-Oriented";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = iphoneos;
@@ -1904,7 +1905,8 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_OSACOMPILEFLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
+				OTHER_OSACOMPILEFLAGS = "";
+				OTHER_SWIFT_FLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS-Document-Oriented";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = iphoneos;

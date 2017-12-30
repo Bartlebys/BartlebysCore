@@ -41,12 +41,14 @@ public final class Storage{
         }
     }
 
+    /// The base url of the storage (can be reset if necessary)
+    public var baseUrl:URL = Paths.baseDirectoryURL
+
 }
 
 // MARK: - FileStorage
 
 extension Storage: FileStorage{
-
 
 
     /// Loads asynchronously a collection from its file
@@ -61,7 +63,7 @@ extension Storage: FileStorage{
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
 
             do{
-                let url = try Paths.directoryURL(relativeFolderPath: proxy.relativeFolderPath).appendingPathComponent(proxy.fileName + ".data")
+                let url = self.baseUrl.appendingPathComponent(proxy.relativeFolderPath).appendingPathComponent(proxy.fileName + ".data")
                 if Storage._fileManager.fileExists(atPath: url.path) {
                     let data = try Data(contentsOf: url)
                     let collection = try dataPoint.coder.decode(CollectionOf<T>.self, from: data)
@@ -102,7 +104,7 @@ extension Storage: FileStorage{
 
             do{
                 collection.fileName = fileName
-                let directoryURL = try Paths.directoryURL(relativeFolderPath: relativeFolderPath)
+                let directoryURL = self.baseUrl.appendingPathComponent(relativeFolderPath)
                 let url = directoryURL.appendingPathComponent(fileName + ".data")
 
                 var isDirectory: ObjCBool = true

@@ -47,18 +47,35 @@ public protocol DataPointDelegate{
     func collectionDidFailToSave(message:String)
 }
 
+struct DataPointDelegatePlaceHolder:DataPointDelegate {
+    func collectionDidLoadSuccessFully(){}
+    func collectionDidFailToLoad(message:String){}
+    func collectionDifSaveSuccessFully(){}
+    func collectionDidFailToSave(message:String){}
+}
+
 // Abstract class
 open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
     
     // MARK: -
 
     /// The coder: encodes and decodes the Data
-    public var coder: ConcreteCoder
+    public var coder: ConcreteCoder = JSONCoder()
 
-    public var delegate: DataPointDelegate
+    public var delegate: DataPointDelegate = DataPointDelegatePlaceHolder()
 
     // The storage IO object: reads an writes the ObjectsCollections
     public var storage = Storage()
+
+    // The base URL
+    public var baseURL:URL{
+        get{
+            return self.storage.baseUrl
+        }
+        set{
+            self.storage.baseUrl = baseURL
+        }
+    }
 
     /// The associated session
     public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)
@@ -85,24 +102,39 @@ open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
     /// [notAvailableOwnerUID][relatedOwnedUIDS]
     fileprivate var _deferredOwnerships=[UID:[UID]]()
 
+
     /// Initialization of the DataPoint
     ///
     /// - Parameters:
+    ///   - baseURL: the base folder url
     ///   - credentials: the current credentials
     ///   - sessionIdentifier: a unique session identifier (should be persistent as it is used to compute serialization paths)
     ///   - coder: the persistency layer a coder == a consistent Encoder / Decoder pair.
     /// - Throws: Children may throw while populating the collections
-    required public init(credentials:Credentials, sessionIdentifier:String, coder: ConcreteCoder,delegate:DataPointDelegate) throws{
+    convenience public init(baseURL:URL,credentials:Credentials, sessionIdentifier:String, coder: ConcreteCoder,delegate:DataPointDelegate) throws{
 
+        #if os(iOS) && USE_DOCUMENT_ORIENTED_ARCHITECTURE
+            self.init(fileURL: baseURL)
+        #else
+            self.init()
+        #endif
+
+        self.baseURL = baseURL
         self.credentials = credentials
         self.sessionIdentifier = sessionIdentifier
         self.coder = coder
         self.delegate = delegate
 
-        super.init()
-
         // The loading is asynchronous on separate queue.
         self.storage.addProgressObserver (observer: DataPointLoadingDelegate(dataPoint: self))
+
+        // Any collection that should be registred should be in this method
+        try self.registerCollections()
+    }
+
+    /// That the place where you should call : registerCollection(..)
+    open func registerCollections()throws{
+
     }
 
 
@@ -155,7 +187,7 @@ open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
     // MARK: -  SessionDelegate
 
     /// The credentials should generaly not change during the session
-    open var credentials: Credentials
+    open var credentials: Credentials = Credentials(username: "NO_NAME", password: "NO_PASSWORD")
     
     /// The authentication method
     open var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
