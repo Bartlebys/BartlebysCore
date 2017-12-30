@@ -17,7 +17,7 @@ public class Paths {
     open static var applicationDirectoryName: String = "NO_NAME"
     
     enum PathsError : Error {
-        case fileDirectoryNotFound
+        case notFound
     }
 
     /// Returns the URL of the valid default directory
@@ -27,16 +27,16 @@ public class Paths {
     /// - Returns: a directory URL
     /// - Throws: issue on failure
     public static func directoryURL(relativeFolderPath: String) throws -> URL {
-        #if os(iOS) || os(macOS)
+        #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
             let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
             if let _url = urls.first {
                 let applicationDirectoryURL = _url.appendingPathComponent(Paths.applicationDirectoryName, isDirectory: true)
                 return applicationDirectoryURL.appendingPathComponent(relativeFolderPath, isDirectory: true)
             }
-        #elseif os(Linux) // linux @todo
-            
+        #elseif os(Linux)
+            // linux @todo
         #endif
-        throw PathsError.fileDirectoryNotFound
+        throw PathsError.notFound
     }
     
 }
