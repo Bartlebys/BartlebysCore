@@ -7,6 +7,124 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E527D1C31FF7C8DE009EA479 /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E527D1BA1FF7C8DE009EA479 /* BartlebysCore.framework */; };
+		E527D1CA1FF7C8DE009EA479 /* BartlebysCore_macOS_Document_Oriented.h in Headers */ = {isa = PBXBuildFile; fileRef = E527D1BC1FF7C8DE009EA479 /* BartlebysCore_macOS_Document_Oriented.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E527D1D11FF7C955009EA479 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC861FDAF68F001D91CE /* Collectible.swift */; };
+		E527D1D21FF7C955009EA479 /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */; };
+		E527D1D31FF7C955009EA479 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
+		E527D1D41FF7C955009EA479 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84661FF5025500F2408B /* Identifiable.swift */; };
+		E527D1D51FF7C955009EA479 /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
+		E527D1D61FF7C955009EA479 /* ErasableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ErasableContainer.swift */; };
+		E527D1D71FF7C955009EA479 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D121FF133C200EC45F6 /* FileStorage.swift */; };
+		E527D1D81FF7C955009EA479 /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
+		E527D1D91FF7C955009EA479 /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
+		E527D1DA1FF7C955009EA479 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
+		E527D1DB1FF7C955009EA479 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E527D1DC1FF7C955009EA479 /* Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84641FF5021F00F2408B /* Relational.swift */; };
+		E527D1DD1FF7C955009EA479 /* RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84681FF5029500F2408B /* RelationsResolution.swift */; };
+		E527D1DE1FF7C955009EA479 /* UniversalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */; };
+		E527D1DF1FF7C955009EA479 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC881FDAF68F001D91CE /* SessionDelegate.swift */; };
+		E527D1E01FF7C955009EA479 /* Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC891FDAF68F001D91CE /* Tolerent.swift */; };
+		E527D1E11FF7C959009EA479 /* ManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC831FDAF688001D91CE /* ManagedModel.swift */; };
+		E527D1E21FF7C959009EA479 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC821FDAF688001D91CE /* Metrics.swift */; };
+		E527D1E31FF7C95E009EA479 /* CallOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC421FDAF5CF001D91CE /* CallOperation.swift */; };
+		E527D1E41FF7C95E009EA479 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */; };
+		E527D1E51FF7C95E009EA479 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC531FDAF5CF001D91CE /* DataPoint.swift */; };
+		E527D1E61FF7C95E009EA479 /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */; };
+		E527D1E71FF7C95E009EA479 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67B1FDFFA9200034787 /* Download.swift */; };
+		E527D1E81FF7C95E009EA479 /* Failure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC401FDAF5CF001D91CE /* Failure.swift */; };
+		E527D1E91FF7C95E009EA479 /* FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37291FDEE87100DA10AB /* FilePath.swift */; };
+		E527D1EA1FF7C95E009EA479 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC501FDAF5CF001D91CE /* Globals.swift */; };
+		E527D1EB1FF7C95E009EA479 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */; };
+		E527D1EC1FF7C95E009EA479 /* HTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */; };
+		E527D1ED1FF7C95E009EA479 /* Int+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */; };
+		E527D1EE1FF7C95E009EA479 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4A1FDAF5CF001D91CE /* JSON.swift */; };
+		E527D1EF1FF7C95E009EA479 /* JSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */; };
+		E527D1F01FF7C95E009EA479 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC481FDAF5CF001D91CE /* Logger.swift */; };
+		E527D1F11FF7C95E009EA479 /* ManagedModel+Erasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847A1FF50D5800F2408B /* ManagedModel+Erasure.swift */; };
+		E527D1F21FF7C95E009EA479 /* ManagedModel+Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */; };
+		E527D1F31FF7C95E009EA479 /* ManagedModel+RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */; };
+		E527D1F41FF7C95E009EA479 /* Metrics+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */; };
+		E527D1F51FF7C95E009EA479 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC441FDAF5CF001D91CE /* Model.swift */; };
+		E527D1F61FF7C95E009EA479 /* Model+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC521FDAF5CF001D91CE /* Model+Description.swift */; };
+		E527D1F71FF7C95E009EA479 /* Model+DictionaryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */; };
+		E527D1F81FF7C95E009EA479 /* Model+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */; };
+		E527D1F91FF7C95E009EA479 /* Model+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* Model+ProvisionChanges.swift */; };
+		E527D1FA1FF7C95E009EA479 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC591FDAF5CF001D91CE /* Object.swift */; };
+		E527D1FB1FF7C95E009EA479 /* CollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */; };
+		E527D1FC1FF7C95E009EA479 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
+		E527D1FD1FF7C95E009EA479 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E69E1FE02FE300034787 /* Paths.swift */; };
+		E527D1FE1FF7C95E009EA479 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84621FF501D400F2408B /* Relationship.swift */; };
+		E527D1FF1FF7C95E009EA479 /* Schemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */; };
+		E527D2001FF7C95E009EA479 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC461FDAF5CF001D91CE /* Session.swift */; };
+		E527D2011FF7C95E009EA479 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC561FDAF5CF001D91CE /* Status.swift */; };
+		E527D2021FF7C95E009EA479 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF060E1FEFB87800E57AA2 /* Storage.swift */; };
+		E527D2031FF7C95E009EA479 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
+		E527D2041FF7C95E009EA479 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
+		E527D2051FF7C95E009EA479 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC411FDAF5CF001D91CE /* Utilities.swift */; };
+		E527D2061FF7C95E009EA479 /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
+		E527D2071FF7C971009EA479 /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F6F1FF6558C008BF543 /* BartlebyCoreTests.swift */; };
+		E527D2081FF7C971009EA479 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F701FF6558C008BF543 /* DataPointTests.swift */; };
+		E527D2091FF7C971009EA479 /* ObjectCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F6E1FF6558C008BF543 /* ObjectCollectionTests.swift */; };
+		E527D2181FF7C9BF009EA479 /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E527D20F1FF7C9BF009EA479 /* BartlebysCore.framework */; };
+		E527D21F1FF7C9BF009EA479 /* BartlebysCore_iOS_Document_Oriented.h in Headers */ = {isa = PBXBuildFile; fileRef = E527D2111FF7C9BF009EA479 /* BartlebysCore_iOS_Document_Oriented.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E527D2261FF7CAC2009EA479 /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F6F1FF6558C008BF543 /* BartlebyCoreTests.swift */; };
+		E527D2271FF7CAC2009EA479 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F701FF6558C008BF543 /* DataPointTests.swift */; };
+		E527D2281FF7CAC2009EA479 /* ObjectCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F6E1FF6558C008BF543 /* ObjectCollectionTests.swift */; };
+		E527D2291FF7CB31009EA479 /* ManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC831FDAF688001D91CE /* ManagedModel.swift */; };
+		E527D22A1FF7CB31009EA479 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC821FDAF688001D91CE /* Metrics.swift */; };
+		E527D22B1FF7CB35009EA479 /* Collectible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC861FDAF68F001D91CE /* Collectible.swift */; };
+		E527D22C1FF7CB35009EA479 /* ConcreteCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */; };
+		E527D22D1FF7CB35009EA479 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
+		E527D22E1FF7CB35009EA479 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84661FF5025500F2408B /* Identifiable.swift */; };
+		E527D22F1FF7CB35009EA479 /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
+		E527D2301FF7CB35009EA479 /* ErasableContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ErasableContainer.swift */; };
+		E527D2311FF7CB35009EA479 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D121FF133C200EC45F6 /* FileStorage.swift */; };
+		E527D2321FF7CB35009EA479 /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
+		E527D2331FF7CB35009EA479 /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
+		E527D2341FF7CB35009EA479 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
+		E527D2351FF7CB35009EA479 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E527D2361FF7CB35009EA479 /* Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84641FF5021F00F2408B /* Relational.swift */; };
+		E527D2371FF7CB35009EA479 /* RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84681FF5029500F2408B /* RelationsResolution.swift */; };
+		E527D2381FF7CB35009EA479 /* UniversalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */; };
+		E527D2391FF7CB35009EA479 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC881FDAF68F001D91CE /* SessionDelegate.swift */; };
+		E527D23A1FF7CB35009EA479 /* Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC891FDAF68F001D91CE /* Tolerent.swift */; };
+		E527D23B1FF7CB3A009EA479 /* CallOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC421FDAF5CF001D91CE /* CallOperation.swift */; };
+		E527D23C1FF7CB3A009EA479 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */; };
+		E527D23D1FF7CB3A009EA479 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC531FDAF5CF001D91CE /* DataPoint.swift */; };
+		E527D23E1FF7CB3A009EA479 /* DataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */; };
+		E527D23F1FF7CB3A009EA479 /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67B1FDFFA9200034787 /* Download.swift */; };
+		E527D2401FF7CB3A009EA479 /* Failure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC401FDAF5CF001D91CE /* Failure.swift */; };
+		E527D2411FF7CB3A009EA479 /* FilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1F37291FDEE87100DA10AB /* FilePath.swift */; };
+		E527D2421FF7CB3A009EA479 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC501FDAF5CF001D91CE /* Globals.swift */; };
+		E527D2431FF7CB3A009EA479 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */; };
+		E527D2441FF7CB3A009EA479 /* HTTPResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */; };
+		E527D2451FF7CB3A009EA479 /* Int+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */; };
+		E527D2461FF7CB3A009EA479 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4A1FDAF5CF001D91CE /* JSON.swift */; };
+		E527D2471FF7CB3A009EA479 /* JSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */; };
+		E527D2481FF7CB3A009EA479 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC481FDAF5CF001D91CE /* Logger.swift */; };
+		E527D2491FF7CB3A009EA479 /* ManagedModel+Erasure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847A1FF50D5800F2408B /* ManagedModel+Erasure.swift */; };
+		E527D24A1FF7CB3A009EA479 /* ManagedModel+Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */; };
+		E527D24B1FF7CB3A009EA479 /* ManagedModel+RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */; };
+		E527D24C1FF7CB3A009EA479 /* Metrics+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */; };
+		E527D24D1FF7CB3A009EA479 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC441FDAF5CF001D91CE /* Model.swift */; };
+		E527D24E1FF7CB3A009EA479 /* Model+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC521FDAF5CF001D91CE /* Model+Description.swift */; };
+		E527D24F1FF7CB3A009EA479 /* Model+DictionaryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */; };
+		E527D2501FF7CB3A009EA479 /* Model+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */; };
+		E527D2511FF7CB3A009EA479 /* Model+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* Model+ProvisionChanges.swift */; };
+		E527D2521FF7CB3A009EA479 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC591FDAF5CF001D91CE /* Object.swift */; };
+		E527D2531FF7CB3A009EA479 /* CollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */; };
+		E527D2541FF7CB3A009EA479 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
+		E527D2551FF7CB3A009EA479 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E69E1FE02FE300034787 /* Paths.swift */; };
+		E527D2561FF7CB3A009EA479 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84621FF501D400F2408B /* Relationship.swift */; };
+		E527D2571FF7CB3A009EA479 /* Schemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */; };
+		E527D2581FF7CB3A009EA479 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC461FDAF5CF001D91CE /* Session.swift */; };
+		E527D2591FF7CB3A009EA479 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC561FDAF5CF001D91CE /* Status.swift */; };
+		E527D25A1FF7CB3A009EA479 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF060E1FEFB87800E57AA2 /* Storage.swift */; };
+		E527D25B1FF7CB3A009EA479 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
+		E527D25C1FF7CB3A009EA479 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
+		E527D25D1FF7CB3A009EA479 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC411FDAF5CF001D91CE /* Utilities.swift */; };
+		E527D25E1FF7CB3A009EA479 /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
 		E5EC9F7F1FF655C4008BF543 /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */; };
 		E5EC9F861FF655C4008BF543 /* BartlebysCore_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC9F8D1FF655E1008BF543 /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F6F1FF6558C008BF543 /* BartlebyCoreTests.swift */; };
@@ -242,6 +360,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E527D1C41FF7C8DE009EA479 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D55FC281FDAF5AC001D91CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E527D1B91FF7C8DE009EA479;
+			remoteInfo = "BartlebysCore macOS Document Oriented";
+		};
+		E527D2191FF7C9BF009EA479 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4D55FC281FDAF5AC001D91CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E527D20E1FF7C9BF009EA479;
+			remoteInfo = "BartlebysCore iOS Document Oriented";
+		};
 		E5EC9F801FF655C4008BF543 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4D55FC281FDAF5AC001D91CE /* Project object */;
@@ -306,6 +438,18 @@
 		E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoder.swift; sourceTree = "<group>"; };
 		E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcreteCoder.swift; sourceTree = "<group>"; };
 		E51E0EF71FDD6E9700414D6C /* Initializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
+		E527D1731FF7C561009EA479 /* BartlebysCore Document macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document macOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore macOS/BartlebysCore Document macOS.plist"; sourceTree = "<absolute>"; };
+		E527D1B41FF7C5F0009EA479 /* BartlebysCore Document iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document iOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore iOS/BartlebysCore Document iOS.plist"; sourceTree = "<absolute>"; };
+		E527D1BA1FF7C8DE009EA479 /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E527D1BC1FF7C8DE009EA479 /* BartlebysCore_macOS_Document_Oriented.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore_macOS_Document_Oriented.h; sourceTree = "<group>"; };
+		E527D1BD1FF7C8DE009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E527D1C21FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BartlebysCore macOS Document OrientedTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E527D1C91FF7C8DE009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E527D20F1FF7C9BF009EA479 /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E527D2111FF7C9BF009EA479 /* BartlebysCore_iOS_Document_Oriented.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore_iOS_Document_Oriented.h; sourceTree = "<group>"; };
+		E527D2121FF7C9BF009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E527D2171FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BartlebysCore iOS Document OrientedTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E527D21E1FF7C9BF009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E52A84621FF501D400F2408B /* Relationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
 		E52A84641FF5021F00F2408B /* Relational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relational.swift; sourceTree = "<group>"; };
 		E52A84661FF5025500F2408B /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -344,6 +488,36 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E527D1B61FF7C8DE009EA479 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D1BF1FF7C8DE009EA479 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D1C31FF7C8DE009EA479 /* BartlebysCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D20B1FF7C9BF009EA479 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D2141FF7C9BF009EA479 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D2181FF7C9BF009EA479 /* BartlebysCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5EC9F721FF655C4008BF543 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -419,6 +593,10 @@
 				E5ECA0251FF65765008BF543 /* BartlebysCore.framework */,
 				E5ECA02D1FF65765008BF543 /* BartlebysCore tvOSTests.xctest */,
 				E5ECA07D1FF6581D008BF543 /* BartlebysCore.framework */,
+				E527D1BA1FF7C8DE009EA479 /* BartlebysCore.framework */,
+				E527D1C21FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests.xctest */,
+				E527D20F1FF7C9BF009EA479 /* BartlebysCore.framework */,
+				E527D2171FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -509,6 +687,40 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
+		E527D1BB1FF7C8DE009EA479 /* BartlebysCore macOS Document Oriented */ = {
+			isa = PBXGroup;
+			children = (
+				E527D1BC1FF7C8DE009EA479 /* BartlebysCore_macOS_Document_Oriented.h */,
+				E527D1BD1FF7C8DE009EA479 /* Info.plist */,
+			);
+			path = "BartlebysCore macOS Document Oriented";
+			sourceTree = "<group>";
+		};
+		E527D1C61FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests */ = {
+			isa = PBXGroup;
+			children = (
+				E527D1C91FF7C8DE009EA479 /* Info.plist */,
+			);
+			path = "BartlebysCore macOS Document OrientedTests";
+			sourceTree = "<group>";
+		};
+		E527D2101FF7C9BF009EA479 /* BartlebysCore iOS Document Oriented */ = {
+			isa = PBXGroup;
+			children = (
+				E527D2111FF7C9BF009EA479 /* BartlebysCore_iOS_Document_Oriented.h */,
+				E527D2121FF7C9BF009EA479 /* Info.plist */,
+			);
+			path = "BartlebysCore iOS Document Oriented";
+			sourceTree = "<group>";
+		};
+		E527D21B1FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests */ = {
+			isa = PBXGroup;
+			children = (
+				E527D21E1FF7C9BF009EA479 /* Info.plist */,
+			);
+			path = "BartlebysCore iOS Document OrientedTests";
+			sourceTree = "<group>";
+		};
 		E5EC9F6D1FF6557B008BF543 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,6 +736,7 @@
 			children = (
 				E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */,
 				E5EC9F791FF655C4008BF543 /* Info.plist */,
+				E527D1731FF7C561009EA479 /* BartlebysCore Document macOS.plist */,
 			);
 			path = "BartlebysCore macOS";
 			sourceTree = "<group>";
@@ -543,8 +756,12 @@
 				E5ECA0311FF65765008BF543 /* BartlebysCore tvOSTests */,
 				E5EC9FCD1FF65691008BF543 /* BartlebysCore iOS */,
 				E5EC9FD81FF65691008BF543 /* BartlebysCore iOSTests */,
+				E527D2101FF7C9BF009EA479 /* BartlebysCore iOS Document Oriented */,
+				E527D21B1FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests */,
 				E5EC9F771FF655C4008BF543 /* BartlebysCore macOS */,
 				E5EC9F821FF655C4008BF543 /* BartlebysCore macOSTests */,
+				E527D1BB1FF7C8DE009EA479 /* BartlebysCore macOS Document Oriented */,
+				E527D1C61FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests */,
 				E5ECA07E1FF6581D008BF543 /* BartlebysCore watchOS */,
 			);
 			name = Targets;
@@ -555,6 +772,7 @@
 			children = (
 				E5EC9FCE1FF65691008BF543 /* BartlebysCore_iOS.h */,
 				E5EC9FCF1FF65691008BF543 /* Info.plist */,
+				E527D1B41FF7C5F0009EA479 /* BartlebysCore Document iOS.plist */,
 			);
 			path = "BartlebysCore iOS";
 			sourceTree = "<group>";
@@ -596,6 +814,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		E527D1B71FF7C8DE009EA479 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D1CA1FF7C8DE009EA479 /* BartlebysCore_macOS_Document_Oriented.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D20C1FF7C9BF009EA479 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D21F1FF7C9BF009EA479 /* BartlebysCore_iOS_Document_Oriented.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5EC9F731FF655C4008BF543 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -631,6 +865,78 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		E527D1B91FF7C8DE009EA479 /* BartlebysCore macOS Document Oriented */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E527D1CB1FF7C8DE009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore macOS Document Oriented" */;
+			buildPhases = (
+				E527D1B51FF7C8DE009EA479 /* Sources */,
+				E527D1B61FF7C8DE009EA479 /* Frameworks */,
+				E527D1B71FF7C8DE009EA479 /* Headers */,
+				E527D1B81FF7C8DE009EA479 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BartlebysCore macOS Document Oriented";
+			productName = "BartlebysCore macOS Document Oriented";
+			productReference = E527D1BA1FF7C8DE009EA479 /* BartlebysCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E527D1C11FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E527D1CE1FF7C8DE009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore macOS Document OrientedTests" */;
+			buildPhases = (
+				E527D1BE1FF7C8DE009EA479 /* Sources */,
+				E527D1BF1FF7C8DE009EA479 /* Frameworks */,
+				E527D1C01FF7C8DE009EA479 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E527D1C51FF7C8DE009EA479 /* PBXTargetDependency */,
+			);
+			name = "BartlebysCore macOS Document OrientedTests";
+			productName = "BartlebysCore macOS Document OrientedTests";
+			productReference = E527D1C21FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E527D20E1FF7C9BF009EA479 /* BartlebysCore iOS Document Oriented */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E527D2201FF7C9BF009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore iOS Document Oriented" */;
+			buildPhases = (
+				E527D20A1FF7C9BF009EA479 /* Sources */,
+				E527D20B1FF7C9BF009EA479 /* Frameworks */,
+				E527D20C1FF7C9BF009EA479 /* Headers */,
+				E527D20D1FF7C9BF009EA479 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "BartlebysCore iOS Document Oriented";
+			productName = "BartlebysCore iOS Document Oriented";
+			productReference = E527D20F1FF7C9BF009EA479 /* BartlebysCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E527D2161FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E527D2231FF7C9BF009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore iOS Document OrientedTests" */;
+			buildPhases = (
+				E527D2131FF7C9BF009EA479 /* Sources */,
+				E527D2141FF7C9BF009EA479 /* Frameworks */,
+				E527D2151FF7C9BF009EA479 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E527D21A1FF7C9BF009EA479 /* PBXTargetDependency */,
+			);
+			name = "BartlebysCore iOS Document OrientedTests";
+			productName = "BartlebysCore iOS Document OrientedTests";
+			productReference = E527D2171FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		E5EC9F751FF655C4008BF543 /* BartlebysCore macOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5EC9F871FF655C4008BF543 /* Build configuration list for PBXNativeTarget "BartlebysCore macOS" */;
@@ -767,6 +1073,22 @@
 				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = Bartleby;
 				TargetAttributes = {
+					E527D1B91FF7C8DE009EA479 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					E527D1C11FF7C8DE009EA479 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					E527D20E1FF7C9BF009EA479 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					E527D2161FF7C9BF009EA479 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
 					E5EC9F751FF655C4008BF543 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
@@ -811,8 +1133,12 @@
 			targets = (
 				E5EC9F751FF655C4008BF543 /* BartlebysCore macOS */,
 				E5EC9F7D1FF655C4008BF543 /* BartlebysCore macOSTests */,
+				E527D1B91FF7C8DE009EA479 /* BartlebysCore macOS Document Oriented */,
+				E527D1C11FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests */,
 				E5EC9FCB1FF65691008BF543 /* BartlebysCore iOS */,
 				E5EC9FD31FF65691008BF543 /* BartlebysCore iOSTests */,
+				E527D20E1FF7C9BF009EA479 /* BartlebysCore iOS Document Oriented */,
+				E527D2161FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests */,
 				E5ECA0241FF65765008BF543 /* BartlebysCore tvOS */,
 				E5ECA02C1FF65765008BF543 /* BartlebysCore tvOSTests */,
 				E5ECA07C1FF6581D008BF543 /* BartlebysCore watchOS */,
@@ -821,6 +1147,34 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E527D1B81FF7C8DE009EA479 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D1C01FF7C8DE009EA479 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D20D1FF7C9BF009EA479 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D2151FF7C9BF009EA479 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5EC9F741FF655C4008BF543 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -873,6 +1227,148 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E527D1B51FF7C8DE009EA479 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D1F81FF7C95E009EA479 /* Model+Equatable.swift in Sources */,
+				E527D1F41FF7C95E009EA479 /* Metrics+Tolerent.swift in Sources */,
+				E527D1DD1FF7C955009EA479 /* RelationsResolution.swift in Sources */,
+				E527D1E91FF7C95E009EA479 /* FilePath.swift in Sources */,
+				E527D1D81FF7C955009EA479 /* FilePersistent.swift in Sources */,
+				E527D1E41FF7C95E009EA479 /* Credentials.swift in Sources */,
+				E527D1D21FF7C955009EA479 /* ConcreteCoder.swift in Sources */,
+				E527D1DE1FF7C955009EA479 /* UniversalType.swift in Sources */,
+				E527D1ED1FF7C95E009EA479 /* Int+Padding.swift in Sources */,
+				E527D2021FF7C95E009EA479 /* Storage.swift in Sources */,
+				E527D2011FF7C95E009EA479 /* Status.swift in Sources */,
+				E527D1F01FF7C95E009EA479 /* Logger.swift in Sources */,
+				E527D1FF1FF7C95E009EA479 /* Schemes.swift in Sources */,
+				E527D1FA1FF7C95E009EA479 /* Object.swift in Sources */,
+				E527D1EA1FF7C95E009EA479 /* Globals.swift in Sources */,
+				E527D2051FF7C95E009EA479 /* Utilities.swift in Sources */,
+				E527D1E11FF7C959009EA479 /* ManagedModel.swift in Sources */,
+				E527D1F51FF7C95E009EA479 /* Model.swift in Sources */,
+				E527D1D51FF7C955009EA479 /* Initializable.swift in Sources */,
+				E527D1F91FF7C95E009EA479 /* Model+ProvisionChanges.swift in Sources */,
+				E527D1F11FF7C95E009EA479 /* ManagedModel+Erasure.swift in Sources */,
+				E527D1FC1FF7C95E009EA479 /* Operators.swift in Sources */,
+				E527D1D41FF7C955009EA479 /* Identifiable.swift in Sources */,
+				E527D1E31FF7C95E009EA479 /* CallOperation.swift in Sources */,
+				E527D1E01FF7C955009EA479 /* Tolerent.swift in Sources */,
+				E527D1FD1FF7C95E009EA479 /* Paths.swift in Sources */,
+				E527D1EC1FF7C95E009EA479 /* HTTPResponse.swift in Sources */,
+				E527D1DF1FF7C955009EA479 /* SessionDelegate.swift in Sources */,
+				E527D1D31FF7C955009EA479 /* ConcreteDataPoint.swift in Sources */,
+				E527D1E51FF7C95E009EA479 /* DataPoint.swift in Sources */,
+				E527D1DB1FF7C955009EA479 /* ProvisionChanges.swift in Sources */,
+				E527D1E61FF7C95E009EA479 /* DataResponse.swift in Sources */,
+				E527D1F31FF7C95E009EA479 /* ManagedModel+RelationsResolution.swift in Sources */,
+				E527D2041FF7C95E009EA479 /* Upload.swift in Sources */,
+				E527D1EF1FF7C95E009EA479 /* JSONCoder.swift in Sources */,
+				E527D1F21FF7C95E009EA479 /* ManagedModel+Relational.swift in Sources */,
+				E527D2031FF7C95E009EA479 /* StorageProgressDelegates.swift in Sources */,
+				E527D1D61FF7C955009EA479 /* ErasableContainer.swift in Sources */,
+				E527D1E81FF7C95E009EA479 /* Failure.swift in Sources */,
+				E527D1FB1FF7C95E009EA479 /* CollectionOf.swift in Sources */,
+				E527D1EE1FF7C95E009EA479 /* JSON.swift in Sources */,
+				E527D1D71FF7C955009EA479 /* FileStorage.swift in Sources */,
+				E527D1E21FF7C959009EA479 /* Metrics.swift in Sources */,
+				E527D1F71FF7C95E009EA479 /* Model+DictionaryRepresentation.swift in Sources */,
+				E527D1D11FF7C955009EA479 /* Collectible.swift in Sources */,
+				E527D1DA1FF7C955009EA479 /* Payload.swift in Sources */,
+				E527D1EB1FF7C95E009EA479 /* HTTPMethod.swift in Sources */,
+				E527D1DC1FF7C955009EA479 /* Relational.swift in Sources */,
+				E527D1E71FF7C95E009EA479 /* Download.swift in Sources */,
+				E527D2001FF7C95E009EA479 /* Session.swift in Sources */,
+				E527D2061FF7C95E009EA479 /* VoidPayload.swift in Sources */,
+				E527D1F61FF7C95E009EA479 /* Model+Description.swift in Sources */,
+				E527D1D91FF7C955009EA479 /* HTTPOperation.swift in Sources */,
+				E527D1FE1FF7C95E009EA479 /* Relationship.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D1BE1FF7C8DE009EA479 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D2081FF7C971009EA479 /* DataPointTests.swift in Sources */,
+				E527D2091FF7C971009EA479 /* ObjectCollectionTests.swift in Sources */,
+				E527D2071FF7C971009EA479 /* BartlebyCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D20A1FF7C9BF009EA479 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D2501FF7CB3A009EA479 /* Model+Equatable.swift in Sources */,
+				E527D24C1FF7CB3A009EA479 /* Metrics+Tolerent.swift in Sources */,
+				E527D2351FF7CB35009EA479 /* ProvisionChanges.swift in Sources */,
+				E527D2411FF7CB3A009EA479 /* FilePath.swift in Sources */,
+				E527D2321FF7CB35009EA479 /* FilePersistent.swift in Sources */,
+				E527D23C1FF7CB3A009EA479 /* Credentials.swift in Sources */,
+				E527D2371FF7CB35009EA479 /* RelationsResolution.swift in Sources */,
+				E527D2291FF7CB31009EA479 /* ManagedModel.swift in Sources */,
+				E527D2451FF7CB3A009EA479 /* Int+Padding.swift in Sources */,
+				E527D25A1FF7CB3A009EA479 /* Storage.swift in Sources */,
+				E527D2591FF7CB3A009EA479 /* Status.swift in Sources */,
+				E527D2481FF7CB3A009EA479 /* Logger.swift in Sources */,
+				E527D2571FF7CB3A009EA479 /* Schemes.swift in Sources */,
+				E527D2521FF7CB3A009EA479 /* Object.swift in Sources */,
+				E527D2421FF7CB3A009EA479 /* Globals.swift in Sources */,
+				E527D25D1FF7CB3A009EA479 /* Utilities.swift in Sources */,
+				E527D22E1FF7CB35009EA479 /* Identifiable.swift in Sources */,
+				E527D24D1FF7CB3A009EA479 /* Model.swift in Sources */,
+				E527D2361FF7CB35009EA479 /* Relational.swift in Sources */,
+				E527D2511FF7CB3A009EA479 /* Model+ProvisionChanges.swift in Sources */,
+				E527D2491FF7CB3A009EA479 /* ManagedModel+Erasure.swift in Sources */,
+				E527D2541FF7CB3A009EA479 /* Operators.swift in Sources */,
+				E527D2311FF7CB35009EA479 /* FileStorage.swift in Sources */,
+				E527D23B1FF7CB3A009EA479 /* CallOperation.swift in Sources */,
+				E527D22A1FF7CB31009EA479 /* Metrics.swift in Sources */,
+				E527D2551FF7CB3A009EA479 /* Paths.swift in Sources */,
+				E527D2441FF7CB3A009EA479 /* HTTPResponse.swift in Sources */,
+				E527D22C1FF7CB35009EA479 /* ConcreteCoder.swift in Sources */,
+				E527D2381FF7CB35009EA479 /* UniversalType.swift in Sources */,
+				E527D23D1FF7CB3A009EA479 /* DataPoint.swift in Sources */,
+				E527D2341FF7CB35009EA479 /* Payload.swift in Sources */,
+				E527D23E1FF7CB3A009EA479 /* DataResponse.swift in Sources */,
+				E527D24B1FF7CB3A009EA479 /* ManagedModel+RelationsResolution.swift in Sources */,
+				E527D25C1FF7CB3A009EA479 /* Upload.swift in Sources */,
+				E527D2471FF7CB3A009EA479 /* JSONCoder.swift in Sources */,
+				E527D24A1FF7CB3A009EA479 /* ManagedModel+Relational.swift in Sources */,
+				E527D25B1FF7CB3A009EA479 /* StorageProgressDelegates.swift in Sources */,
+				E527D2391FF7CB35009EA479 /* SessionDelegate.swift in Sources */,
+				E527D2401FF7CB3A009EA479 /* Failure.swift in Sources */,
+				E527D2531FF7CB3A009EA479 /* CollectionOf.swift in Sources */,
+				E527D2461FF7CB3A009EA479 /* JSON.swift in Sources */,
+				E527D2301FF7CB35009EA479 /* ErasableContainer.swift in Sources */,
+				E527D22D1FF7CB35009EA479 /* ConcreteDataPoint.swift in Sources */,
+				E527D24F1FF7CB3A009EA479 /* Model+DictionaryRepresentation.swift in Sources */,
+				E527D2331FF7CB35009EA479 /* HTTPOperation.swift in Sources */,
+				E527D22B1FF7CB35009EA479 /* Collectible.swift in Sources */,
+				E527D2431FF7CB3A009EA479 /* HTTPMethod.swift in Sources */,
+				E527D23A1FF7CB35009EA479 /* Tolerent.swift in Sources */,
+				E527D23F1FF7CB3A009EA479 /* Download.swift in Sources */,
+				E527D2581FF7CB3A009EA479 /* Session.swift in Sources */,
+				E527D25E1FF7CB3A009EA479 /* VoidPayload.swift in Sources */,
+				E527D24E1FF7CB3A009EA479 /* Model+Description.swift in Sources */,
+				E527D22F1FF7CB35009EA479 /* Initializable.swift in Sources */,
+				E527D2561FF7CB3A009EA479 /* Relationship.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E527D2131FF7C9BF009EA479 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E527D2271FF7CAC2009EA479 /* DataPointTests.swift in Sources */,
+				E527D2281FF7CAC2009EA479 /* ObjectCollectionTests.swift in Sources */,
+				E527D2261FF7CAC2009EA479 /* BartlebyCoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E5EC9F711FF655C4008BF543 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1150,6 +1646,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E527D1C51FF7C8DE009EA479 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E527D1B91FF7C8DE009EA479 /* BartlebysCore macOS Document Oriented */;
+			targetProxy = E527D1C41FF7C8DE009EA479 /* PBXContainerItemProxy */;
+		};
+		E527D21A1FF7C9BF009EA479 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E527D20E1FF7C9BF009EA479 /* BartlebysCore iOS Document Oriented */;
+			targetProxy = E527D2191FF7C9BF009EA479 /* PBXContainerItemProxy */;
+		};
 		E5EC9F811FF655C4008BF543 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E5EC9F751FF655C4008BF543 /* BartlebysCore macOS */;
@@ -1277,6 +1783,173 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		E527D1CC1FF7C8DE009EA479 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "BartlebysCore macOS Document Oriented/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_SWIFT_FLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS-Document-Oriented";
+				PRODUCT_NAME = BartlebysCore;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		E527D1CD1FF7C8DE009EA479 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = "BartlebysCore macOS Document Oriented/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_SWIFT_FLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS-Document-Oriented";
+				PRODUCT_NAME = BartlebysCore;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		E527D1CF1FF7C8DE009EA479 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				INFOPLIST_FILE = "BartlebysCore macOS Document OrientedTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS-Document-OrientedTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		E527D1D01FF7C8DE009EA479 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				INFOPLIST_FILE = "BartlebysCore macOS Document OrientedTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS-Document-OrientedTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		E527D2211FF7C9BF009EA479 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "BartlebysCore iOS Document Oriented/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_OSACOMPILEFLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS-Document-Oriented";
+				PRODUCT_NAME = BartlebysCore;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E527D2221FF7C9BF009EA479 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "BartlebysCore iOS Document Oriented/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				OTHER_OSACOMPILEFLAGS = "-D USE_DOCUMENT_ORIENTED_ARCHITECTURE";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS-Document-Oriented";
+				PRODUCT_NAME = BartlebysCore;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E527D2241FF7C9BF009EA479 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				INFOPLIST_FILE = "BartlebysCore iOS Document OrientedTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS-Document-OrientedTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E527D2251FF7C9BF009EA479 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LX7WHQV846;
+				INFOPLIST_FILE = "BartlebysCore iOS Document OrientedTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS-Document-OrientedTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -1581,6 +2254,42 @@
 			buildConfigurations = (
 				4D55FC371FDAF5AC001D91CE /* Debug */,
 				4D55FC381FDAF5AC001D91CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E527D1CB1FF7C8DE009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore macOS Document Oriented" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E527D1CC1FF7C8DE009EA479 /* Debug */,
+				E527D1CD1FF7C8DE009EA479 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E527D1CE1FF7C8DE009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore macOS Document OrientedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E527D1CF1FF7C8DE009EA479 /* Debug */,
+				E527D1D01FF7C8DE009EA479 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E527D2201FF7C9BF009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore iOS Document Oriented" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E527D2211FF7C9BF009EA479 /* Debug */,
+				E527D2221FF7C9BF009EA479 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E527D2231FF7C9BF009EA479 /* Build configuration list for PBXNativeTarget "BartlebysCore iOS Document OrientedTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E527D2241FF7C9BF009EA479 /* Debug */,
+				E527D2251FF7C9BF009EA479 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

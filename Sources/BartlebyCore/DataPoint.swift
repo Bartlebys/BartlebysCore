@@ -8,6 +8,28 @@
 
 import Foundation
 
+#if os(OSX)
+    #if USE_DOCUMENT_ORIENTED_ARCHITECTURE
+        import AppKit
+        open class DataPointBaseClass:NSDocument{}
+    #else
+        open class DataPointBaseClass{}
+    #endif
+#elseif os(iOS)
+    #if USE_DOCUMENT_ORIENTED_ARCHITECTURE
+        import UIKit
+        open class DataPointBaseClass:UIDocument{}
+    #else
+        open class DataPointBaseClass{}
+    #endif
+#elseif os(watchOS)
+    open class DataPointBaseClass{}
+#elseif os(tvOS)
+    open class DataPointBaseClass{}
+#elseif os(Linux)
+    open class DataPointBaseClass{}
+#endif
+
 public enum DataPointError : Error{
     case invalidURL
     case voidURLRequest
@@ -25,9 +47,8 @@ public protocol DataPointDelegate{
     func collectionDidFailToSave(message:String)
 }
 
-
 // Abstract class
-open class DataPoint: ConcreteDataPoint{
+open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
     
     // MARK: -
 
@@ -77,7 +98,9 @@ open class DataPoint: ConcreteDataPoint{
         self.sessionIdentifier = sessionIdentifier
         self.coder = coder
         self.delegate = delegate
-        
+
+        super.init()
+
         // The loading is asynchronous on separate queue.
         self.storage.addProgressObserver (observer: DataPointLoadingDelegate(dataPoint: self))
     }
@@ -312,7 +335,7 @@ extension DataPoint{
                         if !o.owns.contains(owneeUID){
                             o.owns.append(owneeUID)
                         }else{
-                            print("### !")
+                            Swift.print("### !")
                         }
                     }else{
                         Logger.log("Deferred ownership has failed to found \(owneeUID) for \(o.id)", category: Logger.Categories.critical)
