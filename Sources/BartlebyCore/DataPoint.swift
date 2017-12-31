@@ -8,17 +8,6 @@
 
 import Foundation
 
-#if os(OSX) && USE_DOCUMENT_ORIENTED_ARCHITECTURE
-    import AppKit
-    open class DataPointBaseClass:NSDocument{}
-#elseif os(iOS) && USE_DOCUMENT_ORIENTED_ARCHITECTURE
-    import UIKit
-    open class DataPointBaseClass:UIDocument{}
-#else
-    // Linux, macOS, iOS, tvOS, watchOS
-    open class DataPointBaseClass:Object{}
-#endif
-
 public enum DataPointError : Error{
     case invalidURL
     case voidURLRequest
@@ -44,7 +33,7 @@ struct DataPointDelegatePlaceHolder:DataPointDelegate {
 }
 
 // Abstract class
-open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
+open class DataPoint: Object,ConcreteDataPoint{
     
     // MARK: -
 
@@ -57,12 +46,12 @@ open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
     public var storage = Storage()
 
     // The base URL
-    public var baseURL:URL{
+    public var baseWrapperURL:URL{
         get{
             return self.storage.baseUrl
         }
         set{
-            self.storage.baseUrl = baseURL
+            self.storage.baseUrl = newValue
         }
     }
 
@@ -91,34 +80,22 @@ open class DataPoint: DataPointBaseClass,ConcreteDataPoint{
     /// [notAvailableOwnerUID][relatedOwnedUIDS]
     fileprivate var _deferredOwnerships=[UID:[UID]]()
 
-    // MARK: - Convenience Initializers
-    // Currently the designated initializer may be divergent per platform when using Document Arch.
+    // MARK: -
 
-    /// Initialize the dataPoint
-    ///
-    /// - Parameter baseURL: the baseURL where to load / save the dataPoint wrapper
+
+    /// Initializes the dataPoint
     /// - Throws: Children may throw while populating the collections
-    convenience public init(baseURL:URL) throws {
-        #if os(iOS) && USE_DOCUMENT_ORIENTED_ARCHITECTURE
-            self.init(fileURL: baseURL)
-        #else
-            self.init()
-        #endif
-
-        self.baseURL = baseURL
-
+    required public override init(){
+        super.init()
         // The loading is asynchronous on separate queue.
         self.storage.addProgressObserver (observer: DataPointLoadingDelegate(dataPoint: self))
-
-        // Any collection that should be registred should be in this method
-        try self.registerCollections()
     }
 
 
     // MARK: -
 
-    /// That the place where you should call : registerCollection(..)
-    open func registerCollections()throws{
+    /// That the place where you should call : self.registerCollection(concreteCollection)
+    open func prepareCollections()throws{
 
     }
 

@@ -43,21 +43,21 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         ("test006UnicityOnUpserts",test006UnicityOnUpserts),
         ]
     
-    lazy var dataPoint : DataPoint? = try? DataPoint(baseURL: Paths.baseDirectoryURL)
+    var dataPoint : DataPoint = DataPoint()
 
     
     override func setUp() {
         super.setUp()
         
-        self.dataPoint?.authenticationMethod = .basicHTTPAuth
-        self.dataPoint?.host = "api.dev.laplaylist.com"
-        self.dataPoint?.apiBasePath =  "/v2/api/"
+        self.dataPoint.authenticationMethod = .basicHTTPAuth
+        self.dataPoint.host = "api.dev.laplaylist.com"
+        self.dataPoint.apiBasePath =  "/v2/api/"
         
     }
     
     override func tearDown() {
         super.tearDown()
-        self.dataPoint?.credentials = Credentials(username: "", password: "")
+        self.dataPoint.credentials = Credentials(username: "", password: "")
     }
     
     

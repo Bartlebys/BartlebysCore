@@ -30,8 +30,8 @@ class MyDataPoint: DataPoint {
 
     public var managedModelsCollection: CollectionOf<ManagedModel> =  CollectionOf<ManagedModel>(named:FileNames.managedModels.rawValue,relativePath:"tests")
 
-    override func registerCollections() throws {
-        try super.registerCollections()
+    override func prepareCollections() throws {
+        try super.prepareCollections()
         try self.registerCollection(collection: self.metricsCollection)
         try self.registerCollection(collection: self.managedModelsCollection )
     }
@@ -62,7 +62,9 @@ class DataPointTests: XCTestCase{
 
         do {
 
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
+            let datapoint = MyDataPoint()
+            try datapoint.prepareCollections()
+
             let metricsFileName = MyDataPoint.FileNames.metrics.rawValue
             let managedModelsFileName = MyDataPoint.FileNames.managedModels.rawValue
 
@@ -106,7 +108,8 @@ class DataPointTests: XCTestCase{
                                             // 4# create a clone and reload the data
                                             //we want to load a copy of the dataPoint
 
-                                            let dataPointClone =  try MyDataPoint(baseURL: Paths.baseDirectoryURL)
+                                            let dataPointClone = MyDataPoint()
+                                            try dataPointClone.prepareCollections()
 
                                             let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                                                 if !success{
@@ -164,7 +167,8 @@ class DataPointTests: XCTestCase{
 
     func test002CollectionsReferences() {
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
+            let datapoint = MyDataPoint()
+            try datapoint.prepareCollections()
             let _ = MyDataPoint.FileNames.metrics.rawValue
             let metrics = Metrics()
             metrics.operationName = "op"
@@ -183,7 +187,8 @@ class DataPointTests: XCTestCase{
 
     func test003SimpleRelations() {
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
+            let datapoint = MyDataPoint()
+            try datapoint.prepareCollections()
             let _ = MyDataPoint.FileNames.metrics.rawValue
 
             let metrics1 = Metrics()
@@ -209,7 +214,8 @@ class DataPointTests: XCTestCase{
 
     func test004RelationalErasure() {
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
+            let datapoint = MyDataPoint()
+            try datapoint.prepareCollections()
             let _ = MyDataPoint.FileNames.metrics.rawValue
 
             let metrics1 = Metrics()
@@ -252,7 +258,8 @@ class DataPointTests: XCTestCase{
     func test005RelationalLeafErasure() {
         
         do {
-            let datapoint = try MyDataPoint(baseURL: Paths.baseDirectoryURL)
+            let datapoint = MyDataPoint()
+            try datapoint.prepareCollections()
             let _ = MyDataPoint.FileNames.metrics.rawValue
 
             let metrics1 = Metrics()
