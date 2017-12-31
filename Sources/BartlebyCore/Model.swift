@@ -98,15 +98,15 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
     }
     // MARK: - UniversalType
 
-    public class var typeName:String{
+    open class var typeName:String{
         return "Model"
     }
 
-    public class var collectionName:String{
+    open class var collectionName:String{
         return "models"
     }
 
-    public var d_collectionName:String{
+    open var d_collectionName:String{
         return Model.collectionName
     }
 
