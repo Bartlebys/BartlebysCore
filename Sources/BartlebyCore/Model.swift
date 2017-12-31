@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
+open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payload{
 
     // A reference to the holding dataPoint
     public var dataPoint:DataPoint?
@@ -27,7 +27,8 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
     // The collection reference.
     fileprivate var _collection:Any?
 
-
+    ////Internal flag used not to propagate changes (for example during deserialization) -> Check + ProvisionChanges for detailled explanantions
+    internal var _quietChanges:Bool = false
 
     /// Registers the collection reference
     ///
@@ -67,9 +68,6 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
 
     @objc dynamic public var id:UID = Utilities.createUID()
 
-    internal var _quietChanges:Bool = false
-
-    internal var _autoCommitIsEnabled:Bool = true
 
     // MARK: - Initializable
 
@@ -86,15 +84,13 @@ open class Model:Object,Codable,Collectible,CopyingProtocol,Payload{
 
     public required init(from decoder: Decoder) throws{
         super.init()
-        try self.quietThrowingChanges {
-            let values = try decoder.container(keyedBy: ModelCodingKeys.self)
-            self.id = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
-        }
+        let values = try decoder.container(keyedBy: ModelCodingKeys.self)
+        self.id = try values.decode(String.self,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
     }
 
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ModelCodingKeys.self)
-        try container.encode(self.id,forKey:MODELS_PRIMARY_KEY)
+        try container.encode(self.id,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
     }
     // MARK: - UniversalType
 
