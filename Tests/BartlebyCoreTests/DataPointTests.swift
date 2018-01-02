@@ -63,7 +63,7 @@ class DataPointTests: XCTestCase{
         do {
 
             let datapoint = MyDataPoint()
-            try datapoint.prepareCollections()
+
 
             let metricsFileName = MyDataPoint.FileNames.metrics.rawValue
             let managedModelsFileName = MyDataPoint.FileNames.managedModels.rawValue
@@ -143,8 +143,8 @@ class DataPointTests: XCTestCase{
                                 }
                             })
 
-                            try datapoint.save()
                             datapoint.storage.addProgressObserver(observer: saveHandler)
+                            try datapoint.save()
 
                         }catch{
                             XCTFail("Metrics collection save error: \(error)")
@@ -154,9 +154,10 @@ class DataPointTests: XCTestCase{
                 }
             })
 
-
             // We set up an observer  the metrics when loaded
             datapoint.storage.addProgressObserver(observer:loadHandler)
+            try datapoint.prepareCollections()
+
         } catch {
             XCTFail("Metrics collection error: \(error)")
         }
@@ -240,9 +241,16 @@ class DataPointTests: XCTestCase{
 
 
             do{
-                let _:ManagedModel = try datapoint.registredObjectByUID(oUID)
                 let _:Metrics = try datapoint.registredObjectByUID(mUID)
-                XCTFail("o and metric1 should not be registred")
+                XCTFail("metric1 should not be registred")
+            }catch DataPointError.instanceNotFound {
+                // OK
+            }catch{
+                XCTFail("Should be DataPointError.instanceNotFound, current error is: \(error)")
+            }
+            do{
+                let _:ManagedModel = try datapoint.registredObjectByUID(oUID)
+                XCTFail("o should not be registred")
             }catch DataPointError.instanceNotFound {
                 // OK
             }catch{
