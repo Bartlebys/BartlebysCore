@@ -14,3 +14,9 @@ public var MODELS_PRIMARY_KEY:Model.ModelCodingKeys = Model.ModelCodingKeys.id
 
 // we store the UID
 public typealias UID = String
+
+fileprivate let _startTime = CFAbsoluteTimeGetCurrent()
+
+public func getElapsedTime()->Double {
+    return CFAbsoluteTimeGetCurrent() - _startTime
+}

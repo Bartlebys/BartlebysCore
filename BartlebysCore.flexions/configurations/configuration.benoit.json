@@ -12,7 +12,7 @@
     }
   },
   "variables": {
-    "CoreSources":"/Users/bpds/Documents/Entrepot/Git/Clients/MusicWork/Repositories/LPApp/BartlebysCore/Sources/BartlebyCore",
-    "ConfPath": "/Users/bpds/Documents/Entrepot/Git/Clients/MusicWork/Repositories/LPApp/BartlebysCore/BartlebysCore.flexions/App"
+    "CoreSources":"/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Sources/BartlebysCore",
+    "ConfPath": "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/BartlebysCore.flexions/App"
   }
 }

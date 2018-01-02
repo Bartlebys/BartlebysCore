@@ -1,7 +1,6 @@
 {
   "name": "KeyedChanges",
   "definition": {
-    "nature": "ManagedModel",
     "description": "Bartleby's Core: used to keep track of changes in memory when inspecting an App (Value Object)",
     "allOf": [
       {
@@ -9,7 +8,7 @@
           "elapsed": {
             "type": "double",
             "description": "the elapsed time since the app has been launched",
-            "default": "Bartleby.elapsedTime",
+            "default": "getElapsedTime()",
             "mutable": true,
             "supervisable": false
           },
