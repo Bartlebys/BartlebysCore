@@ -13,18 +13,13 @@ enum CollectionOfError:Error {
     case typeMissMatch
 }
 
-public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent, E_Collection where T : Codable & Collectible & Tolerent {
+public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent where T : Codable & Collectible & Tolerent {
 
     // MARK: -
 
     // Todo use a Btree storage.
-    fileprivate var _storage: [T] = [T]()
+    internal var _storage: [T] = [T]()
 
-    // Staged identifiers (used to determine what should be committed on the next loop)
-    fileprivate var _staged=[String]()
-
-    // Store the identifiers to be deleted on the next loop
-    fileprivate var _deleted=[String]()
 
     // We expose the collection type
     public var collectedType:T.Type { return T.self }
@@ -195,13 +190,11 @@ public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collectio
     /// - Parameter element: the element to be upserted
     public func upsert(_ element: T) {
         self.hasChanged = true
-        
         if let idx = self.index(where: {$0.id == element.id}) {
             self[idx] = element
         } else {
             self._storage.append(element)
         }
-        
     }
 
     // MARK: - Accessors
@@ -210,43 +203,6 @@ public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collectio
     public var all:Array<T> {
         return self._storage
     }
-
-    // MARK: - E_Collection
-
-    /// A remove function with type erasure to enable to perform dynamic cascading removal.
-    //  used in ManagedModel+Erasure
-    ///
-    /// - Parameters:
-    ///   - item: the item to erase
-    ///   - commit: should we commit the erasure?
-    public func remove(_ item: Any , commit:Bool)throws->(){
-        guard let castedItem = item as? T else{
-            throw ErasingError.typeMissMatch
-        }
-        if let idx = self._storage.index(where:{ return $0.id == castedItem.id }){
-            self._storage.remove(at: idx)
-        }
-        // @todo commit
-    }
-
-
-    /// A remove function with type erasure to enable to perform dynamic cascading removal.
-    //  used in ManagedModel+Erasure
-    ///
-    /// - Parameters:
-    ///   - item: the item to erase
-    ///   - commit: should we commit the erasure?
-    public func stage(_ instance:Any)throws -> (){
-        guard let castedInstance = instance as? T else{
-            throw CollectionOfError.typeMissMatch
-        }
-        guard self._staged.contains(castedInstance.UID) else{
-            return
-         }
-        self._staged.append(castedInstance.UID)
-        self.hasChanged = true
-    }
-
 
     // MARK: - Codable
     
@@ -298,6 +254,7 @@ public final class CollectionOf<T> : Codable, UniversalType, Tolerent, Collectio
         }
     }
 
+   
 
 }
 

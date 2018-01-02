@@ -146,7 +146,7 @@ extension ManagedModel:ProvisionChanges{
 
     open func stage(){
         do{
-            try self.collection?.stage(self)
+            try self.parentCollection?.stage(self)
         }catch{
             Logger.log("\(error)", category: Logger.Categories.critical)
         }

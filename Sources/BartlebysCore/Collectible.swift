@@ -37,6 +37,6 @@ public protocol Collectible : UniversalType,Identifiable {
 
 
     /// The collection with erased types
-    var collection:E_Collection? { get }
+    var parentCollection:OpaqueCollection? { get }
 
 }
