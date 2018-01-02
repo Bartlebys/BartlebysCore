@@ -44,7 +44,7 @@ extension ManagedModel{
 
         // Call the overridable cleaning method
         dataPoint.willErase(self)
-        try self.collection?.remove(self, commit: commit)
+        try self.parentCollection?.remove(self, commit: commit)
 
         var erasableUIDS:[String]=[self.UID]
 

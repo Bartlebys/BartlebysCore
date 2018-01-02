@@ -9,6 +9,33 @@
 /* Begin PBXBuildFile section */
 		E54826341FFBBAFB00FB854E /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
+		E54826381FFBD09800FB854E /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
+		E548263A1FFBD0EF00FB854E /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E58A276B1FFBD79A00079CB5 /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E58A276C1FFBDC4600079CB5 /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
+		E58A276D1FFBDC4600079CB5 /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
+		E58A276E1FFBDC4700079CB5 /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
+		E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
+		E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
+		E58A27711FFBDC4F00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
+		E58A27721FFBDC5C00079CB5 /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E58A27731FFBDC5C00079CB5 /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E58A27741FFBDC5C00079CB5 /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
+		E58A27751FFBDC5C00079CB5 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E58A27761FFBDC5C00079CB5 /* OpaqueCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* OpaqueCollection.swift */; };
+		E58A27771FFBDC5C00079CB5 /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
+		E58A27781FFBDC5D00079CB5 /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E58A27791FFBDC5D00079CB5 /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E58A277A1FFBDC5D00079CB5 /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
+		E58A277B1FFBDC5D00079CB5 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E58A277C1FFBDC5D00079CB5 /* OpaqueCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* OpaqueCollection.swift */; };
+		E58A277D1FFBDC5D00079CB5 /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
+		E58A277E1FFBDC5E00079CB5 /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E58A277F1FFBDC5E00079CB5 /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E58A27801FFBDC5E00079CB5 /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
+		E58A27811FFBDC5E00079CB5 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E58A27821FFBDC5E00079CB5 /* OpaqueCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* OpaqueCollection.swift */; };
+		E58A27831FFBDC5E00079CB5 /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
 		E5EC9F7F1FF655C4008BF543 /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */; };
 		E5EC9F861FF655C4008BF543 /* BartlebysCore_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC9F8D1FF655E1008BF543 /* BartlebyCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F6F1FF6558C008BF543 /* BartlebyCoreTests.swift */; };
@@ -21,7 +48,7 @@
 		E5EC9F941FF655F9008BF543 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
 		E5EC9F951FF655F9008BF543 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84661FF5025500F2408B /* Identifiable.swift */; };
 		E5EC9F961FF655F9008BF543 /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
-		E5EC9F971FF655F9008BF543 /* E_Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* E_Collection.swift */; };
+		E5EC9F971FF655F9008BF543 /* OpaqueCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* OpaqueCollection.swift */; };
 		E5EC9F981FF655F9008BF543 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D121FF133C200EC45F6 /* FileStorage.swift */; };
 		E5EC9F991FF655F9008BF543 /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
 		E5EC9F9A1FF655F9008BF543 /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
@@ -76,12 +103,10 @@
 		E5EC9FE71FF656AF008BF543 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
 		E5EC9FE81FF656AF008BF543 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84661FF5025500F2408B /* Identifiable.swift */; };
 		E5EC9FE91FF656AF008BF543 /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
-		E5EC9FEA1FF656AF008BF543 /* E_Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* E_Collection.swift */; };
 		E5EC9FEB1FF656AF008BF543 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D121FF133C200EC45F6 /* FileStorage.swift */; };
 		E5EC9FEC1FF656AF008BF543 /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
 		E5EC9FED1FF656AF008BF543 /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
 		E5EC9FEE1FF656AF008BF543 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
-		E5EC9FEF1FF656AF008BF543 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
 		E5EC9FF01FF656AF008BF543 /* Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84641FF5021F00F2408B /* Relational.swift */; };
 		E5EC9FF11FF656AF008BF543 /* RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84681FF5029500F2408B /* RelationsResolution.swift */; };
 		E5EC9FF21FF656AF008BF543 /* UniversalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */; };
@@ -109,7 +134,6 @@
 		E5ECA0081FF656AF008BF543 /* Model+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC521FDAF5CF001D91CE /* Model+Description.swift */; };
 		E5ECA0091FF656AF008BF543 /* Model+DictionaryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */; };
 		E5ECA00A1FF656AF008BF543 /* Model+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */; };
-		E5ECA00B1FF656AF008BF543 /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
 		E5ECA00C1FF656AF008BF543 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC591FDAF5CF001D91CE /* Object.swift */; };
 		E5ECA00D1FF656AF008BF543 /* CollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */; };
 		E5ECA00E1FF656AF008BF543 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
@@ -135,12 +159,10 @@
 		E5ECA0401FF6579F008BF543 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
 		E5ECA0411FF6579F008BF543 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84661FF5025500F2408B /* Identifiable.swift */; };
 		E5ECA0421FF6579F008BF543 /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
-		E5ECA0431FF6579F008BF543 /* E_Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* E_Collection.swift */; };
 		E5ECA0441FF6579F008BF543 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D121FF133C200EC45F6 /* FileStorage.swift */; };
 		E5ECA0451FF6579F008BF543 /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
 		E5ECA0461FF6579F008BF543 /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
 		E5ECA0471FF6579F008BF543 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
-		E5ECA0481FF6579F008BF543 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
 		E5ECA0491FF6579F008BF543 /* Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84641FF5021F00F2408B /* Relational.swift */; };
 		E5ECA04A1FF6579F008BF543 /* RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84681FF5029500F2408B /* RelationsResolution.swift */; };
 		E5ECA04B1FF6579F008BF543 /* UniversalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */; };
@@ -168,7 +190,6 @@
 		E5ECA0611FF657A6008BF543 /* Model+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC521FDAF5CF001D91CE /* Model+Description.swift */; };
 		E5ECA0621FF657A6008BF543 /* Model+DictionaryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */; };
 		E5ECA0631FF657A6008BF543 /* Model+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */; };
-		E5ECA0641FF657A6008BF543 /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
 		E5ECA0651FF657A6008BF543 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC591FDAF5CF001D91CE /* Object.swift */; };
 		E5ECA0661FF657A6008BF543 /* CollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */; };
 		E5ECA0671FF657A6008BF543 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
@@ -193,12 +214,10 @@
 		E5ECA0891FF6584A008BF543 /* ConcreteDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */; };
 		E5ECA08A1FF6584A008BF543 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84661FF5025500F2408B /* Identifiable.swift */; };
 		E5ECA08B1FF6584A008BF543 /* Initializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51E0EF71FDD6E9700414D6C /* Initializable.swift */; };
-		E5ECA08C1FF6584A008BF543 /* E_Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* E_Collection.swift */; };
 		E5ECA08D1FF6584A008BF543 /* FileStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2D121FF133C200EC45F6 /* FileStorage.swift */; };
 		E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E549A3EE1FF1390200178ECA /* FilePersistent.swift */; };
 		E5ECA08F1FF6584A008BF543 /* HTTPOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */; };
 		E5ECA0901FF6584A008BF543 /* Payload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8B1FDAF690001D91CE /* Payload.swift */; };
-		E5ECA0911FF6584A008BF543 /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
 		E5ECA0921FF6584A008BF543 /* Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84641FF5021F00F2408B /* Relational.swift */; };
 		E5ECA0931FF6584A008BF543 /* RelationsResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84681FF5029500F2408B /* RelationsResolution.swift */; };
 		E5ECA0941FF6584A008BF543 /* UniversalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */; };
@@ -226,7 +245,6 @@
 		E5ECA0AA1FF65851008BF543 /* Model+Description.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC521FDAF5CF001D91CE /* Model+Description.swift */; };
 		E5ECA0AB1FF65851008BF543 /* Model+DictionaryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */; };
 		E5ECA0AC1FF65851008BF543 /* Model+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */; };
-		E5ECA0AD1FF65851008BF543 /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
 		E5ECA0AE1FF65851008BF543 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC591FDAF5CF001D91CE /* Object.swift */; };
 		E5ECA0AF1FF65851008BF543 /* CollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */; };
 		E5ECA0B01FF65851008BF543 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */; };
@@ -323,11 +341,14 @@
 		E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedModel+Relational.swift"; sourceTree = "<group>"; };
 		E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ManagedModel+RelationsResolution.swift"; sourceTree = "<group>"; };
 		E52A847A1FF50D5800F2408B /* ManagedModel+Erasure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedModel+Erasure.swift"; sourceTree = "<group>"; };
-		E52A847C1FF5294500F2408B /* E_Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E_Collection.swift; sourceTree = "<group>"; };
+		E52A847C1FF5294500F2408B /* OpaqueCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpaqueCollection.swift; sourceTree = "<group>"; };
 		E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		E54826331FFBBAFB00FB854E /* KeyedChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyedChanges.swift; sourceTree = "<group>"; };
 		E54826351FFBBB3700FB854E /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
+		E54826371FFBD09800FB854E /* Committable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Committable.swift; sourceTree = "<group>"; };
+		E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedModel+Commitable.swift"; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
+		E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCollectionOf.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
 		E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProgressDelegates.swift; sourceTree = "<group>"; };
 		E5BC2D121FF133C200EC45F6 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
@@ -447,6 +468,7 @@
 		4D55FC3D1FDAF5CF001D91CE /* BartlebysCore */ = {
 			isa = PBXGroup;
 			children = (
+				E58A27661FFBD39800079CB5 /* To_be_relocated_in_BartlebyKit */,
 				4D55FC801FDAF65A001D91CE /* generated */,
 				4D55FC811FDAF672001D91CE /* Protocols */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
@@ -465,7 +487,6 @@
 				E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */,
 				4D55FC481FDAF5CF001D91CE /* Logger.swift */,
 				E52A847A1FF50D5800F2408B /* ManagedModel+Erasure.swift */,
-				4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */,
 				E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */,
 				E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */,
 				4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */,
@@ -506,19 +527,17 @@
 				4D55FC861FDAF68F001D91CE /* Collectible.swift */,
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
+				E549A3EE1FF1390200178ECA /* FilePersistent.swift */,
+				E5BC2D121FF133C200EC45F6 /* FileStorage.swift */,
+				4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */,
 				E52A84661FF5025500F2408B /* Identifiable.swift */,
 				E51E0EF71FDD6E9700414D6C /* Initializable.swift */,
-				E52A847C1FF5294500F2408B /* E_Collection.swift */,
-				E5BC2D121FF133C200EC45F6 /* FileStorage.swift */,
-				E549A3EE1FF1390200178ECA /* FilePersistent.swift */,
-				4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */,
 				4D55FC8B1FDAF690001D91CE /* Payload.swift */,
-				4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */,
 				E52A84641FF5021F00F2408B /* Relational.swift */,
 				E52A84681FF5029500F2408B /* RelationsResolution.swift */,
-				4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */,
 				4D55FC881FDAF68F001D91CE /* SessionDelegate.swift */,
 				4D55FC891FDAF68F001D91CE /* Tolerent.swift */,
+				4D55FC8A1FDAF68F001D91CE /* UniversalType.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -555,6 +574,19 @@
 				E527D21E1FF7C9BF009EA479 /* Info.plist */,
 			);
 			path = "BartlebysCore iOS Document OrientedTests";
+			sourceTree = "<group>";
+		};
+		E58A27661FFBD39800079CB5 /* To_be_relocated_in_BartlebyKit */ = {
+			isa = PBXGroup;
+			children = (
+				E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */,
+				E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */,
+				4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */,
+				4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */,
+				E52A847C1FF5294500F2408B /* OpaqueCollection.swift */,
+				E54826371FFBD09800FB854E /* Committable.swift */,
+			);
+			name = To_be_relocated_in_BartlebyKit;
 			sourceTree = "<group>";
 		};
 		E5EC9F6D1FF6557B008BF543 /* Tests */ = {
@@ -939,6 +971,7 @@
 				E5EC9FA31FF655FE008BF543 /* Credentials.swift in Sources */,
 				E5EC9F9E1FF655F9008BF543 /* RelationsResolution.swift in Sources */,
 				E5EC9F901FF655F4008BF543 /* ManagedModel.swift in Sources */,
+				E548263A1FFBD0EF00FB854E /* ManagedModel+Commitable.swift in Sources */,
 				E5EC9FAC1FF655FE008BF543 /* Int+Padding.swift in Sources */,
 				E5EC9FC11FF655FE008BF543 /* Storage.swift in Sources */,
 				E5EC9FC01FF655FE008BF543 /* Status.swift in Sources */,
@@ -966,14 +999,16 @@
 				E5EC9FB21FF655FE008BF543 /* ManagedModel+RelationsResolution.swift in Sources */,
 				E5EC9FC31FF655FE008BF543 /* Upload.swift in Sources */,
 				E5EC9FAE1FF655FE008BF543 /* JSONCoder.swift in Sources */,
+				E54826381FFBD09800FB854E /* Committable.swift in Sources */,
 				E5EC9FB11FF655FE008BF543 /* ManagedModel+Relational.swift in Sources */,
 				E5EC9FC21FF655FE008BF543 /* StorageProgressDelegates.swift in Sources */,
 				E54826361FFBBB3700FB854E /* Default.swift in Sources */,
 				E5EC9FA01FF655F9008BF543 /* SessionDelegate.swift in Sources */,
+				E58A276B1FFBD79A00079CB5 /* ManagedCollectionOf.swift in Sources */,
 				E5EC9FA71FF655FE008BF543 /* Failure.swift in Sources */,
 				E5EC9FBA1FF655FE008BF543 /* CollectionOf.swift in Sources */,
 				E5EC9FAD1FF655FE008BF543 /* JSON.swift in Sources */,
-				E5EC9F971FF655F9008BF543 /* E_Collection.swift in Sources */,
+				E5EC9F971FF655F9008BF543 /* OpaqueCollection.swift in Sources */,
 				E5EC9F941FF655F9008BF543 /* ConcreteDataPoint.swift in Sources */,
 				E5EC9FB61FF655FE008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5EC9F9A1FF655F9008BF543 /* HTTPOperation.swift in Sources */,
@@ -1005,13 +1040,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA00A1FF656AF008BF543 /* Model+Equatable.swift in Sources */,
+				E58A27751FFBDC5C00079CB5 /* ProvisionChanges.swift in Sources */,
 				E5ECA0061FF656AF008BF543 /* Metrics+Tolerent.swift in Sources */,
-				E5EC9FEF1FF656AF008BF543 /* ProvisionChanges.swift in Sources */,
 				E5EC9FFB1FF656AF008BF543 /* FilePath.swift in Sources */,
 				E5EC9FEC1FF656AF008BF543 /* FilePersistent.swift in Sources */,
 				E5EC9FF61FF656AF008BF543 /* Credentials.swift in Sources */,
 				E5EC9FF11FF656AF008BF543 /* RelationsResolution.swift in Sources */,
 				E5EC9FE31FF656AF008BF543 /* ManagedModel.swift in Sources */,
+				E58A27761FFBDC5C00079CB5 /* OpaqueCollection.swift in Sources */,
 				E5EC9FFF1FF656AF008BF543 /* Int+Padding.swift in Sources */,
 				E5ECA0141FF656AF008BF543 /* Storage.swift in Sources */,
 				E5ECA0131FF656AF008BF543 /* Status.swift in Sources */,
@@ -1020,20 +1056,24 @@
 				E5ECA00C1FF656AF008BF543 /* Object.swift in Sources */,
 				E5EC9FFC1FF656AF008BF543 /* Globals.swift in Sources */,
 				E5ECA0171FF656AF008BF543 /* Utilities.swift in Sources */,
+				E58A27731FFBDC5C00079CB5 /* ManagedModel+Commitable.swift in Sources */,
 				E5EC9FE81FF656AF008BF543 /* Identifiable.swift in Sources */,
+				E58A27741FFBDC5C00079CB5 /* ManagedModel+ProvisionChanges.swift in Sources */,
+				E58A27771FFBDC5C00079CB5 /* Committable.swift in Sources */,
 				E5ECA0071FF656AF008BF543 /* Model.swift in Sources */,
 				E5EC9FF01FF656AF008BF543 /* Relational.swift in Sources */,
-				E5ECA00B1FF656AF008BF543 /* ManagedModel+ProvisionChanges.swift in Sources */,
 				E5ECA0031FF656AF008BF543 /* ManagedModel+Erasure.swift in Sources */,
 				E5ECA00E1FF656AF008BF543 /* Operators.swift in Sources */,
 				E5EC9FEB1FF656AF008BF543 /* FileStorage.swift in Sources */,
 				E5EC9FF51FF656AF008BF543 /* CallOperation.swift in Sources */,
 				E5EC9FE41FF656AF008BF543 /* Metrics.swift in Sources */,
 				E5ECA00F1FF656AF008BF543 /* Paths.swift in Sources */,
+				E58A276C1FFBDC4600079CB5 /* KeyedChanges.swift in Sources */,
 				E5EC9FFE1FF656AF008BF543 /* HTTPResponse.swift in Sources */,
 				E5EC9FE61FF656AF008BF543 /* ConcreteCoder.swift in Sources */,
 				E5EC9FF21FF656AF008BF543 /* UniversalType.swift in Sources */,
 				E5EC9FF71FF656AF008BF543 /* DataPoint.swift in Sources */,
+				E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */,
 				E5EC9FEE1FF656AF008BF543 /* Payload.swift in Sources */,
 				E5EC9FF81FF656AF008BF543 /* DataResponse.swift in Sources */,
 				E5ECA0051FF656AF008BF543 /* ManagedModel+RelationsResolution.swift in Sources */,
@@ -1045,7 +1085,6 @@
 				E5EC9FFA1FF656AF008BF543 /* Failure.swift in Sources */,
 				E5ECA00D1FF656AF008BF543 /* CollectionOf.swift in Sources */,
 				E5ECA0001FF656AF008BF543 /* JSON.swift in Sources */,
-				E5EC9FEA1FF656AF008BF543 /* E_Collection.swift in Sources */,
 				E5EC9FE71FF656AF008BF543 /* ConcreteDataPoint.swift in Sources */,
 				E5ECA0091FF656AF008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5EC9FED1FF656AF008BF543 /* HTTPOperation.swift in Sources */,
@@ -1055,6 +1094,7 @@
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E5ECA0121FF656AF008BF543 /* Session.swift in Sources */,
 				E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */,
+				E58A27721FFBDC5C00079CB5 /* ManagedCollectionOf.swift in Sources */,
 				E5ECA0081FF656AF008BF543 /* Model+Description.swift in Sources */,
 				E5EC9FE91FF656AF008BF543 /* Initializable.swift in Sources */,
 				E5ECA0101FF656AF008BF543 /* Relationship.swift in Sources */,
@@ -1076,13 +1116,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA0631FF657A6008BF543 /* Model+Equatable.swift in Sources */,
+				E58A277B1FFBDC5D00079CB5 /* ProvisionChanges.swift in Sources */,
 				E5ECA05F1FF657A6008BF543 /* Metrics+Tolerent.swift in Sources */,
-				E5ECA0481FF6579F008BF543 /* ProvisionChanges.swift in Sources */,
 				E5ECA0541FF657A6008BF543 /* FilePath.swift in Sources */,
 				E5ECA0451FF6579F008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA04F1FF657A6008BF543 /* Credentials.swift in Sources */,
 				E5ECA04A1FF6579F008BF543 /* RelationsResolution.swift in Sources */,
 				E5ECA03C1FF6579B008BF543 /* ManagedModel.swift in Sources */,
+				E58A277C1FFBDC5D00079CB5 /* OpaqueCollection.swift in Sources */,
 				E5ECA0581FF657A6008BF543 /* Int+Padding.swift in Sources */,
 				E5ECA06D1FF657A6008BF543 /* Storage.swift in Sources */,
 				E5ECA06C1FF657A6008BF543 /* Status.swift in Sources */,
@@ -1091,20 +1132,24 @@
 				E5ECA0651FF657A6008BF543 /* Object.swift in Sources */,
 				E5ECA0551FF657A6008BF543 /* Globals.swift in Sources */,
 				E5ECA0701FF657A6008BF543 /* Utilities.swift in Sources */,
+				E58A27791FFBDC5D00079CB5 /* ManagedModel+Commitable.swift in Sources */,
 				E5ECA0411FF6579F008BF543 /* Identifiable.swift in Sources */,
+				E58A277A1FFBDC5D00079CB5 /* ManagedModel+ProvisionChanges.swift in Sources */,
+				E58A277D1FFBDC5D00079CB5 /* Committable.swift in Sources */,
 				E5ECA0601FF657A6008BF543 /* Model.swift in Sources */,
 				E5ECA0491FF6579F008BF543 /* Relational.swift in Sources */,
-				E5ECA0641FF657A6008BF543 /* ManagedModel+ProvisionChanges.swift in Sources */,
 				E5ECA05C1FF657A6008BF543 /* ManagedModel+Erasure.swift in Sources */,
 				E5ECA0671FF657A6008BF543 /* Operators.swift in Sources */,
 				E5ECA0441FF6579F008BF543 /* FileStorage.swift in Sources */,
 				E5ECA04E1FF657A6008BF543 /* CallOperation.swift in Sources */,
 				E5ECA03D1FF6579B008BF543 /* Metrics.swift in Sources */,
 				E5ECA0681FF657A6008BF543 /* Paths.swift in Sources */,
+				E58A276D1FFBDC4600079CB5 /* KeyedChanges.swift in Sources */,
 				E5ECA0571FF657A6008BF543 /* HTTPResponse.swift in Sources */,
 				E5ECA03F1FF6579F008BF543 /* ConcreteCoder.swift in Sources */,
 				E5ECA04B1FF6579F008BF543 /* UniversalType.swift in Sources */,
 				E5ECA0501FF657A6008BF543 /* DataPoint.swift in Sources */,
+				E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */,
 				E5ECA0471FF6579F008BF543 /* Payload.swift in Sources */,
 				E5ECA0511FF657A6008BF543 /* DataResponse.swift in Sources */,
 				E5ECA05E1FF657A6008BF543 /* ManagedModel+RelationsResolution.swift in Sources */,
@@ -1116,7 +1161,6 @@
 				E5ECA0531FF657A6008BF543 /* Failure.swift in Sources */,
 				E5ECA0661FF657A6008BF543 /* CollectionOf.swift in Sources */,
 				E5ECA0591FF657A6008BF543 /* JSON.swift in Sources */,
-				E5ECA0431FF6579F008BF543 /* E_Collection.swift in Sources */,
 				E5ECA0401FF6579F008BF543 /* ConcreteDataPoint.swift in Sources */,
 				E5ECA0621FF657A6008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5ECA0461FF6579F008BF543 /* HTTPOperation.swift in Sources */,
@@ -1126,6 +1170,7 @@
 				E5ECA0521FF657A6008BF543 /* Download.swift in Sources */,
 				E5ECA06B1FF657A6008BF543 /* Session.swift in Sources */,
 				E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */,
+				E58A27781FFBDC5D00079CB5 /* ManagedCollectionOf.swift in Sources */,
 				E5ECA0611FF657A6008BF543 /* Model+Description.swift in Sources */,
 				E5ECA0421FF6579F008BF543 /* Initializable.swift in Sources */,
 				E5ECA0691FF657A6008BF543 /* Relationship.swift in Sources */,
@@ -1147,13 +1192,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA0AC1FF65851008BF543 /* Model+Equatable.swift in Sources */,
+				E58A27811FFBDC5E00079CB5 /* ProvisionChanges.swift in Sources */,
 				E5ECA0A81FF65851008BF543 /* Metrics+Tolerent.swift in Sources */,
-				E5ECA0911FF6584A008BF543 /* ProvisionChanges.swift in Sources */,
 				E5ECA09D1FF65851008BF543 /* FilePath.swift in Sources */,
 				E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA0981FF65851008BF543 /* Credentials.swift in Sources */,
 				E5ECA0931FF6584A008BF543 /* RelationsResolution.swift in Sources */,
 				E5ECA0851FF6584A008BF543 /* ManagedModel.swift in Sources */,
+				E58A27821FFBDC5E00079CB5 /* OpaqueCollection.swift in Sources */,
 				E5ECA0A11FF65851008BF543 /* Int+Padding.swift in Sources */,
 				E5ECA0B61FF65851008BF543 /* Storage.swift in Sources */,
 				E5ECA0B51FF65851008BF543 /* Status.swift in Sources */,
@@ -1162,20 +1208,24 @@
 				E5ECA0AE1FF65851008BF543 /* Object.swift in Sources */,
 				E5ECA09E1FF65851008BF543 /* Globals.swift in Sources */,
 				E5ECA0B91FF65851008BF543 /* Utilities.swift in Sources */,
+				E58A277F1FFBDC5E00079CB5 /* ManagedModel+Commitable.swift in Sources */,
 				E5ECA08A1FF6584A008BF543 /* Identifiable.swift in Sources */,
+				E58A27801FFBDC5E00079CB5 /* ManagedModel+ProvisionChanges.swift in Sources */,
+				E58A27831FFBDC5E00079CB5 /* Committable.swift in Sources */,
 				E5ECA0A91FF65851008BF543 /* Model.swift in Sources */,
 				E5ECA0921FF6584A008BF543 /* Relational.swift in Sources */,
-				E5ECA0AD1FF65851008BF543 /* ManagedModel+ProvisionChanges.swift in Sources */,
 				E5ECA0A51FF65851008BF543 /* ManagedModel+Erasure.swift in Sources */,
 				E5ECA0B01FF65851008BF543 /* Operators.swift in Sources */,
 				E5ECA08D1FF6584A008BF543 /* FileStorage.swift in Sources */,
 				E5ECA0971FF65851008BF543 /* CallOperation.swift in Sources */,
 				E5ECA0861FF6584A008BF543 /* Metrics.swift in Sources */,
 				E5ECA0B11FF65851008BF543 /* Paths.swift in Sources */,
+				E58A276E1FFBDC4700079CB5 /* KeyedChanges.swift in Sources */,
 				E5ECA0A01FF65851008BF543 /* HTTPResponse.swift in Sources */,
 				E5ECA0881FF6584A008BF543 /* ConcreteCoder.swift in Sources */,
 				E5ECA0941FF6584A008BF543 /* UniversalType.swift in Sources */,
 				E5ECA0991FF65851008BF543 /* DataPoint.swift in Sources */,
+				E58A27711FFBDC4F00079CB5 /* Default.swift in Sources */,
 				E5ECA0901FF6584A008BF543 /* Payload.swift in Sources */,
 				E5ECA09A1FF65851008BF543 /* DataResponse.swift in Sources */,
 				E5ECA0A71FF65851008BF543 /* ManagedModel+RelationsResolution.swift in Sources */,
@@ -1187,7 +1237,6 @@
 				E5ECA09C1FF65851008BF543 /* Failure.swift in Sources */,
 				E5ECA0AF1FF65851008BF543 /* CollectionOf.swift in Sources */,
 				E5ECA0A21FF65851008BF543 /* JSON.swift in Sources */,
-				E5ECA08C1FF6584A008BF543 /* E_Collection.swift in Sources */,
 				E5ECA0891FF6584A008BF543 /* ConcreteDataPoint.swift in Sources */,
 				E5ECA0AB1FF65851008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5ECA08F1FF6584A008BF543 /* HTTPOperation.swift in Sources */,
@@ -1197,6 +1246,7 @@
 				E5ECA09B1FF65851008BF543 /* Download.swift in Sources */,
 				E5ECA0B41FF65851008BF543 /* Session.swift in Sources */,
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
+				E58A277E1FFBDC5E00079CB5 /* ManagedCollectionOf.swift in Sources */,
 				E5ECA0AA1FF65851008BF543 /* Model+Description.swift in Sources */,
 				E5ECA08B1FF6584A008BF543 /* Initializable.swift in Sources */,
 				E5ECA0B21FF65851008BF543 /* Relationship.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  E_Collection.swift
+//  OpaqueCollection.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 28/12/2017.
@@ -10,7 +10,7 @@ import Foundation
 
 // A Collection with erased Collected types
 // Used to perform operations that requires type erasure
-public protocol E_Collection{
+public protocol OpaqueCollection{
 
     /// Stages the change of the item. (Equivalent to git staging)
     ///
