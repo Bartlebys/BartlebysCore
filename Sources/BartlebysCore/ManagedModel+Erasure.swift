@@ -24,6 +24,7 @@ extension ManagedModel{
     ///   - eraserUID: the eraser UID (used by recursive calls to determinate if co-owned children must be erased)
     /// - Returns: N/A
     public func erase(commit:Bool=true,eraserUID:String="NO_UID")throws->(){
+        
         guard let dataPoint=self.dataPoint else{
             throw ErasingError.dataPointUndefined
         }
@@ -43,7 +44,7 @@ extension ManagedModel{
 
         // Call the overridable cleaning method
         dataPoint.willErase(self)
-        try self.erasableContainer?.remove(self, commit: commit)
+        try self.collection?.remove(self, commit: commit)
 
         var erasableUIDS:[String]=[self.UID]
 

@@ -16,7 +16,7 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
 
     // MARK: - DataPointDelegate
     
-    func collectionDifSaveSuccessFully() {
+    func collectionDidSaveSuccessFully() {
         print("Did Save")
     }
 

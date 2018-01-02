@@ -17,6 +17,10 @@ public typealias UID = String
 
 fileprivate let _startTime = CFAbsoluteTimeGetCurrent()
 
+
+/// Returns the elapsed time since launch time.
+///
+/// - Returns: the elapsed tile
 public func getElapsedTime()->Double {
     return CFAbsoluteTimeGetCurrent() - _startTime
 }

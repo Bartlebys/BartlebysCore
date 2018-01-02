@@ -45,6 +45,27 @@ open class ManagedModel:Model{
 	//The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
 	@objc dynamic open var owns:[String] = [String]()
 
+	//A human readable model summary. If you want to disclose more information you can adopt the Descriptible protocol.
+	@objc dynamic open var summary:String? {
+	    didSet { 
+	       if !self.wantsQuietChanges && summary != oldValue {
+	            self.provisionChanges(forKey: "summary",oldValue: oldValue,newValue: summary) 
+	       } 
+	    }
+	}
+
+	//An instance Marked ephemeral will be destroyed server side on next ephemeral cleaning procedure.This flag allows for example to remove entities that have been for example created by unit-tests.
+	@objc dynamic open var ephemeral:Bool = false
+
+	//MARK: - ChangesInspectable Protocol
+	@objc dynamic open var changedKeys:[KeyedChanges] = [KeyedChanges]()
+
+	////Auto commit availability -> Check ManagedModel + ProvisionChanges for detailed explanantions
+	@objc dynamic internal var _autoCommitIsEnabled:Bool = true
+
+	//The internal commit provisioning counter to discriminate Creation from Update and for possible frequency analysis
+	@objc dynamic open var commitCounter:Int = 0
+
 
     // MARK: - Codable
 
@@ -54,6 +75,11 @@ open class ManagedModel:Model{
 		case ownedBy
 		case freeRelations
 		case owns
+		case summary
+		case ephemeral
+		case changedKeys
+		case _autoCommitIsEnabled
+		case commitCounter
 		case typeName
     }
 
@@ -62,6 +88,9 @@ open class ManagedModel:Model{
         try self.quietThrowingChanges {
 			let values = try decoder.container(keyedBy: ManagedModelCodingKeys.self)
 			self.externalID = try values.decodeIfPresent(String.self,forKey:.externalID)
+			self.summary = try values.decodeIfPresent(String.self,forKey:.summary)
+			self.ephemeral = try values.decode(Bool.self,forKey:.ephemeral)
+			self.commitCounter = try values.decode(Int.self,forKey:.commitCounter)
         }
     }
 
@@ -69,6 +98,9 @@ open class ManagedModel:Model{
 		try super.encode(to:encoder)
 		var container = encoder.container(keyedBy: ManagedModelCodingKeys.self)
 		try container.encodeIfPresent(self.externalID,forKey:.externalID)
+		try container.encodeIfPresent(self.summary,forKey:.summary)
+		try container.encode(self.ephemeral,forKey:.ephemeral)
+		try container.encode(self.commitCounter,forKey:.commitCounter)
     }
 
 

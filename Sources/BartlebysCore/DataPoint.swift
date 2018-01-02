@@ -21,14 +21,14 @@ public enum DataPointError : Error{
 public protocol DataPointDelegate{
     func collectionDidLoadSuccessFully()
     func collectionDidFailToLoad(message:String)
-    func collectionDifSaveSuccessFully()
+    func collectionDidSaveSuccessFully()
     func collectionDidFailToSave(message:String)
 }
 
 struct DataPointDelegatePlaceHolder:DataPointDelegate {
     func collectionDidLoadSuccessFully(){}
     func collectionDidFailToLoad(message:String){}
-    func collectionDifSaveSuccessFully(){}
+    func collectionDidSaveSuccessFully(){}
     func collectionDidFailToSave(message:String){}
 }
 

@@ -81,7 +81,7 @@ public class DataPointSavingDelegate:ProgressDelegate{
     }
 
     /// This Progress method calls the dataPoint delegate method
-    ///     - collectionDifSaveSuccessFully() or collectionDidFailToSave(:)
+    ///     - collectionDidSaveSuccessFully() or collectionDidFailToSave(:)
     ///     - This observer is auto removed on completion
     /// - Parameters:
     ///   - fileName: the filename
@@ -92,7 +92,7 @@ public class DataPointSavingDelegate:ProgressDelegate{
         if !success{
             self.dataPoint.delegate.collectionDidFailToSave(message:message ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.delegate.collectionDifSaveSuccessFully()
+            self.dataPoint.delegate.collectionDidSaveSuccessFully()
         }
         if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.storage.removeProgressObserver(observer: self)
@@ -113,7 +113,7 @@ public class DataPointLoadingDelegate:ProgressDelegate{
 
 
     /// This Progress method calls the dataPoint delegate method
-    ///     - collectionDifSaveSuccessFully() or collectionDidFailToSave(:)
+    ///     - collectionDidSaveSuccessFully() or collectionDidFailToSave(:)
     ///     - This observer is auto removed on completion
     /// - Parameters:
     ///   - fileName: the filename

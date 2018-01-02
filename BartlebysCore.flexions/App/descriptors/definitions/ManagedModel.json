@@ -52,6 +52,45 @@
             "scope": "public"
           }
         }
+      },
+      "summary": {
+        "type": "string",
+        "description": "A human readable model summary. If you want to disclose more information you can adopt the Descriptible protocol."
+      },
+      "ephemeral": {
+        "type": "boolean",
+        "description": "An instance Marked ephemeral will be destroyed server side on next ephemeral cleaning procedure.This flag allows for example to remove entities that have been for example created by unit-tests.",
+        "default": "false",
+        "supervisable": false
+      },
+      "changedKeys": {
+        "schema": {
+          "type": "array",
+          "items": {
+            "description": "MARK: - ChangesInspectable Protocol",
+            "explicitType": "KeyedChanges",
+            "default": "[KeyedChanges]()",
+            "supervisable": false,
+            "serializable": false
+          }
+        }
+      },
+      "_autoCommitIsEnabled": {
+        "type": "boolean",
+        "description": "//Auto commit availability -> Check ManagedModel + ProvisionChanges for detailed explanantions",
+        "default": "true",
+        "scope": "protected",
+        "supervisable": false,
+        "serializable": false
+      },
+      "commitCounter": {
+        "type": "integer",
+        "description": "The internal commit provisioning counter to discriminate Creation from Update and for possible frequency analysis",
+        "default": 0,
+        "required":true,
+        "scope": "public",
+        "supervisable": false,
+        "serializable": true
       }
     },
     "metadata": {

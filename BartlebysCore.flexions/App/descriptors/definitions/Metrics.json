@@ -7,7 +7,7 @@
       "operationName":{
         "type": "string",
         "description": "The action name e.g: UpdateUser",
-        "default": "NO_NAME",
+        "default": "$Default.NO_NAME",
         "required":true,
         "supervisable": false
       },

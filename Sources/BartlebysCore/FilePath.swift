@@ -10,7 +10,7 @@ import Foundation
 
 public class FilePath : Model {
     
-    var relativePath: String = "FILE_NOT_SPECIFIED"
+    var relativePath: String = Default.NOT_SPECIFIED
     
     func urlFromSession(session: Session) throws -> URL {
         return URL(fileURLWithPath: relativePath)
@@ -31,10 +31,9 @@ public class FilePath : Model {
     
     public required init(from decoder: Decoder) throws{
         super.init()
-        try self.quietThrowingChanges {
-            let values = try decoder.container(keyedBy: FilePathCodingKeys.self)
-            self.id = try values.decode(String.self, forKey:.relativePath)
-        }
+        let values = try decoder.container(keyedBy: FilePathCodingKeys.self)
+        self.id = try values.decode(String.self, forKey:.relativePath)
+
     }
     
     public override func encode(to encoder: Encoder) throws {

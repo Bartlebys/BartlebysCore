@@ -13,7 +13,7 @@ public protocol Collectible : UniversalType,Identifiable {
     // Universally Unique identifier (check Globals.swift for details on the primary key MODELS_PRIMARY_KEY)
     var id:String { get set }
 
-    // The Associated collected type is equal the Collectible type
+    // The Associated "CollectedType" is the Collectible type
     associatedtype CollectedType
 
     // The reference to the dataPoint
@@ -36,7 +36,7 @@ public protocol Collectible : UniversalType,Identifiable {
     func getCollection<CollectedType>()->CollectionOf<CollectedType>
 
 
-    /// The collection as an ErasableContainer
-    var erasableContainer:ErasableContainer? { get }
+    /// The collection with erased types
+    var collection:E_Collection? { get }
 
 }

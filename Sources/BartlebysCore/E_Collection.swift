@@ -1,5 +1,5 @@
 //
-//  ErasableContainer.swift
+//  E_Collection.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 28/12/2017.
@@ -8,7 +8,15 @@
 
 import Foundation
 
-public protocol ErasableContainer{
+// A Collection with erased Collected types
+// Used to perform operations that requires type erasure
+public protocol E_Collection{
+
+    /// Stages the change of the item. (Equivalent to git staging)
+    ///
+    /// - Parameters:
+    ///   - item: the item to stage
+    func stage(_ item: Any)throws->()
 
 
     /// A remove function with type erasure to enable to perform dynamic cascading removal.

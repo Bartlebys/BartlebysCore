@@ -16,7 +16,7 @@ open class Metrics:ManagedModel{
     public typealias CollectedType = Metrics
 
 	//The action name e.g: UpdateUser
-	@objc dynamic open var operationName:String = "NO_NAME"
+	@objc dynamic open var operationName:String = Default.NO_NAME
 
 	//The elasped time since app started up.
 	@objc dynamic open var elapsed:Double = 0

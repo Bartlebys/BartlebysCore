@@ -48,9 +48,9 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
         return collection
     }
 
-    /// The collection as an ErasableContainer
-    public var erasableContainer:ErasableContainer? {
-        return self._collection as? ErasableContainer
+    /// The type erased Collection
+    public var collection:E_Collection? {
+        return self._collection as? E_Collection
     }
 
     // MARK: - Identifiable
