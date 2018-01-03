@@ -12,6 +12,9 @@
 		E50C5C761FFCE78C00A3C9DA /* ErasableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A27841FFBE56600079CB5 /* ErasableCollection.swift */; };
 		E50C5C7A1FFD0C6B00A3C9DA /* ManagedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ManagedCollection.swift */; };
 		E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
+		E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
+		E50C5C9E1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
+		E50C5C9F1FFD2EFC00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
@@ -1064,6 +1067,7 @@
 				E5EC9FE51FF656AF008BF543 /* Collectible.swift in Sources */,
 				E5EC9FFD1FF656AF008BF543 /* HTTPMethod.swift in Sources */,
 				E5EC9FF41FF656AF008BF543 /* Tolerent.swift in Sources */,
+				E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E5ECA0121FF656AF008BF543 /* Session.swift in Sources */,
 				E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */,
@@ -1133,6 +1137,7 @@
 				E5ECA03E1FF6579F008BF543 /* Collectible.swift in Sources */,
 				E5ECA0561FF657A6008BF543 /* HTTPMethod.swift in Sources */,
 				E5ECA04D1FF6579F008BF543 /* Tolerent.swift in Sources */,
+				E50C5C9E1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5ECA0521FF657A6008BF543 /* Download.swift in Sources */,
 				E5ECA06B1FF657A6008BF543 /* Session.swift in Sources */,
 				E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */,
@@ -1202,6 +1207,7 @@
 				E5ECA0871FF6584A008BF543 /* Collectible.swift in Sources */,
 				E5ECA09F1FF65851008BF543 /* HTTPMethod.swift in Sources */,
 				E5ECA0961FF6584A008BF543 /* Tolerent.swift in Sources */,
+				E50C5C9F1FFD2EFC00A3C9DA /* LogEntry.swift in Sources */,
 				E5ECA09B1FF65851008BF543 /* Download.swift in Sources */,
 				E5ECA0B41FF65851008BF543 /* Session.swift in Sources */,
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
