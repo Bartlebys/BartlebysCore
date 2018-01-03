@@ -15,6 +15,34 @@
 		E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
 		E50C5C9E1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
 		E50C5C9F1FFD2EFC00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
+		E50C5CA41FFD328500A3C9DA /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
+		E50C5CA51FFD328500A3C9DA /* ManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC831FDAF688001D91CE /* ManagedModel.swift */; };
+		E50C5CA61FFD328500A3C9DA /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E50C5CA71FFD328500A3C9DA /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E50C5CA81FFD328500A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
+		E50C5CA91FFD328500A3C9DA /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
+		E50C5CAA1FFD328500A3C9DA /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E50C5CAB1FFD328600A3C9DA /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
+		E50C5CAC1FFD328600A3C9DA /* ManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC831FDAF688001D91CE /* ManagedModel.swift */; };
+		E50C5CAD1FFD328600A3C9DA /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E50C5CAE1FFD328600A3C9DA /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E50C5CAF1FFD328600A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
+		E50C5CB01FFD328600A3C9DA /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
+		E50C5CB11FFD328600A3C9DA /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E50C5CB21FFD328600A3C9DA /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
+		E50C5CB31FFD328600A3C9DA /* ManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC831FDAF688001D91CE /* ManagedModel.swift */; };
+		E50C5CB41FFD328600A3C9DA /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E50C5CB51FFD328600A3C9DA /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E50C5CB61FFD328600A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
+		E50C5CB71FFD328600A3C9DA /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
+		E50C5CB81FFD328600A3C9DA /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
+		E50C5CB91FFD328700A3C9DA /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
+		E50C5CBA1FFD328700A3C9DA /* ManagedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC831FDAF688001D91CE /* ManagedModel.swift */; };
+		E50C5CBB1FFD328700A3C9DA /* ManagedCollectionOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */; };
+		E50C5CBC1FFD328700A3C9DA /* ManagedModel+Commitable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */; };
+		E50C5CBD1FFD328700A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */; };
+		E50C5CBE1FFD328700A3C9DA /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
+		E50C5CBF1FFD328700A3C9DA /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
@@ -951,6 +979,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5EC9FB71FF655FE008BF543 /* Model+Equatable.swift in Sources */,
+				E50C5CA81FFD328500A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */,
 				E5EC9FB31FF655FE008BF543 /* Metrics+Tolerent.swift in Sources */,
 				E5EC9FA81FF655FE008BF543 /* FilePath.swift in Sources */,
 				E5EC9F991FF655F9008BF543 /* FilePersistent.swift in Sources */,
@@ -958,6 +987,7 @@
 				E5EC9F9E1FF655F9008BF543 /* RelationsResolution.swift in Sources */,
 				E5EC9FAC1FF655FE008BF543 /* Int+Padding.swift in Sources */,
 				E5EC9FC11FF655FE008BF543 /* Storage.swift in Sources */,
+				E50C5CA71FFD328500A3C9DA /* ManagedModel+Commitable.swift in Sources */,
 				E5EC9FC01FF655FE008BF543 /* Status.swift in Sources */,
 				E5EC9FAF1FF655FE008BF543 /* Logger.swift in Sources */,
 				E5EC9FBE1FF655FE008BF543 /* Schemes.swift in Sources */,
@@ -973,6 +1003,7 @@
 				E5EC9F981FF655F9008BF543 /* FileStorage.swift in Sources */,
 				E5EC9FA21FF655FE008BF543 /* CallOperation.swift in Sources */,
 				E5EC9F911FF655F4008BF543 /* Metrics.swift in Sources */,
+				E50C5CAA1FFD328500A3C9DA /* ProvisionChanges.swift in Sources */,
 				E5EC9FBC1FF655FE008BF543 /* Paths.swift in Sources */,
 				E5EC9FAB1FF655FE008BF543 /* HTTPResponse.swift in Sources */,
 				E5EC9F931FF655F9008BF543 /* ConcreteCoder.swift in Sources */,
@@ -985,6 +1016,7 @@
 				E5EC9FC31FF655FE008BF543 /* Upload.swift in Sources */,
 				E5EC9FAE1FF655FE008BF543 /* JSONCoder.swift in Sources */,
 				E5EC9FB11FF655FE008BF543 /* Model+Relational.swift in Sources */,
+				E50C5CA51FFD328500A3C9DA /* ManagedModel.swift in Sources */,
 				E5EC9FC21FF655FE008BF543 /* StorageProgressDelegates.swift in Sources */,
 				E54826361FFBBB3700FB854E /* Default.swift in Sources */,
 				E5EC9FA01FF655F9008BF543 /* SessionDelegate.swift in Sources */,
@@ -1000,10 +1032,13 @@
 				E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FA61FF655FE008BF543 /* Download.swift in Sources */,
 				E5EC9FBF1FF655FE008BF543 /* Session.swift in Sources */,
+				E50C5CA91FFD328500A3C9DA /* Committable.swift in Sources */,
 				E5EC9FC51FF655FE008BF543 /* VoidPayload.swift in Sources */,
 				E5EC9FB51FF655FE008BF543 /* Model+Description.swift in Sources */,
+				E50C5CA41FFD328500A3C9DA /* KeyedChanges.swift in Sources */,
 				E5EC9F961FF655F9008BF543 /* Initializable.swift in Sources */,
 				E5EC9FBD1FF655FE008BF543 /* Relationship.swift in Sources */,
+				E50C5CA61FFD328500A3C9DA /* ManagedCollectionOf.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1056,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA00A1FF656AF008BF543 /* Model+Equatable.swift in Sources */,
+				E50C5CAF1FFD328600A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */,
 				E5ECA0061FF656AF008BF543 /* Metrics+Tolerent.swift in Sources */,
 				E5EC9FFB1FF656AF008BF543 /* FilePath.swift in Sources */,
 				E5EC9FEC1FF656AF008BF543 /* FilePersistent.swift in Sources */,
@@ -1028,6 +1064,7 @@
 				E5EC9FF11FF656AF008BF543 /* RelationsResolution.swift in Sources */,
 				E58A27761FFBDC5C00079CB5 /* ManagedCollection.swift in Sources */,
 				E5EC9FFF1FF656AF008BF543 /* Int+Padding.swift in Sources */,
+				E50C5CAE1FFD328600A3C9DA /* ManagedModel+Commitable.swift in Sources */,
 				E5ECA0141FF656AF008BF543 /* Storage.swift in Sources */,
 				E5ECA0131FF656AF008BF543 /* Status.swift in Sources */,
 				E5ECA0021FF656AF008BF543 /* Logger.swift in Sources */,
@@ -1043,6 +1080,7 @@
 				E5EC9FEB1FF656AF008BF543 /* FileStorage.swift in Sources */,
 				E5EC9FF51FF656AF008BF543 /* CallOperation.swift in Sources */,
 				E5EC9FE41FF656AF008BF543 /* Metrics.swift in Sources */,
+				E50C5CB11FFD328600A3C9DA /* ProvisionChanges.swift in Sources */,
 				E5ECA00F1FF656AF008BF543 /* Paths.swift in Sources */,
 				E50C5C741FFCE78300A3C9DA /* ErasableCollection.swift in Sources */,
 				E5EC9FFE1FF656AF008BF543 /* HTTPResponse.swift in Sources */,
@@ -1055,6 +1093,7 @@
 				E5ECA0051FF656AF008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5ECA0161FF656AF008BF543 /* Upload.swift in Sources */,
 				E5ECA0011FF656AF008BF543 /* JSONCoder.swift in Sources */,
+				E50C5CAC1FFD328600A3C9DA /* ManagedModel.swift in Sources */,
 				E5ECA0041FF656AF008BF543 /* Model+Relational.swift in Sources */,
 				E5ECA0151FF656AF008BF543 /* StorageProgressDelegates.swift in Sources */,
 				E5EC9FF31FF656AF008BF543 /* SessionDelegate.swift in Sources */,
@@ -1070,10 +1109,13 @@
 				E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E5ECA0121FF656AF008BF543 /* Session.swift in Sources */,
+				E50C5CB01FFD328600A3C9DA /* Committable.swift in Sources */,
 				E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */,
 				E5ECA0081FF656AF008BF543 /* Model+Description.swift in Sources */,
+				E50C5CAB1FFD328600A3C9DA /* KeyedChanges.swift in Sources */,
 				E5EC9FE91FF656AF008BF543 /* Initializable.swift in Sources */,
 				E5ECA0101FF656AF008BF543 /* Relationship.swift in Sources */,
+				E50C5CAD1FFD328600A3C9DA /* ManagedCollectionOf.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,6 +1133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA0631FF657A6008BF543 /* Model+Equatable.swift in Sources */,
+				E50C5CB61FFD328600A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */,
 				E5ECA05F1FF657A6008BF543 /* Metrics+Tolerent.swift in Sources */,
 				E5ECA0541FF657A6008BF543 /* FilePath.swift in Sources */,
 				E5ECA0451FF6579F008BF543 /* FilePersistent.swift in Sources */,
@@ -1098,6 +1141,7 @@
 				E5ECA04A1FF6579F008BF543 /* RelationsResolution.swift in Sources */,
 				E58A277C1FFBDC5D00079CB5 /* ManagedCollection.swift in Sources */,
 				E5ECA0581FF657A6008BF543 /* Int+Padding.swift in Sources */,
+				E50C5CB51FFD328600A3C9DA /* ManagedModel+Commitable.swift in Sources */,
 				E5ECA06D1FF657A6008BF543 /* Storage.swift in Sources */,
 				E5ECA06C1FF657A6008BF543 /* Status.swift in Sources */,
 				E5ECA05B1FF657A6008BF543 /* Logger.swift in Sources */,
@@ -1113,6 +1157,7 @@
 				E5ECA0441FF6579F008BF543 /* FileStorage.swift in Sources */,
 				E5ECA04E1FF657A6008BF543 /* CallOperation.swift in Sources */,
 				E5ECA03D1FF6579B008BF543 /* Metrics.swift in Sources */,
+				E50C5CB81FFD328600A3C9DA /* ProvisionChanges.swift in Sources */,
 				E5ECA0681FF657A6008BF543 /* Paths.swift in Sources */,
 				E50C5C751FFCE78B00A3C9DA /* ErasableCollection.swift in Sources */,
 				E5ECA0571FF657A6008BF543 /* HTTPResponse.swift in Sources */,
@@ -1125,6 +1170,7 @@
 				E5ECA05E1FF657A6008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5ECA06F1FF657A6008BF543 /* Upload.swift in Sources */,
 				E5ECA05A1FF657A6008BF543 /* JSONCoder.swift in Sources */,
+				E50C5CB31FFD328600A3C9DA /* ManagedModel.swift in Sources */,
 				E5ECA05D1FF657A6008BF543 /* Model+Relational.swift in Sources */,
 				E5ECA06E1FF657A6008BF543 /* StorageProgressDelegates.swift in Sources */,
 				E5ECA04C1FF6579F008BF543 /* SessionDelegate.swift in Sources */,
@@ -1140,10 +1186,13 @@
 				E50C5C9E1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5ECA0521FF657A6008BF543 /* Download.swift in Sources */,
 				E5ECA06B1FF657A6008BF543 /* Session.swift in Sources */,
+				E50C5CB71FFD328600A3C9DA /* Committable.swift in Sources */,
 				E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */,
 				E5ECA0611FF657A6008BF543 /* Model+Description.swift in Sources */,
+				E50C5CB21FFD328600A3C9DA /* KeyedChanges.swift in Sources */,
 				E5ECA0421FF6579F008BF543 /* Initializable.swift in Sources */,
 				E5ECA0691FF657A6008BF543 /* Relationship.swift in Sources */,
+				E50C5CB41FFD328600A3C9DA /* ManagedCollectionOf.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1161,6 +1210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA0AC1FF65851008BF543 /* Model+Equatable.swift in Sources */,
+				E50C5CBD1FFD328700A3C9DA /* ManagedModel+ProvisionChanges.swift in Sources */,
 				E5ECA0A81FF65851008BF543 /* Metrics+Tolerent.swift in Sources */,
 				E5ECA09D1FF65851008BF543 /* FilePath.swift in Sources */,
 				E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */,
@@ -1168,6 +1218,7 @@
 				E5ECA0931FF6584A008BF543 /* RelationsResolution.swift in Sources */,
 				E58A27821FFBDC5E00079CB5 /* ManagedCollection.swift in Sources */,
 				E5ECA0A11FF65851008BF543 /* Int+Padding.swift in Sources */,
+				E50C5CBC1FFD328700A3C9DA /* ManagedModel+Commitable.swift in Sources */,
 				E5ECA0B61FF65851008BF543 /* Storage.swift in Sources */,
 				E5ECA0B51FF65851008BF543 /* Status.swift in Sources */,
 				E5ECA0A41FF65851008BF543 /* Logger.swift in Sources */,
@@ -1183,6 +1234,7 @@
 				E5ECA08D1FF6584A008BF543 /* FileStorage.swift in Sources */,
 				E5ECA0971FF65851008BF543 /* CallOperation.swift in Sources */,
 				E5ECA0861FF6584A008BF543 /* Metrics.swift in Sources */,
+				E50C5CBF1FFD328700A3C9DA /* ProvisionChanges.swift in Sources */,
 				E5ECA0B11FF65851008BF543 /* Paths.swift in Sources */,
 				E50C5C761FFCE78C00A3C9DA /* ErasableCollection.swift in Sources */,
 				E5ECA0A01FF65851008BF543 /* HTTPResponse.swift in Sources */,
@@ -1195,6 +1247,7 @@
 				E5ECA0A71FF65851008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5ECA0B81FF65851008BF543 /* Upload.swift in Sources */,
 				E5ECA0A31FF65851008BF543 /* JSONCoder.swift in Sources */,
+				E50C5CBA1FFD328700A3C9DA /* ManagedModel.swift in Sources */,
 				E5ECA0A61FF65851008BF543 /* Model+Relational.swift in Sources */,
 				E5ECA0B71FF65851008BF543 /* StorageProgressDelegates.swift in Sources */,
 				E5ECA0951FF6584A008BF543 /* SessionDelegate.swift in Sources */,
@@ -1210,10 +1263,13 @@
 				E50C5C9F1FFD2EFC00A3C9DA /* LogEntry.swift in Sources */,
 				E5ECA09B1FF65851008BF543 /* Download.swift in Sources */,
 				E5ECA0B41FF65851008BF543 /* Session.swift in Sources */,
+				E50C5CBE1FFD328700A3C9DA /* Committable.swift in Sources */,
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
 				E5ECA0AA1FF65851008BF543 /* Model+Description.swift in Sources */,
+				E50C5CB91FFD328700A3C9DA /* KeyedChanges.swift in Sources */,
 				E5ECA08B1FF6584A008BF543 /* Initializable.swift in Sources */,
 				E5ECA0B21FF65851008BF543 /* Relationship.swift in Sources */,
+				E50C5CBB1FFD328700A3C9DA /* ManagedCollectionOf.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
