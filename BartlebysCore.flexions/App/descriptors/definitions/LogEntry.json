@@ -1,0 +1,70 @@
+{
+  "name": "LogEntry",
+  "definition": {
+    "nature": "UnManagedModel",
+    "description": "Bartleby's Core: A single print entry",
+    "properties": {
+      "counter": {
+        "type": "integer",
+        "description": "The print entry counter",
+        "default": -1,
+        "supervisable": false
+      },
+      "line": {
+        "type": "integer",
+        "description": "The referent line",
+        "default": -1,
+        "supervisable": false
+      },
+      "elapsed": {
+        "type": "double",
+        "description": "The elasped duration",
+        "default": -1,
+        "supervisable": false
+      },
+      "message": {
+        "type": "string",
+        "description": "the message",
+        "default": "no message",
+        "supervisable": false
+      },
+      "file": {
+        "type": "string",
+        "description": "the file",
+        "default": "no file",
+        "supervisable": false
+      },
+      "function": {
+        "type": "string",
+        "description": "the function",
+        "default": "no function",
+        "supervisable": false
+      },
+      "category": {
+        "type": "string",
+        "description": "the category",
+        "default": "no category",
+        "supervisable": false
+      },
+      "decorative": {
+        "type": "boolean",
+        "description": "Is the entry decorative or significant? decoration includes separators, etc...",
+        "default": "false",
+        "supervisable": false
+      },
+      "_runUID": {
+        "type": "string",
+        "description": "Is the entry decorative or significant? decoration includes separators, etc...",
+        "default": "$Bartleby.runUID",
+        "scope": "private",
+        "supervisable": false
+      }
+    },
+    "metadata": {
+      "urdMode": false,
+      "persistsLocallyOnlyInMemory": false,
+      "persistsDistantly": false,
+      "undoable": false
+    }
+  }
+}
