@@ -134,7 +134,7 @@ extension ManagedModel:ProvisionChanges{
         do{
             try self.parentCollection?.stage(self)
         }catch{
-            Logger.log("\(error)", category: Logger.Categories.critical)
+            Logger.log("\(error)", category: .critical)
         }
 
     }
