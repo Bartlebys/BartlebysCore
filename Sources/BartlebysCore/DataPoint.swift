@@ -99,11 +99,10 @@ open class DataPoint: Object,ConcreteDataPoint{
 
     }
 
-
     /// Registers the collection into the data point
     ///
     /// - Parameter collection: the collection
-    public func registerCollection<T>(collection:CollectionOf<T>)throws{
+    open func registerCollection<T>(collection:CollectionOf<T>)throws{
 
         if !self._collections.contains(where: { (existingCollection) -> Bool in
             if let c = existingCollection as? CollectionOf<T>{
