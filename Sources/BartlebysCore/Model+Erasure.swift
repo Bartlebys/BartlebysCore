@@ -15,10 +15,10 @@ public enum ErasingError:Error {
 }
 
 
-extension ManagedModel{
+extension Model{
 
 
-
+   // @TODO!
    // Write func remove<C: Codable & Collectible>(_ item: C)throws->()
    // Call this method from  func remove<CollectibleType:Codable & Collectible>(_ item: CollectibleType , commit:Bool)throws->()
 
@@ -43,7 +43,7 @@ extension ManagedModel{
         if self.ownedBy.count > 1 && eraserUID != "NO_UID"{
             if let idx = self.ownedBy.index(of: eraserUID){
                 // Remove the homologous relation
-                if let owner:ManagedModel = try? dataPoint.registredObjectByUID(eraserUID){
+                if let owner:Model = try? dataPoint.registredObjectByUID(eraserUID){
                     owner.removeRelation(Relationship.owns, to:self)
                     return
                 }
@@ -65,7 +65,7 @@ extension ManagedModel{
         func __stageForErasure(_ objectUID:String,eraserUID:String="NO_UID")throws->(){
             if !erasableUIDS.contains(objectUID){
                 erasableUIDS.append(objectUID)
-                let target:ManagedModel = try dataPoint.registredObjectByUID(objectUID)
+                let target:Model = try dataPoint.registredObjectByUID(objectUID)
                 try target.erase(commit: commit)
             }
         }
@@ -77,7 +77,7 @@ extension ManagedModel{
 
         self.ownedBy.forEach({ (ownerObjectUID) in
             // Remove the homologous relation
-            if let owner:ManagedModel = try? dataPoint.registredObjectByUID(ownerObjectUID){
+            if let owner:Model = try? dataPoint.registredObjectByUID(ownerObjectUID){
                 owner.removeRelation(Relationship.owns, to:self)
             }
         })

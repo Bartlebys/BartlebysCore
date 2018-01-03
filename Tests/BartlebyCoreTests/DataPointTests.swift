@@ -10,7 +10,7 @@ import XCTest
 @testable import BartlebysCore
 
 
-extension ManagedModel:Tolerent{
+extension Model:Tolerent{
     public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
     }
 }
@@ -20,7 +20,7 @@ class MyDataPoint: DataPoint {
 
     public enum FileNames:String{
         case metrics
-        case managedModels
+        case models
     }
 
     public var playerId: String { return session.sessionIdentifier }
@@ -28,17 +28,27 @@ class MyDataPoint: DataPoint {
     // MARK: -  Collections of Models proxys
     public var metricsCollection: CollectionOf<Metrics> =  CollectionOf<Metrics>(named:FileNames.metrics.rawValue,relativePath:"tests")
 
-    public var managedModelsCollection: CollectionOf<ManagedModel> =  CollectionOf<ManagedModel>(named:FileNames.managedModels.rawValue,relativePath:"tests")
+    public var modelsCollection: CollectionOf<Model> =  CollectionOf<Model>(named:FileNames.models.rawValue,relativePath:"tests")
 
     override func prepareCollections() throws {
         try super.prepareCollections()
         try self.registerCollection(collection: self.metricsCollection)
-        try self.registerCollection(collection: self.managedModelsCollection )
+        try self.registerCollection(collection: self.modelsCollection )
     }
 
 }
 
 class DataPointTests: XCTestCase{
+
+    static var associatedDataPoints = [MyDataPoint]()
+
+    override func tearDown() {
+        super.tearDown()
+        for dataPoint in DataPointTests.associatedDataPoints{
+            dataPoint.storage.eraseFiles(of: dataPoint.metricsCollection)
+            dataPoint.storage.eraseFiles(of: dataPoint.modelsCollection)
+        }
+    }
 
     // MARK: - Tests
 
@@ -48,7 +58,6 @@ class DataPointTests: XCTestCase{
         ("test003SimpleRelations", test003SimpleRelations),
         ("test004RelationalErasure", test004RelationalErasure),
         ]
-
 
     
 
@@ -64,9 +73,10 @@ class DataPointTests: XCTestCase{
 
             let datapoint = MyDataPoint()
 
+            DataPointTests.associatedDataPoints.append(datapoint)
 
             let metricsFileName = MyDataPoint.FileNames.metrics.rawValue
-            let managedModelsFileName = MyDataPoint.FileNames.managedModels.rawValue
+            let managedModelsFileName = MyDataPoint.FileNames.models.rawValue
 
             // -----------------------------------
             // 1# Create or load the collection
@@ -110,6 +120,7 @@ class DataPointTests: XCTestCase{
 
                                             let dataPointClone = MyDataPoint()
                                             try dataPointClone.prepareCollections()
+                                            DataPointTests.associatedDataPoints.append(dataPointClone)
 
                                             let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                                                 if !success{
@@ -129,7 +140,6 @@ class DataPointTests: XCTestCase{
                                                     }
                                                 }
                                             })
-
                                             dataPointClone.storage.addProgressObserver(observer: reloadHandler)
 
                                         }catch{
@@ -196,8 +206,8 @@ class DataPointTests: XCTestCase{
             metrics1.operationName = "op1"
             datapoint.metricsCollection.append(metrics1)
 
-            let o = ManagedModel()
-            datapoint.managedModelsCollection.append(o)
+            let o = Model()
+            datapoint.modelsCollection.append(o)
 
             metrics1.declaresOwnership(of: o)
 
@@ -224,19 +234,19 @@ class DataPointTests: XCTestCase{
             metrics1.operationName = "op1"
             datapoint.metricsCollection.append(metrics1)
 
-            let o = ManagedModel()
+            let o = Model()
             let oUID = o.UID
-            datapoint.managedModelsCollection.append(o)
+            datapoint.modelsCollection.append(o)
 
             metrics1.declaresOwnership(of: o)
 
-            XCTAssert(datapoint.managedModelsCollection.count == 1, "managedModelsCollection should contain one item")
+            XCTAssert(datapoint.modelsCollection.count == 1, "modelsCollection should contain one item")
             XCTAssert(datapoint.metricsCollection.count == 1, "metricsCollection should contain one item")
 
             // Erasing the metrics should erase the managedModel
             try metrics1.erase()
 
-            XCTAssert(datapoint.managedModelsCollection.count == 0, "managedModelsCollection should contain 0 item")
+            XCTAssert(datapoint.modelsCollection.count == 0, "modelsCollection should contain 0 item")
             XCTAssert(datapoint.metricsCollection.count == 0, "metricsCollection should contain 0 item")
 
 
@@ -249,7 +259,7 @@ class DataPointTests: XCTestCase{
                 XCTFail("Should be DataPointError.instanceNotFound, current error is: \(error)")
             }
             do{
-                let _:ManagedModel = try datapoint.registredObjectByUID(oUID)
+                let _:Model = try datapoint.registredObjectByUID(oUID)
                 XCTFail("o should not be registred")
             }catch DataPointError.instanceNotFound {
                 // OK
@@ -274,26 +284,26 @@ class DataPointTests: XCTestCase{
             metrics1.operationName = "op1"
             datapoint.metricsCollection.append(metrics1)
 
-            let o = ManagedModel()
-            datapoint.managedModelsCollection.append(o)
+            let o = Model()
+            datapoint.modelsCollection.append(o)
             metrics1.declaresOwnership(of: o)
 
             let oUID = o.UID
 
-            let oRef:ManagedModel = try datapoint.registredObjectByUID(oUID)
+            let oRef:Model = try datapoint.registredObjectByUID(oUID)
             XCTAssert(oRef == o, "o should be registred")
 
-            XCTAssert(datapoint.managedModelsCollection.count == 1, "managedModelsCollection should contain one item")
+            XCTAssert(datapoint.modelsCollection.count == 1, "modelsCollection should contain one item")
             XCTAssert(datapoint.metricsCollection.count == 1, "metricsCollection should contain one item")
 
             // Erasing the o should not erase the managed model
             try o.erase()
 
-            XCTAssert(datapoint.managedModelsCollection.count == 0, "managedModelsCollection should contain 0 item ")
+            XCTAssert(datapoint.modelsCollection.count == 0, "modelsCollection should contain 0 item ")
             XCTAssert(datapoint.metricsCollection.count == 1, "metricsCollection should contain 1 item")
 
             do{
-                let _:ManagedModel = try datapoint.registredObjectByUID(oUID)
+                let _:Model = try datapoint.registredObjectByUID(oUID)
                 XCTFail("oRef should not be registred")
             }catch DataPointError.instanceNotFound {
                 // OK

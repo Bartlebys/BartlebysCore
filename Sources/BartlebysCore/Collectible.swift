@@ -35,8 +35,4 @@ public protocol Collectible : UniversalType,Identifiable {
     /// - Returns: the collection
     func getCollection<CollectedType>()->CollectionOf<CollectedType>
 
-
-    /// The collection with erased types
-    var parentCollection:ManagedCollection? { get }
-
 }

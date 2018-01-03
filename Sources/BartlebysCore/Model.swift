@@ -9,34 +9,58 @@
 import Foundation
 
 open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payload{
+    
+    // The id 
+    @objc dynamic public var id:UID = Utilities.createUID()
+    
+    //The UIDS of the owners
+    @objc dynamic open var ownedBy:[String] = [String]()  {
+        didSet {
+            if !self.wantsQuietChanges && ownedBy != oldValue {
+                self.erasableCollection?.didChange()
+            }
+        }
+    }
 
+    //The UIDS of the free relations
+    @objc dynamic  open var freeRelations:[String] = [String]()  {
+        didSet {
+            if !self.wantsQuietChanges && ownedBy != oldValue {
+                self.erasableCollection?.didChange()
+            }
+        }
+    }
+
+    //The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
+    @objc dynamic open var owns:[String] = [String]()
+    
     // A reference to the holding dataPoint
     public var dataPoint:DataPoint?
-
+    
     /// Sets the dataPoint Reference
     ///
     /// - Parameter dataPoint: the dataPoint
     public func setDataPoint(_ dataPoint:DataPoint){
         self.dataPoint = dataPoint
     }
-
+    
     // MARK: - Collection support
-
+    
     public typealias CollectedType = Model
-
+    
     // The collection reference.
     fileprivate var _collection:Any?
-
+    
     ////Internal flag used not to propagate changes (for example during deserialization) -> Check + ProvisionChanges for detailled explanantions
     internal var _quietChanges:Bool = false
-
+    
     /// Registers the collection reference
     ///
     /// - Parameter collection: the collection
     public func setCollection<CollectedType>(_ collection:CollectionOf<CollectedType>){
         self._collection = collection
     }
-
+    
     /// Returns the collection
     ///
     /// - Returns: the collection
@@ -47,18 +71,18 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
         }
         return collection
     }
-
+    
     public var erasableCollection:ErasableCollection?{
         return self._collection as? ErasableCollection
     }
-
+    
     /// The type erased Collection
     public var parentCollection:ManagedCollection? {
         return self._collection as? ManagedCollection
     }
-
+    
     // MARK: - Identifiable
-
+    
     @objc dynamic public var UID:UID {
         set{
             self.id = UID
@@ -68,49 +92,51 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
         }
     }
 
-    // MARK: -
-
-    @objc dynamic public var id:UID = Utilities.createUID()
-
-
     // MARK: - Initializable
-
+    
     required public override init() {
         super.init()
     }
-
+    
     // MARK: - Codable
-
+    
     public enum ModelCodingKeys: String,CodingKey{
         case id     // the concrete selected value is defined by MODELS_PRIMARY_KEY
         case _id    // the concrete selected value is defined by MODELS_PRIMARY_KEY
+        case ownedBy
+        case freeRelations
+        case owns // not serialized
     }
-
+    
     public required init(from decoder: Decoder) throws{
         super.init()
         let values = try decoder.container(keyedBy: ModelCodingKeys.self)
         self.id = try values.decode(String.self,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
+        self.ownedBy = try values.decode([String].self,forKey: .ownedBy)
+        self.freeRelations = try values.decode([String].self, forKey: .freeRelations)
     }
-
+    
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ModelCodingKeys.self)
         try container.encode(self.id,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
+        try container.encode(self.ownedBy,forKey: .ownedBy)
+        try container.encode(self.freeRelations,forKey:.freeRelations)
     }
     // MARK: - UniversalType
-
+    
     open class var typeName:String{
         return "Model"
     }
-
+    
     open class var collectionName:String{
         return "models"
     }
-
+    
     open var d_collectionName:String{
         return Model.collectionName
     }
-
-
+    
+    
     // MARK: - NSCopy aka CopyingProtocol
     
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -121,6 +147,22 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
             return Model()
         }
         return copy
+    }
+
+    // MARK: - Partial implementation of BarltebyKit's ProvisionChanges for Generative compatibility
+
+    /// Performs the deserialization without invoking provisionChanges
+    ///
+    /// - parameter changes: the changes closure
+    public func quietThrowingChanges(_ changes:()throws->())rethrows{
+        self._quietChanges=true
+        try changes()
+        self._quietChanges=false
+    }
+
+
+    public var wantsQuietChanges:Bool{
+        return self._quietChanges
     }
 
 }

@@ -73,6 +73,8 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         metrics3.operationName = "operation3"
 
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
+        collection.dataPoint = self.dataPoint
+        
         collection.append(metrics1)
         collection.append(metrics2)
         collection.append(metrics3)
@@ -91,6 +93,8 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
     func test002Append() {
         
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
+        collection.dataPoint = self.dataPoint
+
         let metrics = Metrics()
         collection.append(metrics)
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
@@ -99,6 +103,8 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
     
     func test003Remove() {
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
+        collection.dataPoint = self.dataPoint
+
         let metrics = Metrics()
         collection.append(metrics)
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
@@ -114,6 +120,7 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         let Metrics3 = Metrics()
         
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
+        collection.dataPoint = self.dataPoint
         collection.append(Metrics1)
         collection.append(Metrics2)
         collection.append(Metrics3)
@@ -126,6 +133,8 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
     
     func test005Count() {
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
+        collection.dataPoint = self.dataPoint
+
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
         
         collection.append(Metrics())
@@ -138,7 +147,8 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
     func test006UnicityOnUpserts() {
         
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-
+        collection.dataPoint = self.dataPoint
+        
         let metrics = Metrics()
         metrics.operationName = "operation"
         

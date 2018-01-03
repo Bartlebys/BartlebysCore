@@ -24,27 +24,6 @@ open class ManagedModel:Model{
 	    }
 	}
 
-	//The UIDS of the owners
-	@objc dynamic open var ownedBy:[String] = [String]()  {
-	    didSet { 
-	       if !self.wantsQuietChanges && ownedBy != oldValue {
-	            self.provisionChanges(forKey: "ownedBy",oldValue: oldValue,newValue: ownedBy)  
-	       } 
-	    }
-	}
-
-	//The UIDS of the free relations
-	@objc dynamic open var freeRelations:[String] = [String]()  {
-	    didSet { 
-	       if !self.wantsQuietChanges && freeRelations != oldValue {
-	            self.provisionChanges(forKey: "freeRelations",oldValue: oldValue,newValue: freeRelations)  
-	       } 
-	    }
-	}
-
-	//The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
-	@objc dynamic open var owns:[String] = [String]()
-
 	//A human readable model summary. If you want to disclose more information you can adopt the Descriptible protocol.
 	@objc dynamic open var summary:String? {
 	    didSet { 
@@ -72,9 +51,6 @@ open class ManagedModel:Model{
 
     public enum ManagedModelCodingKeys: String,CodingKey{
 		case externalID
-		case ownedBy
-		case freeRelations
-		case owns
 		case summary
 		case ephemeral
 		case changedKeys

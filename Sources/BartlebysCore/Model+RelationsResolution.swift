@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension ManagedModel:RelationsResolution{
+extension Model:RelationsResolution{
 
     /// Resolve the Related Objects
     ///
@@ -22,7 +22,7 @@ extension ManagedModel:RelationsResolution{
         }
         for object in self.getContractedRelations(relationship){
 
-            if let candidate = try? dataPoint.registredObjectByUID(object) as ManagedModel{
+            if let candidate = try? dataPoint.registredObjectByUID(object) as Model{
                 if let casted = candidate as? T{
                     related.append(casted)
                 }
@@ -44,7 +44,7 @@ extension ManagedModel:RelationsResolution{
             return related
         }
         for object in self.getContractedRelations(relationship){
-            if let candidate = try? dataPoint.registredObjectByUID(object) as ManagedModel{
+            if let candidate = try? dataPoint.registredObjectByUID(object) as Model{
                 if let casted = candidate as? T{
                     if  included(casted) == true {
                         related.append(casted)
@@ -68,7 +68,7 @@ extension ManagedModel:RelationsResolution{
             return related
         }
         for object in self.getContractedRelations(relationship){
-            if let candidate = try? dataPoint.registredObjectByUID(object) as ManagedModel{
+            if let candidate = try? dataPoint.registredObjectByUID(object) as Model{
                 if let casted = candidate as? T{
                     if  included(casted) == true {
                         related[casted.UID]=casted
@@ -95,7 +95,7 @@ extension ManagedModel:RelationsResolution{
             return related
         }
         for objectUID in objectsUID{
-            if let candidate = try? dataPoint.registredObjectByUID(objectUID) as ManagedModel{
+            if let candidate = try? dataPoint.registredObjectByUID(objectUID) as Model{
                 if let casted = candidate as? T{
                     related.append(casted)
                 }
@@ -121,7 +121,7 @@ extension ManagedModel:RelationsResolution{
             return related
         }
         for objectUID in objectsUID{
-            if let candidate = try? dataPoint.registredObjectByUID(objectUID) as ManagedModel{
+            if let candidate = try? dataPoint.registredObjectByUID(objectUID) as Model{
                 if let casted = candidate as? T{
                     if  included(casted) == true {
                         related.append(casted)
@@ -146,7 +146,7 @@ extension ManagedModel:RelationsResolution{
                 return nil
             }
             for objectUID in objectsUID{
-                if let candidate = try? dataPoint.registredObjectByUID(objectUID) as ManagedModel{
+                if let candidate = try? dataPoint.registredObjectByUID(objectUID) as Model{
                     if let casted = candidate as? T{
                         return casted
                     }
@@ -171,7 +171,7 @@ extension ManagedModel:RelationsResolution{
                 return nil
             }
             for objectUID in objectsUID{
-                if let candidate = try? dataPoint.registredObjectByUID(objectUID) as ManagedModel{
+                if let candidate = try? dataPoint.registredObjectByUID(objectUID) as Model{
                     if let castedCandidate = candidate as? T {
                         if  included(castedCandidate) == true {
                             return castedCandidate

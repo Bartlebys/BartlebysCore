@@ -12,47 +12,6 @@
         "description": "An external unique identifier",
         "required":false
       },
-      "ownedBy": {
-        "schema": {
-          "type": "array",
-          "items": {
-            "description": "The UIDS of the owners",
-            "type": "String",
-            "default": "[String]()",
-            "supervisable": true,
-            "serializable": false,
-            "dynamic":true,
-            "scope": "public"
-          }
-        }
-      },
-      "freeRelations": {
-        "schema": {
-          "type": "array",
-          "items": {
-            "description": "The UIDS of the free relations",
-            "type": "String",
-            "default": "[String]()",
-            "supervisable": true,
-            "serializable": false,
-            "dynamic":true,
-            "scope": "public"
-          }
-        }
-      },
-      "owns": {
-        "schema": {
-          "type": "array",
-          "items": {
-            "description": "The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)",
-            "type": "String",
-            "default": "[String]()",
-            "supervisable": false,
-            "serializable": false,
-            "scope": "public"
-          }
-        }
-      },
       "summary": {
         "type": "string",
         "description": "A human readable model summary. If you want to disclose more information you can adopt the Descriptible protocol."
