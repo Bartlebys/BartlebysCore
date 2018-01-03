@@ -21,6 +21,13 @@ public protocol FileStorage {
     /// - Parameters:
     ///   - collection: the collection reference
     ///   - dataPoint: the holding dataPoint
-    func saveCollectionToFile<T>(collection:CollectionOf<T>, using dataPoint:DataPoint)
+    func saveCollection<T>(collection:CollectionOf<T>, using dataPoint:DataPoint)
+
+
+    /// Erases the file(s) of the collection if there is one
+    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
+    ///
+    /// - Parameter collection: the collection
+    func eraseFiles<T>(of collection:CollectionOf<T>)
 
 }

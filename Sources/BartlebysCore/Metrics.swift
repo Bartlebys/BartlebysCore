@@ -11,7 +11,7 @@
 import Foundation
 
 // MARK: Bartleby's Core: a value object used to record metrics
-open class Metrics:ManagedModel{
+open class Metrics:Model{
 
     public typealias CollectedType = Metrics
 

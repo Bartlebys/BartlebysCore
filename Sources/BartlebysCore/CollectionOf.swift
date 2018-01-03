@@ -115,7 +115,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
       dataPoint.register(element)
 
       // Deferred ownership
-      if let item = element as? ManagedModel{
+      if let item = element as? Model{
          // Re-build the own relation.
          item.ownedBy.forEach({ (ownerUID) in
             if let o = dataPoint.registredManagedModelByUID(ownerUID){
@@ -216,6 +216,10 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
       }
    }
 
+   public func didChange(){
+      self.hasChanged = true
+   }
+
    // MARK: - Accessors
 
    /// Returns all the stored element packaged in an Array
@@ -236,9 +240,6 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
       self._storage = try values.decode([T].self, forKey:.items)
       self.fileName =  try values.decode(String.self, forKey:.fileName)
       self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
-      for element in self._storage{
-         self.reference(element)
-      }
    }
 
    public func encode(to encoder: Encoder) throws {
@@ -267,7 +268,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
          guard let dataPoint = self.dataPoint else {
             throw CollectionOfError.collectionIsNotRegistred
          }
-         dataPoint.storage.saveCollectionToFile(collection: self, using: dataPoint)
+         dataPoint.storage.saveCollection(collection: self, using: dataPoint)
       }
    }
 

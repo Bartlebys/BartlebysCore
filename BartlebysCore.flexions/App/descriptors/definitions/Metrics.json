@@ -1,7 +1,7 @@
 {
   "name": "Metrics",
   "definition": {
-    "nature": "ManagedModel",
+    "explicitType":"Model",
     "description": "Bartleby's Core: a value object used to record metrics",
     "properties": {
       "operationName":{

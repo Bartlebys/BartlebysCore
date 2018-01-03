@@ -50,7 +50,6 @@ public final class Storage{
 
 extension Storage: FileStorage{
 
-
     /// Loads asynchronously a collection from its file
     /// and insert the elements
     ///
@@ -96,7 +95,7 @@ extension Storage: FileStorage{
     /// - Parameters:
     ///   - collection: the collection reference
     ///   - dataPoint: the holding dataPoint
-    public func saveCollectionToFile<T>(collection:CollectionOf<T>, using dataPoint:DataPoint){
+    public func saveCollection<T>(collection:CollectionOf<T>, using dataPoint:DataPoint){
         self._progress.totalUnitCount += 1
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
 
@@ -130,4 +129,25 @@ extension Storage: FileStorage{
         Storage._sharedQueue.async(execute: workItem)
     }
 
+
+
+    /// Erases the file(s) of the collection if there is one
+    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
+    /// That's why it is synchronous.
+    ///
+    /// - Parameter collection: the collection
+    public func eraseFiles<T>(of collection:CollectionOf<T>){
+        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
+            do{
+                let directoryURL = self.baseUrl.appendingPathComponent(collection.relativeFolderPath)
+                let url = directoryURL.appendingPathComponent(collection.fileName + ".data")
+                if Storage._fileManager.fileExists(atPath: url.path) {
+                    try Storage._fileManager.removeItem(at: url)
+                }
+            }catch{
+                Logger.log("\(error)",category: .critical)
+            }
+        }
+        Storage._sharedQueue.sync(execute: workItem)
+    }
 }

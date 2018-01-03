@@ -10,6 +10,7 @@ import Foundation
 
 // A Collection with erased Collected types
 // Used to perform operations that requires type erasure
+// This protocol is implemented by the Collection Management layer (for example in BartlebyKit)
 public protocol ManagedCollection:ErasableCollection{
 
     /// Stages the change of the item. (Equivalent to git staging)

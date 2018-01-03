@@ -19,4 +19,7 @@ public protocol ErasableCollection{
     /// - Parameter item: the item
     func remove<C: Codable & Collectible>(_ item: C)throws->()
 
+
+    /// Called when the collection or one of its member has Changed
+    func didChange()
 }

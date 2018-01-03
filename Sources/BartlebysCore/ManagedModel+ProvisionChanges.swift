@@ -114,21 +114,7 @@ extension ManagedModel:ProvisionChanges{
         self._quietChanges=false
     }
 
-
-    /// Performs the deserialization without invoking provisionChanges
-    ///
-    /// - parameter changes: the changes closure
-    public func quietThrowingChanges(_ changes:()throws->())rethrows{
-        self._quietChanges=true
-        try changes()
-        self._quietChanges=false
-    }
-
     // MARK : -
-
-    public var wantsQuietChanges:Bool{
-        return self._quietChanges
-    }
 
 
     /// **Inspection**

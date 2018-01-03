@@ -29,4 +29,6 @@ public protocol Committable {
     /// - parameter changes: the changes
     func doNotCommit(_ changes:()->())
 
+    /// The collection with erased types
+    var parentCollection:ManagedCollection? { get }
 }

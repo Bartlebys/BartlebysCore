@@ -293,7 +293,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     /// You should override this method to perform for example associated files deletions...
     ///
     /// - Parameter instance: the managedModel
-    open func willErase(_ instance:ManagedModel){}
+    open func willErase(_ instance:Model){}
 
 }
 
@@ -321,7 +321,7 @@ extension DataPoint{
             /// This situation occurs for example
             /// when the ownee has been triggered but not the owner
             // or the deserialization of the ownee preceeds the owner
-            if let o=instance as? ManagedModel{
+            if let o=instance as? Model{
                 for owneeUID in  owneesUIDS{
                     if let _ = self.registredManagedModelByUID(owneeUID){
                         // Add the owns entry
@@ -398,7 +398,7 @@ extension DataPoint{
     /// You should most of the time use : `registredObjectByUID<T: Collectible>(_ UID: String) throws-> T`
     /// - parameter UID:
     /// - returns: the instance
-    public func registredManagedModelByUID(_ UID: UID)-> ManagedModel? {
+    public func registredManagedModelByUID(_ UID: UID)-> Model? {
         return try? self.registredObjectByUID(UID)
     }
 
@@ -407,7 +407,7 @@ extension DataPoint{
     /// You should most of the time use : `registredObjectByUID<T: Collectible>(_ UID: String) throws-> T`
     /// - parameter UID:
     /// - returns: the instance
-    public func registredManagedModelByUIDs(_ UIDs: [UID])-> [ManagedModel]? {
+    public func registredManagedModelByUIDs(_ UIDs: [UID])-> [Model]? {
         return try? self.registredObjectsByUIDs(UIDs)
     }
 
