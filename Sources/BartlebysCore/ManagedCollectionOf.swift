@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if !USE_EMBEDDED_MODULES
+    import BartlebysCore
+#endif
 
 public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T : Managed {
 

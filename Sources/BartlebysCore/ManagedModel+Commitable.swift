@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if !USE_EMBEDDED_MODULES
+    import BartlebysCore
+#endif
 
 
 extension ManagedModel:Committable{

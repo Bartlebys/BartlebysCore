@@ -6,6 +6,9 @@
 //  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 import Foundation
+#if !USE_EMBEDDED_MODULES
+    import BartlebysCore
+#endif
 
 
 extension ManagedModel:ProvisionChanges{
