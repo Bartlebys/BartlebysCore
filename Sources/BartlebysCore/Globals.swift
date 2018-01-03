@@ -12,11 +12,14 @@ import Foundation
 // In Most context Model.ModelCodingKeys.id is relevant.
 public var MODELS_PRIMARY_KEY:Model.ModelCodingKeys = Model.ModelCodingKeys.id
 
-// we store the UID
+// the explicit UID type used for expressivity
 public typealias UID = String
 
-fileprivate let _startTime = CFAbsoluteTimeGetCurrent()
+// A short cut to designate Managed Entities
+public typealias Managed = Codable & Collectible & Tolerent
 
+// The start Time is define when launching.
+fileprivate let _startTime = CFAbsoluteTimeGetCurrent()
 
 /// Returns the elapsed time since launch time.
 ///
