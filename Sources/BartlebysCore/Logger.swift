@@ -8,11 +8,30 @@
 
 import Foundation
 
+public struct LogEntry : CustomStringConvertible {
+    
+    var elapsedTime: Double = 0
+    var message: Any
+    var category: Logger.Categories = .standard
+    var file: String
+    var function: String
+    var line: Int
+    var counter: Int
+    
+    public var description: String {
+        let filestr: NSString = file as NSString
+        return "\(self.counter.paddedString()) \(self.category.rawValue)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
+    }
+    
+}
+
 public struct Logger {
     
     static var counter: Int = 0
     
     static var printable: [Categories] = [.standard, .temporary, .critical]
+    
+    public static var logsEntries: [LogEntry] = []
     
     public enum Categories : String {
         case standard = "std"
@@ -26,12 +45,12 @@ public struct Logger {
             return
         }
         
-        let filestr: NSString = file as NSString
-        print("\(counter.paddedString()) \(category.rawValue)-\(filestr.lastPathComponent)(\(line).\(function): \(message)")
+        let entry: LogEntry = LogEntry(elapsedTime: getElapsedTime(), message: message, category: category, file: file, function: function, line: line, counter: self.counter)
+        
+        logsEntries.append(entry)
+        print(entry.description)
         
         self.counter += 1
     }
-    
-
     
 }
