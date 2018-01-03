@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E50C5C741FFCE78300A3C9DA /* ErasableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A27841FFBE56600079CB5 /* ErasableCollection.swift */; };
+		E50C5C751FFCE78B00A3C9DA /* ErasableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A27841FFBE56600079CB5 /* ErasableCollection.swift */; };
+		E50C5C761FFCE78C00A3C9DA /* ErasableCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58A27841FFBE56600079CB5 /* ErasableCollection.swift */; };
 		E54826341FFBBAFB00FB854E /* KeyedChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826331FFBBAFB00FB854E /* KeyedChanges.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E54826381FFBD09800FB854E /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
@@ -473,22 +476,17 @@
 				E58A27661FFBD39800079CB5 /* To_be_relocated_in_BartlebyKit */,
 				4D55FC801FDAF65A001D91CE /* generated */,
 				4D55FC811FDAF672001D91CE /* Protocols */,
-				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */,
 				E54826351FFBBB3700FB854E /* Default.swift */,
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
-				4D55FC401FDAF5CF001D91CE /* Failure.swift */,
 				4D1F37291FDEE87100DA10AB /* FilePath.swift */,
 				4D55FC501FDAF5CF001D91CE /* Globals.swift */,
 				4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */,
 				4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */,
 				4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */,
-				4D55FC4A1FDAF5CF001D91CE /* JSON.swift */,
-				E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */,
 				4D55FC481FDAF5CF001D91CE /* Logger.swift */,
-				E52A847A1FF50D5800F2408B /* ManagedModel+Erasure.swift */,
 				E52A846A1FF5033E00F2408B /* ManagedModel+Relational.swift */,
 				E52A846B1FF5033E00F2408B /* ManagedModel+RelationsResolution.swift */,
 				4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */,
@@ -509,6 +507,11 @@
 				4D65E67C1FDFFA9200034787 /* Upload.swift */,
 				4D55FC411FDAF5CF001D91CE /* Utilities.swift */,
 				4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */,
+				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
+				4D55FC401FDAF5CF001D91CE /* Failure.swift */,
+				4D55FC4A1FDAF5CF001D91CE /* JSON.swift */,
+				E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */,
+				E52A847A1FF50D5800F2408B /* ManagedModel+Erasure.swift */,
 			);
 			path = BartlebysCore;
 			sourceTree = "<group>";
@@ -1073,6 +1076,7 @@
 				E5EC9FE41FF656AF008BF543 /* Metrics.swift in Sources */,
 				E5ECA00F1FF656AF008BF543 /* Paths.swift in Sources */,
 				E58A276C1FFBDC4600079CB5 /* KeyedChanges.swift in Sources */,
+				E50C5C741FFCE78300A3C9DA /* ErasableCollection.swift in Sources */,
 				E5EC9FFE1FF656AF008BF543 /* HTTPResponse.swift in Sources */,
 				E5EC9FE61FF656AF008BF543 /* ConcreteCoder.swift in Sources */,
 				E5EC9FF21FF656AF008BF543 /* UniversalType.swift in Sources */,
@@ -1149,6 +1153,7 @@
 				E5ECA03D1FF6579B008BF543 /* Metrics.swift in Sources */,
 				E5ECA0681FF657A6008BF543 /* Paths.swift in Sources */,
 				E58A276D1FFBDC4600079CB5 /* KeyedChanges.swift in Sources */,
+				E50C5C751FFCE78B00A3C9DA /* ErasableCollection.swift in Sources */,
 				E5ECA0571FF657A6008BF543 /* HTTPResponse.swift in Sources */,
 				E5ECA03F1FF6579F008BF543 /* ConcreteCoder.swift in Sources */,
 				E5ECA04B1FF6579F008BF543 /* UniversalType.swift in Sources */,
@@ -1225,6 +1230,7 @@
 				E5ECA0861FF6584A008BF543 /* Metrics.swift in Sources */,
 				E5ECA0B11FF65851008BF543 /* Paths.swift in Sources */,
 				E58A276E1FFBDC4700079CB5 /* KeyedChanges.swift in Sources */,
+				E50C5C761FFCE78C00A3C9DA /* ErasableCollection.swift in Sources */,
 				E5ECA0A01FF65851008BF543 /* HTTPResponse.swift in Sources */,
 				E5ECA0881FF6584A008BF543 /* ConcreteCoder.swift in Sources */,
 				E5ECA0941FF6584A008BF543 /* UniversalType.swift in Sources */,
