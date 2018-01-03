@@ -30,4 +30,11 @@ public protocol FileStorage {
     /// - Parameter collection: the collection
     func eraseFiles<T>(of collection:CollectionOf<T>)
 
+    /// Returns the URL of the collection file
+    ///
+    /// - Parameter collection: the collection
+    /// - Returns: the collection file URL
+    func getURL<T>(of collection:CollectionOf<T>) -> URL
+    
 }
+

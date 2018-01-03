@@ -227,6 +227,10 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
       return self._storage
    }
 
+   public var fileURL: URL? {
+      return self.dataPoint?.storage.getURL(of: self)
+   }
+   
    // MARK: - Codable
 
    public enum CollectionCodingKeys: String, CodingKey {
