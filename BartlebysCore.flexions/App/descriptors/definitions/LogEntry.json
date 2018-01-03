@@ -25,7 +25,7 @@
       "message": {
         "type": "string",
         "description": "the message",
-        "default": "no message",
+        "default": "$Default.NO_MESSAGE",
         "supervisable": false
       },
       "file": {
