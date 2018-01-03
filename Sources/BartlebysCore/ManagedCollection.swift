@@ -10,21 +10,24 @@ import Foundation
 
 // A Collection with erased Collected types
 // Used to perform operations that requires type erasure
-public protocol OpaqueCollection{
+public protocol ManagedCollection:ErasableCollection{
 
     /// Stages the change of the item. (Equivalent to git staging)
+    /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
+    /// if the item is not tolerent
     ///
     /// - Parameters:
     ///   - item: the item to stage
-    func stage(_ item: Any)throws->()
+    func stage<C:Codable & Collectible>(_ item: C)throws->()
 
 
     /// A remove function with type erasure to enable to perform dynamic cascading removal.
-    //  used in ManagedModel+Erasure
-    ///
+    /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
+    /// if the item is not tolerent.
+    /// 
     /// - Parameters:
     ///   - item: the item to erase
     ///   - commit: should we commit the erasure?
-    func remove(_ item: Any , commit:Bool)throws->()
+    func remove<C:Codable & Collectible>(_ item: C , commit:Bool)throws->()
 
 }

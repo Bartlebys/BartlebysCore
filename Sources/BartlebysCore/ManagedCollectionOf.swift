@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ManagedCollectionOf<T>:CollectionOf<T>, OpaqueCollection  where T : Codable & Collectible & Tolerent {
+public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T : Managed {
 
     public override subscript(index: Int) -> T {
         get {
@@ -36,6 +36,13 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, OpaqueCollection  where T :
     // Store the identifiers to be deleted on the next loop
     fileprivate var _deleted=[String]()
 
+    /// Overrides the default Erasable Collection method
+    ///
+    /// - Parameter item: the item to remove
+    /// - Throws: erasing error on type miss match
+    override public func remove<C:Codable & Collectible>(_ item: C)throws->() {
+        try self.remove(item, commit: true)
+    }
 
     /// A remove function with type erasure to enable to perform dynamic cascading removal.
     //  used in ManagedModel+Erasure
@@ -43,9 +50,12 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, OpaqueCollection  where T :
     /// - Parameters:
     ///   - item: the item to erase
     ///   - commit: should we commit the erasure?
-    public func remove(_ item: Any , commit:Bool)throws->(){
+    public func remove<C:Codable & Collectible>(_ item: C , commit:Bool)throws->(){
         guard let castedItem = item as? T else{
             throw ErasingError.typeMissMatch
+        }
+        guard item is Tolerent else{
+            throw CollectionOfError.collectedTypeMustBeTolerent
         }
         if let idx = self._storage.index(where:{ return $0.id == castedItem.id }){
             self._storage.remove(at: idx)
@@ -60,9 +70,12 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, OpaqueCollection  where T :
     /// - Parameters:
     ///   - item: the item to erase
     ///   - commit: should we commit the erasure?
-    public func stage(_ instance:Any)throws -> (){
+    public func stage<C:Codable & Collectible>(_ instance:C)throws -> (){
         guard let castedInstance = instance as? T else{
             throw CollectionOfError.typeMissMatch
+        }
+        guard instance is Tolerent else{
+            throw CollectionOfError.collectedTypeMustBeTolerent
         }
         guard self._staged.contains(castedInstance.UID) else{
             return
