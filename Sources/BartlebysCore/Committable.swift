@@ -7,10 +7,13 @@
 //
 
 import Foundation
+<<<<<<< HEAD
 #if !USE_EMBEDDED_MODULES
     import BartlebysCore
 #endif
 
+=======
+>>>>>>> 7e2e0175aeb847f988a05058e532ad8a5e501faf
 
 public protocol Committable {
 
