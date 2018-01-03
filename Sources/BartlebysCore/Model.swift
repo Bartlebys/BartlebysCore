@@ -48,9 +48,13 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
         return collection
     }
 
+    public var erasableCollection:ErasableCollection?{
+        return self._collection as? ErasableCollection
+    }
+
     /// The type erased Collection
-    public var parentCollection:OpaqueCollection? {
-        return self._collection as? OpaqueCollection
+    public var parentCollection:ManagedCollection? {
+        return self._collection as? ManagedCollection
     }
 
     // MARK: - Identifiable

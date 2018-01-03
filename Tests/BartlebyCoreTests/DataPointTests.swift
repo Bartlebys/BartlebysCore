@@ -289,7 +289,7 @@ class DataPointTests: XCTestCase{
             // Erasing the o should not erase the managed model
             try o.erase()
 
-            XCTAssert(datapoint.managedModelsCollection.count == 0, "managedModelsCollection should contain 0 item")
+            XCTAssert(datapoint.managedModelsCollection.count == 0, "managedModelsCollection should contain 0 item ")
             XCTAssert(datapoint.metricsCollection.count == 1, "metricsCollection should contain 1 item")
 
             do{

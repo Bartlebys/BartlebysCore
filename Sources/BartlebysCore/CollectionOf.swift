@@ -11,9 +11,10 @@ import Dispatch
 enum CollectionOfError:Error {
     case collectionIsNotRegistred
     case typeMissMatch
+    case collectedTypeMustBeTolerent
 }
 
-public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent where T : Codable & Collectible & Tolerent {
+public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T : Managed{
 
     // MARK: -
 
@@ -98,7 +99,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
     /// References the element into the dataPoint registry
     ///
     /// - Parameter element: the element
-    func reference<T: Codable & Collectible & Tolerent >(_ element:T){
+    func reference<T: Managed >(_ element:T){
         // We reference the collection
         element.setCollection(self)
 
@@ -194,6 +195,24 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
             self[idx] = element
         } else {
             self._storage.append(element)
+        }
+    }
+
+    // MARK: - ErasableCollection
+
+    
+    /// Removes the item from the collection
+    ///
+    /// - Parameter item: the item
+    public func remove<C:Codable & Collectible>(_ item: C)throws->(){
+        guard let castedItem = item as? T else{
+            throw ErasingError.typeMissMatch
+        }
+        guard item is Tolerent else{
+            throw CollectionOfError.collectedTypeMustBeTolerent
+        }
+        if let idx = self._storage.index(where:{ return $0.id == castedItem.id }){
+            self._storage.remove(at: idx)
         }
     }
 

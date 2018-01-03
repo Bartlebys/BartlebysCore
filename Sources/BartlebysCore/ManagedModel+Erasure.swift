@@ -11,10 +11,17 @@ import Foundation
 public enum ErasingError:Error {
     case dataPointUndefined
     case typeMissMatch
+    case notTolerent
 }
 
 
 extension ManagedModel{
+
+
+
+   // Write func remove<C: Codable & Collectible>(_ item: C)throws->()
+   // Call this method from  func remove<CollectibleType:Codable & Collectible>(_ item: CollectibleType , commit:Bool)throws->()
+
 
     /// Erases globally the instance and its dependent relations.
     /// Throws  ErasingError.dataPointUndefined
@@ -28,6 +35,7 @@ extension ManagedModel{
         guard let dataPoint=self.dataPoint else{
             throw ErasingError.dataPointUndefined
         }
+    
 
         // #TODO write specific Unit test for real cases validation (in BSFS and YD)
         // Co-ownership (used by recursive calls)
@@ -44,7 +52,12 @@ extension ManagedModel{
 
         // Call the overridable cleaning method
         dataPoint.willErase(self)
-        try self.parentCollection?.remove(self, commit: commit)
+        if let managedOpaqueCollection = self.parentCollection{
+            try managedOpaqueCollection.remove(self,commit:true)
+        }else{
+            try self.erasableCollection?.remove(self)
+        }
+
 
         var erasableUIDS:[String]=[self.UID]
 
