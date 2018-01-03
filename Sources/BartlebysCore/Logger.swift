@@ -20,9 +20,14 @@ public struct LogEntry : CustomStringConvertible {
     
     public var description: String {
         let filestr: NSString = file as NSString
-        return "\(self.counter.paddedString()) \(self.category.rawValue)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
+        let elapsedSeconds = Int(self.elapsedTime).paddedString(8)
+        return "\(self.counter.paddedString()) \(elapsedSeconds) \(self.category.rawValue)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
     }
     
+}
+
+public protocol LoggerDelegate {
+    func log(entry: LogEntry)
 }
 
 public struct Logger {
@@ -33,6 +38,8 @@ public struct Logger {
     
     public static var logsEntries: [LogEntry] = []
     
+    static var delegate: LoggerDelegate?
+
     public enum Categories : String {
         case standard = "std"
         case critical // E.g: Code section that that should never be reached
@@ -41,14 +48,12 @@ public struct Logger {
     
     static public func log(_ message: Any, category: Categories = .standard, file: String = #file, function: String = #function, line: Int = #line) {
         
-        guard Logger.printable.contains(category) else {
-            return
-        }
-        
         let entry: LogEntry = LogEntry(elapsedTime: getElapsedTime(), message: message, category: category, file: file, function: function, line: line, counter: self.counter)
-        
         logsEntries.append(entry)
-        print(entry.description)
+
+        if let delegate = self.delegate {
+            delegate.log(entry: entry)
+        }
         
         self.counter += 1
     }
