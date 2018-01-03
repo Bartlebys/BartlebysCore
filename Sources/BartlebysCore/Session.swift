@@ -26,6 +26,9 @@ public class Session {
     // The session Identifier
     public var sessionIdentifier: String
 
+    // A unique run identifier that changes on each launch
+    open static let runUID: String = Utilities.createUID()
+
     // shortcuts to the delegate
     public var credentials: Credentials { return self.delegate.credentials }
     public var authenticationMethod: AuthenticationMethod  { return self.delegate.authenticationMethod }

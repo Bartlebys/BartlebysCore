@@ -104,7 +104,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
       element.setCollection(self)
 
       guard let dataPoint = self.dataPoint else{
-         Logger.log("Undefined Datapoint", category: Logger.Categories.critical)
+         Logger.log("Undefined Datapoint", category:.critical)
          return
       }
 

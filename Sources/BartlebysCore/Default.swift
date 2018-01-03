@@ -17,6 +17,8 @@ public struct Default{
     static public let NO_NAME: String = "NO_NAME"
     static public let NO_COMMENT: String = "NO_COMMENT"
     static public let NO_MESSAGE: String = "NO_MESSAGE"
+    static public let NO_FILE: String = "NO_FILE"
+    static public let NO_FUNCTION: String = "NO_FUNCTION"
     static public let NO_KEY: String = "NO_KEY"
     static public let NO_PATH: String = "NO_PATH"
     static public let NO_GEM: String = "NO_GEM"
