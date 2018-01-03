@@ -331,7 +331,7 @@ extension DataPoint{
                             Swift.print("### !")
                         }
                     }else{
-                        Logger.log("Deferred ownership has failed to found \(owneeUID) for \(o.id)", category: Logger.Categories.critical)
+                        Logger.log("Deferred ownership has failed to found \(owneeUID) for \(o.id)", category: .critical)
                     }
                 }
             }
