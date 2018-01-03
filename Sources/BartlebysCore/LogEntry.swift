@@ -25,7 +25,7 @@ open class LogEntry:Model{
 	@objc dynamic open var elapsedTime:Double = -1
 
 	//the message
-	@objc dynamic open var message:String = "no message"
+	@objc dynamic open var message:String = Default.NO_MESSAGE
 
 	//the file
 	@objc dynamic open var file:String = Default.NO_FILE
