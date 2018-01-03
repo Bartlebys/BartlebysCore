@@ -22,7 +22,7 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T 
             do{
                 try self.stage(newValue)
             }catch{
-                Logger.log("\(error)", category: Logger.Categories.critical)
+                Logger.log("\(error)", category: .critical)
             }
         }
     }
@@ -100,7 +100,7 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T 
                     let o:T = try dataPoint.registredObjectByUID(itemUID)
                     changedInstances.append(o)
                 }catch{
-                    Logger.log("\(error)", category: Logger.Categories.critical)
+                    Logger.log("\(error)", category: .critical)
                 }
             }
             if changedInstances.count > 0 {
@@ -116,7 +116,7 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T 
                     let o:T = try dataPoint.registredObjectByUID(itemUID)
                     toBeDeletedInstances.append(o)
                 }catch{
-                    Logger.log("\(error)", category: Logger.Categories.critical)
+                    Logger.log("\(error)", category: .critical)
                 }
             }
             if toBeDeletedInstances.count > 0 {
