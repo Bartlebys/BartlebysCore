@@ -95,17 +95,14 @@ extension Storage: FileStorage{
     ///
     /// - Parameters:
     ///   - collection: the collection reference
-    ///   - fileName: the filename
-    ///   - relativeFolderPath: the relative folder path
     ///   - dataPoint: the holding dataPoint
-    public func saveCollectionToFile<T>(collection:CollectionOf<T>,fileName: String, relativeFolderPath: String, using dataPoint:DataPoint){
+    public func saveCollectionToFile<T>(collection:CollectionOf<T>, using dataPoint:DataPoint){
         self._progress.totalUnitCount += 1
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
 
             do{
-                collection.fileName = fileName
-                let directoryURL = self.baseUrl.appendingPathComponent(relativeFolderPath)
-                let url = directoryURL.appendingPathComponent(fileName + ".data")
+                let directoryURL = self.baseUrl.appendingPathComponent(collection.relativeFolderPath)
+                let url = directoryURL.appendingPathComponent(collection.fileName + ".data")
 
                 var isDirectory: ObjCBool = true
                 if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
@@ -125,7 +122,7 @@ extension Storage: FileStorage{
             }catch{
                 DispatchQueue.main.async(execute: {
                     for observer in self._observers{
-                        observer.onProgress(fileName, false, "\(error)", self._progress)
+                        observer.onProgress(collection.fileName, false, "\(error)", self._progress)
                     }
                 })
             }

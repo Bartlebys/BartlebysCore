@@ -20,9 +20,7 @@ public protocol FileStorage {
     ///
     /// - Parameters:
     ///   - collection: the collection reference
-    ///   - fileName: the filename
-    ///   - relativeFolderPath: the relative folder path
     ///   - dataPoint: the holding dataPoint
-    func saveCollectionToFile<T>(collection:CollectionOf<T>,fileName: String, relativeFolderPath: String, using dataPoint:DataPoint)
+    func saveCollectionToFile<T>(collection:CollectionOf<T>, using dataPoint:DataPoint)
 
 }
