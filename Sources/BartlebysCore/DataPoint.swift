@@ -285,7 +285,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     public final func save(using encoder: ConcreteCoder) throws {
         for collection in self._collections {
             if let universallyPersistentCollection = collection as? FilePersistent {
-                try universallyPersistentCollection.saveToFile(fileName: universallyPersistentCollection.fileName, relativeFolderPath: self.sessionIdentifier,using: encoder)
+                try universallyPersistentCollection.saveToFile(encoder)
             }
         }
     }
