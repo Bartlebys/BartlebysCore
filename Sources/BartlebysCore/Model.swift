@@ -112,8 +112,8 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
         super.init()
         let values = try decoder.container(keyedBy: ModelCodingKeys.self)
         self.id = try values.decode(String.self,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
-        self.ownedBy = try values.decode([String].self,forKey: .ownedBy)
-        self.freeRelations = try values.decode([String].self, forKey: .freeRelations)
+        self.ownedBy =? try values.decodeIfPresent([String].self,forKey: .ownedBy)
+        self.freeRelations =? try values.decodeIfPresent([String].self, forKey: .freeRelations)
     }
     
     open func encode(to encoder: Encoder) throws {
