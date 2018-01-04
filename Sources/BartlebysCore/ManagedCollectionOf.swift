@@ -10,7 +10,57 @@ import Foundation
 #if !USE_EMBEDDED_MODULES
     import BartlebysCore
 #endif
+
 public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T : Managed {
+
+
+    //MARK: - ChangesInspectable Protocol
+
+    // Not serialized
+    @objc dynamic open var changedKeys:[KeyedChanges] = [KeyedChanges]()
+
+    ////Auto commit availability -> Check ManagedModel + ProvisionChanges for detailed explanantions
+    @objc dynamic internal var _autoCommitIsEnabled:Bool = true
+
+    //The internal commit provisioning counter to discriminate Creation from Update and for possible frequency analysis
+    @objc dynamic open var commitCounter:Int = 0
+
+    ////Internal flag used not to propagate changes (for example during deserialization) -> Check + ProvisionChanges for detailled explanantions
+    internal var _quietChanges:Bool = false
+
+    // MARK: - Initializer
+
+    /// The designated proxy initializer
+    ///
+    /// - Parameters:
+    ///   - named: the name of the collection is also its fileName
+    ///   - relativePath: a relative path to be able to group/classify collections.
+    public required init(named: String, relativePath: String) {
+        super.init(named: named, relativePath: relativePath)
+    }
+
+
+  // MARK: - Codable
+
+    public enum ManagedCollectionOf: String, CodingKey {
+        case commitCounter
+    }
+
+    required public init(from decoder: Decoder) throws {
+        try super.init(from: decoder)
+        let values = try decoder.container(keyedBy: ManagedCollectionOf.self)
+        self.commitCounter = try values.decode(Int.self,forKey:.commitCounter)
+    }
+
+
+    public override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+        var container = encoder.container(keyedBy: ManagedCollectionOf.self)
+        try container.encode(self.commitCounter,forKey:.commitCounter)
+    }
+
+
+    // MARK: - Collection
 
     public override subscript(index: Int) -> T {
         get {

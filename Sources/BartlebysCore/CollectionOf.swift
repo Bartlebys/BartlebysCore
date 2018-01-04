@@ -61,7 +61,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
    // MARK: - Initializer
 
 
-   /// The designated initializer
+   /// The designated proxy initializer
    ///
    /// - Parameters:
    ///   - named: the name of the collection is also its fileName

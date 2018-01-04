@@ -44,6 +44,7 @@
 		E50C5CBE1FFD328700A3C9DA /* Committable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826371FFBD09800FB854E /* Committable.swift */; };
 		E50C5CBF1FFD328700A3C9DA /* ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC871FDAF68F001D91CE /* ProvisionChanges.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
+		E56F9F651FFE33D70041BD66 /* ManagedCollectionOf+ProvisionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56F9F641FFE33D70041BD66 /* ManagedCollectionOf+ProvisionChanges.swift */; };
 		E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27711FFBDC4F00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
@@ -354,6 +355,7 @@
 		E54826371FFBD09800FB854E /* Committable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Committable.swift; sourceTree = "<group>"; };
 		E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedModel+Commitable.swift"; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
+		E56F9F641FFE33D70041BD66 /* ManagedCollectionOf+ProvisionChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ManagedCollectionOf+ProvisionChanges.swift"; sourceTree = "<group>"; };
 		E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCollectionOf.swift; sourceTree = "<group>"; };
 		E58A27841FFBE56600079CB5 /* ErasableCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErasableCollection.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
@@ -597,6 +599,7 @@
 			children = (
 				E50C5C771FFCF0A700A3C9DA /* generated */,
 				E58A276A1FFBD79A00079CB5 /* ManagedCollectionOf.swift */,
+				E56F9F641FFE33D70041BD66 /* ManagedCollectionOf+ProvisionChanges.swift */,
 				E54826391FFBD0EF00FB854E /* ManagedModel+Commitable.swift */,
 				4D55FC431FDAF5CF001D91CE /* ManagedModel+ProvisionChanges.swift */,
 				E54826371FFBD09800FB854E /* Committable.swift */,
@@ -1026,6 +1029,7 @@
 				E5EC9F941FF655F9008BF543 /* ConcreteDataPoint.swift in Sources */,
 				E5EC9FB61FF655FE008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5EC9F9A1FF655F9008BF543 /* HTTPOperation.swift in Sources */,
+				E56F9F651FFE33D70041BD66 /* ManagedCollectionOf+ProvisionChanges.swift in Sources */,
 				E5EC9F921FF655F9008BF543 /* Collectible.swift in Sources */,
 				E5EC9FAA1FF655FE008BF543 /* HTTPMethod.swift in Sources */,
 				E5EC9FA11FF655F9008BF543 /* Tolerent.swift in Sources */,

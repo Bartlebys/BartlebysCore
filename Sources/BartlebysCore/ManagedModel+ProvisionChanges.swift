@@ -44,10 +44,13 @@ extension ManagedModel:ProvisionChanges{
         for (_,supervisionClosure) in self._supervisers{
             supervisionClosure(key,oldValue,newValue)
         }
+ */
 
         if self._autoCommitIsEnabled == true {
-            self.getCollection()?.stage(self)
+            self.stage()
         }
+
+        /*
 
         // Changes propagation & Inspection
         // Propagate item changes to its collections
@@ -102,7 +105,6 @@ extension ManagedModel:ProvisionChanges{
             }
         }
  */
-
     }
 
 
@@ -125,7 +127,7 @@ extension ManagedModel:ProvisionChanges{
     ///
     /// - parameter key:     the key
     /// - parameter changes: the description of the changes
-    private func _appendChanges(key:String,changes:String){
+    fileprivate func _appendChanges(key:String,changes:String){
         let kChanges=KeyedChanges()
         kChanges.key=key
         kChanges.changes=changes
@@ -133,6 +135,7 @@ extension ManagedModel:ProvisionChanges{
     }
 
 
+    /// Stages the current instance in its collections
     open func stage(){
         do{
             try self.parentCollection?.stage(self)
