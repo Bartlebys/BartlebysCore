@@ -14,12 +14,10 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T 
 
     public override subscript(index: Int) -> T {
         get {
-            return self._storage[index]
+            return super[index]
         }
         set(newValue) {
-            self._storage[index] = newValue
-            self.hasChanged = true
-            self.reference(newValue)
+            super[index] = newValue
             // Staging @todo is it the good place?
             do{
                 try self.stage(newValue)
@@ -59,8 +57,8 @@ public class ManagedCollectionOf<T>:CollectionOf<T>, ManagedCollection  where T 
         guard item is Tolerent else{
             throw CollectionOfError.collectedTypeMustBeTolerent
         }
-        if let idx = self._storage.index(where:{ return $0.id == castedItem.id }){
-            self._storage.remove(at: idx)
+        if let idx = self.index(where:{ return $0.id == castedItem.id }){
+            self.remove(at: idx)
         }
         // @todo commit
     }
