@@ -33,16 +33,17 @@ public struct Logger {
     
     public static var delegate: LoggerDelegate?
 
-    static public func log(_ message: String, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line) {
+    static public func log(_ message: Any, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line,decorative:Bool = false) {
         
         let entry: LogEntry = LogEntry()
         entry.elapsedTime = getElapsedTime()
-        entry.message = message
+        entry.message = "\(message)"
         entry.category = category
         entry.file = file
         entry.function = function
         entry.line = line
         entry.counter = counter
+        entry.decorative = decorative
 
         while self.logsEntries.count > Logger.maxNumberOfEntries{
             let _ = self.logsEntries.dropFirst()
