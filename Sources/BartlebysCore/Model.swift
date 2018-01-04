@@ -111,7 +111,10 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
     public required init(from decoder: Decoder) throws{
         super.init()
         let values = try decoder.container(keyedBy: ModelCodingKeys.self)
-        self.id = try values.decode(String.self,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
+        // We want to be resilient to external omissions
+        // So we discriminate the invalid UIDs by prefixing NO_UID
+        // We admit not to have ownedBy and freeRelations Keys
+        self.id = try values.decodeIfPresent(String.self,forKey:BartlebysCore.MODELS_PRIMARY_KEY) ?? Default.NO_UID + self.id
         self.ownedBy =? try values.decodeIfPresent([String].self,forKey: .ownedBy)
         self.freeRelations =? try values.decodeIfPresent([String].self, forKey: .freeRelations)
     }
