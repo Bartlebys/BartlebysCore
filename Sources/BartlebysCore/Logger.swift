@@ -26,6 +26,8 @@ public protocol LoggerDelegate {
 public struct Logger {
     
     static var counter: Int = 0
+
+    static var maxNumberOfEntries = 1_000
     
     public static var logsEntries: [LogEntry] = []
     
@@ -41,6 +43,10 @@ public struct Logger {
         entry.function = function
         entry.line = line
         entry.counter = counter
+
+        while self.logsEntries.count > Logger.maxNumberOfEntries{
+            let _ = self.logsEntries.dropFirst()
+        }
 
         logsEntries.append(entry)
 
