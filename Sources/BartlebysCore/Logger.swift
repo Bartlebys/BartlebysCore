@@ -29,7 +29,7 @@ public struct Logger {
     
     public static var logsEntries: [LogEntry] = []
     
-    static var delegate: LoggerDelegate?
+    public static var delegate: LoggerDelegate?
 
     static public func log(_ message: String, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line) {
         
