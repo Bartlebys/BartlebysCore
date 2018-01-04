@@ -38,7 +38,7 @@ public struct Logger {
         entry.message = message
         entry.category = category
         entry.file = file
-        entry.file = function
+        entry.function = function
         entry.line = line
         entry.counter = counter
 
