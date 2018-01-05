@@ -15,7 +15,7 @@ public enum CollectionOfError:Error {
    case collectedTypeMustBeTolerent
 }
 
-open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T : Managed{
+open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T :  Codable & Collectible & Tolerent{
 
 
    // MARK: -
@@ -101,7 +101,7 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
    /// References the element into the dataPoint registry
    ///
    /// - Parameter element: the element
-   func reference<T: Managed >(_ element:T){
+   func reference<T:  Codable & Collectible & Tolerent >(_ element:T){
       // We reference the collection
       element.setCollection(self)
 

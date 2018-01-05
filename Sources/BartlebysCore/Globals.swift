@@ -15,9 +15,6 @@ public var MODELS_PRIMARY_KEY:Model.ModelCodingKeys = Model.ModelCodingKeys.id
 // the explicit UID type used for expressivity
 public typealias UID = String
 
-// A short cut to designate Managed Entities
-public typealias Managed = Codable & Collectible & Tolerent
-
 // MARK: - Time
 
 // The start Time is define when launching.
