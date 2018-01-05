@@ -120,7 +120,7 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
       if let item = element as? Model{
          // Re-build the own relation.
          item.ownedBy.forEach({ (ownerUID) in
-            if let o = dataPoint.registredManagedModelByUID(ownerUID){
+            if let o = dataPoint.registredModelByUID(ownerUID){
                if !o.owns.contains(item.UID){
                   o.owns.append(item.UID)
                }
