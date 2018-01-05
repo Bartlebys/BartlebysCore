@@ -71,12 +71,14 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
         }
         return collection
     }
-    
+
+
+    /// The type erased acceessor to a collection that support remove & didChange
     public var erasableCollection:ErasableCollection?{
         return self._collection as? ErasableCollection
     }
     
-    /// The type erased Collection
+    /// The type erased Collection part of BartlebyKit's Commitable procotol
     public var parentCollection:ManagedCollection? {
         return self._collection as? ManagedCollection
     }
@@ -164,8 +166,18 @@ open class Model:Object,Codable,BartlebysCore.Collectible,CopyingProtocol,Payloa
     }
 
 
+    /// the Accessor to the underlining quiet state
     public var wantsQuietChanges:Bool{
         return self._quietChanges
+    }
+
+    /// Performs the deserialization without invoking provisionChanges
+    ///
+    /// - parameter changes: the changes closure
+    public func quietChanges(_ changes: () -> ()) {
+        self._quietChanges=true
+        changes()
+        self._quietChanges=false
     }
 
 }

@@ -17,6 +17,7 @@ public enum CollectionOfError:Error {
 
 open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T : Managed{
 
+
    // MARK: -
 
    //@todo use a Btree.
@@ -205,7 +206,7 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
    /// Removes the item from the collection
    ///
    /// - Parameter item: the item
-   open func remove<C:Codable & Collectible>(_ item: C)throws->(){
+   open func removeItem<C:Codable & Collectible>(_ item: C)throws->(){
       guard let castedItem = item as? T else{
          throw ErasingError.typeMissMatch
       }

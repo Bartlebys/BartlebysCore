@@ -19,7 +19,7 @@ public protocol ManagedCollection:ErasableCollection{
     ///
     /// - Parameters:
     ///   - item: the item to stage
-    func stage<C:Codable & Collectible>(_ item: C)throws->()
+    func stageItem<C:Codable & Collectible>(_ item: C)throws->()
 
 
     /// A remove function with type erasure to enable to perform dynamic cascading removal.
@@ -29,6 +29,6 @@ public protocol ManagedCollection:ErasableCollection{
     /// - Parameters:
     ///   - item: the item to erase
     ///   - commit: should we commit the erasure?
-    func remove<C:Codable & Collectible>(_ item: C , commit:Bool)throws->()
+    func removeItem<C:Codable & Collectible>(_ item: C , commit:Bool)throws->()
 
 }

@@ -55,9 +55,9 @@ extension Model{
         // Call the overridable cleaning method
         dataPoint.willErase(self)
         if let managedOpaqueCollection = self.parentCollection{
-            try managedOpaqueCollection.remove(self,commit:commit)
+            try managedOpaqueCollection.removeItem(self,commit:commit)
         }else{
-            try self.erasableCollection?.remove(self)
+            try self.erasableCollection?.removeItem(self)
         }
 
 
