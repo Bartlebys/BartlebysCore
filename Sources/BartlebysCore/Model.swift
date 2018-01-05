@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Model:Object,Codable,BartlebysCore.Collectable,CopyingProtocol,Payload{
+open class Model:Object,Codable,Collectable,CopyingProtocol,Payload{
     
     // The id 
     @objc dynamic public var id:UID = Utilities.createUID()

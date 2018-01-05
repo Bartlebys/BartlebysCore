@@ -161,4 +161,27 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         XCTAssert(collection.count == 1, "The collection should still have exactly one element")
         
     }
+
+    func test007PluralityOnAppend() {
+
+        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
+        collection.dataPoint = self.dataPoint
+
+        let metrics = Metrics()
+        metrics.operationName = "operation"
+
+        collection.append(metrics)
+        Logger.log("Collection count = \(collection.count)")
+        XCTAssert(collection.count == 1, "The collection should have exactly one element")
+
+        collection.append(metrics)
+        Logger.log("Collection count = \(collection.count)")
+        XCTAssert(collection.count == 2, "The collection should still have exactly two elements")
+
+        if collection.count >= 2 {
+            XCTAssert(collection[0] == collection[1] , "The two first elements should be equal")
+            XCTAssert(collection[0] === collection[1] , "The two first elements should match")
+        }
+
+    }
 }
