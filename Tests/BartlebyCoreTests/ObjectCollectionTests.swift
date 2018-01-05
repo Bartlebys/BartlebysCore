@@ -41,7 +41,8 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         ("test004Remove", test004Remove),
         ("test005Count", test005Count),
         ("test006UnicityOnUpserts",test006UnicityOnUpserts),
-        ]
+        ("test007PluralityOnAppends",test007PluralityOnAppends),
+    ]
     
     var dataPoint : DataPoint = DataPoint()
 
@@ -162,7 +163,7 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         
     }
 
-    func test007PluralityOnAppend() {
+    func test007PluralityOnAppends() {
 
         let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
         collection.dataPoint = self.dataPoint
