@@ -8,13 +8,14 @@
 
 import Foundation
 import Dispatch
-enum CollectionOfError:Error {
+
+public enum CollectionOfError:Error {
    case collectionIsNotRegistred
    case typeMissMatch
    case collectedTypeMustBeTolerent
 }
 
-public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T : Managed{
+open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T : Managed{
 
    // MARK: -
 
@@ -85,7 +86,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
       return try self._items.index(where: predicate)
    }
 
-   public subscript(index: Int) -> T {
+   open subscript(index: Int) -> T {
       get {
          return self._items[index]
       }
@@ -204,7 +205,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
    /// Removes the item from the collection
    ///
    /// - Parameter item: the item
-   public func remove<C:Codable & Collectible>(_ item: C)throws->(){
+   open func remove<C:Codable & Collectible>(_ item: C)throws->(){
       guard let castedItem = item as? T else{
          throw ErasingError.typeMissMatch
       }
@@ -246,7 +247,7 @@ public class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seq
       self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
    }
 
-   public func encode(to encoder: Encoder) throws {
+   open func encode(to encoder: Encoder) throws {
       var container = encoder.container(keyedBy: CollectionCodingKeys.self)
       try container.encode(self._items, forKey:.items)
       try container.encode(self.fileName, forKey:.fileName)

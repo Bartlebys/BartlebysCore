@@ -8,10 +8,12 @@
 
 import Foundation
 
+
 public enum ErasingError:Error {
     case dataPointUndefined
     case typeMissMatch
     case notTolerent
+    case referentDocumentUndefined // @todo to be removed
 }
 
 
