@@ -312,7 +312,7 @@ extension DataPoint{
     /// Registers an instance
     ///
     /// - Parameter instance: the instance to be registered
-    public func register<T:  Codable & Collectible >(_ instance: T) {
+    public func register<T:  Codable & Collectable >(_ instance: T) {
         // Store the instance by its UID
         self._instancesByUID[instance.id]=instance
 
@@ -343,14 +343,14 @@ extension DataPoint{
     /// Removes the registred instance from the registry
     ///
     /// - Parameter instance: the instance
-    public func unRegister<T:  Codable & Collectible >(_ instance: T) {
+    public func unRegister<T:  Codable & Collectable >(_ instance: T) {
         self._instancesByUID.removeValue(forKey: instance.id)
     }
 
     /// Removes the registred instances from the registry
     ///
     /// - Parameter instance: the instance
-    public func unRegister<T:  Codable & Collectible >(_ instances: [T]) {
+    public func unRegister<T:  Codable & Collectable >(_ instances: [T]) {
         for instance in instances{
             self.unRegister(instance)
         }
@@ -360,7 +360,7 @@ extension DataPoint{
     ///
     /// - Parameter UID: the instance unique identifier
     /// - Returns: the instance
-    public func registredObjectByUID<T: Codable & Collectible>(_ UID: UID) throws-> T {
+    public func registredObjectByUID<T: Codable & Collectable>(_ UID: UID) throws-> T {
         if let instance=self._instancesByUID[UID]{
             if let casted=instance as? T{
                 return casted
@@ -376,7 +376,7 @@ extension DataPoint{
     ///
     /// - Parameter UIDs: the UIDs
     /// - Returns: the registred Instances
-    public func registredObjectsByUIDs<T: Collectible & Collectible >(_ UIDs: [UID]) throws-> [T] {
+    public func registredObjectsByUIDs<T: Collectable & Collectable >(_ UIDs: [UID]) throws-> [T] {
         var items:[T]=[T]()
         for UID in UIDs{
             if let instance=self._instancesByUID[UID]{
@@ -395,7 +395,7 @@ extension DataPoint{
 
     /// Returns a ManagedModel by its UID
     /// Those instance are not casted.
-    /// You should most of the time use : `registredObjectByUID<T: Collectible>(_ UID: String) throws-> T`
+    /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
     /// - parameter UID:
     /// - returns: the instance
     public func registredManagedModelByUID(_ UID: UID)-> Model? {
@@ -404,7 +404,7 @@ extension DataPoint{
 
     /// Returns a collection of ManagedModel by UIDs
     /// Those instance are not casted.
-    /// You should most of the time use : `registredObjectByUID<T: Collectible>(_ UID: String) throws-> T`
+    /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
     /// - parameter UID:
     /// - returns: the instance
     public func registredManagedModelByUIDs(_ UIDs: [UID])-> [Model]? {
@@ -415,7 +415,7 @@ extension DataPoint{
     ///
     /// - Parameter UID: needle
     /// - Returns: the instance
-    public func collectibleInstanceByUID<T:Codable & Collectible>(_ UID: UID) -> T? {
+    public func CollectableInstanceByUID<T:Codable & Collectable>(_ UID: UID) -> T? {
         return self._instancesByUID[UID] as? T
     }
 
@@ -426,7 +426,7 @@ extension DataPoint{
     /// - Parameters:
     ///   - ownee: the ownee
     ///   - ownerUID: the currently unavailable owner UID
-    public func appendToDeferredOwnershipsList<T:Codable & Collectible>(_ ownee:T,ownerUID:UID){
+    public func appendToDeferredOwnershipsList<T:Codable & Collectable>(_ ownee:T,ownerUID:UID){
         if self._deferredOwnerships.keys.contains(ownerUID) {
             self._deferredOwnerships[ownerUID]!.append(ownee.id)
         }else{

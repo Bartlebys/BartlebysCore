@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DataResponse<T> : HTTPResponse where T : Codable & Collectible {
+public class DataResponse<T> : HTTPResponse where T : Codable & Collectable {
     
     public var result: Array<T>
 

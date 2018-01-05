@@ -1,5 +1,5 @@
 //
-//  Collectible.swift
+//  Collectable.swift
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 06/12/2017.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-public protocol Collectible : UniversalType,Identifiable {
+public protocol Collectable : UniversalType,Identifiable {
 
     // Universally Unique identifier (check Globals.swift for details on the primary key MODELS_PRIMARY_KEY)
     var id:String { get set }
 
-    // The Associated "CollectedType" is the Collectible type
+    // The Associated "CollectedType" is the Collectable type
     associatedtype CollectedType
 
     // The reference to the dataPoint

@@ -17,7 +17,7 @@ public protocol ErasableCollection{
     /// if the item is not tolerent.
     ///
     /// - Parameter item: the item
-    func removeItem<C: Codable & Collectible>(_ item: C)throws->()
+    func removeItem<C: Codable & Collectable>(_ item: C)throws->()
 
 
     /// Called when the collection or one of its member has Changed

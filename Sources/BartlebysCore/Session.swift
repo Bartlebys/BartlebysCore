@@ -58,7 +58,7 @@ public class Session {
     
     // MARK: - Operations Runtime
     
-    public func execute<T:Collectible,P>(_ operation: CallOperation<T,P>){
+    public func execute<T:Collectable,P>(_ operation: CallOperation<T,P>){
         self.provisionOperation(operation)
         do {
             try self.runCall(operation)
@@ -79,7 +79,7 @@ public class Session {
     /// Run the operation
     ///
     /// - Parameter operation: the operation
-    public func runCall<T: Collectible, P>(_ operation: CallOperation<T, P>) throws {
+    public func runCall<T: Collectable, P>(_ operation: CallOperation<T, P>) throws {
         
         let request: URLRequest
         request = try self.delegate.requestFor(operation)

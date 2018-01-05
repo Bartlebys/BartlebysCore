@@ -15,7 +15,7 @@ public enum CollectionOfError:Error {
    case collectedTypeMustBeTolerent
 }
 
-open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T :  Codable & Collectible & Tolerent{
+open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T :  Codable & Collectable & Tolerent{
 
 
    // MARK: -
@@ -101,7 +101,7 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
    /// References the element into the dataPoint registry
    ///
    /// - Parameter element: the element
-   func reference<T:  Codable & Collectible & Tolerent >(_ element:T){
+   func reference<T:  Codable & Collectable & Tolerent >(_ element:T){
       // We reference the collection
       element.setCollection(self)
 
@@ -206,7 +206,7 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
    /// Removes the item from the collection
    ///
    /// - Parameter item: the item
-   open func removeItem<C:Codable & Collectible>(_ item: C)throws->(){
+   open func removeItem<C:Codable & Collectable>(_ item: C)throws->(){
       guard let castedItem = item as? T else{
          throw ErasingError.typeMissMatch
       }
