@@ -17,19 +17,19 @@ public enum ErasingError:Error {
 }
 
 
+/// This extension implement relational erasure
+/// It also expose a Commit property to enable to implement ManagedCollection
+/// A non fully Managed model is not concerned by those details
 extension Model{
 
-
-   // @TODO!
-   // Write func remove<C: Codable & Collectible>(_ item: C)throws->()
-   // Call this method from  func remove<CollectibleType:Codable & Collectible>(_ item: CollectibleType , commit:Bool)throws->()
 
 
     /// Erases globally the instance and its dependent relations.
     /// Throws  ErasingError.dataPointUndefined
-    /// You may invoke sanitizing routines on document.willErase (e.g:  purge files  Node, Block, ...)
+    /// You may invoke sanitizing routines on dataPoint.willErase (e.g:  purge files  Node, Block, ...)
+    ///
     /// - Parameters:
-    ///   - commit: set to true by default (we set to false only  not to commit triggered Deletion)
+    ///   - commit: set to true by default (used byFully Managed Framework e.g: BarlebyKit commit is set to false not to commit triggered Deletion)
     ///   - eraserUID: the eraser UID (used by recursive calls to determinate if co-owned children must be erased)
     /// - Returns: N/A
     public func erase(commit:Bool=true,eraserUID:String="NO_UID")throws->(){
@@ -55,7 +55,7 @@ extension Model{
         // Call the overridable cleaning method
         dataPoint.willErase(self)
         if let managedOpaqueCollection = self.parentCollection{
-            try managedOpaqueCollection.remove(self,commit:true)
+            try managedOpaqueCollection.remove(self,commit:commit)
         }else{
             try self.erasableCollection?.remove(self)
         }
@@ -68,7 +68,7 @@ extension Model{
             if !erasableUIDS.contains(objectUID){
                 erasableUIDS.append(objectUID)
                 let target:Model = try dataPoint.registredObjectByUID(objectUID)
-                try target.erase(commit: commit)
+                try target.erase(commit: commit,eraserUID: eraserUID)
             }
         }
 
@@ -89,7 +89,6 @@ extension Model{
 
         // Let's unRegister
         dataPoint.unRegister(self)
-
 
     }
 
