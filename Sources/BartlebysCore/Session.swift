@@ -122,11 +122,6 @@ public class Session {
             }
             
             if T.self is Download.Type {
-                
-//                var request2 = request
-//                let urlstring = request.url!.absoluteString.replacingOccurrences(of: "https", with: "http")
-//                request2.url = URL(string: urlstring)!
-
                 self.callDownload(request: request, resultType: T.self, localFilePath: FilePath, success: successClosure, failure: failureClosure)
             } else {
                 self.callUpload(request: request, resultType: T.self, localFilePath: FilePath, success: successClosure, failure: failureClosure)

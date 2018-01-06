@@ -16,8 +16,22 @@ public protocol StorageProgressDelegate{
 }
 
 
+/// The storage layer
 public final class Storage{
-    
+
+    /// If set to true the Storage is volatile
+    /// It means it persist in memory only
+    /// The FileStorage storage methods are ignored at runtime
+    fileprivate var _volatile:Bool = false
+
+
+    /// If you call once this method the datapoint will not persist out of the memory anymore
+    /// You cannot turn back _volatile to false
+    /// This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
+    public func becomeVolatile(){
+        self._volatile = true
+    }
+
     public let collectionExtension: String = ".data"
     
     /// You can / should register progress observers.
@@ -59,6 +73,16 @@ extension Storage: FileStorage{
         guard let dataPoint = proxy.dataPoint else {
             return
         }
+
+        guard self._volatile == false else{
+            DispatchQueue.main.async {
+                for observer in self._observers{
+                    observer.onProgress(proxy.fileName, false, nil, self._progress)
+                }
+            }
+            return
+        }
+
         self._progress.totalUnitCount += 1
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
             
@@ -99,6 +123,16 @@ extension Storage: FileStorage{
     ///   - collection: the collection reference
     ///   - dataPoint: the holding dataPoint
     public func saveCollection<T>(collection:CollectionOf<T>, using dataPoint:DataPoint){
+
+        guard self._volatile == false else{
+            DispatchQueue.main.async {
+                for observer in self._observers{
+                    observer.onProgress(collection.fileName, false, nil, self._progress)
+                }
+            }
+            return
+        }
+
         self._progress.totalUnitCount += 1
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
             
@@ -140,6 +174,9 @@ extension Storage: FileStorage{
     ///
     /// - Parameter collection: the collection
     public func eraseFiles<T>(of collection:CollectionOf<T>){
+        guard self._volatile == false else{
+            return
+        }
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
             do{
                 let url = self.getURL(of: collection)

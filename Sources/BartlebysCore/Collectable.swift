@@ -35,4 +35,8 @@ public protocol Collectable : UniversalType,Identifiable {
     /// - Returns: the collection
     func getCollection<CollectedType>()->CollectionOf<CollectedType>
 
+
+    /// The type erased acceessor to a collection that support reference, remove & didChange
+    var indistinctCollection:IndistinctCollection? { get }
+
 }

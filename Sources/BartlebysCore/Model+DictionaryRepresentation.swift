@@ -9,7 +9,11 @@
 import Foundation
 
 public extension Model {
-    
+
+
+    /// Returns a dictionary representation of the Model
+    ///
+    /// - Returns: the dictionary
     public func toDictionaryRepresentation() -> Dictionary<String, Any> {
         do {
             let data = try JSON.encoder.encode(self)
