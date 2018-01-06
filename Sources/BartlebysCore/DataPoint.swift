@@ -83,6 +83,9 @@ open class DataPoint: Object,ConcreteDataPoint{
     // MARK: -
 
 
+    /// A collection used to perform Key Value Storage
+    public var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.typeName.lowercased(),relativePath:"")
+
     /// Initializes the dataPoint
     /// - Throws: Children may throw while populating the collections
     required public override init(){
@@ -96,7 +99,7 @@ open class DataPoint: Object,ConcreteDataPoint{
 
     /// That the place where you should call : self.registerCollection(concreteCollection)
     open func prepareCollections()throws{
-
+        try self.registerCollection(collection:self.keyedDataCollection)
     }
 
     /// Registers the collection into the data point

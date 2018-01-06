@@ -1,0 +1,27 @@
+{
+  "name": "KeyedData",
+  "definition": {
+    "explicitType": "Model",
+    "description": "A simple wrapper to associate a key and a Data",
+    "properties": {
+      "key": {
+        "type": "string",
+        "description": "The key",
+        "default":"$Default.NO_KEY",
+        "supervisable": false,
+        "serializable": true,
+        "cryptable": false
+      },
+      "data": {
+        "type": "data",
+        "description": "The Data",
+        "default":"Data()",
+        "supervisable": false,
+        "serializable": true,
+        "cryptable": false
+      }
+    },
+    "metadata": {
+    }
+  }
+}
