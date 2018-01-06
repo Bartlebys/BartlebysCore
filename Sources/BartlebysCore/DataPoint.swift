@@ -425,6 +425,15 @@ extension DataPoint{
         return self._instancesByUID[UID]
     }
 
+    /// Totaly opaque accessor
+    ///
+    /// - Parameter UID: the UID
+    /// - Returns: the opaque Instance
+    public func registredOpaqueInstancesByUIDs(_ UIDs: [UID])-> [Any] {
+        return self._instancesByUID.filter{ UIDs.contains($0.key)}
+    }
+
+
     // MARK: -
 
     /// Stores the ownee when the owner is not already available

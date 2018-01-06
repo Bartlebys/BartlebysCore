@@ -23,12 +23,25 @@ public protocol Aliasable{
 // Addd the ability to resolve Aliases
 public protocol AliasResolver{
 
-    /// Resolve the alias
+    /// Resolves the alias
     ///
     /// - Parameter alias: the alias
     /// - Returns: the reference
-    func instance<T : Codable >(from alias:Alias)->T?
+    func instance<T : Codable >(from alias:Alias) throws -> T
 
+    /// Resolves the aliases
+    ///
+    /// - Parameter aliases: the aliases
+    /// - Returns: the references
+    func instances<T : Codable >(from aliases:[Alias]) throws -> [T]
+
+
+}
+
+public enum AliasResolverError:Error{
+    case undefinedContainer
+    case typeMissMatch
+    case notFound
 }
 
 /// The alias struct
