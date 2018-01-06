@@ -292,18 +292,27 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    fileprivate let _selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
 
+
+   // Recovers the
    fileprivate var _selectedUIDS:[UID]{
       set{
          Object.syncOnMain {
-            if let selections = self.selectedItems {
-               let _selectedUIDS:[UID] = selections.map{$0.UID}
-               ///self.referentDocument?.metadata.saveStateOf(_selectedUIDS, identified: self._selectedUIDSKeys)
+            do{
+               try self.dataPoint?.storeInKVS(newValue, identifiedBy: self._selectedUIDSKeys)
+            }catch{
+               Logger.log("\(error)")
             }
          }
       }
       get{
          return Object.syncOnMainAndReturn{ () -> [UID] in
-            return [UID]()//return self.referentDocument?.metadata.getStateOf(identified: self._selectedUIDSKeys) ?? [String]()
+            guard let dataPoint = self.dataPoint else {
+               return [UID]()
+            }
+            if let UIDs:[UID] = try? dataPoint.getFromKVS(key:self._selectedUIDSKeys){
+               return UIDs
+            }
+            return [UID]()
          }
       }
    }

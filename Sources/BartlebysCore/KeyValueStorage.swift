@@ -29,22 +29,4 @@ public protocol KeyValueStorage{
     func getFromKVS<T:Codable>(key:String)throws ->T
 
 
-    // MARK: - Strings
-
-    /// Save a string into the dataPoint keyedData
-    /// E.g : save indexes, datapoint related preferences (not app wide)
-    ///
-    /// - Parameters:
-    ///   - value: the string
-    ///   - key: the identification key (must be unique)
-    func storeInKVS(_ value:String,identifiedBy key:String)throws->()
-
-    
-    /// Recover the saved string
-    ///
-    /// - Parameter byKey: the identification key (must be unique)
-    /// - Returns: the string
-    /// - Throws: KeyValueStorageError.keyNotFound if the key is not set, JSON coder error on decoding issue
-    func getFromKVS(key:String)throws ->String
-
 }

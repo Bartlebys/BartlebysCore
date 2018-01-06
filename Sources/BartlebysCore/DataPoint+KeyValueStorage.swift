@@ -24,7 +24,8 @@ extension DataPoint:KeyValueStorage{
     ///   - value: the value
     ///   - key: the identification key (must be unique)
     public func storeInKVS<T:Codable>(_ value:T,identifiedBy key:String)throws->(){
-        let data = try JSON.encoder.encode(value)
+        // We use base64Encoder and decoder to secure for example [String] storage
+        let data = try JSON.base64Encoder.encode(value)
         let keyedData = KeyedData()
         keyedData.key = key
         keyedData.data = data
@@ -46,7 +47,8 @@ extension DataPoint:KeyValueStorage{
             throw KeyValueStorageError.keyNotFound
         }
         let data = keyedData.data
-        let instance = try JSON.decoder.decode(T.self, from: data)
+        // We use base64Encoder and decoder to secure for example [String] storage
+        let instance = try JSON.base64Decoder.decode(T.self, from: data)
         return instance
     }
 
@@ -68,43 +70,6 @@ extension DataPoint:KeyValueStorage{
         return instance
     }
 
-
-    // MARK: - Strings
-
-
-    /// Save a string into the dataPoint keyedData
-    /// E.g : save indexes, datapoint related preferences (not app wide)
-    ///
-    /// - Parameters:
-    ///   - value: the string
-    ///   - key: the identification key (must be unique)
-    public func storeInKVS(_ value:String,identifiedBy key:String)throws->(){
-        let data = try JSON.base64Encoder.encode([value])
-        let keyedData = KeyedData()
-        keyedData.key = key
-        keyedData.data = data
-        if let index = self.keyedDataCollection.index(where:{$0.key == key}){
-            self.keyedDataCollection[index] = keyedData
-        }else{
-            self.keyedDataCollection.append(keyedData)
-        }
-    }
-
-
-    /// Recover the saved string
-    ///
-    /// - Parameter byKey: the identification key (must be unique)
-    /// - Returns: the string
-    /// - Throws: KeyValueStorageError.keyNotFound if the key is not set, JSON coder error on decoding issue
-    public func getFromKVS(key:String)throws ->String{
-        guard let keyedData = self.keyedDataCollection.first(where:{$0.key == key }) else {
-            throw KeyValueStorageError.keyNotFound
-        }
-        let data = keyedData.data
-        let instance = try JSON.base64Decoder.decode([String].self, from: data)
-         return instance[0]
-
-    }
 
 
 }
