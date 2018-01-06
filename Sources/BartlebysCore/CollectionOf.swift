@@ -231,6 +231,13 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    // MARK: - Accessors
 
+
+   /// Returns all the stored element packaged in an Array
+   /// Used by Array Controllers in cocoa bindings
+   public var all:Array<T> {
+      return self._items
+   }
+
    public var fileURL: URL? {
       return self.dataPoint?.storage.getURL(of: self)
    }
