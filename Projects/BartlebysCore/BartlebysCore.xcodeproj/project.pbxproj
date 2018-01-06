@@ -27,6 +27,8 @@
 		E5AE0CC42000CE600026F26A /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE0CC22000CE5B0026F26A /* Alias.swift */; };
 		E5AE0CC52000CE600026F26A /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE0CC22000CE5B0026F26A /* Alias.swift */; };
 		E5AE0CC62000CE600026F26A /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE0CC22000CE5B0026F26A /* Alias.swift */; };
+		E5AE0CC82000D9260026F26A /* Model+Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE0CC72000D9260026F26A /* Model+Aliasable.swift */; };
+		E5AE0CCA2000D94A0026F26A /* Model+AliasResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE0CC92000D94A0026F26A /* Model+AliasResolver.swift */; };
 		E5EC9F7F1FF655C4008BF543 /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */; };
 		E5EC9F861FF655C4008BF543 /* BartlebysCore_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC9F8E1FF655E1008BF543 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC9F701FF6558C008BF543 /* DataPointTests.swift */; };
@@ -328,6 +330,8 @@
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
 		E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProgressDelegates.swift; sourceTree = "<group>"; };
 		E5AE0CC22000CE5B0026F26A /* Alias.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
+		E5AE0CC72000D9260026F26A /* Model+Aliasable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Aliasable.swift"; sourceTree = "<group>"; };
+		E5AE0CC92000D94A0026F26A /* Model+AliasResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+AliasResolver.swift"; sourceTree = "<group>"; };
 		E5BC2D121FF133C200EC45F6 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		E5EC9F6E1FF6558C008BF543 /* ObjectCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObjectCollectionTests.swift; path = ../../Tests/BartlebyCoreTests/ObjectCollectionTests.swift; sourceTree = "<group>"; };
 		E5EC9F701FF6558C008BF543 /* DataPointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DataPointTests.swift; path = ../../Tests/BartlebyCoreTests/DataPointTests.swift; sourceTree = "<group>"; };
@@ -464,6 +468,8 @@
 				4D55FC481FDAF5CF001D91CE /* Logger.swift */,
 				4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */,
 				4D55FC441FDAF5CF001D91CE /* Model.swift */,
+				E5AE0CC72000D9260026F26A /* Model+Aliasable.swift */,
+				E5AE0CC92000D94A0026F26A /* Model+AliasResolver.swift */,
 				E52A847A1FF50D5800F2408B /* Model+Erasure.swift */,
 				4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */,
 				4D55FC521FDAF5CF001D91CE /* Model+Description.swift */,
@@ -956,10 +962,12 @@
 				E58A27851FFBE56600079CB5 /* IndistinctCollection.swift in Sources */,
 				E5EC9FA41FF655FE008BF543 /* DataPoint.swift in Sources */,
 				E5EC9F9B1FF655F9008BF543 /* Payload.swift in Sources */,
+				E5AE0CCA2000D94A0026F26A /* Model+AliasResolver.swift in Sources */,
 				E5EC9FA51FF655FE008BF543 /* DataResponse.swift in Sources */,
 				E5EC9FB21FF655FE008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5EC9FC31FF655FE008BF543 /* Upload.swift in Sources */,
 				E5EC9FAE1FF655FE008BF543 /* JSONCoder.swift in Sources */,
+				E5AE0CC82000D9260026F26A /* Model+Aliasable.swift in Sources */,
 				E5EC9FB11FF655FE008BF543 /* Model+Relational.swift in Sources */,
 				E5EC9FC21FF655FE008BF543 /* StorageProgressDelegates.swift in Sources */,
 				E54826361FFBBB3700FB854E /* Default.swift in Sources */,
