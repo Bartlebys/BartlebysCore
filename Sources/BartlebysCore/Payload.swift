@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-/// An informal protocol used to allow a Codable to be passed as Payload
 public protocol Payload : Codable {
     
 }

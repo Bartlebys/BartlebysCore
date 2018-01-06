@@ -356,8 +356,6 @@ extension DataPoint{
         }
     }
 
-    // MARK: Generic level
-
     /// Returns the registred instance of by its UID
     ///
     /// - Parameter UID: the instance unique identifier
@@ -378,7 +376,7 @@ extension DataPoint{
     ///
     /// - Parameter UIDs: the UIDs
     /// - Returns: the registred Instances
-    public func registredObjectsByUIDs<T: Codable & Collectable >(_ UIDs: [UID]) throws-> [T] {
+    public func registredObjectsByUIDs<T: Collectable & Collectable >(_ UIDs: [UID]) throws-> [T] {
         var items:[T]=[T]()
         for UID in UIDs{
             if let instance=self._instancesByUID[UID]{
@@ -394,9 +392,8 @@ extension DataPoint{
         return items
     }
 
-    // MARK: Model level
 
-    /// Returns a Model by its UID
+    /// Returns a ManagedModel by its UID
     /// Those instance are not casted.
     /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
     /// - parameter UID:
@@ -405,7 +402,7 @@ extension DataPoint{
         return try? self.registredObjectByUID(UID)
     }
 
-    /// Returns a collection of Model by UIDs
+    /// Returns a collection of ManagedModel by UIDs
     /// Those instance are not casted.
     /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
     /// - parameter UID:
@@ -414,27 +411,13 @@ extension DataPoint{
         return try? self.registredObjectsByUIDs(UIDs)
     }
 
-
-    // MARK: Opaque level
-
-    /// Totaly opaque accessor
+    ///  Returns the instance by its UID
     ///
-    /// - Parameter UID: the UID
-    /// - Returns: the opaque Instance
-    public func registredOpaqueInstanceByUID(_ UID: UID)-> Any? {
-        return self._instancesByUID[UID]
+    /// - Parameter UID: needle
+    /// - Returns: the instance
+    public func CollectableInstanceByUID<T:Codable & Collectable>(_ UID: UID) -> T? {
+        return self._instancesByUID[UID] as? T
     }
-
-    /// Totaly opaque accessor
-    ///
-    /// - Parameter UID: the UID
-    /// - Returns: the opaque Instance
-    public func registredOpaqueInstancesByUIDs(_ UIDs: [UID])-> [Any] {
-        return self._instancesByUID.filter{ UIDs.contains($0.key)}
-    }
-
-
-    // MARK: -
 
     /// Stores the ownee when the owner is not already available
     /// This situation may occur for example on collection deserialization

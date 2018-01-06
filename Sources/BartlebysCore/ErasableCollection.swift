@@ -1,5 +1,5 @@
 //
-//  IndistinctCollection.swift
+//  ErasableCollection.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 02/01/2018.
@@ -9,13 +9,8 @@
 import Foundation
 
 // A Collection with erased Collected types
-// Can be Used to perform operations that requires type erasure
-public protocol IndistinctCollection:UniversalType{
-
-    /// References the element into the dataPoint registry
-    ///
-    /// - Parameter element: the element
-    func reference<T:  Codable & Collectable & Tolerent >(_ element:T)
+// Used to perform operations that requires type erasure
+public protocol ErasableCollection{
 
     /// Removes the item from the collection
     /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
@@ -23,6 +18,7 @@ public protocol IndistinctCollection:UniversalType{
     ///
     /// - Parameter item: the item
     func removeItem<C: Codable & Collectable>(_ item: C)throws->()
+
 
     /// Called when the collection or one of its member has Changed
     func didChange()
