@@ -156,10 +156,10 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    /// References the element into its collection and the dataPoint registry
    ///
    /// - Parameter element: the element
-   public func reference<T:  Codable & Collectable & Tolerent >(_ element:T){
+   public func reference<T:  Codable & Collectable & Tolerent >(_ item:T){
 
       // We reference the collection
-      element.setCollection(self)
+      item.setCollection(self)
 
       guard let dataPoint = self.dataPoint else{
          Logger.log("Undefined Datapoint", category:.critical)
@@ -167,13 +167,13 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
 
       // Reference the datapoint
-      element.setDataPoint(dataPoint)
+      item.setDataPoint(dataPoint)
 
       // And register globally the element
-      dataPoint.register(element)
+      dataPoint.register(item)
 
       // Deferred ownership
-      if let item = element as? Model{
+      if let item = item as? Model{
          // Re-build the own relation.
          item.ownedBy.forEach({ (ownerUID) in
             if let o = dataPoint.registredModelByUID(ownerUID){
@@ -287,5 +287,43 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
+
+   // MARK:- Selection Support
+
+   open let selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
+
+   fileprivate var _selectedUIDS:[UID]{
+      set{
+         Object.syncOnMain {
+            if let selections = self.selectedItems {
+               let _selectedUIDS:[UID] = selections.map{$0.UID}
+               ///self.referentDocument?.metadata.saveStateOf(_selectedUIDS, identified: self.selectedUIDSKeys)
+            }
+         }
+      }
+      get{
+         return Object.syncOnMainAndReturn{ () -> [UID] in
+            return [UID]()//return self.referentDocument?.metadata.getStateOf(identified: self.selectedUIDSKeys) ?? [String]()
+         }
+      }
+   }
+
+   // Note for Cocoa Bindings
+   // If you use an ArrayController & Bartleby automation
+   // to modify the current selection you should use the array controller
+   // e.g: loops.arrayController?.setSelectedObjects(loops)
+   open var selectedItems:[T]?{
+      didSet{
+         Object.syncOnMain {
+            if let selections = selectedItems {
+               self._selectedUIDS = selections.map{$0.UID}
+            }
+            Notify<T>.postSelectionChanged()
+         }
+      }
+   }
+
+   // A facility to access to the first selected item
+   open var firstSelectedItem:T? { return self.selectedItems?.first }
 
 }
