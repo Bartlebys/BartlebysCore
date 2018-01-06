@@ -323,7 +323,7 @@ extension DataPoint{
             // or the deserialization of the ownee preceeds the owner
             if let o=instance as? Model{
                 for owneeUID in  owneesUIDS{
-                    if let _ = self.registredManagedModelByUID(owneeUID){
+                    if let _ = self.registredModelByUID(owneeUID){
                         // Add the owns entry
                         if !o.owns.contains(owneeUID){
                             o.owns.append(owneeUID)
@@ -398,7 +398,7 @@ extension DataPoint{
     /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
     /// - parameter UID:
     /// - returns: the instance
-    public func registredManagedModelByUID(_ UID: UID)-> Model? {
+    public func registredModelByUID(_ UID: UID)-> Model? {
         return try? self.registredObjectByUID(UID)
     }
 
@@ -407,7 +407,7 @@ extension DataPoint{
     /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
     /// - parameter UID:
     /// - returns: the instance
-    public func registredManagedModelByUIDs(_ UIDs: [UID])-> [Model]? {
+    public func registredModelByUIDs(_ UIDs: [UID])-> [Model]? {
         return try? self.registredObjectsByUIDs(UIDs)
     }
 
