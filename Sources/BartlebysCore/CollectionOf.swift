@@ -15,7 +15,7 @@ public enum CollectionOfError:Error {
    case collectedTypeMustBeTolerent
 }
 
-open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Tolerent, FilePersistent where T :  Codable & Collectable & Tolerent{
+open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Tolerent, Selection, FilePersistent where T :  Codable & Collectable & Tolerent{
 
 
    // MARK: -
@@ -288,42 +288,40 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    }
 
 
-   // MARK:- Selection Support
+   // MARK: - Selection Support
 
-   open let selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
+   fileprivate let _selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
 
    fileprivate var _selectedUIDS:[UID]{
       set{
          Object.syncOnMain {
             if let selections = self.selectedItems {
                let _selectedUIDS:[UID] = selections.map{$0.UID}
-               ///self.referentDocument?.metadata.saveStateOf(_selectedUIDS, identified: self.selectedUIDSKeys)
+               ///self.referentDocument?.metadata.saveStateOf(_selectedUIDS, identified: self._selectedUIDSKeys)
             }
          }
       }
       get{
          return Object.syncOnMainAndReturn{ () -> [UID] in
-            return [UID]()//return self.referentDocument?.metadata.getStateOf(identified: self.selectedUIDSKeys) ?? [String]()
+            return [UID]()//return self.referentDocument?.metadata.getStateOf(identified: self._selectedUIDSKeys) ?? [String]()
          }
       }
    }
 
-   // Note for Cocoa Bindings
-   // If you use an ArrayController & Bartleby automation
-   // to modify the current selection you should use the array controller
-   // e.g: loops.arrayController?.setSelectedObjects(loops)
-   open var selectedItems:[T]?{
+   public var selectedItems:[T]?{
       didSet{
          Object.syncOnMain {
-            if let selections = selectedItems {
-               self._selectedUIDS = selections.map{$0.UID}
-            }
+            self._selectedUIDS = selectedItems?.map{$0.UID} ?? [UID]()
             Notify<T>.postSelectionChanged()
          }
       }
    }
 
    // A facility to access to the first selected item
-   open var firstSelectedItem:T? { return self.selectedItems?.first }
+   public var firstSelectedItem:T? {
+      return Object.syncOnMainAndReturn{ () -> T? in
+         return self.selectedItems?.first
+      }
+   }
 
 }
