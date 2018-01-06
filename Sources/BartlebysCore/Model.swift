@@ -8,59 +8,32 @@
 
 import Foundation
 
-open class Model:Object,Codable,Collectable,CopyingProtocol,Payload{
-    
+open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
+
+    // MARK: - Collectable
+
     // The id 
     @objc dynamic public var id:UID = Utilities.createUID()
-    
-    //The UIDS of the owners
-    @objc dynamic open var ownedBy:[String] = [String]()  {
-        didSet {
-            if !self.wantsQuietChanges && ownedBy != oldValue {
-                self.erasableCollection?.didChange()
-            }
-        }
-    }
 
-    //The UIDS of the free relations
-    @objc dynamic  open var freeRelations:[String] = [String]()  {
-        didSet {
-            if !self.wantsQuietChanges && ownedBy != oldValue {
-                self.erasableCollection?.didChange()
-            }
-        }
-    }
-
-    //The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
-    @objc dynamic open var owns:[String] = [String]()
-    
     // A reference to the holding dataPoint
     public var dataPoint:DataPoint?
-    
+
     /// Sets the dataPoint Reference
     ///
     /// - Parameter dataPoint: the dataPoint
     public func setDataPoint(_ dataPoint:DataPoint){
         self.dataPoint = dataPoint
     }
-    
-    // MARK: - Collection support
-    
+
     public typealias CollectedType = Model
-    
-    // The collection reference.
-    fileprivate var _collection:Any?
-    
-    ////Internal flag used not to propagate changes (for example during deserialization) -> Check + ProvisionChanges for detailled explanantions
-    internal var _quietChanges:Bool = false
-    
+
     /// Registers the collection reference
     ///
     /// - Parameter collection: the collection
     public func setCollection<CollectedType>(_ collection:CollectionOf<CollectedType>){
         self._collection = collection
     }
-    
+
     /// Returns the collection
     ///
     /// - Returns: the collection
@@ -72,19 +45,27 @@ open class Model:Object,Codable,Collectable,CopyingProtocol,Payload{
         return collection
     }
 
+    /// The type erased acceessor to a collection that support reference, remove & didChange
+    public var indistinctCollection:IndistinctCollection?{
+        return self._collection as? IndistinctCollection
+    }
 
-    /// The type erased acceessor to a collection that support remove & didChange
-    public var erasableCollection:ErasableCollection?{
-        return self._collection as? ErasableCollection
+    // MARK: Collectable.UniversalType
+
+    open class var typeName:String{
+        return "Model"
     }
-    
-    /// The type erased Collection part of BartlebyKit's Commitable procotol
-    public var parentCollection:ManagedCollection? {
-        return self._collection as? ManagedCollection
+
+    open class var collectionName:String{
+        return "models"
     }
-    
-    // MARK: - Identifiable
-    
+
+    open var d_collectionName:String{
+        return Model.collectionName
+    }
+
+    // MARK: Collectable.Identifiable
+
     @objc dynamic public var UID:UID {
         set{
             self.id = UID
@@ -93,6 +74,46 @@ open class Model:Object,Codable,Collectable,CopyingProtocol,Payload{
             return self.id
         }
     }
+
+
+    // MARK: -
+
+    // The collection reference.
+    fileprivate var _collection:Any?
+
+    ////Internal flag used not to propagate changes (for example during deserialization) -> Check + ProvisionChanges for detailled explanantions
+    internal var _quietChanges:Bool = false
+
+
+    /// The type erased Collection part of BartlebyKit's Commitable procotol
+    public var managedCollection:ManagedCollection? {
+        return self._collection as? ManagedCollection
+    }
+
+    // MARK: - Properties used for Relational Model
+
+    //The UIDS of the owners
+    @objc dynamic open var ownedBy:[String] = [String]()  {
+        didSet {
+            if !self.wantsQuietChanges && ownedBy != oldValue {
+                self.indistinctCollection?.didChange()
+            }
+        }
+    }
+
+    //The UIDS of the free relations
+    @objc dynamic open var freeRelations:[String] = [String]()  {
+        didSet {
+            if !self.wantsQuietChanges && ownedBy != oldValue {
+                self.indistinctCollection?.didChange()
+            }
+        }
+    }
+
+    //The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
+    @objc dynamic open var owns:[String] = [String]()
+
+
 
     // MARK: - Initializable
     
@@ -127,20 +148,7 @@ open class Model:Object,Codable,Collectable,CopyingProtocol,Payload{
         try container.encode(self.ownedBy,forKey: .ownedBy)
         try container.encode(self.freeRelations,forKey:.freeRelations)
     }
-    // MARK: - UniversalType
-    
-    open class var typeName:String{
-        return "Model"
-    }
-    
-    open class var collectionName:String{
-        return "models"
-    }
-    
-    open var d_collectionName:String{
-        return Model.collectionName
-    }
-    
+
     
     // MARK: - NSCopy aka CopyingProtocol
     

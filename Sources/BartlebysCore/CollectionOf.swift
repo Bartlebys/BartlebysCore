@@ -15,7 +15,7 @@ public enum CollectionOfError:Error {
    case collectedTypeMustBeTolerent
 }
 
-open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Sequence, FilePersistent,ErasableCollection where T :  Codable & Collectable & Tolerent{
+open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Tolerent, FilePersistent where T :  Codable & Collectable & Tolerent{
 
 
    // MARK: -
@@ -43,22 +43,6 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
 
    public var name:String { return self.fileName }
 
-   // MARK: - UniversalType
-
-   public static var collectionName:String { return CollectionOf._collectionName() }
-
-   public var d_collectionName: String { return CollectionOf._collectionName() }
-
-   fileprivate static func _collectionName()->String{
-      return T.collectionName
-   }
-
-   public static var typeName: String {
-      get {
-         return "CollectionOf<\(T.typeName)>"
-      }
-      set {}
-   }
 
    // MARK: - Initializer
 
@@ -73,7 +57,7 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
       self.relativeFolderPath = relativePath
    }
 
-   // MARK: - Functional Programing Storage layer support
+   // MARK: - Functional Programing layer support
 
    public var startIndex: Int { return self._items.startIndex }
 
@@ -98,39 +82,6 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
       }
    }
 
-   /// References the element into the dataPoint registry
-   ///
-   /// - Parameter element: the element
-   func reference<T:  Codable & Collectable & Tolerent >(_ element:T){
-      // We reference the collection
-      element.setCollection(self)
-
-      guard let dataPoint = self.dataPoint else{
-         Logger.log("Undefined Datapoint", category:.critical)
-         return
-      }
-
-      // Reference the datapoint
-      element.setDataPoint(dataPoint)
-
-      // And register globally the element
-      dataPoint.register(element)
-
-      // Deferred ownership
-      if let item = element as? Model{
-         // Re-build the own relation.
-         item.ownedBy.forEach({ (ownerUID) in
-            if let o = dataPoint.registredModelByUID(ownerUID){
-               if !o.owns.contains(item.UID){
-                  o.owns.append(item.UID)
-               }
-            }else{
-               // If the owner is not already available defer the homologous ownership registration.
-               dataPoint.appendToDeferredOwnershipsList(item, ownerUID: ownerUID)
-            }
-         })
-      }
-   }
 
    @discardableResult public func remove(at index: Int) -> T {
       self.hasChanged = true
@@ -200,10 +151,47 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
       }
    }
 
-   // MARK: - ErasableCollection
+   // MARK: - IndistinctCollection
+
+   /// References the element into its collection and the dataPoint registry
+   ///
+   /// - Parameter element: the element
+   public func reference<T:  Codable & Collectable & Tolerent >(_ element:T){
+
+      // We reference the collection
+      element.setCollection(self)
+
+      guard let dataPoint = self.dataPoint else{
+         Logger.log("Undefined Datapoint", category:.critical)
+         return
+      }
+
+      // Reference the datapoint
+      element.setDataPoint(dataPoint)
+
+      // And register globally the element
+      dataPoint.register(element)
+
+      // Deferred ownership
+      if let item = element as? Model{
+         // Re-build the own relation.
+         item.ownedBy.forEach({ (ownerUID) in
+            if let o = dataPoint.registredModelByUID(ownerUID){
+               if !o.owns.contains(item.UID){
+                  o.owns.append(item.UID)
+               }
+            }else{
+               // If the owner is not already available defer the homologous ownership registration.
+               dataPoint.appendToDeferredOwnershipsList(item, ownerUID: ownerUID)
+            }
+         })
+      }
+   }
 
 
    /// Removes the item from the collection
+   /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
+   /// if the item is not tolerent.
    ///
    /// - Parameter item: the item
    open func removeItem<C:Codable & Collectable>(_ item: C)throws->(){
@@ -218,16 +206,30 @@ open class CollectionOf<T> : Codable, UniversalType, Tolerent, Collection, Seque
       }
    }
 
+   /// Called when the collection or one of its member has Changed
    public func didChange(){
       self.hasChanged = true
    }
 
-   // MARK: - Accessors
+   // MARK: IndistinctCollection.UniversalType
 
-   /// Returns all the stored element packaged in an Array
-   public var all:Array<T> {
-      return self._items
+   public static var collectionName:String { return CollectionOf._collectionName() }
+
+   public var d_collectionName: String { return CollectionOf._collectionName() }
+
+   fileprivate static func _collectionName()->String{
+      return T.collectionName
    }
+
+   public static var typeName: String {
+      get {
+         return "CollectionOf<\(T.typeName)>"
+      }
+      set {}
+   }
+
+
+   // MARK: - Accessors
 
    public var fileURL: URL? {
       return self.dataPoint?.storage.getURL(of: self)
