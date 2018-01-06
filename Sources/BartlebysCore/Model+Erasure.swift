@@ -10,10 +10,9 @@ import Foundation
 
 
 public enum ErasingError:Error {
-    case dataPointUndefined
+    case undefinedContainer
     case typeMissMatch
     case notTolerent
-    case referentDocumentUndefined // @todo to be removed
 }
 
 
@@ -21,7 +20,6 @@ public enum ErasingError:Error {
 /// It also expose a Commit property to enable to implement ManagedCollection
 /// A non fully Managed model is not concerned by those details
 extension Model{
-
 
 
     /// Erases globally the instance and its dependent relations.
@@ -35,11 +33,9 @@ extension Model{
     public func erase(commit:Bool=true,eraserUID:String="NO_UID")throws->(){
         
         guard let dataPoint=self.dataPoint else{
-            throw ErasingError.dataPointUndefined
+            throw ErasingError.undefinedContainer
         }
-    
 
-        // #TODO write specific Unit test for real cases validation (in BSFS and YD)
         // Co-ownership (used by recursive calls)
         // Preserves ownees with multiple Owners
         if self.ownedBy.count > 1 && eraserUID != "NO_UID"{
@@ -53,13 +49,14 @@ extension Model{
         }
 
         // Call the overridable cleaning method
+        // This may ne the time for dependent file cleaning.
         dataPoint.willErase(self)
+        
         if let managedOpaqueCollection = self.managedCollection{
             try managedOpaqueCollection.removeItem(self,commit:commit)
         }else{
             try self.indistinctCollection?.removeItem(self)
         }
-
 
         var erasableUIDS:[String]=[self.UID]
 
@@ -85,7 +82,7 @@ extension Model{
         })
 
         // What should we do for free relations?
-        // That's FreeDom! There is nothing to do with self.free
+        // - There is nothing to do with self.free !
 
         // Let's unRegister
         dataPoint.unRegister(self)
