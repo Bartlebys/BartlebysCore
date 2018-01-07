@@ -16,7 +16,6 @@ public enum Relationship:String{
 
     /// "owns" is Computed at runtime during registration to determine the the Subject
     /// Ownership is computed asynchronously for better resilience to distributed pressure
-    /// Check ManagedCollection.propagate()
     case owns = "owns"
 
 }

@@ -20,10 +20,10 @@
 		E52527A12000E4D700D9A148 /* Model+Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279A2000E4D600D9A148 /* Model+Aliasable.swift */; };
 		E52527A22000E4D700D9A148 /* Model+Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279A2000E4D600D9A148 /* Model+Aliasable.swift */; };
 		E52527A32000E4D700D9A148 /* Model+Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279A2000E4D600D9A148 /* Model+Aliasable.swift */; };
-		E52527A42000E4D700D9A148 /* Model+AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasResolution.swift */; };
-		E52527A52000E4D700D9A148 /* Model+AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasResolution.swift */; };
-		E52527A62000E4D700D9A148 /* Model+AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasResolution.swift */; };
-		E52527A72000E4D700D9A148 /* Model+AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasResolution.swift */; };
+		E52527A42000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasesResolution.swift */; };
+		E52527A52000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasesResolution.swift */; };
+		E52527A62000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasesResolution.swift */; };
+		E52527A72000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279B2000E4D600D9A148 /* Model+AliasesResolution.swift */; };
 		E52527A92000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AA2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AB2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
@@ -36,7 +36,7 @@
 		E58A277C1FFBDC5D00079CB5 /* ManagedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ManagedCollection.swift */; };
 		E58A27821FFBDC5E00079CB5 /* ManagedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ManagedCollection.swift */; };
 		E5BAB6C0200120C900386A9B /* Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6BF200120C900386A9B /* Aliasable.swift */; };
-		E5BAB6C2200120E400386A9B /* AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasResolution.swift */; };
+		E5BAB6C2200120E400386A9B /* AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasesResolution.swift */; };
 		E5D6CDE420012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
 		E5D6CDE520012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
 		E5D6CDE620012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
@@ -62,11 +62,11 @@
 		E5DBB1D4200224990079F4C6 /* Aliased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D0200224770079F4C6 /* Aliased.swift */; };
 		E5DBB1D6200224C60079F4C6 /* AliasOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D5200224C60079F4C6 /* AliasOf.swift */; };
 		E5DBB1D720022A090079F4C6 /* Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6BF200120C900386A9B /* Aliasable.swift */; };
-		E5DBB1D820022A090079F4C6 /* AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasResolution.swift */; };
+		E5DBB1D820022A090079F4C6 /* AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasesResolution.swift */; };
 		E5DBB1D920022A0B0079F4C6 /* Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6BF200120C900386A9B /* Aliasable.swift */; };
-		E5DBB1DA20022A0B0079F4C6 /* AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasResolution.swift */; };
+		E5DBB1DA20022A0B0079F4C6 /* AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasesResolution.swift */; };
 		E5DBB1DB20022A0B0079F4C6 /* Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6BF200120C900386A9B /* Aliasable.swift */; };
-		E5DBB1DC20022A0B0079F4C6 /* AliasResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasResolution.swift */; };
+		E5DBB1DC20022A0B0079F4C6 /* AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasesResolution.swift */; };
 		E5DBB1DD20022A160079F4C6 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */; };
 		E5DBB1DE20022A170079F4C6 /* Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDED2001329200A3D975 /* Selection.swift */; };
 		E5DBB1DF20022A1C0079F4C6 /* AliasOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D5200224C60079F4C6 /* AliasOf.swift */; };
@@ -354,7 +354,7 @@
 		E51E0EF71FDD6E9700414D6C /* Initializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Initializable.swift; sourceTree = "<group>"; };
 		E52527992000E4D600D9A148 /* Alias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alias.swift; sourceTree = "<group>"; };
 		E525279A2000E4D600D9A148 /* Model+Aliasable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+Aliasable.swift"; sourceTree = "<group>"; };
-		E525279B2000E4D600D9A148 /* Model+AliasResolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+AliasResolution.swift"; sourceTree = "<group>"; };
+		E525279B2000E4D600D9A148 /* Model+AliasesResolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+AliasesResolution.swift"; sourceTree = "<group>"; };
 		E52527A82000E54700D9A148 /* IndistinctCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndistinctCollection.swift; sourceTree = "<group>"; };
 		E527D1731FF7C561009EA479 /* BartlebysCore Document macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document macOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore macOS/BartlebysCore Document macOS.plist"; sourceTree = "<absolute>"; };
 		E527D1B41FF7C5F0009EA479 /* BartlebysCore Document iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document iOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore iOS/BartlebysCore Document iOS.plist"; sourceTree = "<absolute>"; };
@@ -378,7 +378,7 @@
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
 		E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProgressDelegates.swift; sourceTree = "<group>"; };
 		E5BAB6BF200120C900386A9B /* Aliasable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliasable.swift; sourceTree = "<group>"; };
-		E5BAB6C1200120E400386A9B /* AliasResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasResolution.swift; sourceTree = "<group>"; };
+		E5BAB6C1200120E400386A9B /* AliasesResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasesResolution.swift; sourceTree = "<group>"; };
 		E5BC2D121FF133C200EC45F6 /* FileStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorage.swift; sourceTree = "<group>"; };
 		E5D6CDE320012F2800A3D975 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		E5D6CDED2001329200A3D975 /* Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selection.swift; sourceTree = "<group>"; };
@@ -528,7 +528,7 @@
 				4D8A0CA91FDFF02E00AC6A21 /* Metrics+Tolerent.swift */,
 				4D55FC441FDAF5CF001D91CE /* Model.swift */,
 				E525279A2000E4D600D9A148 /* Model+Aliasable.swift */,
-				E525279B2000E4D600D9A148 /* Model+AliasResolution.swift */,
+				E525279B2000E4D600D9A148 /* Model+AliasesResolution.swift */,
 				4D55FC521FDAF5CF001D91CE /* Model+Description.swift */,
 				4D55FC4E1FDAF5CF001D91CE /* Model+DictionaryRepresentation.swift */,
 				4D55FC5B1FDAF5CF001D91CE /* Model+Equatable.swift */,
@@ -567,7 +567,7 @@
 			children = (
 				E5BAB6BF200120C900386A9B /* Aliasable.swift */,
 				E5DBB1D0200224770079F4C6 /* Aliased.swift */,
-				E5BAB6C1200120E400386A9B /* AliasResolution.swift */,
+				E5BAB6C1200120E400386A9B /* AliasesResolution.swift */,
 				4D55FC861FDAF68F001D91CE /* Collectable.swift */,
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
@@ -1031,7 +1031,7 @@
 				E5EC9F9F1FF655F9008BF543 /* UniversalType.swift in Sources */,
 				E5EC9FA41FF655FE008BF543 /* DataPoint.swift in Sources */,
 				E5EC9F9B1FF655F9008BF543 /* Payload.swift in Sources */,
-				E52527A42000E4D700D9A148 /* Model+AliasResolution.swift in Sources */,
+				E52527A42000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5EC9FA51FF655FE008BF543 /* DataResponse.swift in Sources */,
 				E5EC9FB21FF655FE008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5EC9FC31FF655FE008BF543 /* Upload.swift in Sources */,
@@ -1054,7 +1054,7 @@
 				E5EC9FAA1FF655FE008BF543 /* HTTPMethod.swift in Sources */,
 				E5D6CDEE2001329200A3D975 /* Selection.swift in Sources */,
 				E5EC9FA11FF655F9008BF543 /* Tolerent.swift in Sources */,
-				E5BAB6C2200120E400386A9B /* AliasResolution.swift in Sources */,
+				E5BAB6C2200120E400386A9B /* AliasesResolution.swift in Sources */,
 				E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FA61FF655FE008BF543 /* Download.swift in Sources */,
 				E5EC9FBF1FF655FE008BF543 /* Session.swift in Sources */,
@@ -1095,7 +1095,7 @@
 				E5ECA0021FF656AF008BF543 /* Logger.swift in Sources */,
 				E5ECA0111FF656AF008BF543 /* Schemes.swift in Sources */,
 				E5ECA00C1FF656AF008BF543 /* Object.swift in Sources */,
-				E5DBB1D820022A090079F4C6 /* AliasResolution.swift in Sources */,
+				E5DBB1D820022A090079F4C6 /* AliasesResolution.swift in Sources */,
 				E5EC9FFC1FF656AF008BF543 /* Globals.swift in Sources */,
 				E5ECA0171FF656AF008BF543 /* Utilities.swift in Sources */,
 				E5EC9FE81FF656AF008BF543 /* Identifiable.swift in Sources */,
@@ -1116,7 +1116,7 @@
 				E5EC9FF21FF656AF008BF543 /* UniversalType.swift in Sources */,
 				E5EC9FF71FF656AF008BF543 /* DataPoint.swift in Sources */,
 				E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */,
-				E52527A52000E4D700D9A148 /* Model+AliasResolution.swift in Sources */,
+				E52527A52000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5EC9FEE1FF656AF008BF543 /* Payload.swift in Sources */,
 				E5EC9FF81FF656AF008BF543 /* DataResponse.swift in Sources */,
 				E5ECA0051FF656AF008BF543 /* Model+RelationsResolution.swift in Sources */,
@@ -1178,7 +1178,7 @@
 				E5ECA05B1FF657A6008BF543 /* Logger.swift in Sources */,
 				E5ECA06A1FF657A6008BF543 /* Schemes.swift in Sources */,
 				E5ECA0651FF657A6008BF543 /* Object.swift in Sources */,
-				E5DBB1DA20022A0B0079F4C6 /* AliasResolution.swift in Sources */,
+				E5DBB1DA20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
 				E5ECA0551FF657A6008BF543 /* Globals.swift in Sources */,
 				E5ECA0701FF657A6008BF543 /* Utilities.swift in Sources */,
 				E5ECA0411FF6579F008BF543 /* Identifiable.swift in Sources */,
@@ -1199,7 +1199,7 @@
 				E5ECA04B1FF6579F008BF543 /* UniversalType.swift in Sources */,
 				E5ECA0501FF657A6008BF543 /* DataPoint.swift in Sources */,
 				E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */,
-				E52527A62000E4D700D9A148 /* Model+AliasResolution.swift in Sources */,
+				E52527A62000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5ECA0471FF6579F008BF543 /* Payload.swift in Sources */,
 				E5ECA0511FF657A6008BF543 /* DataResponse.swift in Sources */,
 				E5ECA05E1FF657A6008BF543 /* Model+RelationsResolution.swift in Sources */,
@@ -1280,13 +1280,13 @@
 				E5ECA0941FF6584A008BF543 /* UniversalType.swift in Sources */,
 				E5ECA0991FF65851008BF543 /* DataPoint.swift in Sources */,
 				E58A27711FFBDC4F00079CB5 /* Default.swift in Sources */,
-				E52527A72000E4D700D9A148 /* Model+AliasResolution.swift in Sources */,
+				E52527A72000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5ECA0901FF6584A008BF543 /* Payload.swift in Sources */,
 				E5ECA09A1FF65851008BF543 /* DataResponse.swift in Sources */,
 				E5ECA0A71FF65851008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5ECA0B81FF65851008BF543 /* Upload.swift in Sources */,
 				E52527A32000E4D700D9A148 /* Model+Aliasable.swift in Sources */,
-				E5DBB1DC20022A0B0079F4C6 /* AliasResolution.swift in Sources */,
+				E5DBB1DC20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
 				E5ECA0A31FF65851008BF543 /* JSONCoder.swift in Sources */,
 				E5ECA0A61FF65851008BF543 /* Model+Relational.swift in Sources */,
 				E5ECA0B71FF65851008BF543 /* StorageProgressDelegates.swift in Sources */,

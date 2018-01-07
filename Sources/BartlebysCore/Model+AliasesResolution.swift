@@ -1,5 +1,5 @@
 //
-//  Model+AliasResolution.swift
+//  Model+AliasesResolution.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 06/01/2018.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Model:AliasResolution{
+extension Model:AliasesResolution{
 
     /// Resolves the alias
     ///

@@ -17,7 +17,7 @@ public enum AliasResolverError:Error{
 
 
 // Addd the ability to resolve Aliases
-public protocol AliasResolution{
+public protocol AliasesResolution{
 
     /// Resolves the alias
     /// May throw AliasResolverError

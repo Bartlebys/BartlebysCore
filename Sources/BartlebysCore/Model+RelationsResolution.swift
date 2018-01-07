@@ -1,5 +1,5 @@
 //
-//  ManagedModel+RelationsResolution.swift
+//  Model+RelationsResolution.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 28/12/2017.

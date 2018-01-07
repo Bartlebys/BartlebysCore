@@ -1,5 +1,5 @@
 //
-//  ManagedModel+Erasure.swift
+//  Model+Erasure.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 28/12/2017.
