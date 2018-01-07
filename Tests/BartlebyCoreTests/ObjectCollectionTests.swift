@@ -6,65 +6,40 @@
 //  Copyright © 2017 Benoit Pereira da Silva https://bartlebys.org. All rights reserved.
 //
 
-import Foundation
 import XCTest
 @testable import BartlebysCore
 
 
-class CollectionOfTests: XCTestCase,DataPointDelegate{
-
-
-    // MARK: - DataPointDelegate
-    
-    func collectionDidSaveSuccessFully() {
-        print("Did Save")
-    }
-
-    func collectionDidFailToSave(message: String) {
-        print(message)
-    }
-
-    func collectionDidLoadSuccessFully() {
-        print("Did Load")
-    }
-
-    func collectionDidFailToLoad(message: String) {
-        print(message)
-    }
+class CollectionOfTests: BaseDataPointTestCase{
 
     // MARK: - Tests
     
     static var allTests = [
-        ("test001Subscript", test001Subscript),
-        ("test002Append", test002Append),
-        ("test003Remove", test003Remove),
-        ("test004Remove", test004Remove),
-        ("test005Count", test005Count),
-        ("test006UnicityOnUpserts",test006UnicityOnUpserts),
-        ("test007PluralityOnAppends",test007PluralityOnAppends),
+        ("test001_Subscript", test001_Subscript),
+        ("test002_Append", test002_Append),
+        ("test003_Remove", test003_Remove),
+        ("test004_Remove", test004_Remove),
+        ("test005_Count", test005_Count),
+        ("test006_UnicityOnUpserts",test006_UnicityOnUpserts),
+        ("test007_PluralityOnAppends",test007_PluralityOnAppends),
     ]
     
-    var dataPoint : DataPoint = DataPoint()
-
     
     override func setUp() {
         super.setUp()
-        
-        self.dataPoint.authenticationMethod = .basicHTTPAuth
-        self.dataPoint.host = "api.dev.laplaylist.com"
-        self.dataPoint.apiBasePath =  "/v2/api/"
-        
     }
     
     override func tearDown() {
         super.tearDown()
-        self.dataPoint.credentials = Credentials(username: "", password: "")
     }
-    
+
     
     // MARK: -
     
-    func test001Subscript() {
+    func test001_Subscript() {
+
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
 
         let metrics1 = Metrics()
         metrics1.operationName = "operation1"
@@ -73,9 +48,6 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         let metrics3 = Metrics()
         metrics3.operationName = "operation3"
 
-        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-        collection.dataPoint = self.dataPoint
-        
         collection.append(metrics1)
         collection.append(metrics2)
         collection.append(metrics3)
@@ -91,10 +63,10 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         // managedmodel
     }
     
-    func test002Append() {
+    func test002_Append() {
         
-        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-        collection.dataPoint = self.dataPoint
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
 
         let metrics = Metrics()
         collection.append(metrics)
@@ -102,9 +74,10 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         
     }
     
-    func test003Remove() {
-        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-        collection.dataPoint = self.dataPoint
+    func test003_Remove() {
+
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
 
         let metrics = Metrics()
         collection.append(metrics)
@@ -115,13 +88,15 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         // @todo remove qqch qui n'existe pas
     }
     
-    func test004Remove() {
+    func test004_Remove() {
+        
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
+
         let Metrics1 = Metrics()
         let Metrics2 = Metrics()
         let Metrics3 = Metrics()
-        
-        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-        collection.dataPoint = self.dataPoint
+
         collection.append(Metrics1)
         collection.append(Metrics2)
         collection.append(Metrics3)
@@ -132,9 +107,10 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
 
     }
     
-    func test005Count() {
-        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-        collection.dataPoint = self.dataPoint
+    func test005_Count() {
+
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
 
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
         
@@ -145,11 +121,11 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
     }
     
-    func test006UnicityOnUpserts() {
+    func test006_UnicityOnUpserts() {
         
-        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-        collection.dataPoint = self.dataPoint
-        
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
+
         let metrics = Metrics()
         metrics.operationName = "operation"
         
@@ -163,10 +139,10 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
         
     }
 
-    func test007PluralityOnAppends() {
+    func test007_PluralityOnAppends() {
 
-        let collection = CollectionOf<Metrics>(named:"metrics",relativePath:"")
-        collection.dataPoint = self.dataPoint
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
 
         let metrics = Metrics()
         metrics.operationName = "operation"
@@ -183,6 +159,8 @@ class CollectionOfTests: XCTestCase,DataPointDelegate{
             XCTAssert(collection[0] == collection[1] , "The two first elements should be equal")
             XCTAssert(collection[0] === collection[1] , "The two first elements should match")
         }
-
     }
+
+
+
 }
