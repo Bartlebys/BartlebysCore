@@ -1,15 +1,8 @@
 # BartlebysCore
 
-**BartlebysCore** is the core Engine of [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit). It is written is Swift 4.x.
+**BartlebysCore** is the core Engine of [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit).
 
-## Supported platforms :
-
-- macOS
-- iOS
-- Linux
-- tvOS (partial)
-- watchOS (partial)
-
+[![Swift 4](https://img.shields.io/badge/Swift-4.0-orange.svg)](https://swift.org)  [![Platform](https://img.shields.io/badge/platforms-macOS%20∙%20iOS%20∙%20watchOS%20∙%20tvOS∙%20Linux-blue.svg)](https://developer.apple.com/platforms/) 
 
 # Integration
 
