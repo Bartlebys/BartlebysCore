@@ -16,3 +16,11 @@
 ## Using the swift Package manager
 
 ## Linking BartlebysCore as a Submodule
+
+### 1. as an external target
+### 2. integrated to your own sources (higher performance)
+
+
+# Documents
+
+- How to deal with Relations between Entities? BartlebysCore's approaches are described in [RelationsBetweenModels.md] (Documents/RelationsBetweenModels.md)
