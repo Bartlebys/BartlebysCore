@@ -1,6 +1,6 @@
 //
 //  BartlebysCore_macOS.h
-//  BartlebysCore macOS
+//  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 29/12/2017.
 //  Copyright © 2017 Bartleby. All rights reserved.

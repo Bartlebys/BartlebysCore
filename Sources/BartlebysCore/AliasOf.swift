@@ -1,15 +1,15 @@
 //
-//  Alias.swift
+//  AliasOf.swift
 //  BartlebysCore
 //
-//  Created by Benoit Pereira da silva on 06/01/2018.
+//  Created by Benoit Pereira da silva on 07/01/2018.
 //  Copyright © 2018 Bartleby. All rights reserved.
 //
 
 import Foundation
 
-/// The type erased alias struct
-public struct Alias:Codable,Aliased{
+/// The generic alias struct
+public struct AliasOf<T:Aliasable>:Codable,Aliased{
 
     // We use
     public let UID:UID

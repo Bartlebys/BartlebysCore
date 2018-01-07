@@ -11,8 +11,7 @@ import XCTest
 
 
 extension Model:Tolerent{
-    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-    }
+    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {}
 }
 
 

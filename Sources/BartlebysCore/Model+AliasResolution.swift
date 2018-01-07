@@ -1,6 +1,6 @@
 //
-//  Model+AliasResolver.swift
-//  BartlebysCore macOS
+//  Model+AliasResolution.swift
+//  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 06/01/2018.
 //  Copyright © 2018 Bartleby. All rights reserved.
@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension Model:AliasResolver{
+extension Model:AliasResolution{
 
     /// Resolves the alias
     ///
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
-    public func instance<T : Codable >(from alias:Alias) throws -> T{
+    public func instance<T : Codable >(from alias:Aliased) throws -> T{
         guard let dataPoint = self.dataPoint else{
             throw AliasResolverError.undefinedContainer
         }
@@ -32,12 +32,15 @@ extension Model:AliasResolver{
     }
 
 
+
     /// Resolves the aliases
+    /// Verify that all the instance are available
+    /// May throw AliasResolverError
     ///
     /// - Parameter aliases: the aliases
     /// - Returns: the references
     /// - Throws: AliasResolverError
-    public func instances<T : Codable >(from aliases:[Alias]) throws -> [T] {
+    public func instances<T : Codable >(from aliases:[Aliased]) throws -> [T] {
         guard let dataPoint = self.dataPoint else{
             throw AliasResolverError.undefinedContainer
         }
@@ -48,6 +51,37 @@ extension Model:AliasResolver{
         }
         guard let castedInstances = instances as? [T] else{
             throw AliasResolverError.typeMissMatch
+        }
+        return castedInstances
+    }
+
+    // MARK: - Optionals
+
+    /// Resolves the optional instances alias
+    ///
+    /// - Parameter alias: the alias
+    /// - Returns: the reference
+    /// - Throws: AliasResolverError
+    public func optionalInstance<T : Codable >(from alias:Aliased) -> T?{
+        guard let dataPoint = self.dataPoint else{
+            return nil
+        }
+        return  dataPoint.registredOpaqueInstanceByUID(alias.UID) as? T
+    }
+
+
+    /// Resolves the optionals aliases
+    ///
+    /// - Parameter aliases: the aliases
+    /// - Returns: the references
+    public func optionalInstances<T : Codable >(from aliases:[Aliased]) -> [T]{
+        guard let dataPoint = self.dataPoint else{
+            return [T]()
+        }
+        let UIDs = aliases.map { $0.UID }
+        let instances = dataPoint.registredOpaqueInstancesByUIDs(UIDs)
+        guard let castedInstances = instances as? [T] else{
+            return [T]()
         }
         return castedInstances
     }
