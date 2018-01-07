@@ -24,7 +24,7 @@ public protocol AliasesResolution{
     ///
     /// - Parameter alias: the alias
     /// - Returns: the reference
-    func instance<T : Codable >(from alias:Aliased) throws -> T
+    func instance<T : Codable & Collectable >(from alias:Aliased) throws -> T
 
 
     /// Resolves the aliases
@@ -33,7 +33,7 @@ public protocol AliasesResolution{
     ///
     /// - Parameter aliases: the aliases
     /// - Returns: the references
-    func instances<T : Codable >(from aliases:[Aliased]) throws -> [T]
+    func instances<T : Codable & Collectable >(from aliases:[Aliased]) throws -> [T]
 
 
     // MARK: - Optionals
@@ -44,14 +44,14 @@ public protocol AliasesResolution{
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
-    func optionalInstance<T : Codable >(from alias:Aliased) -> T?
+    func optionalInstance<T : Codable & Collectable>(from alias:Aliased) -> T?
 
 
     /// Resolves the aliases
     ///
     /// - Parameter aliases: the aliases
     /// - Returns: the references
-    func optionalInstances<T : Codable >(from aliases:[Aliased]) -> [T]
+    func optionalInstances<T : Codable & Collectable>(from aliases:[Aliased]) -> [T]
 
 
 }

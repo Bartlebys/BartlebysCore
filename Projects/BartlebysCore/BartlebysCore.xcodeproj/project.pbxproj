@@ -56,6 +56,18 @@
 		E5D6CDFE200142E000A3D975 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */; };
 		E5D6CDFF200142E000A3D975 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */; };
 		E5D6CE00200142E000A3D975 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */; };
+		E5D6D12F20025BA60085E72C /* AliasesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D12E20025BA60085E72C /* AliasesTests.swift */; };
+		E5D6D13020025BA60085E72C /* AliasesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D12E20025BA60085E72C /* AliasesTests.swift */; };
+		E5D6D13120025BA60085E72C /* AliasesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D12E20025BA60085E72C /* AliasesTests.swift */; };
+		E5D6D13320025CBC0085E72C /* BaseDataPointTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D13220025CBC0085E72C /* BaseDataPointTestCase.swift */; };
+		E5D6D13420025CBC0085E72C /* BaseDataPointTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D13220025CBC0085E72C /* BaseDataPointTestCase.swift */; };
+		E5D6D13520025CBC0085E72C /* BaseDataPointTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D13220025CBC0085E72C /* BaseDataPointTestCase.swift */; };
+		E5D6D137200260930085E72C /* RelationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D136200260930085E72C /* RelationsTests.swift */; };
+		E5D6D138200260930085E72C /* RelationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D136200260930085E72C /* RelationsTests.swift */; };
+		E5D6D139200260930085E72C /* RelationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D136200260930085E72C /* RelationsTests.swift */; };
+		E5D6D13F20026FFC0085E72C /* DataPointKVS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D13E20026FFC0085E72C /* DataPointKVS.swift */; };
+		E5D6D14020026FFC0085E72C /* DataPointKVS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D13E20026FFC0085E72C /* DataPointKVS.swift */; };
+		E5D6D14120026FFC0085E72C /* DataPointKVS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6D13E20026FFC0085E72C /* DataPointKVS.swift */; };
 		E5DBB1D1200224770079F4C6 /* Aliased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D0200224770079F4C6 /* Aliased.swift */; };
 		E5DBB1D2200224980079F4C6 /* Aliased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D0200224770079F4C6 /* Aliased.swift */; };
 		E5DBB1D3200224980079F4C6 /* Aliased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D0200224770079F4C6 /* Aliased.swift */; };
@@ -386,6 +398,10 @@
 		E5D6CDF52001379500A3D975 /* KeyedData+Tolerent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyedData+Tolerent.swift"; sourceTree = "<group>"; };
 		E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+KeyValueStorage.swift"; sourceTree = "<group>"; };
 		E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
+		E5D6D12E20025BA60085E72C /* AliasesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AliasesTests.swift; path = ../../Tests/BartlebyCoreTests/AliasesTests.swift; sourceTree = "<group>"; };
+		E5D6D13220025CBC0085E72C /* BaseDataPointTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseDataPointTestCase.swift; path = ../../Tests/BartlebyCoreTests/BaseDataPointTestCase.swift; sourceTree = "<group>"; };
+		E5D6D136200260930085E72C /* RelationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RelationsTests.swift; path = ../../Tests/BartlebyCoreTests/RelationsTests.swift; sourceTree = "<group>"; };
+		E5D6D13E20026FFC0085E72C /* DataPointKVS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataPointKVS.swift; path = ../../Tests/BartlebyCoreTests/DataPointKVS.swift; sourceTree = "<group>"; };
 		E5DBB1D0200224770079F4C6 /* Aliased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliased.swift; sourceTree = "<group>"; };
 		E5DBB1D5200224C60079F4C6 /* AliasOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasOf.swift; sourceTree = "<group>"; };
 		E5EC9F6E1FF6558C008BF543 /* ObjectCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ObjectCollectionTests.swift; path = ../../Tests/BartlebyCoreTests/ObjectCollectionTests.swift; sourceTree = "<group>"; };
@@ -627,8 +643,12 @@
 		E5EC9F6D1FF6557B008BF543 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				E5D6D12E20025BA60085E72C /* AliasesTests.swift */,
+				E5D6D13220025CBC0085E72C /* BaseDataPointTestCase.swift */,
+				E5D6D13E20026FFC0085E72C /* DataPointKVS.swift */,
 				E5EC9F701FF6558C008BF543 /* DataPointTests.swift */,
 				E5EC9F6E1FF6558C008BF543 /* ObjectCollectionTests.swift */,
+				E5D6D136200260930085E72C /* RelationsTests.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -1072,7 +1092,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5EC9F8F1FF655E1008BF543 /* ObjectCollectionTests.swift in Sources */,
+				E5D6D13320025CBC0085E72C /* BaseDataPointTestCase.swift in Sources */,
 				E5EC9F8E1FF655E1008BF543 /* DataPointTests.swift in Sources */,
+				E5D6D13F20026FFC0085E72C /* DataPointKVS.swift in Sources */,
+				E5D6D137200260930085E72C /* RelationsTests.swift in Sources */,
+				E5D6D12F20025BA60085E72C /* AliasesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1155,7 +1179,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA01E1FF656F4008BF543 /* DataPointTests.swift in Sources */,
+				E5D6D13420025CBC0085E72C /* BaseDataPointTestCase.swift in Sources */,
 				E5ECA01F1FF656F4008BF543 /* ObjectCollectionTests.swift in Sources */,
+				E5D6D14020026FFC0085E72C /* DataPointKVS.swift in Sources */,
+				E5D6D138200260930085E72C /* RelationsTests.swift in Sources */,
+				E5D6D13020025BA60085E72C /* AliasesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,7 +1266,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA0761FF657C7008BF543 /* DataPointTests.swift in Sources */,
+				E5D6D13520025CBC0085E72C /* BaseDataPointTestCase.swift in Sources */,
 				E5ECA0771FF657C7008BF543 /* ObjectCollectionTests.swift in Sources */,
+				E5D6D14120026FFC0085E72C /* DataPointKVS.swift in Sources */,
+				E5D6D139200260930085E72C /* RelationsTests.swift in Sources */,
+				E5D6D13120025BA60085E72C /* AliasesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

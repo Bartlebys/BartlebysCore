@@ -15,7 +15,7 @@ extension Model:AliasesResolution{
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
-    public func instance<T : Codable >(from alias:Aliased) throws -> T{
+    public func instance<T : Codable & Collectable >(from alias:Aliased) throws -> T{
         guard let dataPoint = self.dataPoint else{
             throw AliasResolverError.undefinedContainer
         }
@@ -40,19 +40,13 @@ extension Model:AliasesResolution{
     /// - Parameter aliases: the aliases
     /// - Returns: the references
     /// - Throws: AliasResolverError
-    public func instances<T : Codable >(from aliases:[Aliased]) throws -> [T] {
+    public func instances<T : Codable  & Collectable  >(from aliases:[Aliased]) throws -> [T] {
         guard let dataPoint = self.dataPoint else{
             throw AliasResolverError.undefinedContainer
         }
         let UIDs = aliases.map { $0.UID }
-        let instances = dataPoint.registredOpaqueInstancesByUIDs(UIDs)
-        guard  instances.count == UIDs.count else {
-            throw AliasResolverError.notFound
-        }
-        guard let castedInstances = instances as? [T] else{
-            throw AliasResolverError.typeMissMatch
-        }
-        return castedInstances
+        let instances:[T] = try dataPoint.registredObjectsByUIDs(UIDs)
+        return instances
     }
 
     // MARK: - Optionals
@@ -62,7 +56,7 @@ extension Model:AliasesResolution{
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
-    public func optionalInstance<T : Codable >(from alias:Aliased) -> T?{
+    public func optionalInstance<T : Codable  & Collectable >(from alias:Aliased) -> T?{
         guard let dataPoint = self.dataPoint else{
             return nil
         }
