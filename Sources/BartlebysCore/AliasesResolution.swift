@@ -39,12 +39,20 @@ public protocol AliasesResolution{
     // MARK: - Optionals
     
 
-    /// Resolves the optional instances alias
+    /// Resolves the optional instance alias
     ///
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
     func optionalInstance<T : Codable & Collectable>(from alias:Aliased) -> T?
+
+
+    /// Resolves the optional instance alias
+    ///
+    /// - Parameter alias: the alias
+    /// - Returns: the reference
+    /// - Throws: AliasResolverError
+    func optionalInstance<T : Codable & Collectable>(from alias:Aliased?) -> T?
 
 
     /// Resolves the aliases

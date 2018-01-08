@@ -52,6 +52,17 @@ extension Model:AliasesResolution{
         return dataPoint.optionalInstance(from: alias)
     }
 
+    /// Resolves the optional instance alias
+    ///
+    /// - Parameter alias: the alias
+    /// - Returns: the reference
+    /// - Throws: AliasResolverError
+    public func optionalInstance<T : Codable & Collectable>(from alias:Aliased?) -> T?{
+        guard let alias = alias,let dataPoint = self.dataPoint else{
+            return nil
+        }
+        return dataPoint.optionalInstance(from: alias)
+    }
 
     /// Resolves the optionals aliases
     ///

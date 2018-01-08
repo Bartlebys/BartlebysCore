@@ -54,6 +54,18 @@ extension DataPoint:AliasesResolution{
         return  self.registredOpaqueInstanceByUID(alias.UID) as? T
     }
 
+    /// Resolves the optional instance alias
+    ///
+    /// - Parameter alias: the alias
+    /// - Returns: the reference
+    /// - Throws: AliasResolverError
+    public func optionalInstance<T : Codable & Collectable>(from alias:Aliased?) -> T?{
+        guard let alias = alias else{
+            return nil
+        }
+        return self.optionalInstance(from: alias)
+    }
+
 
     /// Resolves the optionals aliases
     ///
