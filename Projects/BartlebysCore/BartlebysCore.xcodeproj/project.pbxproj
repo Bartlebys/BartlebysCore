@@ -30,6 +30,10 @@
 		E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E553813720035CFF0023ED88 /* DataPoint+Resolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+Resolutions.swift */; };
+		E553813820036C7C0023ED88 /* DataPoint+Resolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+Resolutions.swift */; };
+		E553813920036C7C0023ED88 /* DataPoint+Resolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+Resolutions.swift */; };
+		E553813A20036C7D0023ED88 /* DataPoint+Resolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+Resolutions.swift */; };
+		E553813B20036C890023ED88 /* KeyedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDF12001366900A3D975 /* KeyedData.swift */; };
 		E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27711FFBDC4F00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
@@ -1144,6 +1148,7 @@
 				E5EC9FF21FF656AF008BF543 /* UniversalType.swift in Sources */,
 				E5EC9FF71FF656AF008BF543 /* DataPoint.swift in Sources */,
 				E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */,
+				E553813820036C7C0023ED88 /* DataPoint+Resolutions.swift in Sources */,
 				E52527A52000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5EC9FEE1FF656AF008BF543 /* Payload.swift in Sources */,
 				E5EC9FF81FF656AF008BF543 /* DataResponse.swift in Sources */,
@@ -1231,6 +1236,7 @@
 				E5ECA04B1FF6579F008BF543 /* UniversalType.swift in Sources */,
 				E5ECA0501FF657A6008BF543 /* DataPoint.swift in Sources */,
 				E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */,
+				E553813920036C7C0023ED88 /* DataPoint+Resolutions.swift in Sources */,
 				E52527A62000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5ECA0471FF6579F008BF543 /* Payload.swift in Sources */,
 				E5ECA0511FF657A6008BF543 /* DataResponse.swift in Sources */,
@@ -1288,6 +1294,7 @@
 				E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA0981FF65851008BF543 /* Credentials.swift in Sources */,
 				E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */,
+				E553813B20036C890023ED88 /* KeyedData.swift in Sources */,
 				E5ECA0931FF6584A008BF543 /* RelationsResolution.swift in Sources */,
 				E5DBB1E320022A1D0079F4C6 /* KeyedData+Tolerent.swift in Sources */,
 				E5DBB1E120022A1D0079F4C6 /* AliasOf.swift in Sources */,
@@ -1341,6 +1348,7 @@
 				E5ECA0961FF6584A008BF543 /* Tolerent.swift in Sources */,
 				E50C5C9F1FFD2EFC00A3C9DA /* LogEntry.swift in Sources */,
 				E5ECA09B1FF65851008BF543 /* Download.swift in Sources */,
+				E553813A20036C7D0023ED88 /* DataPoint+Resolutions.swift in Sources */,
 				E5ECA0B41FF65851008BF543 /* Session.swift in Sources */,
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
 				E5ECA0AA1FF65851008BF543 /* Model+Description.swift in Sources */,
