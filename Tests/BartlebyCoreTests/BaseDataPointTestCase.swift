@@ -21,7 +21,7 @@ public class TestObject:Model{
 
     open var aliasOfKD:AliasOf<KeyedData>?
 
-    open var aliasesOfMetrics:[AliasOf<Metrics>]=[AliasOf<Metrics>]()
+    open var aliasesOfMetrics:[AliasOf<Metrics>] = [AliasOf<Metrics>]()
 
     open var oneAlias:Alias?
 

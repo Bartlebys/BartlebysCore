@@ -83,4 +83,4 @@ You can override `DataPoint.willErase` method to cleanup external dependencies o
 
 ### Notes
 - Check: [Model+Erasure] (../Sources/BartlebysCore/Model+Erasure.swift) for implementation details.
--Each object has a unique creator. It can give ACL privileges in Children Framework like `BartlebyKit` but is not related to Bartleby Relationships mechanism!
+- Each object has a unique creator. It can give ACL privileges in Children Framework like `BartlebyKit` but is not related to Bartleby Relationships mechanism!
