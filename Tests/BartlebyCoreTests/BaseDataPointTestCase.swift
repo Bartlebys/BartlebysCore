@@ -116,18 +116,20 @@ class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
 
     static var associatedDataPoints = [MyDataPoint]()
 
-    override static func tearDown() {
+    override func tearDown() {
         super.tearDown()
         for dataPoint in BaseDataPointTestCase.associatedDataPoints{
             dataPoint.storage.eraseFiles(of: dataPoint.keyedDataCollection)
             dataPoint.storage.eraseFiles(of: dataPoint.metricsCollection)
             dataPoint.storage.eraseFiles(of: dataPoint.testObjectsCollection)
         }
+        BaseDataPointTestCase.associatedDataPoints.removeAll()
     }
 
 
     func getNewDataPoint() -> MyDataPoint {
         let dataPoint = MyDataPoint()
+        dataPoint.sessionIdentifier = Utilities.createUID()
         dataPoint.authenticationMethod = .basicHTTPAuth
         dataPoint.host = "demo.bartlebys.org"
         dataPoint.apiBasePath =  "www/v1/api/"

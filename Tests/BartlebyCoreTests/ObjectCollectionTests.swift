@@ -22,6 +22,7 @@ class CollectionOfTests: BaseDataPointTestCase{
         ("test005_Count", test005_Count),
         ("test006_UnicityOnUpserts",test006_UnicityOnUpserts),
         ("test007_PluralityOnAppends",test007_PluralityOnAppends),
+        ("test008_Selection_persistency",test008_Selection_persistency),
     ]
     
     
@@ -93,17 +94,17 @@ class CollectionOfTests: BaseDataPointTestCase{
         let dataPoint = self.getNewDataPoint()
         let collection = dataPoint.metricsCollection
 
-        let Metrics1 = Metrics()
-        let Metrics2 = Metrics()
-        let Metrics3 = Metrics()
+        let metrics1 = Metrics()
+        let metrics2 = Metrics()
+        let metrics3 = Metrics()
 
-        collection.append(Metrics1)
-        collection.append(Metrics2)
-        collection.append(Metrics3)
+        collection.append(metrics1)
+        collection.append(metrics2)
+        collection.append(metrics3)
         
-        XCTAssert(collection.index(of: Metrics1) == 0, "The index of Metrics1 should be 0")
-        XCTAssert(collection.index(of: Metrics2) == 1, "The index of Metrics2 should be 1")
-        XCTAssert(collection.index(of: Metrics3) == 2, "The index of Metrics3 should be 2")
+        XCTAssert(collection.index(of: metrics1) == 0, "The index of metrics1 should be 0")
+        XCTAssert(collection.index(of: metrics2) == 1, "The index of metrics2 should be 1")
+        XCTAssert(collection.index(of: metrics3) == 2, "The index of metrics3 should be 2")
 
     }
     
@@ -159,6 +160,92 @@ class CollectionOfTests: BaseDataPointTestCase{
             XCTAssert(collection[0] == collection[1] , "The two first elements should be equal")
             XCTAssert(collection[0] === collection[1] , "The two first elements should match")
         }
+    }
+
+
+    func test008_Selection_persistency(){
+
+        let expectation = XCTestExpectation(description: "Selection")
+
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
+
+        let metrics1 = Metrics()
+        let metrics2 = Metrics()
+        let metrics3 = Metrics()
+
+        collection.append(metrics1)
+        collection.append(metrics2)
+        collection.append(metrics3)
+
+        // select some items
+        collection.selectedItems = [metrics3,metrics1]
+
+        let saveHandler = StorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
+            if !success{
+                XCTFail("datapoint.save() did fail: \(String(describing: message))")
+                expectation.fulfill()
+            }else{
+
+                if progress.totalUnitCount > 2{
+                    // @todo WHY!!!!
+                    XCTFail("progress.totalUnitCount == \(progress.totalUnitCount)")
+                    expectation.fulfill()
+                }
+                if progress.completedUnitCount == progress.totalUnitCount{
+
+                    // It is finished
+                    // Let's reload after
+                    // reseting the selectedItems
+                    // cleaning up the key data Storage
+                    collection.selectedItems = [Metrics]()
+                    while dataPoint.keyedDataCollection.count > 0{
+                        dataPoint.keyedDataCollection.remove(at: 0)
+                    }
+
+
+                    let reloadHandler = StorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
+                        if !success{
+                            XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
+                            expectation.fulfill()
+                        }else{
+                            if fileName == dataPoint.metricsCollection.fileName{
+
+                            if progress.completedUnitCount == progress.totalUnitCount{
+                                // It is finished
+
+                                let selectedUIDs = dataPoint.metricsCollection.selectedUIDs
+                                XCTAssert(selectedUIDs.count == 2,"selectedUIDs == \(selectedUIDs.count) should be equal to 2" )
+                                
+                                guard let selectedItems = dataPoint.metricsCollection.selectedItems else{
+                                    XCTFail("Void metricsCollection.selectedItems")
+                                    expectation.fulfill()
+                                    return
+                                }
+                                XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
+                                expectation.fulfill()
+                                }
+                            }
+                        }
+                    })
+                    // Reload the metrics
+                    dataPoint.storage.addProgressObserver(observer: reloadHandler)
+                     dataPoint.storage.load(on: dataPoint.keyedDataCollection)
+                    dataPoint.storage.load(on: dataPoint.metricsCollection)
+
+                }
+            }
+        })
+
+        do {
+            dataPoint.storage.addProgressObserver(observer: saveHandler)
+            try dataPoint.save()
+        }catch{
+            XCTFail("\(error)")
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 1.0)
     }
 
 

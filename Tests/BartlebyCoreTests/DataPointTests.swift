@@ -45,10 +45,10 @@ class DataPointTests: BaseDataPointTestCase{
                     expectation.fulfill()
                 }else{
 
-                    if fileName == metricsFileName{
+                    if progress.totalUnitCount == progress.completedUnitCount{
 
                         // We associate the metricsCollection Proxy with the loaded collection
-                        datapoint.metricsCollection =? datapoint.collection(with: fileName)
+                        datapoint.metricsCollection =? datapoint.collection(with: datapoint.metricsCollection.fileName)
 
                         // -----------------------------------
                         // 2# Populate some data
@@ -69,14 +69,16 @@ class DataPointTests: BaseDataPointTestCase{
                                     XCTFail("datapoint.save() did fail: \(String(describing: message)) ")
                                     expectation.fulfill()
                                 }else{
-                                    if fileName == metricsFileName{
 
+                                    if fileName == metricsFileName{
 
                                             // -----------------------------------
                                             // 4# create a clone and reload the data
                                             //we want to load a copy of the dataPoint
 
                                             let dataPointClone = self.getNewDataPoint()
+                                            dataPointClone.sessionIdentifier = datapoint.sessionIdentifier
+                                        
                                             let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                                                 if !success{
                                                     XCTFail("Metrics createOrLoadCollection did fail: \(String(describing: message)) ")
