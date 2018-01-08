@@ -39,7 +39,7 @@ class DataPointTests: BaseDataPointTestCase{
             // -----------------------------------
             // 1# Create or load the collection
 
-            let loadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
+            let loadHandler = AutoRemovableStorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                 if !success{
                     XCTFail("Metrics loading did fail: \(String(describing: message)) ")
                     expectation.fulfill()
@@ -63,7 +63,7 @@ class DataPointTests: BaseDataPointTestCase{
                             // 3# Save the data Point
                             // Let's save the DataPoint
 
-                            let saveHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
+                            let saveHandler = AutoRemovableStorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                                 // We reset the observer
                                 if !success{
                                     XCTFail("datapoint.save() did fail: \(String(describing: message)) ")
@@ -79,7 +79,7 @@ class DataPointTests: BaseDataPointTestCase{
                                             let dataPointClone = self.getNewDataPoint()
                                             dataPointClone.sessionIdentifier = datapoint.sessionIdentifier
                                         
-                                            let reloadHandler = StorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
+                                            let reloadHandler = AutoRemovableStorageProgressHandler(dataPoint: datapoint, handler: {  (fileName, success, message, progress) in
                                                 if !success{
                                                     XCTFail("Metrics createOrLoadCollection did fail: \(String(describing: message)) ")
                                                     expectation.fulfill()

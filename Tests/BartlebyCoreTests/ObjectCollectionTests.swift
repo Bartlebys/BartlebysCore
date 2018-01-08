@@ -23,7 +23,7 @@ class CollectionOfTests: BaseDataPointTestCase{
         ("test006_UnicityOnUpserts",test006_UnicityOnUpserts),
         ("test007_PluralityOnAppends",test007_PluralityOnAppends),
         ("test008_Selection_persistency",test008_Selection_persistency),
-    ]
+        ]
     
     
     override func setUp() {
@@ -181,17 +181,17 @@ class CollectionOfTests: BaseDataPointTestCase{
         // select some items
         collection.selectedItems = [metrics3,metrics1]
 
-        let saveHandler = StorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
+        let saveHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
             if !success{
                 XCTFail("datapoint.save() did fail: \(String(describing: message))")
                 expectation.fulfill()
             }else{
 
-                if progress.totalUnitCount > 2{
-                    // @todo WHY!!!!
+                if progress.totalUnitCount > dataPoint.collectionsCount(){
                     XCTFail("progress.totalUnitCount == \(progress.totalUnitCount)")
                     expectation.fulfill()
                 }
+
                 if progress.completedUnitCount == progress.totalUnitCount{
 
                     // It is finished
@@ -204,33 +204,30 @@ class CollectionOfTests: BaseDataPointTestCase{
                     }
 
 
-                    let reloadHandler = StorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
+                    let reloadHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
                         if !success{
                             XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
                             expectation.fulfill()
                         }else{
                             if fileName == dataPoint.metricsCollection.fileName{
 
-                            if progress.completedUnitCount == progress.totalUnitCount{
-                                // It is finished
+                                if progress.completedUnitCount == progress.totalUnitCount{
+                                    // It is finished
 
-                                let selectedUIDs = dataPoint.metricsCollection.selectedUIDs
-                                XCTAssert(selectedUIDs.count == 2,"selectedUIDs == \(selectedUIDs.count) should be equal to 2" )
-                                
-                                guard let selectedItems = dataPoint.metricsCollection.selectedItems else{
-                                    XCTFail("Void metricsCollection.selectedItems")
+                                    guard let selectedItems = dataPoint.metricsCollection.selectedItems else{
+                                        XCTFail("Void metricsCollection.selectedItems")
+                                        expectation.fulfill()
+                                        return
+                                    }
+                                    XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
                                     expectation.fulfill()
-                                    return
-                                }
-                                XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
-                                expectation.fulfill()
                                 }
                             }
                         }
                     })
                     // Reload the metrics
                     dataPoint.storage.addProgressObserver(observer: reloadHandler)
-                     dataPoint.storage.load(on: dataPoint.keyedDataCollection)
+                    dataPoint.storage.load(on: dataPoint.keyedDataCollection)
                     dataPoint.storage.load(on: dataPoint.metricsCollection)
 
                 }
