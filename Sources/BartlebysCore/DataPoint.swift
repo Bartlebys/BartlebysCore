@@ -69,6 +69,9 @@ open class DataPoint: Object,ConcreteDataPoint{
     /// The collection hashed per fileName
     fileprivate var _collectionsPerFileName = Dictionary<String,Any>()
 
+    /// The collection hashed by typeName
+    fileprivate var _collectionsPerCollectedTypeName = Dictionary<String,Any>()
+
     // this centralized dictionary allows to access to any referenced object by its UID
     // Future versions will use A binary tree.
     fileprivate var _instancesByUID=Dictionary<String, Any>()
@@ -115,6 +118,7 @@ open class DataPoint: Object,ConcreteDataPoint{
         }){
             self._collections.append(collection)
             self._collectionsPerFileName[collection.fileName] = collection
+            self._collectionsPerCollectedTypeName[T.typeName] = collection
             collection.dataPoint = self
 
             // Creates or asynchronously load the collection on registration
@@ -289,6 +293,42 @@ open class DataPoint: Object,ConcreteDataPoint{
     ///
     /// - Parameter instance: the managedModel
     open func willErase(_ instance:Model){}
+
+
+
+
+    /// Object factory that creates a new instance
+    //  and append the object to the first Corresponding Collection
+    ///
+    /// - Returns: the created instance
+    open func newInstance<T:Collectable & Codable & Tolerent >()->T{
+        let instance = T()
+        if let collection:CollectionOf<T> = self.collectionFor() {
+            collection.append(instance)
+        }
+        return instance
+    }
+
+
+    /// Object factory that creates a new instance
+    //  and append the object to the first Corresponding Collection
+    ///
+    /// - Returns: the created instance
+    open func new<T:Collectable & Codable & Tolerent>(type:T.Type)->T{
+        let instance = T()
+        if let collection:CollectionOf<T> = self.collectionFor() {
+            collection.append(instance)
+        }
+        return instance
+    }
+
+
+    /// Recover a collection for a given Collectable type
+    ///
+    /// - Returns: the collection
+    open func collectionFor<T:Collectable & Codable & Tolerent >()->CollectionOf<T>?{
+        return self._collectionsPerCollectedTypeName[T.typeName] as? CollectionOf<T>
+    }
 
 }
 
