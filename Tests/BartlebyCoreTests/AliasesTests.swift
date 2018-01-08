@@ -285,4 +285,40 @@ class AliasesTests: BaseDataPointTestCase{
         }
 
     }
+    
+    func test007_AliasOfSerialization() {
+        
+        let object: TestObject = TestObject()
+        let alias: AliasOf<TestObject> = object.aliasOf()
+        
+        do {
+            let data = try JSON.encoder.encode(alias)
+            let decodedObject = try JSON.decoder.decode(AliasOf<TestObject>.self, from: data)
+            XCTAssert(decodedObject.UID == object.UID, "UIDs should match")
+        } catch {
+            XCTFail("error = \(error)")
+        }
+        
+    }
+    
+    func test008_AliasesOfSerialization() {
+        
+        let object: TestObject = TestObject()
+        let aliases: [AliasOf<TestObject>] = [object.aliasOf()]
+        
+        do {
+            let data = try JSON.encoder.encode(aliases)
+            let str = String(data: data, encoding: .utf8)
+            print("data = \(String(describing: str))")
+            let decodedAliases = try JSON.decoder.decode([AliasOf<TestObject>].self, from: data)
+            if let first = decodedAliases.first {
+                XCTAssert(first.UID == object.UID, "UIDs should match")
+            }
+            
+        } catch {
+            XCTFail("error = \(error)")
+        }
+        
+    }
+    
 }
