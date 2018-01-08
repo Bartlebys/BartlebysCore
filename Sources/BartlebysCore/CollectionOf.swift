@@ -301,7 +301,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
             do{
                try self.dataPoint?.storeInKVS(newValue, identifiedBy: self._selectedUIDSKeys)
             }catch{
-               Logger.log("\(error)")
+               Logger.log("\(error)",category:.critical)
             }
          }
       }
