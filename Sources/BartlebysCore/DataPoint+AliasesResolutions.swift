@@ -1,5 +1,5 @@
 //
-//  DataPoint+Resolutions.swift
+//  DataPoint+AliasesResolutions.swift
 //  BartlebysCore macOS
 //
 //  Created by Benoit Pereira da silva on 08/01/2018.
@@ -9,6 +9,7 @@
 import Foundation
 
 extension DataPoint:AliasesResolution{
+    
     /// Resolves the alias
     ///
     /// - Parameter alias: the alias
