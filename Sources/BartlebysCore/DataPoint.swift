@@ -302,7 +302,6 @@ open class DataPoint: Object,ConcreteDataPoint{
 
 // MARK: - Centralized Instances Registration
 
-
 extension DataPoint{
 
     // The number of registred object
@@ -456,3 +455,13 @@ extension DataPoint{
 
 }
 
+extension DataPoint{
+
+    /// If you call once this method the datapoint will not persist out of the memory anymore
+    /// You cannot turn back storage volatility to false
+    /// This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
+    public func becomeVolatile(){
+        self.storage.becomeVolatile()
+    }
+
+}
