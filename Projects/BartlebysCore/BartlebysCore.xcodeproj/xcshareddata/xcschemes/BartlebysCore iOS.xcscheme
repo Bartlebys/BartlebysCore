@@ -38,6 +38,11 @@
                BlueprintName = "BartlebysCore iOSTests"
                ReferencedContainer = "container:BartlebysCore.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "CollectionOfTests/test008_Selection_persistency()">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>
