@@ -173,8 +173,11 @@ class CollectionOfTests: BaseDataPointTestCase{
         let collection = dataPoint.metricsCollection
 
         let metrics1 = Metrics()
+        metrics1.operationName = "op1"
         let metrics2 = Metrics()
+        metrics2.operationName = "op2"
         let metrics3 = Metrics()
+        metrics3.operationName = "op3"
 
         collection.append(metrics1)
         collection.append(metrics2)
@@ -222,6 +225,10 @@ class CollectionOfTests: BaseDataPointTestCase{
                                         return
                                     }
                                     XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
+                                    XCTAssert(selectedItems.filter{ $0.operationName == "op3"}.count == 1, "Should contain a op3")
+                                    XCTAssert(selectedItems.filter{ $0.operationName == "op1"}.count == 1, "Should contain a op1")
+                                    XCTAssert(selectedItems.filter{ $0.UID == metrics3.UID }.count == 1, "Should contain metrics3")
+                                    XCTAssert(selectedItems.filter{ $0.UID == metrics1.UID }.count == 1, "Should contain metrics1")
                                     expectation.fulfill()
                                 }
                             }
