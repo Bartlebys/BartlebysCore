@@ -42,16 +42,18 @@ class CollectionOfTests: BaseDataPointTestCase{
         let dataPoint = self.getNewDataPoint()
         let collection = dataPoint.metricsCollection
 
-        let metrics1 = Metrics()
+        // Use the factory
+        let metrics1:Metrics = dataPoint.newInstance()
         metrics1.operationName = "operation1"
-        let metrics2 = Metrics()
-        metrics2.operationName = "operation2"
-        let metrics3 = Metrics()
-        metrics3.operationName = "operation3"
 
-        collection.append(metrics1)
-        collection.append(metrics2)
+        // Use the factory
+        let metrics2 = dataPoint.newInstance() as Metrics
+        metrics2.operationName = "operation2"
+
+        // Create and append
+        let metrics3 = Metrics()
         collection.append(metrics3)
+        metrics3.operationName = "operation3"
 
         var metrics = collection[0]
         XCTAssert(metrics.operationName == "operation1", "The first element should be named \(metrics.operationName)")
@@ -69,8 +71,8 @@ class CollectionOfTests: BaseDataPointTestCase{
         let dataPoint = self.getNewDataPoint()
         let collection = dataPoint.metricsCollection
 
-        let metrics = Metrics()
-        collection.append(metrics)
+        let _ :Metrics = dataPoint.newInstance()
+
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
         
     }
@@ -80,8 +82,8 @@ class CollectionOfTests: BaseDataPointTestCase{
         let dataPoint = self.getNewDataPoint()
         let collection = dataPoint.metricsCollection
 
-        let metrics = Metrics()
-        collection.append(metrics)
+        let _ = dataPoint.new(type: Metrics.self)
+
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
         collection.remove(at: 0)
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
