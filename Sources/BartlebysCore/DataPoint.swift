@@ -91,7 +91,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     required public override init(){
         super.init()
         // The loading is asynchronous on separate queue.
-        self.storage.addProgressObserver (observer: DataPointLoadingDelegate(dataPoint: self))
+        self.storage.addProgressObserver (observer: AutoRemovableLoadingDelegate(dataPoint: self))
     }
 
 
@@ -276,7 +276,7 @@ open class DataPoint: Object,ConcreteDataPoint{
 
     public final func save() throws {
         // We add a saving delegate to relay the progression
-        self.storage.addProgressObserver (observer: DataPointSavingDelegate(dataPoint: self))
+        self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
             if let universallyPersistentCollection = collection as? FilePersistent {
                 try universallyPersistentCollection.saveToFile()

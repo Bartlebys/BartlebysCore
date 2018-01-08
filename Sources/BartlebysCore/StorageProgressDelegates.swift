@@ -31,14 +31,13 @@ open class ProgressDelegate:StorageProgressDelegate{
     ///   - success: is it a success?
     ///   - message: a contextual messsage
     ///   - progress: the progress object
-    open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
-    }
+    open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {}
 }
 
-// MARK: - StorageProgressHandler
+// MARK: - AutoRemovableStorageProgressHandler
 
 // A Storage progress that uses an handler
-open class StorageProgressHandler:ProgressDelegate{
+open class AutoRemovableStorageProgressHandler:ProgressDelegate{
 
     public typealias  StorageProgress = (_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress)->()
 
@@ -65,14 +64,17 @@ open class StorageProgressHandler:ProgressDelegate{
     ///   - progress: the progress object
     override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         self.handler(fileName, success, message, progress)
+        if progress.totalUnitCount == progress.completedUnitCount{
+            self.dataPoint.storage.removeProgressObserver(observer: self)
+        }
     }
 }
 
 
-// MARK: - SavingDelegate
+// MARK: - AutoRemovableSavingDelegate
 
 // A SavingDelegate that call the DataPoint delegate
-public class DataPointSavingDelegate:ProgressDelegate{
+public class AutoRemovableSavingDelegate:ProgressDelegate{
 
 
     // The initializer
@@ -100,10 +102,10 @@ public class DataPointSavingDelegate:ProgressDelegate{
     }
 }
 
-// MARK: - LoadingDelegate
+// MARK: - AutoRemovableLoadingDelegate
 
 // A LoadingDelegate that call the DataPoint delegate
-public class DataPointLoadingDelegate:ProgressDelegate{
+public class AutoRemovableLoadingDelegate:ProgressDelegate{
 
 
     // The initializer

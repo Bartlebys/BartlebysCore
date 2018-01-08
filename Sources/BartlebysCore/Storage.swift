@@ -8,6 +8,10 @@
 
 import Foundation
 
+public enum FileStorageError:Error {
+    case undefinedDataPoint
+}
+
 public protocol StorageProgressDelegate{
     
     var identifier:String { get }
@@ -45,7 +49,7 @@ public final class Storage{
     fileprivate static var _fileManager = FileManager()
     
     fileprivate var _progress = Progress()
-    
+
     public func addProgressObserver(observer:StorageProgressDelegate){
         self._observers.append(observer)
     }
@@ -70,18 +74,18 @@ extension Storage: FileStorage{
     ///
     /// - Parameter proxy: the collection proxy
     public func load<T>(on proxy:CollectionOf<T>){
-        guard let dataPoint = proxy.dataPoint else {
+
+        guard self._volatile == false else{
+            self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: true, error: nil)
             return
         }
 
-        guard self._volatile == false else{
-            DispatchQueue.main.async {
-                for observer in self._observers{
-                    observer.onProgress(proxy.fileName, false, nil, self._progress)
-                }
-            }
+        guard let dataPoint = proxy.dataPoint else {
+            let error = FileStorageError.undefinedDataPoint
+            self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: false, error: error)
             return
         }
+
         DispatchQueue.main.async {
             self._progress.totalUnitCount += 1
         }
@@ -97,19 +101,11 @@ extension Storage: FileStorage{
                     }
                 }
                 
-                // The collection has been registered.
-                DispatchQueue.main.async {
-                    self._progress.completedUnitCount += 1
-                    for observer in self._observers{
-                        observer.onProgress(proxy.fileName, true, nil, self._progress)
-                    }
-                }
+                // The collection has been saved.
+                self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: true, error: nil)
+
             } catch {
-                DispatchQueue.main.async {
-                    for observer in self._observers{
-                        observer.onProgress(proxy.fileName, false, "\(error)", self._progress)
-                    }
-                }
+               self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: false, error: error)
             }
         }
         Storage._serialQueue.async(execute: workItem)
@@ -126,11 +122,7 @@ extension Storage: FileStorage{
     public func saveCollection<T>(collection:CollectionOf<T>, using coder:ConcreteCoder){
 
         guard self._volatile == false else{
-            DispatchQueue.main.async {
-                for observer in self._observers{
-                    observer.onProgress(collection.fileName, false, nil, self._progress)
-                }
-            }
+            self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: true, error: nil)
             return
         }
 
@@ -153,25 +145,17 @@ extension Storage: FileStorage{
                 try data.write(to: url)
                 collection.hasChanged = false
                 
-                DispatchQueue.main.async {
-                    self._progress.completedUnitCount += 1
-                    for observer in self._observers{
-                        observer.onProgress(collection.d_collectionName, true, nil, self._progress)
-                    }
-                }
+                // The collection has been saved.
+                self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: true, error: nil)
+
             } catch {
-                DispatchQueue.main.async {
-                    for observer in self._observers{
-                        observer.onProgress(collection.fileName, false, "\(error)", self._progress)
-                    }
-                }
+                self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: false, error: error)
             }
         }
 
         Storage._serialQueue.async(execute: workItem)
     }
-    
-    
+
     
     /// Erases the file(s) of the collection if there is one
     /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
@@ -194,14 +178,39 @@ extension Storage: FileStorage{
         }
         Storage._serialQueue.sync(execute: workItem)
     }
-    
+
+
     /// Returns the URL of the collection file
     ///
     /// - Parameter collection: the collection
     /// - Returns: the collection file URL
     public func getURL<T>(of collection:CollectionOf<T>) -> URL {
         return self.baseUrl.appendingPathComponent(collection.relativeFolderPath).appendingPathComponent(collection.fileName + self.collectionExtension)
-        
+    }
+
+
+    /// Relays to the observers and clean up the _progress
+    ///
+    /// - Parameters:
+    ///   - fileName: the fileName
+    ///   - success: the success state
+    ///   - error: the associated error
+    fileprivate func _relayTaskCompletionToProgressObservers(fileName:String,success:Bool, error:Error?){
+        DispatchQueue.main.async {
+            self._progress.completedUnitCount += 1
+            for observer in self._observers{
+                if let error = error{
+                    observer.onProgress(fileName, success, "\(error)", self._progress)
+                }else{
+                    observer.onProgress(fileName, success, nil, self._progress)
+                }
+            }
+            // Reset if necessary the progress object
+            if self._progress.completedUnitCount == self._progress.totalUnitCount {
+                self._progress.completedUnitCount = 0
+                self._progress.totalUnitCount = 0
+            }
+        }
     }
     
 }

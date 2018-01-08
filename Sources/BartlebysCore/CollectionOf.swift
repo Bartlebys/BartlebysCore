@@ -291,7 +291,10 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    fileprivate let _selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
 
-   // Recovers the
+   fileprivate let _doNotPropagateSelection:Bool = false
+
+
+   // Recovers the selectedUIDS
    fileprivate var _selectedUIDs:[UID]{
       set{
          Object.syncOnMain {
@@ -315,15 +318,23 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
-   // Get and Loads the selectedUIDS
-   public var selectedUIDs:[UID]{
-      return self._selectedUIDs
-   }
 
    public var selectedItems:[T]?{
-      didSet{
+      get{
+         return Object.syncOnMainAndReturn { () -> [T]? in
+            do{
+               if let instances: [T] =  try self.dataPoint?.registredObjectsByUIDs(self._selectedUIDs){
+                  return instances
+               }
+            }catch{
+               // Silent catch
+            }
+            return nil
+         }
+      }
+      set{
          Object.syncOnMain {
-            self._selectedUIDs = selectedItems?.map{$0.UID} ?? [UID]()
+            self._selectedUIDs = newValue?.map{$0.UID} ?? [UID]()
             Notify<T>.postSelectionChanged()
          }
       }
