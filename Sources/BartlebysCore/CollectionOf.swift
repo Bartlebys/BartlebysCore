@@ -292,9 +292,8 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    fileprivate let _selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
 
-
    // Recovers the
-   fileprivate var _selectedUIDS:[UID]{
+   fileprivate var _selectedUIDs:[UID]{
       set{
          Object.syncOnMain {
             do{
@@ -317,10 +316,15 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
+   // Get and Loads the selectedUIDS
+   public var selectedUIDs:[UID]{
+      return self._selectedUIDs
+   }
+
    public var selectedItems:[T]?{
       didSet{
          Object.syncOnMain {
-            self._selectedUIDS = selectedItems?.map{$0.UID} ?? [UID]()
+            self._selectedUIDs = selectedItems?.map{$0.UID} ?? [UID]()
             Notify<T>.postSelectionChanged()
          }
       }
