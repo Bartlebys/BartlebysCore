@@ -29,6 +29,7 @@
 		E52527AB2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
+		E553813720035CFF0023ED88 /* DataPoint+Resolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+Resolutions.swift */; };
 		E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E58A27711FFBDC4F00079CB5 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
@@ -387,6 +388,7 @@
 		E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		E54826351FFBBB3700FB854E /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
+		E553813620035CFF0023ED88 /* DataPoint+Resolutions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+Resolutions.swift"; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
 		E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProgressDelegates.swift; sourceTree = "<group>"; };
 		E5BAB6BF200120C900386A9B /* Aliasable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliasable.swift; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */,
+				E553813620035CFF0023ED88 /* DataPoint+Resolutions.swift */,
 				4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */,
 				E54826351FFBBB3700FB854E /* Default.swift */,
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
@@ -1053,6 +1056,7 @@
 				E5EC9F9B1FF655F9008BF543 /* Payload.swift in Sources */,
 				E52527A42000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5EC9FA51FF655FE008BF543 /* DataResponse.swift in Sources */,
+				E553813720035CFF0023ED88 /* DataPoint+Resolutions.swift in Sources */,
 				E5EC9FB21FF655FE008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5EC9FC31FF655FE008BF543 /* Upload.swift in Sources */,
 				E5D6CDFA2001391700A3D975 /* DataPoint+KeyValueStorage.swift in Sources */,
