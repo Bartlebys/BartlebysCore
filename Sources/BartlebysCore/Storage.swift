@@ -39,7 +39,7 @@ public final class Storage{
     fileprivate var _observers=[StorageProgressDelegate]()
     
     // We use a static shared serial queue for all our operation
-    fileprivate static var _sharedQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.collectionsQueue")
+    fileprivate static var _serialQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.collectionsQueue", qos: .utility, attributes: [])
     
     // A unique file manager used exclusively on the shared queue
     fileprivate static var _fileManager = FileManager()
@@ -82,10 +82,11 @@ extension Storage: FileStorage{
             }
             return
         }
+        DispatchQueue.main.async {
+            self._progress.totalUnitCount += 1
+        }
 
-        self._progress.totalUnitCount += 1
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
-            
             do {
                 let url = self.getURL(of: proxy)
                 if Storage._fileManager.fileExists(atPath: url.path) {
@@ -111,7 +112,7 @@ extension Storage: FileStorage{
                 }
             }
         }
-        Storage._sharedQueue.async(execute: workItem)
+        Storage._serialQueue.async(execute: workItem)
     }
     
     
@@ -121,8 +122,8 @@ extension Storage: FileStorage{
     ///
     /// - Parameters:
     ///   - collection: the collection reference
-    ///   - dataPoint: the holding dataPoint
-    public func saveCollection<T>(collection:CollectionOf<T>, using dataPoint:DataPoint){
+    ///   - coder: the coder
+    public func saveCollection<T>(collection:CollectionOf<T>, using coder:ConcreteCoder){
 
         guard self._volatile == false else{
             DispatchQueue.main.async {
@@ -133,7 +134,10 @@ extension Storage: FileStorage{
             return
         }
 
-        self._progress.totalUnitCount += 1
+        DispatchQueue.main.async {
+            self._progress.totalUnitCount += 1
+        }
+
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
             
             do {
@@ -145,7 +149,7 @@ extension Storage: FileStorage{
                     try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                 }
                 
-                let data = try dataPoint.coder.encode(collection)
+                let data = try coder.encode(collection)
                 try data.write(to: url)
                 collection.hasChanged = false
                 
@@ -163,7 +167,8 @@ extension Storage: FileStorage{
                 }
             }
         }
-        Storage._sharedQueue.async(execute: workItem)
+
+        Storage._serialQueue.async(execute: workItem)
     }
     
     
@@ -187,7 +192,7 @@ extension Storage: FileStorage{
                 Logger.log("\(error)",category: .critical)
             }
         }
-        Storage._sharedQueue.sync(execute: workItem)
+        Storage._serialQueue.sync(execute: workItem)
     }
     
     /// Returns the URL of the collection file
