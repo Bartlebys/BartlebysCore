@@ -16,4 +16,5 @@
 
 # Documents
 
+- Learn the basics in [Basics.md](Documents/Basics.md)
 - How to deal with Relations between Entities? BartlebysCore's approaches are described in [RelationsBetweenModels.md](Documents/RelationsBetweenModels.md)
