@@ -10,6 +10,10 @@ import Foundation
 
 open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
 
+    // If set to false the ownedBy instances & freeRelations will not be serialized
+    // Can be used to inject some Model into Systems that does not support Bartlebys Relational model
+    static public var encodeRelations:Bool = true
+
     // MARK: - Collectable
 
     // The id 
@@ -145,8 +149,10 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ModelCodingKeys.self)
         try container.encode(self.id,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
-        try container.encode(self.ownedBy,forKey: .ownedBy)
-        try container.encode(self.freeRelations,forKey:.freeRelations)
+        if Model.encodeRelations{
+            try container.encode(self.ownedBy,forKey: .ownedBy)
+            try container.encode(self.freeRelations,forKey:.freeRelations)
+        }
     }
 
     
