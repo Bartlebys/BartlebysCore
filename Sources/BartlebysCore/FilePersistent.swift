@@ -20,8 +20,7 @@ public protocol FilePersistent{
     /// Saves to a given file named 'fileName'
     /// Into a dedicated folder named
     /// - Parameters:
-    ///   - coder: the coder
     /// - Throws: throws errors on Coding
-    func saveToFile(_ coder:ConcreteCoder) throws
+    func saveToFile() throws
 
 }

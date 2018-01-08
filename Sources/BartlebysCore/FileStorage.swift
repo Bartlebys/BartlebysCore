@@ -16,12 +16,12 @@ public protocol FileStorage {
     /// - Parameter proxy: the collection proxy
     func load<T>(on proxy:CollectionOf<T>)
 
-    /// Saves the collection to a file on a separate queue
+    /// Saves asynchronously the collection to a file on a separate queue
     ///
     /// - Parameters:
     ///   - collection: the collection reference
-    ///   - dataPoint: the holding dataPoint
-    func saveCollection<T>(collection:CollectionOf<T>, using dataPoint:DataPoint)
+    ///   - coder: the coder
+    func saveCollection<T>(collection:CollectionOf<T>, using coder:ConcreteCoder)
 
 
     /// Erases the file(s) of the collection if there is one

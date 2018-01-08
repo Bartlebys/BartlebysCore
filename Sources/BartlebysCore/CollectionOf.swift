@@ -276,14 +276,13 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    /// Saves to a given file named 'fileName'
    /// Into a dedicated folder named relativeFolderPath
    /// - Parameters:
-   ///   - coder: the coder
    /// - Throws: throws errors on Coding
-   public func saveToFile(_ coder:ConcreteCoder) throws {
+   public func saveToFile() throws {
       if self.hasChanged {
          guard let dataPoint = self.dataPoint else {
             throw CollectionOfError.collectionIsNotRegistred
          }
-         dataPoint.storage.saveCollection(collection: self, using: dataPoint)
+         dataPoint.storage.saveCollection(collection: self, using:dataPoint.coder)
       }
    }
 

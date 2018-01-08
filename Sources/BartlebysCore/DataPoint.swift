@@ -277,17 +277,9 @@ open class DataPoint: Object,ConcreteDataPoint{
     public final func save() throws {
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: DataPointSavingDelegate(dataPoint: self))
-        try self.save(using: self.coder)
-    }
-    
-
-    /// Saves all the collections.
-    ///
-    /// - Throws: throws an exception if any save operation has failed
-    public final func save(using encoder: ConcreteCoder) throws {
         for collection in self._collections {
             if let universallyPersistentCollection = collection as? FilePersistent {
-                try universallyPersistentCollection.saveToFile(encoder)
+                try universallyPersistentCollection.saveToFile()
             }
         }
     }
