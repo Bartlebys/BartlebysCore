@@ -424,7 +424,13 @@ extension DataPoint{
     /// - Parameter UID: the UID
     /// - Returns: the opaque Instance
     public func registredOpaqueInstancesByUIDs(_ UIDs: [UID])-> [Any] {
-        return self._instancesByUID.filter{ UIDs.contains($0.key)}
+        var items:[Any]=[Any]()
+        for UID in UIDs{
+            if let instance=self._instancesByUID[UID]{
+                items.append(instance)
+            }
+        }
+        return items
     }
 
 
