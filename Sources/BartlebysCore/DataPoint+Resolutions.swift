@@ -1,25 +1,30 @@
 //
-//  Model+AliasesResolution.swift
-//  BartlebysCore
+//  DataPoint+Resolutions.swift
+//  BartlebysCore macOS
 //
-//  Created by Benoit Pereira da silva on 06/01/2018.
+//  Created by Benoit Pereira da silva on 08/01/2018.
 //  Copyright © 2018 Bartleby. All rights reserved.
 //
 
 import Foundation
 
-extension Model:AliasesResolution{
-
+extension DataPoint:AliasesResolution{
     /// Resolves the alias
     ///
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
     public func instance<T : Codable & Collectable >(from alias:Aliased) throws -> T{
-        guard let dataPoint = self.dataPoint else{
-            throw AliasResolverError.undefinedContainer
+        // We want to be able to resolve any object not only Models and ManagedModels
+        // So we use the opaque layer.
+        let instance =  self.registredOpaqueInstanceByUID(alias.UID)
+        guard  instance != nil else {
+            throw AliasResolverError.notFound
         }
-        return try dataPoint.instance(from: alias)
+        guard let castedInstance = instance as? T else{
+            throw AliasResolverError.typeMissMatch
+        }
+        return castedInstance
     }
 
 
@@ -32,10 +37,9 @@ extension Model:AliasesResolution{
     /// - Returns: the references
     /// - Throws: AliasResolverError
     public func instances<T : Codable  & Collectable  >(from aliases:[Aliased]) throws -> [T] {
-        guard let dataPoint = self.dataPoint else{
-            throw AliasResolverError.undefinedContainer
-        }
-        return try dataPoint.instances(from: aliases)
+        let UIDs = aliases.map { $0.UID }
+        let instances:[T] = try self.registredObjectsByUIDs(UIDs)
+        return instances
     }
 
     // MARK: - Optionals
@@ -46,10 +50,7 @@ extension Model:AliasesResolution{
     /// - Returns: the reference
     /// - Throws: AliasResolverError
     public func optionalInstance<T : Codable  & Collectable >(from alias:Aliased) -> T?{
-        guard let dataPoint = self.dataPoint else{
-            return nil
-        }
-        return dataPoint.optionalInstance(from: alias)
+        return  self.registredOpaqueInstanceByUID(alias.UID) as? T
     }
 
 
@@ -58,10 +59,13 @@ extension Model:AliasesResolution{
     /// - Parameter aliases: the aliases
     /// - Returns: the references
     public func optionalInstances<T : Codable >(from aliases:[Aliased]) -> [T]{
-        guard let dataPoint = self.dataPoint else{
+
+        let UIDs = aliases.map { $0.UID }
+        let instances = self.registredOpaqueInstancesByUIDs(UIDs)
+        guard let castedInstances = instances as? [T] else{
             return [T]()
         }
-        return dataPoint.optionalInstances(from: aliases)
+        return castedInstances
     }
 
 }
