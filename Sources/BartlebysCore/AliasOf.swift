@@ -11,11 +11,7 @@ import Foundation
 /// The generic alias struct
 public struct AliasOf<T:Aliasable>:Codable,Aliased{
 
-    // We use
-    public var UID:UID = Default.NO_UID
-
-    public init() {
-    }
+    public let UID:UID
     
     public init(UID:UID) {
         self.UID = UID
