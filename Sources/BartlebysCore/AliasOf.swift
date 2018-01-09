@@ -30,17 +30,5 @@ public struct AliasOf<T:Aliasable>:Codable,Aliased{
         var container = encoder.container(keyedBy:  Model.ModelCodingKeys.self)
         try container.encode(self.UID,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
     }
-    
-    public func toDictionaryRepresentation() -> Dictionary<String, Any> {
-        do {
-            let data = try JSON.encoder.encode(self)
-            if let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Dictionary<String, Any> {
-                return dictionary
-            }
-        } catch {
-            Logger.log("dictionary representation has failed: \(error)")
-        }
-        return Dictionary<String, Any>()
-    }
 
 }
