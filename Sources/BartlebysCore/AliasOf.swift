@@ -12,8 +12,11 @@ import Foundation
 public struct AliasOf<T:Aliasable>:Codable,Aliased{
 
     // We use
-    public let UID:UID
+    public var UID:UID = Default.NO_UID
 
+    public init() {
+    }
+    
     public init(UID:UID) {
         self.UID = UID
     }
@@ -30,6 +33,18 @@ public struct AliasOf<T:Aliasable>:Codable,Aliased{
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy:  Model.ModelCodingKeys.self)
         try container.encode(self.UID,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
+    }
+    
+    public func toDictionaryRepresentation() -> Dictionary<String, Any> {
+        do {
+            let data = try JSON.encoder.encode(self)
+            if let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? Dictionary<String, Any> {
+                return dictionary
+            }
+        } catch {
+            Logger.log("dictionary representation has failed: \(error)")
+        }
+        return Dictionary<String, Any>()
     }
 
 }
