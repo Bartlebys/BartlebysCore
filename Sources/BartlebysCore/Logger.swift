@@ -46,7 +46,7 @@ public struct Logger {
         entry.decorative = decorative
 
         while self.logsEntries.count > Logger.maxNumberOfEntries{
-            let _ = self.logsEntries.dropFirst()
+            let _ = self.logsEntries.removeFirst()
         }
 
         logsEntries.append(entry)
