@@ -151,6 +151,15 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
+   /// Merge the provided collection
+   ///
+   /// - Parameter collection: a collection
+   public func merge(with collection: CollectionOf<T>) {
+      for item in collection {
+         self.upsert(item)
+      }
+   }
+   
    // MARK: - IndistinctCollection
 
    /// References the element into its collection and the dataPoint registry
