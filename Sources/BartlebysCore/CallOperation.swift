@@ -15,18 +15,33 @@ public extension Notification.Name {
         public static let operationKey = "callOperation"
         public static let errorKey = "error"
 
-        public static func didSucceed(_ operationName:String ) -> (Notification.Name) {
-            return Notification.Name(rawValue: "org.barlebys.\(operationName).didSucceed")
+        /// Posted on operation success
+        /// We do associate the CallOperation instance in the operationKey of userInfo
+        ///
+        /// - Returns: the notification
+        public static func didSucceed() -> (Notification.Name) {
+            return Notification.Name(rawValue: "org.barlebys.callOperation.didSucceed")
         }
 
-        public static func didFail(_ operationName:String ) -> (Notification.Name) {
-            return Notification.Name(rawValue: "org.barlebys.\(operationName).didFail")
+        /// Posted on operation failure
+        /// We do associate the CallOperation instance in the operationKey of userInfo
+        ///
+        /// - Returns: the notification
+        public static func didFail() -> (Notification.Name) {
+            return Notification.Name(rawValue: "org.barlebys.callOperation.didFail")
         }
     }
 }
 
 public protocol CallOperationProtocol {
     var sessionIdentifier: String { get }
+    var operationName: String { get }
+    var path: String { get }
+    var queryString: String { get }
+    var method: HTTPMethod { get }
+    var resultIsACollection:Bool { get }
+    var executionCounter:Int { get }
+    var lastAttemptDate:Date { get }
 }
 
 /// A CallOperation is:

@@ -95,7 +95,7 @@ public class Session {
                 operation.executionCounter += 1
                 operation.lastAttemptDate = Date()
                 
-                let notificationName = Notification.Name.CallOperation.didFail(operation.operationName)
+                let notificationName = Notification.Name.CallOperation.didFail()
                 if let error = response.error {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.errorKey : error])
                 } else {
@@ -115,7 +115,7 @@ public class Session {
                     operation.executionCounter += 1
                     operation.lastAttemptDate = Date()
                     
-                    let notificationName = Notification.Name.CallOperation.didSucceed(operation.operationName)
+                    let notificationName = Notification.Name.CallOperation.didSucceed()
                     
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
                     
@@ -144,7 +144,7 @@ public class Session {
                     
                     self.delegate.integrateResponse(response)
                     
-                    let notificationName = Notification.Name.CallOperation.didSucceed(operation.operationName)
+                    let notificationName = Notification.Name.CallOperation.didSucceed()
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
 
                     self.delegate.deleteCallOperation(operation)
