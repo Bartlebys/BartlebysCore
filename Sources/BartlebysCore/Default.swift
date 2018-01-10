@@ -26,6 +26,7 @@ public struct Default{
     static public let NO_METHOD: String = "NO_METHOD"
     static public let NO_DIGEST: String = "NO_DIGEST"
     static public let NO_PASSWORD: String = "NO_PASSWORD"
+    static public let NO_QUERY_STRING: String = "NO_QUERY_STRING"
     static public let NO_SUGAR: String = "NO_SUGAR"
     static public let NOT_SPECIFIED: String = "NOT_SPECIFIED"
     static public let STRING_ENCODING = String.Encoding.utf8

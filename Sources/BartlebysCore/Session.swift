@@ -81,6 +81,9 @@ public class Session {
     /// - Parameter operation: the operation
     public func runCall<T: Collectable, P>(_ operation: CallOperation<T, P>) throws {
         
+        // We inject the session identifier in the call operation
+        operation.sessionIdentifier = self.sessionIdentifier
+        
         let request: URLRequest
         request = try self.delegate.requestFor(operation)
         
@@ -92,9 +95,13 @@ public class Session {
                 operation.executionCounter += 1
                 operation.lastAttemptDate = Date()
                 
-                let notificationName = NSNotification.Name.CallOperation.didFail(operation.operationName)
-                NotificationCenter.default.post(name:notificationName, object: response.error)
-                
+                let notificationName = Notification.Name.CallOperation.didFail(operation.operationName)
+                if let error = response.error {
+                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.errorKey : error])
+                } else {
+                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
+                }
+
             }
         }
         
@@ -108,8 +115,9 @@ public class Session {
                     operation.executionCounter += 1
                     operation.lastAttemptDate = Date()
                     
-                    let notificationName = NSNotification.Name.CallOperation.didSucceed(operation.operationName)
-                    NotificationCenter.default.post(name:notificationName , object: nil)
+                    let notificationName = Notification.Name.CallOperation.didSucceed(operation.operationName)
+                    
+                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
                     
                     self.delegate.deleteCallOperation(operation)
                 }
@@ -137,8 +145,8 @@ public class Session {
                     self.delegate.integrateResponse(response)
                     
                     let notificationName = Notification.Name.CallOperation.didSucceed(operation.operationName)
-                    NotificationCenter.default.post(name:notificationName, object: nil)
-                    
+                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
+
                     self.delegate.deleteCallOperation(operation)
                 }
             }, failure: failureClosure)

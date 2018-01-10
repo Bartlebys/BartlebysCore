@@ -11,6 +11,9 @@ import Foundation
 public extension Notification.Name {
 
     public struct CallOperation {
+        
+        public static let operationKey = "callOperation"
+        public static let errorKey = "error"
 
         public static func didSucceed(_ operationName:String ) -> (Notification.Name) {
             return Notification.Name(rawValue: "org.barlebys.\(operationName).didSucceed")
@@ -22,6 +25,9 @@ public extension Notification.Name {
     }
 }
 
+public protocol CallOperationProtocol {
+    var sessionIdentifier: String { get }
+}
 
 /// A CallOperation is:
 /// - a Network operation runnable in a Session.
@@ -29,13 +35,14 @@ public extension Notification.Name {
 /// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public final class CallOperation<T, P> : Model, Tolerent where T : Codable & Tolerent, P : Payload {
+public final class CallOperation<T, P> : Model, Tolerent, CallOperationProtocol where T : Codable & Tolerent, P : Payload {
 
     // The operation name should be unique
     // E.g: `getTagsWithIds` will refer to a specific endpoint
-    public var operationName: String = "NO_OPERATION_NAME"
-    public var path: String = "NO_PATH"
-    public var queryString: String = "NO_QUERY_STRING"
+    public var operationName: String = Default.NO_NAME
+    public var sessionIdentifier: String = Default.NO_UID
+    public var path: String = Default.NO_PATH
+    public var queryString: String = Default.NO_QUERY_STRING
     public var method: HTTPMethod = .GET
     public var resultType: T.Type = T.self
     public var resultIsACollection:Bool = true
