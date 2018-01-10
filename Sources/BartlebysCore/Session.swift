@@ -98,8 +98,6 @@ public class Session {
             }
         }
         
-        Logger.log("request URL = \(String(describing: request.url))", category: .temporary)
-        
         switch T.self {
         case is Download.Type, is Upload.Type:
             let successClosure: ((HTTPResponse) -> ()) = { response in
@@ -127,10 +125,10 @@ public class Session {
                 self.callUpload(request: request, resultType: T.self, localFilePath: FilePath, success: successClosure, failure: failureClosure)
             }
         default:
-            
+
             self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: { response in
                 Object.syncOnMain {
-                    
+
                     let operation = operation
                     
                     operation.executionCounter += 1
@@ -138,8 +136,8 @@ public class Session {
                     
                     self.delegate.integrateResponse(response)
                     
-                    let notificationName = NSNotification.Name.CallOperation.didSucceed(operation.operationName)
-                    NotificationCenter.default.post(name:notificationName , object: nil)
+                    let notificationName = Notification.Name.CallOperation.didSucceed(operation.operationName)
+                    NotificationCenter.default.post(name:notificationName, object: nil)
                     
                     self.delegate.deleteCallOperation(operation)
                 }
@@ -173,25 +171,25 @@ public class Session {
                             let decoded = try self.delegate.coder.decodeArrayOf(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let response = DataResponse(result: decoded)
-                            response.metrics = metrics
-                            response.httpStatus = httpResponse.statusCode.status()
-                            response.content = data
+                            let dataResponse = DataResponse(result: decoded)
+                            dataResponse.metrics = metrics
+                            dataResponse.httpStatus = httpResponse.statusCode.status()
+                            dataResponse.content = data
                             
                             Object.syncOnMain {
-                                success(response)
+                                success(dataResponse)
                             }
                         }else{
                             let decoded = try self.delegate.coder.decode(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let response = DataResponse(result: [decoded])
-                            response.metrics = metrics
-                            response.httpStatus = httpResponse.statusCode.status()
-                            response.content = data
+                            let dataResponse = DataResponse(result: [decoded])
+                            dataResponse.metrics = metrics
+                            dataResponse.httpStatus = httpResponse.statusCode.status()
+                            dataResponse.content = data
 
                             Object.syncOnMain {
-                                success(response)
+                                success(dataResponse)
                             }
                         }
                         
@@ -211,11 +209,11 @@ public class Session {
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
 
-                            let response: DataResponse = DataResponse(result: Array<T>())
-                            response.httpStatus = httpResponse.statusCode.status()
-                            response.content = data
-                            response.metrics = metrics
-                            success(response)
+                            let dataResponse: DataResponse = DataResponse(result: Array<T>())
+                            dataResponse.httpStatus = httpResponse.statusCode.status()
+                            dataResponse.content = data
+                            dataResponse.metrics = metrics
+                            success(dataResponse)
                         }
                     }
                 }
@@ -245,11 +243,11 @@ public class Session {
                 Object.syncOnMain {
                     failure(Failure(from: error))
                 }
-            } else if let httpResponse = response as? HTTPURLResponse {
+            } else if let httpURLResponse = response as? HTTPURLResponse {
                 
                 guard let tempURL = temporaryURL else {
                     Object.syncOnMain {
-                        failure(Failure(from: httpResponse.statusCode.status(), and: SessionError.fileNotFound))
+                        failure(Failure(from: httpURLResponse.statusCode.status(), and: SessionError.fileNotFound))
                     }
                     return
                 }
@@ -261,15 +259,15 @@ public class Session {
 
                     try FileManager.default.moveItem(at: tempURL, to: localFileURL)
                     
-                    let response = HTTPResponse()
-                    response.httpStatus = httpResponse.statusCode.status()
-                    response.metrics = metrics
+                    let httpResponse = HTTPResponse()
+                    httpResponse.httpStatus = httpURLResponse.statusCode.status()
+                    httpResponse.metrics = metrics
                     Object.syncOnMain {
-                        success(response)
+                        success(httpResponse)
                     }
                 } catch {
                     Object.syncOnMain {
-                        failure(Failure(from: httpResponse.statusCode.status(), and: error))
+                        failure(Failure(from: httpURLResponse.statusCode.status(), and: error))
                     }
                 }
             }
@@ -301,19 +299,19 @@ public class Session {
                     Object.syncOnMain {
                         failure(Failure(from: error))
                     }
-                } else if let httpResponse = response as? HTTPURLResponse {
+                } else if let httpURLResponse = response as? HTTPURLResponse {
                     
-                    switch httpResponse.statusCode {
+                    switch httpURLResponse.statusCode {
                     case 200...299:
-                        let response = HTTPResponse()
-                        response.httpStatus = httpResponse.statusCode.status()
-                        response.metrics = metrics
+                        let httpResponse = HTTPResponse()
+                        httpResponse.httpStatus = httpURLResponse.statusCode.status()
+                        httpResponse.metrics = metrics
                         Object.syncOnMain {
-                            success(response)
+                            success(httpResponse)
                         }
                     default:
                         Object.syncOnMain {
-                            failure(Failure(from: httpResponse.statusCode.status()))
+                            failure(Failure(from: httpURLResponse.statusCode.status()))
                         }
                     }
                 }
