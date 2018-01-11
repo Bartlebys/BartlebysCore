@@ -380,12 +380,6 @@
 		E52527A82000E54700D9A148 /* IndistinctCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndistinctCollection.swift; sourceTree = "<group>"; };
 		E527D1731FF7C561009EA479 /* BartlebysCore Document macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document macOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore macOS/BartlebysCore Document macOS.plist"; sourceTree = "<absolute>"; };
 		E527D1B41FF7C5F0009EA479 /* BartlebysCore Document iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document iOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore iOS/BartlebysCore Document iOS.plist"; sourceTree = "<absolute>"; };
-		E527D1BC1FF7C8DE009EA479 /* BartlebysCore_macOS_Document_Oriented.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore_macOS_Document_Oriented.h; sourceTree = "<group>"; };
-		E527D1BD1FF7C8DE009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E527D1C91FF7C8DE009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E527D2111FF7C9BF009EA479 /* BartlebysCore_iOS_Document_Oriented.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore_iOS_Document_Oriented.h; sourceTree = "<group>"; };
-		E527D2121FF7C9BF009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E527D21E1FF7C9BF009EA479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E52A84621FF501D400F2408B /* Relationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
 		E52A84641FF5021F00F2408B /* Relational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relational.swift; sourceTree = "<group>"; };
 		E52A84661FF5025500F2408B /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -619,40 +613,6 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
-		E527D1BB1FF7C8DE009EA479 /* BartlebysCore macOS Document Oriented */ = {
-			isa = PBXGroup;
-			children = (
-				E527D1BC1FF7C8DE009EA479 /* BartlebysCore_macOS_Document_Oriented.h */,
-				E527D1BD1FF7C8DE009EA479 /* Info.plist */,
-			);
-			path = "BartlebysCore macOS Document Oriented";
-			sourceTree = "<group>";
-		};
-		E527D1C61FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests */ = {
-			isa = PBXGroup;
-			children = (
-				E527D1C91FF7C8DE009EA479 /* Info.plist */,
-			);
-			path = "BartlebysCore macOS Document OrientedTests";
-			sourceTree = "<group>";
-		};
-		E527D2101FF7C9BF009EA479 /* BartlebysCore iOS Document Oriented */ = {
-			isa = PBXGroup;
-			children = (
-				E527D2111FF7C9BF009EA479 /* BartlebysCore_iOS_Document_Oriented.h */,
-				E527D2121FF7C9BF009EA479 /* Info.plist */,
-			);
-			path = "BartlebysCore iOS Document Oriented";
-			sourceTree = "<group>";
-		};
-		E527D21B1FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests */ = {
-			isa = PBXGroup;
-			children = (
-				E527D21E1FF7C9BF009EA479 /* Info.plist */,
-			);
-			path = "BartlebysCore iOS Document OrientedTests";
-			sourceTree = "<group>";
-		};
 		E5EC9F6D1FF6557B008BF543 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -691,12 +651,8 @@
 				E5ECA0311FF65765008BF543 /* BartlebysCore tvOSTests */,
 				E5EC9FCD1FF65691008BF543 /* BartlebysCore iOS */,
 				E5EC9FD81FF65691008BF543 /* BartlebysCore iOSTests */,
-				E527D2101FF7C9BF009EA479 /* BartlebysCore iOS Document Oriented */,
-				E527D21B1FF7C9BF009EA479 /* BartlebysCore iOS Document OrientedTests */,
 				E5EC9F771FF655C4008BF543 /* BartlebysCore macOS */,
 				E5EC9F821FF655C4008BF543 /* BartlebysCore macOSTests */,
-				E527D1BB1FF7C8DE009EA479 /* BartlebysCore macOS Document Oriented */,
-				E527D1C61FF7C8DE009EA479 /* BartlebysCore macOS Document OrientedTests */,
 				E5ECA07E1FF6581D008BF543 /* BartlebysCore watchOS */,
 			);
 			name = Targets;
