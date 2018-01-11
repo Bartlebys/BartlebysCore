@@ -43,7 +43,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     public var delegate: DataPointDelegate = DataPointDelegatePlaceHolder()
 
     // The storage IO object: reads an writes the ObjectsCollections
-    public var storage = Storage()
+    public let storage = Storage()
 
     // The base URL
     public var baseWrapperURL:URL{
@@ -100,8 +100,17 @@ open class DataPoint: Object,ConcreteDataPoint{
 
     // MARK: -
 
+    /// You cannot turn back storage volatility to false
+    /// This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
     /// That the place where you should call : self.registerCollection(concreteCollection)
-    open func prepareCollections()throws{
+    ///
+    /// - Parameter volatile: If set to true the storage will be in memory
+    /// - Throws: errors on registration
+    open func prepareCollections(volatile: Bool) throws {
+        print("\(String(describing: type(of: self))) - \(getElapsedTime()) \n-------")
+        if volatile {
+            self.storage.becomeVolatile()
+        }
         try self.registerCollection(collection:self.keyedDataCollection)
     }
 
@@ -493,13 +502,3 @@ extension DataPoint{
 
 }
 
-extension DataPoint{
-
-    /// If you call once this method the datapoint will not persist out of the memory anymore
-    /// You cannot turn back storage volatility to false
-    /// This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
-    public func becomeVolatile(){
-        self.storage.becomeVolatile()
-    }
-
-}

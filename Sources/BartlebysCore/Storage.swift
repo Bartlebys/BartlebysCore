@@ -26,7 +26,11 @@ public final class Storage{
     /// If set to true the Storage is volatile
     /// It means it persist in memory only
     /// The FileStorage storage methods are ignored at runtime
-    fileprivate var _volatile:Bool = false
+    fileprivate var _volatile:Bool = false {
+        didSet {
+            print("_volatile = \(self._volatile)")
+        }
+    }
 
 
     /// If you call once this method the datapoint will not persist out of the memory anymore
@@ -75,7 +79,7 @@ extension Storage: FileStorage{
     /// - Parameter proxy: the collection proxy
     public func load<T>(on proxy:CollectionOf<T>){
 
-        guard self._volatile == false else{
+        if self._volatile == true {
             self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: true, error: nil)
             return
         }
@@ -96,6 +100,7 @@ extension Storage: FileStorage{
                 if Storage._fileManager.fileExists(atPath: url.path) {
                     let data = try Data(contentsOf: url)
                     let collection = try dataPoint.coder.decode(CollectionOf<T>.self, from: data)
+                    print("\(getElapsedTime()), \(String(describing: type(of: dataPoint))), url= \(url)")
                     DispatchQueue.main.async {
                         proxy.append(contentsOf: collection)
                     }
@@ -121,7 +126,7 @@ extension Storage: FileStorage{
     ///   - coder: the coder
     public func saveCollection<T>(collection:CollectionOf<T>, using coder:ConcreteCoder){
 
-        guard self._volatile == false else{
+        if self._volatile == true {
             self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: true, error: nil)
             return
         }
@@ -163,7 +168,7 @@ extension Storage: FileStorage{
     ///
     /// - Parameter collection: the collection
     public func eraseFiles<T>(of collection:CollectionOf<T>){
-        guard self._volatile == false else{
+        if self._volatile == true {
             return
         }
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {

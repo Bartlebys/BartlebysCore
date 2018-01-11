@@ -101,8 +101,8 @@ public class MyDataPoint: DataPoint {
     public var metricsCollection: CollectionOf<Metrics> = CollectionOf<Metrics>(named:FileNames.metrics.rawValue,relativePath:"tests")
     public var testObjectsCollection: CollectionOf<TestObject> = CollectionOf<TestObject>(named:FileNames.models.rawValue,relativePath:"tests")
 
-    override public func prepareCollections() throws {
-        try super.prepareCollections()
+    override public func prepareCollections(volatile: Bool) throws {
+        try super.prepareCollections(volatile: volatile)
         try self.registerCollection(collection: self.metricsCollection)
         try self.registerCollection(collection: self.testObjectsCollection)
     }
@@ -127,14 +127,14 @@ class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
     }
 
 
-    func getNewDataPoint() -> MyDataPoint {
+    func getNewDataPoint(volatile: Bool = false) -> MyDataPoint {
         let dataPoint = MyDataPoint()
         dataPoint.sessionIdentifier = Utilities.createUID()
         dataPoint.authenticationMethod = .basicHTTPAuth
         dataPoint.host = "demo.bartlebys.org"
         dataPoint.apiBasePath =  "www/v1/api/"
         BaseDataPointTestCase.associatedDataPoints.append(dataPoint)
-        try? dataPoint.prepareCollections()
+        try? dataPoint.prepareCollections(volatile: volatile)
         return dataPoint
     }
 

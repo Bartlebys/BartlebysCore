@@ -130,7 +130,7 @@ class DataPointTests: BaseDataPointTestCase{
     func test002_CollectionsReferences() {
         do {
             let datapoint = MyDataPoint()
-            try datapoint.prepareCollections()
+            try datapoint.prepareCollections(volatile: false)
             let _ = MyDataPoint.FileNames.metrics.rawValue
             let metrics = Metrics()
             metrics.operationName = "op"
