@@ -141,14 +141,14 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
         // We want to be resilient to external omissions
         // So we discriminate the invalid UIDs by prefixing NO_UID
         // We admit not to have ownedBy and freeRelations Keys
-        self.id = try values.decodeIfPresent(String.self,forKey:BartlebysCore.MODELS_PRIMARY_KEY) ?? Default.NO_UID + self.id
+        self.id = try values.decodeIfPresent(String.self,forKey:MODELS_PRIMARY_KEY) ?? Default.NO_UID + self.id
         self.ownedBy =? try values.decodeIfPresent([String].self,forKey: .ownedBy)
         self.freeRelations =? try values.decodeIfPresent([String].self, forKey: .freeRelations)
     }
     
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: ModelCodingKeys.self)
-        try container.encode(self.id,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
+        try container.encode(self.id,forKey:MODELS_PRIMARY_KEY)
         if Model.encodeRelations{
             try container.encode(self.ownedBy,forKey: .ownedBy)
             try container.encode(self.freeRelations,forKey:.freeRelations)

@@ -23,12 +23,12 @@ public struct AliasOf<T:Aliasable>:Codable,Aliased{
 
     public init(from decoder: Decoder) throws{
         let values = try decoder.container(keyedBy: Model.ModelCodingKeys.self)
-        self.UID = try values.decode(String.self,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
+        self.UID = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy:  Model.ModelCodingKeys.self)
-        try container.encode(self.UID,forKey:BartlebysCore.MODELS_PRIMARY_KEY)
+        try container.encode(self.UID,forKey:MODELS_PRIMARY_KEY)
     }
 
 }

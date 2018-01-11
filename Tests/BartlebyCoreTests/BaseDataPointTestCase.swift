@@ -7,7 +7,9 @@
 //
 
 import XCTest
-@testable import BartlebysCore
+#if !USE_EMBEDDED_MODULES
+    @testable import BartlebysCore
+#endif
 
 // MARK: - Test Objects
 
