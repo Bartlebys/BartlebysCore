@@ -10,7 +10,7 @@ import Foundation
 
 public class FilePath : Model {
     
-    var relativePath: String = Default.NOT_SPECIFIED
+    public var relativePath: String = Default.NOT_SPECIFIED
     
     func urlFromSession(session: Session) throws -> URL {
         return URL(fileURLWithPath: relativePath)

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D51A5AD200756D300A66466 /* FileOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51A5AC200756D300A66466 /* FileOperationError.swift */; };
+		4D51A5AE200756D300A66466 /* FileOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51A5AC200756D300A66466 /* FileOperationError.swift */; };
+		4D51A5AF200756D300A66466 /* FileOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51A5AC200756D300A66466 /* FileOperationError.swift */; };
+		4D51A5B0200756D300A66466 /* FileOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51A5AC200756D300A66466 /* FileOperationError.swift */; };
 		E50C5C7A1FFD0C6B00A3C9DA /* ManagedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ManagedCollection.swift */; };
 		E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
 		E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
@@ -332,6 +336,7 @@
 
 /* Begin PBXFileReference section */
 		4D1F37291FDEE87100DA10AB /* FilePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePath.swift; sourceTree = "<group>"; };
+		4D51A5AC200756D300A66466 /* FileOperationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOperationError.swift; sourceTree = "<group>"; };
 		4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Schemes.swift; sourceTree = "<group>"; };
 		4D55FC401FDAF5CF001D91CE /* Failure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Failure.swift; sourceTree = "<group>"; };
 		4D55FC411FDAF5CF001D91CE /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
@@ -539,6 +544,7 @@
 				E54826351FFBBB3700FB854E /* Default.swift */,
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
 				4D55FC401FDAF5CF001D91CE /* Failure.swift */,
+				4D51A5AC200756D300A66466 /* FileOperationError.swift */,
 				4D1F37291FDEE87100DA10AB /* FilePath.swift */,
 				4D55FC501FDAF5CF001D91CE /* Globals.swift */,
 				4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */,
@@ -1044,6 +1050,7 @@
 				E5EC9F951FF655F9008BF543 /* Identifiable.swift in Sources */,
 				E5EC9FB41FF655FE008BF543 /* Model.swift in Sources */,
 				E5EC9F9D1FF655F9008BF543 /* Relational.swift in Sources */,
+				4D51A5AD200756D300A66466 /* FileOperationError.swift in Sources */,
 				E50C5C7A1FFD0C6B00A3C9DA /* ManagedCollection.swift in Sources */,
 				E5EC9FB01FF655FE008BF543 /* Model+Erasure.swift in Sources */,
 				E5EC9FBB1FF655FE008BF543 /* Operators.swift in Sources */,
@@ -1132,6 +1139,7 @@
 				E5ECA0171FF656AF008BF543 /* Utilities.swift in Sources */,
 				E5EC9FE81FF656AF008BF543 /* Identifiable.swift in Sources */,
 				E5ECA0071FF656AF008BF543 /* Model.swift in Sources */,
+				4D51A5AE200756D300A66466 /* FileOperationError.swift in Sources */,
 				E5EC9FF01FF656AF008BF543 /* Relational.swift in Sources */,
 				E5ECA0031FF656AF008BF543 /* Model+Erasure.swift in Sources */,
 				E5DBB1D720022A090079F4C6 /* Aliasable.swift in Sources */,
@@ -1220,6 +1228,7 @@
 				E5ECA0701FF657A6008BF543 /* Utilities.swift in Sources */,
 				E5ECA0411FF6579F008BF543 /* Identifiable.swift in Sources */,
 				E5ECA0601FF657A6008BF543 /* Model.swift in Sources */,
+				4D51A5AF200756D300A66466 /* FileOperationError.swift in Sources */,
 				E5ECA0491FF6579F008BF543 /* Relational.swift in Sources */,
 				E5ECA05C1FF657A6008BF543 /* Model+Erasure.swift in Sources */,
 				E5DBB1D920022A0B0079F4C6 /* Aliasable.swift in Sources */,
@@ -1308,6 +1317,7 @@
 				E5ECA09E1FF65851008BF543 /* Globals.swift in Sources */,
 				E5ECA0B91FF65851008BF543 /* Utilities.swift in Sources */,
 				E5ECA08A1FF6584A008BF543 /* Identifiable.swift in Sources */,
+				4D51A5B0200756D300A66466 /* FileOperationError.swift in Sources */,
 				E5ECA0A91FF65851008BF543 /* Model.swift in Sources */,
 				E5DBB1E220022A1D0079F4C6 /* DataPoint+KeyValueStorage.swift in Sources */,
 				E5ECA0921FF6584A008BF543 /* Relational.swift in Sources */,

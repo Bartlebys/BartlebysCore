@@ -96,7 +96,9 @@ public class Session {
                 operation.lastAttemptDate = Date()
                 
                 let notificationName = Notification.Name.CallOperation.didFail()
+                
                 if let error = response.error {
+                    // Can be a FileOperationError with associated FilePath
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.errorKey : error])
                 } else {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
@@ -107,6 +109,11 @@ public class Session {
         
         switch T.self {
         case is Download.Type, is Upload.Type:
+            
+            guard let filePath = operation.payload as? FilePath else {
+                throw DataPointError.payloadShouldBeOfFilePathType
+            }
+            
             let successClosure: ((HTTPResponse) -> ()) = { response in
                 Object.syncOnMain {
                     
@@ -117,20 +124,16 @@ public class Session {
                     
                     let notificationName = Notification.Name.CallOperation.didSucceed()
                     
-                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
+                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.filePathKey : filePath])
                     
                     self.delegate.deleteCallOperation(operation)
                 }
             }
             
-            guard let FilePath = operation.payload as? FilePath else {
-                throw DataPointError.payloadShouldBeOfFilePathType
-            }
-            
             if T.self is Download.Type {
-                self.callDownload(request: request, resultType: T.self, localFilePath: FilePath, success: successClosure, failure: failureClosure)
+                self.callDownload(request: request, resultType: T.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
             } else {
-                self.callUpload(request: request, resultType: T.self, localFilePath: FilePath, success: successClosure, failure: failureClosure)
+                self.callUpload(request: request, resultType: T.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
             }
         default:
 
@@ -249,7 +252,8 @@ public class Session {
             
             if let error = error {
                 Object.syncOnMain {
-                    failure(Failure(from: error))
+                    let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
+                    failure(Failure(from: fileError))
                 }
             } else if let httpURLResponse = response as? HTTPURLResponse {
                 
@@ -305,7 +309,8 @@ public class Session {
                 
                 if let error = error {
                     Object.syncOnMain {
-                        failure(Failure(from: error))
+                        let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
+                        failure(Failure(from: fileError))
                     }
                 } else if let httpURLResponse = response as? HTTPURLResponse {
                     

@@ -13,6 +13,7 @@ public extension Notification.Name {
     public struct CallOperation {
         
         public static let operationKey = "callOperation"
+        public static let filePathKey = "filePath"
         public static let errorKey = "error"
 
         /// Posted on operation success
