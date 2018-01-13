@@ -1,27 +1,33 @@
 
 [![Swift 4](https://img.shields.io/badge/Swift-4.0-orange.svg)](https://swift.org)  [![Platform](https://img.shields.io/badge/platforms-macOS%20∙%20iOS%20∙%20watchOS%20∙%20tvOS∙%20Linux-blue.svg)](https://developer.apple.com/platforms/) 
 
-# What is BartlebysCore?
+![Bartleby's](Documents/bartlebys.jpg)
+
+# What is Bartleby's Core?
 
 
 BarlebysCore is a small framework written in Swift4 available for macOS, iOS, tvOS et Linux, that allows to : 
 
-1. Load and save Generic Collection of Swift 4 Codable Objects.
-2. Create serializable reusable HTTP Operation 
-3. Proposes efficient ways to deal with [Object Relations](https://github.com/Bartlebys/BartlebysCore/blob/master/Documents/RelationsBetweenModels.md)
+1. insure the persistency Generic Collection of Swift 4 Objects.
+2. create serializable reusable HTTP Operation 
+3. proposes efficient ways to deal with [Object Relations](https://github.com/Bartlebys/BartlebysCore/blob/master/Documents/RelationsBetweenModels.md)
 
 BartlebysCore's goal is to keep things simples and "Swifty" by Design.
-**BartlebysCore** is the core Engine of [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit) but it suitable for various usages.
+**BartlebysCore** is the core Engine of [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit) but is suitable for various usages.
+
+If your data can be totally loaded in Memory, Bartleby is probably a good solution for your App. It will allow to use simple functional programming approach to manipulate your data synchronously very efficiently, and integrate easily with your RESTFul API.
 
 # DataPoint
 
-The objects are stored in DataPoint that: 
+The objects are stored in a [DataPoint](https://github.com/Bartlebys/BartlebysCore/blob/master/Sources/BartlebysCore/DataPoint.swift) that: 
 
-1. references the collections 
-2. allow aliases, and relations resolution
-3. deals with RestFull HTTP operations (on & Off Line)
+1. references, load and saves the collections.
+2. allow aliases, and relations resolution.
+3. deals with RestFull HTTP operations (on & Off Line).
 
-## How to instantiate a `Model`?
+A Datapoint is equivalent to Document that holds a consistent Data Graph.
+
+## How to instantiate a Model?
 
 You can instantiate a Model using a factory method
 
@@ -71,3 +77,9 @@ dataPoint.metrics.append(metrics4)
 # Documents
 
 - How to deal with Relations between Entities? BartlebysCore's approaches are described in [RelationsBetweenModels.md](Documents/RelationsBetweenModels.md)
+
+
+# Bartleby's Core License
+
+Bartleby's stack is Licensed under the [Apache License version 2.0](LICENSE)
+By [Benoit Pereira da Silva] (https://Pereira-da-Silva.com) 
