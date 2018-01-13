@@ -1,0 +1,9 @@
+language: swift
+xcode_workspace: Bartleby.xcworkspace
+osx_image: xcode9.2
+matrix:
+  include:
+    - env: SCHEME="BartlebysCore macOS"
+      xcode_sdk: macosx10.11
+script:
+  - xcodebuild -workspace $TRAVIS_XCODE_WORKSPACE -scheme "$SCHEME" -sdk $TRAVIS_XCODE_SDK build test
