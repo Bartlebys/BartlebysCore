@@ -1,5 +1,5 @@
-language: swift
-xcode_workspace: Bartleby.xcworkspace
+language: objective-c
+xcode_workspace: Projects/BartlebysCore/BartlebysCore.xcodeproj
 osx_image: xcode9.2
 matrix:
   include:
