@@ -1,4 +1,4 @@
 language: objective-c
 osx_image: xcode9.2
 xcode_workspace: Projects/BartlebysCore/BartlebysCore.xcodeproj
-xcode_scheme: BartlebysCore macOS
+xcode_scheme: BartlebysCore macOSTests
