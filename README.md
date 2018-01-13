@@ -1,7 +1,6 @@
 
 [![Swift 4](https://img.shields.io/badge/Swift-4.0-orange.svg)](https://swift.org)  [![Platform](https://img.shields.io/badge/platforms-macOS%20∙%20iOS%20∙%20watchOS%20∙%20tvOS∙%20Linux-blue.svg)](https://developer.apple.com/platforms/) 
 
-![Bartleby's](Documents/bartlebys.jpg)
 
 # What is Bartleby's Core?
 
@@ -83,3 +82,5 @@ dataPoint.metrics.append(metrics4)
 
 Bartleby's stack is Licensed under the [Apache License version 2.0](LICENSE)
 By [Benoit Pereira da Silva] (https://Pereira-da-Silva.com) 
+
+![Bartleby's](Documents/bartlebys.jpg)
