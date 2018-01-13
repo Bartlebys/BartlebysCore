@@ -4,8 +4,7 @@
 
 # What is Bartleby's Core?
 
-
-BarlebysCore is a small framework written in Swift4 available for macOS, iOS, tvOS et Linux, that allows to : 
+BarlebysCore is a framework written in Swift4, available for macOS, iOS, tvOS et Linux, that allows to : 
 
 1. insure the persistency Generic Collection of Swift 4 Objects.
 2. create serializable reusable HTTP Operation 
@@ -15,11 +14,6 @@ BartlebysCore's goal is to keep things simples and "Swifty" by Design.
 **BartlebysCore** is the core Engine of [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit) but is suitable for various usages.
 
 If your data can be totally loaded in Memory, Bartleby's Core is probably a good solution for your App. It will allow to use simple functional programming approach to manipulate your data synchronously very efficiently, and integrate easily with your RESTFul API.
-
-# Who is Bartleby?
-
-Bartleby is main character of ["Bartleby the scrivener A Story of Wall Street"](https://en.wikipedia.org/wiki/Bartleby,_the_Scrivener) is a short story by Herman Melville. Bartleby is a scrivener—a kind of clerk "who obstinately refuses to go on doing the sort of writing demanded of him" with the words "I would prefer not to".
-
 
 # Installation
 
@@ -114,6 +108,10 @@ dataPoint.metrics.append(metrics4)
 - How to deal with Relations between Entities? BartlebysCore's approaches are described in [RelationsBetweenModels.md](Documents/RelationsBetweenModels.md)
 
 ![Bartleby's](Documents/bartlebys.jpg)
+
+# Who is Bartleby?
+
+Bartleby is main character of ["Bartleby the scrivener A Story of Wall Street"](https://en.wikipedia.org/wiki/Bartleby,_the_Scrivener) is a short story by Herman Melville. Bartleby is a scrivener—a kind of clerk "who obstinately refuses to go on doing the sort of writing demanded of him" with the words "I would prefer not to".
 
 # Bartleby's Core License
 
