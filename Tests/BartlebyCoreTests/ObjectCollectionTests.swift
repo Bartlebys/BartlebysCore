@@ -238,8 +238,8 @@ class CollectionOfTests: BaseDataPointTestCase{
                     })
                     // Reload the metrics
                     dataPoint.storage.addProgressObserver(observer: reloadHandler)
-                    dataPoint.storage.load(on: dataPoint.keyedDataCollection)
-                    dataPoint.storage.load(on: dataPoint.metricsCollection)
+                    dataPoint.storage.loadCollection(on: dataPoint.keyedDataCollection)
+                    dataPoint.storage.loadCollection(on: dataPoint.metricsCollection)
 
                 }
             }

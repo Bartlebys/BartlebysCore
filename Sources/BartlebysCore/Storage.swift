@@ -41,7 +41,7 @@ public final class Storage{
         self._volatile = true
     }
 
-    public let collectionExtension: String = ".data"
+    public let fileExtension: String = ".data"
     
     /// You can / should register progress observers.
     /// to monitor the storage load and save.
@@ -73,12 +73,16 @@ public final class Storage{
 // MARK: - FileStorage
 
 extension Storage: FileStorage{
+
+
+    // MARK: - Asynchronous (on an serial queue)
+
     
     /// Loads asynchronously a collection from its file
     /// and insert the elements
     ///
     /// - Parameter proxy: the collection proxy
-    public func load<T>(on proxy:CollectionOf<T>){
+    public func loadCollection<T>(on proxy:CollectionOf<T>){
 
         if self._volatile == true {
             self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: true, error: nil)
@@ -111,7 +115,7 @@ extension Storage: FileStorage{
                 self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: true, error: nil)
 
             } catch {
-               self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: false, error: error)
+                self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: false, error: error)
             }
         }
         Storage._serialQueue.async(execute: workItem)
@@ -120,15 +124,15 @@ extension Storage: FileStorage{
     
     
     
-    /// Saves asynchronously the collection to a file on a separate queue
+    /// Saves asynchronously any FilePersistent & Encodable a separate queue
     ///
     /// - Parameters:
-    ///   - collection: the collection reference
+    ///   - element: the collection or object reference
     ///   - coder: the coder
-    public func saveCollection<T>(collection:CollectionOf<T>, using coder:ConcreteCoder){
+    public func save<T:FilePersistent & Encodable>(element:T, using coder:ConcreteCoder){
 
         if self._volatile == true {
-            self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: true, error: nil)
+            self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: true, error: nil)
             return
         }
 
@@ -139,23 +143,26 @@ extension Storage: FileStorage{
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
             
             do {
-                let directoryURL = self.baseUrl.appendingPathComponent(collection.relativeFolderPath)
-                let url = self.getURL(of: collection)
+                let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
+                let url = self.getURL(of: element)
                 
                 var isDirectory: ObjCBool = true
                 if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
                     try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                 }
                 
-                let data = try coder.encode(collection)
+                let data = try coder.encode(element)
                 try data.write(to: url)
-                collection.hasChanged = false
+                if var changeable = element as? ChangesFlag{
+                    changeable.hasChanged = false
+                }
+
                 
                 // The collection has been saved.
-                self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: true, error: nil)
+                self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: true, error: nil)
 
             } catch {
-                self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: false, error: error)
+                self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: false, error: error)
             }
         }
 
@@ -168,13 +175,13 @@ extension Storage: FileStorage{
     /// That's why it is synchronous.
     ///
     /// - Parameter collection: the collection
-    public func eraseFiles<T>(of collection:CollectionOf<T>){
+    public func eraseFiles<T:FilePersistent>(of element:T){
         if self._volatile == true {
             return
         }
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
             do{
-                let url = self.getURL(of: collection)
+                let url = self.getURL(of: element)
                 if Storage._fileManager.fileExists(atPath: url.path) {
                     try Storage._fileManager.removeItem(at: url)
                 }
@@ -184,16 +191,6 @@ extension Storage: FileStorage{
         }
         Storage._serialQueue.sync(execute: workItem)
     }
-
-
-    /// Returns the URL of the collection file
-    ///
-    /// - Parameter collection: the collection
-    /// - Returns: the collection file URL
-    public func getURL<T>(of collection:CollectionOf<T>) -> URL {
-        return self.baseUrl.appendingPathComponent(collection.relativeFolderPath).appendingPathComponent(collection.fileName + self.collectionExtension)
-    }
-
 
     /// Relays to the observers and clean up the _progress
     ///
@@ -218,5 +215,66 @@ extension Storage: FileStorage{
             }
         }
     }
+
+
+    // MARK: - Synchronous
+
+
+    /// Loads synchronously a file persistent proxy
+    /// Should normally not be used on Collections.
+    /// This method does not relay tasks progression
+    ///
+    /// - Parameters:
+    ///   - proxy: the proxy reference
+    ///   - coder: the coder
+    /// - Throws: throws decoding issues
+    public func loadSync<T:Decodable & FilePersistent & Initializable>(proxy: inout T, using coder:ConcreteCoder)throws{
+        if !self._volatile{
+            let url = self.getURL(of: proxy)
+            // We do not use the storage file manager.
+            // That performs on an async utility queue
+            if FileManager.default.fileExists(atPath: url.path) {
+                let data = try Data(contentsOf: url)
+                proxy = try coder.decode(T.self, from: data)
+            }
+
+        }
+    }
+
+
+    /// Save synchronously an FilePersitent & Encodable
+    ///
+    /// - Parameters:
+    ///   - element: the element to save
+    ///   - coder: the coder to use
+    /// - Throws: throws encoding and file IO errors
+    public func saveSync<T:FilePersistent & Encodable>(element:T, using coder:ConcreteCoder)throws{
+        if !self._volatile  {
+            let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
+            let url = self.getURL(of: element)
+
+            var isDirectory: ObjCBool = true
+            if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
+                try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+            }
+            let data = try coder.encode(element)
+            try data.write(to: url)
+            if var changeable = element as? ChangesFlag{
+                changeable.hasChanged = false
+            }
+        }
+    }
+
+    // MARK : -
+
+    /// Returns the URL of a FilePersistent element
+    ///
+    /// - Parameter collection: the collection
+    /// - Returns: the collection file URL
+    public func getURL<T:FilePersistent>(of element:T) -> URL {
+        return self.baseUrl.appendingPathComponent(element.relativeFolderPath).appendingPathComponent(element.fileName + self.fileExtension)
+    }
+
+
     
 }

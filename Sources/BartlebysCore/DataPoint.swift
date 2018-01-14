@@ -131,7 +131,7 @@ open class DataPoint: Object,ConcreteDataPoint{
             collection.dataPoint = self
 
             // Creates or asynchronously load the collection on registration
-            self.storage.load(on: collection)
+            self.storage.loadCollection(on: collection)
 
         }else{
             throw DataPointError.duplicatedRegistration(fileName: collection.fileName)
