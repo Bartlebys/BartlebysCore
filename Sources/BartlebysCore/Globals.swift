@@ -26,3 +26,13 @@ fileprivate let _startTime = CFAbsoluteTimeGetCurrent()
 public func getElapsedTime()->Double {
     return CFAbsoluteTimeGetCurrent() - _startTime
 }
+
+#if os(Linux)
+    public class Progress {
+        public var totalUnitCount: Int64 = 0
+        public var completedUnitCount: Int64 = 0
+        public init(){
+        }
+    }
+#endif
+
