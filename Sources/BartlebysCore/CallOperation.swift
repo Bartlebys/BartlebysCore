@@ -51,7 +51,7 @@ public protocol CallOperationProtocol {
 /// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public final class CallOperation<T, P> : Model, Tolerent, CallOperationProtocol where T : Codable & Tolerent, P : Payload {
+public final class CallOperation<T, P> : Model, CallOperationProtocol where T : Codable, P : Payload {
 
     // The operation name should be unique
     // E.g: `getTagsWithIds` will refer to a specific endpoint
@@ -125,10 +125,5 @@ public final class CallOperation<T, P> : Model, Tolerent, CallOperationProtocol 
         try container.encode(self.lastAttemptDate,forKey:.lastAttemptDate)
     }
 
-    // MARK: - Tolerent
-    
-    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-        // No implementation
-    }
 
 }

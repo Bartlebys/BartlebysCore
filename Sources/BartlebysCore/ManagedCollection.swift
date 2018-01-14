@@ -14,8 +14,6 @@ import Foundation
 public protocol ManagedCollection:IndistinctCollection{
 
     /// Stages the change of the item. (Equivalent to git staging)
-    /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
-    /// if the item is not tolerent
     ///
     /// - Parameters:
     ///   - item: the item to stage
@@ -23,8 +21,6 @@ public protocol ManagedCollection:IndistinctCollection{
 
 
     /// A remove function with type erasure to enable to perform dynamic cascading removal.
-    /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
-    /// if the item is not tolerent.
     /// 
     /// - Parameters:
     ///   - item: the item to erase

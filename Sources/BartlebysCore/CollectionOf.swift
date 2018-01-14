@@ -12,10 +12,9 @@ import Dispatch
 public enum CollectionOfError:Error {
    case collectionIsNotRegistred
    case typeMissMatch
-   case collectedTypeMustBeTolerent
 }
 
-open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Tolerent, Selection, FilePersistent where T :  Codable & Collectable & Tolerent{
+open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FilePersistent where T :  Codable & Collectable {
 
 
    // MARK: -
@@ -165,7 +164,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    /// References the element into its collection and the dataPoint registry
    ///
    /// - Parameter element: the element
-   public func reference<T:  Codable & Collectable & Tolerent >(_ item:T){
+   public func reference<T:  Codable & Collectable >(_ item:T){
 
       // We reference the collection
       item.setCollection(self)
@@ -199,16 +198,11 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
 
    /// Removes the item from the collection
-   /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
-   /// if the item is not tolerent.
    ///
    /// - Parameter item: the item
    open func removeItem<C:Codable & Collectable>(_ item: C)throws->(){
       guard let castedItem = item as? T else{
          throw ErasingError.typeMissMatch
-      }
-      guard item is Tolerent else{
-         throw CollectionOfError.collectedTypeMustBeTolerent
       }
       if let idx = self._items.index(where:{ return $0.id == castedItem.id }){
          self._items.remove(at: idx)
@@ -273,12 +267,6 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       try container.encode(self.relativeFolderPath, forKey: .relativeFolderPath)
    }
 
-
-   // MARK: - Tolerent
-
-   public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-      // No implementation
-   }
 
    // MARK: - FilePersistentCollection
 

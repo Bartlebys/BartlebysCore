@@ -11,7 +11,7 @@ import Foundation
 
 public protocol Selection {
 
-    associatedtype T : Collectable, Codable, Tolerent
+    associatedtype T : Collectable, Codable
 
     // The currently selected items
     var selectedItems:[T]?{ get set }

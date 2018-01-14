@@ -257,7 +257,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    public final func integrateResponse<T:Tolerent>(_ response: DataResponse<T>) {
+    public final func integrateResponse<T>(_ response: DataResponse<T>) {
         if let firstCollection = self._collections.first(where:{ $0 as? CollectionOf<T> != nil }) {
             if let concreteCollection = firstCollection as? CollectionOf<T>{
                 for instance in response.result {
@@ -310,7 +310,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     //  and append the object to the first Corresponding Collection
     ///
     /// - Returns: the created instance
-    open func newInstance<T:Collectable & Codable & Tolerent >()->T{
+    open func newInstance<T:Collectable & Codable  >()->T{
         let instance = T()
         if let collection:CollectionOf<T> = self.collectionFor() {
             collection.append(instance)
@@ -323,7 +323,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     //  and append the object to the first Corresponding Collection
     ///
     /// - Returns: the created instance
-    open func new<T:Collectable & Codable & Tolerent>(type:T.Type)->T{
+    open func new<T:Collectable & Codable >(type:T.Type)->T{
         let instance = T()
         if let collection:CollectionOf<T> = self.collectionFor() {
             collection.append(instance)
@@ -335,7 +335,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     /// Recover a collection for a given Collectable type
     ///
     /// - Returns: the collection
-    open func collectionFor<T:Collectable & Codable & Tolerent >()->CollectionOf<T>?{
+    open func collectionFor<T:Collectable & Codable> ()->CollectionOf<T>?{
         return self._collectionsPerCollectedTypeName[T.typeName] as? CollectionOf<T>
     }
 

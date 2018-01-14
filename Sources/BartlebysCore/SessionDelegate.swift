@@ -64,7 +64,7 @@ public protocol SessionDelegate {
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    func integrateResponse<T:Tolerent>(_ response:DataResponse<T>)
+    func integrateResponse<T>(_ response:DataResponse<T>)
 
     /// Implements the concrete Removal of the CallOperation on success
     ///

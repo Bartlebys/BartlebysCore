@@ -53,15 +53,15 @@ extension DataPoint:KeyValueStorage{
     }
 
 
-    // MARK: - Codable & Tolerent
+    // MARK: - Codable
 
 
-    /// Recover the saved instance (Tolerent)
+    /// Recover the saved instance (For Tolerent instances)
     ///
     /// - Parameter byKey: the identification key (must be unique)
     /// - Returns: the value
     /// - Throws: KeyValueStorageError.keyNotFound if the key is not set, and JSON coder error on decoding issue
-    public func getFromKVS<T:Codable & Tolerent>(key:String)throws ->T{
+    public func getFromKVS<T:Codable & Tolerent >(key:String)throws ->T{
         guard let keyedData = self.keyedDataCollection.first(where:{$0.key == key }) else {
             throw KeyValueStorageError.keyNotFound
         }

@@ -159,7 +159,7 @@ public class Session {
     
     // MARK: - HTTP Engine
     
-    public func call<T:Tolerent>(  request: URLRequest,
+    public func call<T>(  request: URLRequest,
                                 resultType: T.Type,
                                 resultIsACollection:Bool,
                                 success: @escaping (_ completion: DataResponse<T>)->(),

@@ -33,32 +33,38 @@ open class JSONCoder:ConcreteCoder{
     /// - returns: A value of the requested type.
     /// - throws: `DecodingError.dataCorrupted` if values requested from the payload are corrupted, or if the given data is not valid .
     /// - throws: An error if any value throws an error during decoding.
-    public func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Tolerent & Decodable{
+    public func decode<T>(_ type: T.Type, from data: Data) throws -> T where T : Decodable{
         do{
             // Try a to decode normally
             return try JSON.decoder.decode(T.self, from: data)
         }catch{
+            guard let TolerentType = T.self as? Tolerent.Type else{
+                throw TolerentError.isNotTolerent(decodingError: error)
+            }
             // Patch the object
-            let patchedData = try self._patchObject(data: data, resultType: T.self)
+            let patchedData = try self._patchObject(data: data, resultType: TolerentType)
             return try JSON.decoder.decode(T.self, from: patchedData)
+
         }
     }
 
     /// Decodes a top-level value of the given type from the given  representation.
     ///
-    /// - parameter data: The data to decode from.
+    /// - parameter data: The data to decode.
     /// - returns: A value of the requested type.
     /// - throws: `DecodingError.dataCorrupted` if values requested from the payload are corrupted, or if the given data is not valid .
     /// - throws: An error if any value throws an error during decoding.
-    public func decodeArrayOf<T>(_ type: T.Type, from data: Data) throws -> [T] where T : Tolerent & Decodable{
+    public func decodeArrayOf<T>(_ type: T.Type, from data: Data) throws -> [T] where T : Decodable{
         do{
             // Try a to decode normally
             return try JSON.decoder.decode([T].self, from: data)
         }catch{
-            let patchedData = try self._patchCollection(data: data, resultType: T.self)
+            guard let TolerentType = T.self as? Tolerent.Type else{
+                throw TolerentError.isNotTolerent(decodingError: error)
+            }
+            let patchedData = try self._patchCollection(data: data, resultType:TolerentType)
             return try JSON.decoder.decode([T].self, from: patchedData)
         }
-
     }
 
     // MARK: -  Tolerent Patches

@@ -88,10 +88,6 @@ public class TestObject:Model{
     }
 }
 
-extension TestObject:Tolerent{
-    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {}
-}
-
 public class MyDataPoint: DataPoint {
 
     public enum FileNames:String{

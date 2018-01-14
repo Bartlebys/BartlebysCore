@@ -15,11 +15,9 @@ public protocol IndistinctCollection:UniversalType{
     /// References the element into the dataPoint registry
     ///
     /// - Parameter item: the item
-    func reference<T:  Codable & Collectable & Tolerent >(_ item:T)
+    func reference<T:  Codable & Collectable >(_ item:T)
 
     /// Removes the item from the collection
-    /// The implementation should throw CollectionOfError.collectedTypeMustBeTolerent
-    /// if the item is not tolerent.
     ///
     /// - Parameter item: the item
     func removeItem<C: Codable & Collectable>(_ item: C)throws->()

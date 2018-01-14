@@ -21,3 +21,8 @@ public protocol Tolerent {
     //func transFormToDictionaryRepresantation()
 
 }
+
+
+public enum TolerentError:Error{
+    case isNotTolerent(decodingError:Error)
+}

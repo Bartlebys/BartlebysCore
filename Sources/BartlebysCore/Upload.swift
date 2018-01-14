@@ -8,10 +8,5 @@
 
 import Foundation
 
-public class Upload : Model, Tolerent {
-    
-    public static func patchDictionary(_ dictionary: inout Dictionary<String, Any>) {
-        
-    }
-    
+public class Upload : Model {
 }

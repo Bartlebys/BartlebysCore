@@ -12,7 +12,6 @@ import Foundation
 public enum ErasingError:Error {
     case undefinedContainer
     case typeMissMatch
-    case notTolerent
 }
 
 

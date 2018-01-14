@@ -19,7 +19,7 @@ public protocol ConcreteEncoder{
     /// - returns: A new `Data` value containing the encoded  data.
     /// - throws: `EncodingError.invalidValue` if a non-conforming floating-point value is encountered during encoding, and the encoding strategy is `.throw`.
     /// - throws: An error if any value throws an error during encoding.
-    func encode<T : Encodable & Tolerent>(_ value: T) throws -> Data
+    func encode<T : Encodable >(_ value: T) throws -> Data
 
 }
 
@@ -32,7 +32,7 @@ public protocol ConcreteDecoder{
     /// - returns: A value of the requested type.
     /// - throws: `DecodingError.dataCorrupted` if values requested from the payload are corrupted, or if the given data is not valid .
     /// - throws: An error if any value throws an error during decoding.
-    func decode<T : Decodable & Tolerent>(_ type: T.Type, from data: Data) throws -> T
+    func decode<T : Decodable>(_ type: T.Type, from data: Data) throws -> T
 
 
     /// Decodes a top-level value of the given type from the given  representation.
@@ -42,6 +42,6 @@ public protocol ConcreteDecoder{
     /// - returns: A value of the requested type.
     /// - throws: `DecodingError.dataCorrupted` if values requested from the payload are corrupted, or if the given data is not valid .
     /// - throws: An error if any value throws an error during decoding.
-    func decodeArrayOf<T : Decodable & Tolerent>(_ type: T.Type, from data: Data) throws -> [T]
+    func decodeArrayOf<T : Decodable>(_ type: T.Type, from data: Data) throws -> [T]
 
 }
