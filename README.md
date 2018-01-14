@@ -44,7 +44,7 @@ This approach may improve performance and can be suitable is you want to aggrega
 
 If you want to use mixed approach you should import BartlebysCore as :
 
-```
+```swift
 #if !USE_EMBEDDED_MODULES
     import BartlebysCore
 #endif   
@@ -83,7 +83,7 @@ In fact, Bartleby's Core Models are standard Swift instances, and their Collecti
 
 You can instantiate and register a Model using the DataPoint factory method
 
-```
+```swift
 // Syntax #1
 let metrics1:Metrics = dataPoint.newInstance()
 
@@ -96,7 +96,7 @@ let metrics3 = dataPoint.new(type: Metrics.self)
 
 Or instantiating an Object and appending it to its collection.
 
-```
+```swift
 // Decomposed approach 
 let metrics4 = Metrics()
 dataPoint.metrics.append(metrics4)
@@ -109,9 +109,6 @@ dataPoint.metrics.append(metrics4)
 
 ![Bartleby's](Documents/bartlebys.jpg)
 
-# Who is Bartleby?
-
-Bartleby is main character of ["Bartleby the scrivener A Story of Wall Street"](https://en.wikipedia.org/wiki/Bartleby,_the_Scrivener) is a short story by Herman Melville. Bartleby is a scrivener—a kind of clerk "who obstinately refuses to go on doing the sort of writing demanded of him" with the words "I would prefer not to".
 
 # Bartleby's Core License
 

@@ -7,8 +7,9 @@
 //
 
 import XCTest
-@testable #if !USE_EMBEDDED_MODULES
-    import BartlebysCore
+
+#if !USE_EMBEDDED_MODULES
+    @testable import BartlebysCore
 #endif
 
 class DataPointTests: BaseDataPointTestCase{
