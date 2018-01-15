@@ -163,5 +163,5 @@ while ( $d ->iterateOnProperties() === true ) {
 }
 ?>
 }
-s
+
 #endif
