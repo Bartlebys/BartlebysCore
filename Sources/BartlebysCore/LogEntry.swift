@@ -165,5 +165,5 @@ open class LogEntry:Model{
         get{ return super.runUID }
     }
 }
-s
+
 #endif
