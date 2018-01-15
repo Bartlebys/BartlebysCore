@@ -61,13 +61,13 @@ open class DataPoint: Object,ConcreteDataPoint{
     /// Contains all the data Point collections
     /// Populated by registerCollection
     /// - Returns: the data Point model collections
-    fileprivate var _collections:[FilePersistent & Codable] = [FilePersistent & Codable]()
+    fileprivate var _collections:[FileSavable] = [FileSavable]()
 
-    /// The collection hashed per fileName
-    fileprivate var _collectionsPerFileName = [String:FilePersistent & Codable]()
+    /// The collection hashed per fileNam
+    fileprivate var _collectionsPerFileName = [String:FileSavable]()
 
     /// The collection hashed by typeName
-    fileprivate var _collectionsPerCollectedTypeName = [String:FilePersistent & Codable]()
+    fileprivate var _collectionsPerCollectedTypeName = [String:FileSavable]()
 
     // this centralized dictionary allows to access to any referenced object by its UID
     // Future versions will use A binary tree.
@@ -288,11 +288,7 @@ open class DataPoint: Object,ConcreteDataPoint{
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
-            if let universallyPersistentCollection = collection as? FileSavable {
-                try universallyPersistentCollection.saveToFile()
-            }else{
-               // self.storage.save(element: collection, using: self.coder)
-            }
+            try collection.saveToFile()
         }
     }
 

@@ -133,7 +133,7 @@ extension Storage: FileStorage{
     ///
     /// - Parameters:
     ///   - element: the collection or object reference
-    public func saveCollection<T:FilePersistent & Encodable>(element:T){
+    public func saveCollection<T>(element:CollectionOf<T>){
 
         if self._volatile == true {
             self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: true, error: nil)
@@ -157,9 +157,8 @@ extension Storage: FileStorage{
                 
                 let data = try self.coder.encode(element)
                 try data.write(to: url)
-                if var changeable = element as? ChangesFlag{
-                    changeable.hasChanged = false
-                }
+                element.hasChanged = false
+
 
                 
                 // The collection has been saved.

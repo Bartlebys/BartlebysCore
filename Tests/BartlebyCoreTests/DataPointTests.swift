@@ -15,12 +15,10 @@ import XCTest
 
 fileprivate struct PersistentObject:Codable,Initializable{
 
-
     var x:Int = 0
 
     // MARK: - Initializable
     init() {}
-
 }
 
 
@@ -180,9 +178,6 @@ class DataPointTests: BaseDataPointTestCase{
         }catch{
             XCTFail("\(error)")
         }
-
-
-
     }
 
 
