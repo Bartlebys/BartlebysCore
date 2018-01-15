@@ -124,7 +124,7 @@ open class CommonLogEntry:Model{
 
 
 
-#if os(macOS)
+#if os(macOS) && USE_COCOA_BINDINGS
 
 // You Can use Dynamic Override to support Cocoa Bindings
 // This class can be used in a CollectionOf<T>
