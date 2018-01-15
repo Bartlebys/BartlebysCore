@@ -16,11 +16,4 @@ public protocol FilePersistent{
     // We define the relative folder path
     var relativeFolderPath:String { get }
 
-
-    /// Saves to a given file named 'fileName'
-    /// Into a dedicated folder named
-    /// - Parameters:
-    /// - Throws: throws errors on Coding
-    func saveToFile() throws
-
 }

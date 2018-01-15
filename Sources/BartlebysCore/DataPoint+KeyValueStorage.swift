@@ -66,7 +66,7 @@ extension DataPoint:KeyValueStorage{
             throw KeyValueStorageError.keyNotFound
         }
         let data = keyedData.data
-        let instance = try self.coder.decode(T.self, from: data)
+        let instance = try self.storage.coder.decode(T.self, from: data)
         return instance
     }
 

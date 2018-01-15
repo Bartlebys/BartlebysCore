@@ -300,6 +300,10 @@
 		E5ECA0B81FF65851008BF543 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
 		E5ECA0B91FF65851008BF543 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC411FDAF5CF001D91CE /* Utilities.swift */; };
 		E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
+		E5F3CDA0200CA74B00AB9A44 /* FileSavable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F3CD9F200CA74B00AB9A44 /* FileSavable.swift */; };
+		E5F3CDA1200CA74B00AB9A44 /* FileSavable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F3CD9F200CA74B00AB9A44 /* FileSavable.swift */; };
+		E5F3CDA2200CA74B00AB9A44 /* FileSavable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F3CD9F200CA74B00AB9A44 /* FileSavable.swift */; };
+		E5F3CDA3200CA74B00AB9A44 /* FileSavable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F3CD9F200CA74B00AB9A44 /* FileSavable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -420,6 +424,7 @@
 		E5ECA07F1FF6581D008BF543 /* BartlebysCore_watchOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore_watchOS.h; sourceTree = "<group>"; };
 		E5ECA0801FF6581D008BF543 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5EF060E1FEFB87800E57AA2 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		E5F3CD9F200CA74B00AB9A44 /* FileSavable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSavable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -583,6 +588,7 @@
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */,
 				E549A3EE1FF1390200178ECA /* FilePersistent.swift */,
+				E5F3CD9F200CA74B00AB9A44 /* FileSavable.swift */,
 				E5BC2D121FF133C200EC45F6 /* FileStorage.swift */,
 				4D55FC8C1FDAF690001D91CE /* HTTPOperation.swift */,
 				E52A84661FF5025500F2408B /* Identifiable.swift */,
@@ -1036,6 +1042,7 @@
 				E5EC9FA61FF655FE008BF543 /* Download.swift in Sources */,
 				E5EC9FBF1FF655FE008BF543 /* Session.swift in Sources */,
 				E5EC9FC51FF655FE008BF543 /* VoidPayload.swift in Sources */,
+				E5F3CDA0200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5EC9FB51FF655FE008BF543 /* Model+Description.swift in Sources */,
 				E5D6CDFE200142E000A3D975 /* KeyValueStorage.swift in Sources */,
 				E5EC9F961FF655F9008BF543 /* Initializable.swift in Sources */,
@@ -1123,6 +1130,7 @@
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E5ECA0121FF656AF008BF543 /* Session.swift in Sources */,
 				E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */,
+				E5F3CDA1200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5ECA0081FF656AF008BF543 /* Model+Description.swift in Sources */,
 				E5D6CDE520012F2800A3D975 /* Notify.swift in Sources */,
 				E5EC9FE91FF656AF008BF543 /* Initializable.swift in Sources */,
@@ -1210,6 +1218,7 @@
 				E5ECA0521FF657A6008BF543 /* Download.swift in Sources */,
 				E5ECA06B1FF657A6008BF543 /* Session.swift in Sources */,
 				E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */,
+				E5F3CDA2200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5ECA0611FF657A6008BF543 /* Model+Description.swift in Sources */,
 				E5D6CDE620012F2800A3D975 /* Notify.swift in Sources */,
 				E5ECA0421FF6579F008BF543 /* Initializable.swift in Sources */,
@@ -1297,6 +1306,7 @@
 				E553813A20036C7D0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E5ECA0B41FF65851008BF543 /* Session.swift in Sources */,
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
+				E5F3CDA3200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5ECA0AA1FF65851008BF543 /* Model+Description.swift in Sources */,
 				E5D6CDE720012F2800A3D975 /* Notify.swift in Sources */,
 				E5ECA08B1FF6584A008BF543 /* Initializable.swift in Sources */,

@@ -18,7 +18,7 @@ protocol ChangesFlag {
    var hasChanged: Bool { get set }
 }
 
-open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FilePersistent,ChangesFlag where T :  Codable & Collectable {
+open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FileSavable,ChangesFlag where T :  Codable & Collectable {
 
 
    // MARK: -
@@ -272,7 +272,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    }
 
 
-   // MARK: - FilePersistentCollection
+   // MARK: - FileSavable
 
    /// Saves to a given file named 'fileName'
    /// Into a dedicated folder named relativeFolderPath
@@ -283,7 +283,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
          guard let dataPoint = self.dataPoint else {
             throw CollectionOfError.collectionIsNotRegistred
          }
-         dataPoint.storage.save(element: self, using:dataPoint.coder)
+         dataPoint.storage.saveCollection(element: self)
       }
    }
 

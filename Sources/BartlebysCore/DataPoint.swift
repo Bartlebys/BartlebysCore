@@ -37,13 +37,10 @@ open class DataPoint: Object,ConcreteDataPoint{
     
     // MARK: -
 
-    /// The coder: encodes and decodes the Data
-    public var coder: ConcreteCoder = JSONCoder()
-
     public var delegate: DataPointDelegate = DataPointDelegatePlaceHolder()
 
     // The storage IO object: reads an writes the ObjectsCollections
-    public let storage = Storage()
+    public var storage = Storage()
 
     // The base URL
     public var baseWrapperURL:URL{
@@ -64,17 +61,17 @@ open class DataPoint: Object,ConcreteDataPoint{
     /// Contains all the data Point collections
     /// Populated by registerCollection
     /// - Returns: the data Point model collections
-    fileprivate var _collections:[Any] = Array<Any>()
+    fileprivate var _collections:[FilePersistent & Codable] = [FilePersistent & Codable]()
 
     /// The collection hashed per fileName
-    fileprivate var _collectionsPerFileName = Dictionary<String,Any>()
+    fileprivate var _collectionsPerFileName = [String:FilePersistent & Codable]()
 
     /// The collection hashed by typeName
-    fileprivate var _collectionsPerCollectedTypeName = Dictionary<String,Any>()
+    fileprivate var _collectionsPerCollectedTypeName = [String:FilePersistent & Codable]()
 
     // this centralized dictionary allows to access to any referenced object by its UID
     // Future versions will use A binary tree.
-    fileprivate var _instancesByUID=Dictionary<String, Any>()
+    fileprivate var _instancesByUID=[String: Any]()
 
     /// Defered Ownership
     /// If we receive a Instance that refers to an unexisting Owner
@@ -139,7 +136,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     }
 
 
-    /// Returns the collection by file name
+    /// Returns the collection by its file name
     ///
     /// - Parameter fileName: the fileName of the searched collection
     /// - Returns: the CollectionOf
@@ -291,8 +288,10 @@ open class DataPoint: Object,ConcreteDataPoint{
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
-            if let universallyPersistentCollection = collection as? FilePersistent {
+            if let universallyPersistentCollection = collection as? FileSavable {
                 try universallyPersistentCollection.saveToFile()
+            }else{
+               // self.storage.save(element: collection, using: self.coder)
             }
         }
     }

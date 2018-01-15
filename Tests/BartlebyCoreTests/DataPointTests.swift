@@ -12,6 +12,24 @@ import XCTest
     @testable import BartlebysCore
 #endif
 
+
+fileprivate struct PersistentSample:Codable,Initializable,FilePersistent{
+
+
+    var x:Int = 0
+
+    // MARK: - Initializable
+    init() {}
+
+    //MARK: - FilePersistent
+
+    var fileName: String = "Sample"
+
+    var relativeFolderPath: String = Default.VOID_STRING
+
+}
+
+
 class DataPointTests: BaseDataPointTestCase{
 
     // MARK: - Tests
@@ -147,6 +165,13 @@ class DataPointTests: BaseDataPointTestCase{
         }catch{
             XCTFail("Metrics collection error: \(error)")
         }
+    }
+
+
+
+    func test003_saveAndLoadSync(){
+
+
     }
 
 

@@ -117,9 +117,9 @@ class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
     override func tearDown() {
         super.tearDown()
         for dataPoint in BaseDataPointTestCase.associatedDataPoints{
-            dataPoint.storage.eraseFiles(of: dataPoint.keyedDataCollection)
-            dataPoint.storage.eraseFiles(of: dataPoint.metricsCollection)
-            dataPoint.storage.eraseFiles(of: dataPoint.testObjectsCollection)
+            dataPoint.storage.eraseFilesOfCollection(of: dataPoint.keyedDataCollection)
+            dataPoint.storage.eraseFilesOfCollection(of: dataPoint.metricsCollection)
+            dataPoint.storage.eraseFilesOfCollection(of: dataPoint.testObjectsCollection)
         }
         BaseDataPointTestCase.associatedDataPoints.removeAll()
     }

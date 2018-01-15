@@ -24,6 +24,11 @@ public protocol StorageProgressDelegate{
 /// The storage layer
 public final class Storage{
 
+
+    /// The coder: encodes and decodes the Data
+    public var coder: ConcreteCoder = JSONCoder()
+    
+
     /// If set to true the Storage is volatile
     /// It means it persist in memory only
     /// The FileStorage storage methods are ignored at runtime
@@ -104,7 +109,7 @@ extension Storage: FileStorage{
                 let url = self.getURL(of: proxy)
                 if Storage._fileManager.fileExists(atPath: url.path) {
                     let data = try Data(contentsOf: url)
-                    let collection = try dataPoint.coder.decode(CollectionOf<T>.self, from: data)
+                    let collection = try self.coder.decode(CollectionOf<T>.self, from: data)
                     print("\(getElapsedTime()), \(String(describing: type(of: dataPoint))), url= \(url)")
                     DispatchQueue.main.async {
                         proxy.append(contentsOf: collection)
@@ -128,8 +133,7 @@ extension Storage: FileStorage{
     ///
     /// - Parameters:
     ///   - element: the collection or object reference
-    ///   - coder: the coder
-    public func save<T:FilePersistent & Encodable>(element:T, using coder:ConcreteCoder){
+    public func saveCollection<T:FilePersistent & Encodable>(element:T){
 
         if self._volatile == true {
             self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: true, error: nil)
@@ -151,7 +155,7 @@ extension Storage: FileStorage{
                     try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                 }
                 
-                let data = try coder.encode(element)
+                let data = try self.coder.encode(element)
                 try data.write(to: url)
                 if var changeable = element as? ChangesFlag{
                     changeable.hasChanged = false
@@ -175,7 +179,7 @@ extension Storage: FileStorage{
     /// That's why it is synchronous.
     ///
     /// - Parameter collection: the collection
-    public func eraseFiles<T:FilePersistent>(of element:T){
+    public func eraseFilesOfCollection<T:FilePersistent>(of element:T){
         if self._volatile == true {
             return
         }
@@ -226,16 +230,15 @@ extension Storage: FileStorage{
     ///
     /// - Parameters:
     ///   - proxy: the proxy reference
-    ///   - coder: the coder
     /// - Throws: throws decoding issues
-    public func loadSync<T:Decodable & FilePersistent & Initializable>(proxy: inout T, using coder:ConcreteCoder)throws{
+    public func loadSync<T:Codable & FilePersistent & Initializable>(proxy: inout T)throws{
         if !self._volatile{
             let url = self.getURL(of: proxy)
             // We do not use the storage file manager.
             // That performs on an async utility queue
             if FileManager.default.fileExists(atPath: url.path) {
                 let data = try Data(contentsOf: url)
-                proxy = try coder.decode(T.self, from: data)
+                proxy = try self.coder.decode(T.self, from: data)
             }
 
         }
@@ -246,9 +249,8 @@ extension Storage: FileStorage{
     ///
     /// - Parameters:
     ///   - element: the element to save
-    ///   - coder: the coder to use
     /// - Throws: throws encoding and file IO errors
-    public func saveSync<T:FilePersistent & Encodable>(element:T, using coder:ConcreteCoder)throws{
+    public func saveSync<T:Codable & FilePersistent & Initializable>(element:T)throws{
         if !self._volatile  {
             let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
             let url = self.getURL(of: element)
@@ -257,7 +259,7 @@ extension Storage: FileStorage{
             if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
                 try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
             }
-            let data = try coder.encode(element)
+            let data = try self.coder.encode(element)
             try data.write(to: url)
             if var changeable = element as? ChangesFlag{
                 changeable.hasChanged = false

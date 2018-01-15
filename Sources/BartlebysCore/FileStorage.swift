@@ -22,15 +22,14 @@ public protocol FileStorage {
     ///
     /// - Parameters:
     ///   - collection: the collection reference
-    ///   - coder: the coder
-    func save<T>(element:CollectionOf<T>, using coder:ConcreteCoder)
+    func saveCollection<T>(element:CollectionOf<T>)
 
 
     /// Erases the file(s) of the collection if there is one
     /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
     ///
     /// - Parameter collection: the collection
-    func eraseFiles<T>(of collection:CollectionOf<T>)
+    func eraseFilesOfCollection<T>(of collection:CollectionOf<T>)
 
 
     // MARK: - Synchronous
@@ -42,9 +41,8 @@ public protocol FileStorage {
     ///
     /// - Parameters:
     ///   - proxy: the proxy reference
-    ///   - coder: the coder
     /// - Throws: throws decoding issues
-    func loadSync<T:Decodable & FilePersistent & Initializable>(proxy: inout T, using coder:ConcreteCoder)throws
+    func loadSync<T:Codable & FilePersistent & Initializable>(proxy: inout T)throws
 
 
     /// Save synchronously an Encodable & FilePersitent
@@ -53,16 +51,16 @@ public protocol FileStorage {
     ///   - element: the element to save
     ///   - coder: the coder to use
     /// - Throws: throws encoding and file IO errors
-    func saveSync<T:FilePersistent & Encodable>(element:T, using coder:ConcreteCoder)throws
+    func saveSync<T:Codable & FilePersistent & Initializable>(element:T)throws
 
     // MARK : -
 
-    /// Returns the URL of the collection file
+
+    /// Returns the URL of a FilePersistent element
     ///
     /// - Parameter collection: the collection
     /// - Returns: the collection file URL
-    func getURL<T>(of collection:CollectionOf<T>) -> URL
-
+    func getURL<T:FilePersistent>(of element:T) -> URL
 
 
 }
