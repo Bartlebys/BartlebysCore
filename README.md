@@ -6,7 +6,7 @@
 
 BarlebysCore is a framework written in Swift4, available for macOS, iOS, tvOS et Linux, that allows to : 
 
-1. insure the persistency Generic Collection of Swift 4 Objects.
+1. insure the persistency Generic Collection, and FilePersistent Objects.
 2. create serializable reusable HTTP Operation 
 3. deal efficiently with runtime [Object Relations resolution](https://github.com/Bartlebys/BartlebysCore/blob/master/Documents/RelationsBetweenModels.md)
 

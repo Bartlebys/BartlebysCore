@@ -2,3 +2,5 @@ language: objective-c
 osx_image: xcode9.2
 xcode_workspace: Projects/BartlebysCore/BartlebysCore.xcodeproj
 xcode_scheme: BartlebysCore macOSTests
+script:
+    - xcodebuild clean build -sdk macosx10.13 -workspace Projects/BartlebysCore/BartlebysCore.xcworkspace -scheme BartlebysCore\ macOS CODE_SIGNING_REQUIRED=NO

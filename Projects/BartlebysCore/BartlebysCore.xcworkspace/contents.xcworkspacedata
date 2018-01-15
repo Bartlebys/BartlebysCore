@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:BartlebyKit.xcodeproj">
+      location = "group:BartlebysCore.xcodeproj">
    </FileRef>
 </Workspace>
