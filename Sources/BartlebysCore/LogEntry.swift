@@ -10,8 +10,14 @@
 
 import Foundation
 
+#if os(macOS) && USE_COCOA_BINDINGS
+public typealias LogEntry = DynamicLogEntry
+#else
+public typealias LogEntry = CommonLogEntry
+#endif
+
 // MARK: Bartleby's Core: A single Log entry
-open class LogEntry:Model{
+open class CommonLogEntry:Model{
 
     public typealias CollectedType = LogEntry
 
@@ -123,7 +129,7 @@ open class LogEntry:Model{
 // You Can use Dynamic Override to support Cocoa Bindings
 // This class can be used in a CollectionOf<T>
 
-@objc open class DynamicLogEntry:LogEntry{
+@objc open class DynamicLogEntry:CommonLogEntry{
 
     @objc override dynamic open var  counter : Int{
         set{ super.counter = newValue }

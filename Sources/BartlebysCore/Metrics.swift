@@ -10,8 +10,14 @@
 
 import Foundation
 
+#if os(macOS) && USE_COCOA_BINDINGS
+public typealias Metrics = DynamicMetrics
+#else
+public typealias Metrics = CommonMetrics
+#endif
+
 // MARK: Bartleby's Core: a value object used to record metrics
-open class Metrics:Model{
+open class CommonMetrics:Model{
 
     public typealias CollectedType = Metrics
 
@@ -104,7 +110,7 @@ open class Metrics:Model{
 // You Can use Dynamic Override to support Cocoa Bindings
 // This class can be used in a CollectionOf<T>
 
-@objc open class DynamicMetrics:Metrics{
+@objc open class DynamicMetrics:CommonMetrics{
 
     @objc override dynamic open var  operationName : String{
         set{ super.operationName = newValue }

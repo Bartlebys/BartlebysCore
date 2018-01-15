@@ -10,8 +10,14 @@
 
 import Foundation
 
+#if os(macOS) && USE_COCOA_BINDINGS
+public typealias KeyedData = DynamicKeyedData
+#else
+public typealias KeyedData = CommonKeyedData
+#endif
+
 // MARK: A simple wrapper to associate a key and a Data
-open class KeyedData:Model{
+open class CommonKeyedData:Model{
 
     public typealias CollectedType = KeyedData
 
@@ -76,7 +82,7 @@ open class KeyedData:Model{
 // You Can use Dynamic Override to support Cocoa Bindings
 // This class can be used in a CollectionOf<T>
 
-@objc open class DynamicKeyedData:KeyedData{
+@objc open class DynamicKeyedData:CommonKeyedData{
 
     @objc override dynamic open var  key : String{
         set{ super.key = newValue }
