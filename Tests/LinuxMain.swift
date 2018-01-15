@@ -1,5 +1,5 @@
 import XCTest
-@testable import BartlebyCoreTests
+@testable import BartlebysCoreTests
 
 XCTMain([
     testCase(DataPointTests.allTests),
