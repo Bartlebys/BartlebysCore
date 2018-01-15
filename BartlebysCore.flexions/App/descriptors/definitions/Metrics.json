@@ -9,31 +9,36 @@
         "description": "The action name e.g: UpdateUser",
         "default": "$Default.NO_NAME",
         "required":true,
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "elapsed":{
         "description":"The elasped time since app started up.",
         "type":"double",
         "default":0,
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "requestDuration":{
         "description":"The time interval in seconds from the time the request started to the time the request completed.",
         "type":"double",
         "default":"0",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "serializationDuration":{
         "description":" The time interval in seconds from the time the request completed to the time response serialization completed.",
         "type":"double",
         "default":"0",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "totalDuration":{
         "description":"The time interval in seconds from the time the request started to the time response serialization completed.",
         "type":"double",
         "default":"0",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       }
       ,"streamOrientation": {
         "type": "enum",
@@ -45,7 +50,8 @@
           "downStream"
         ],
         "default": ".upStream",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       }
     },
     "metadata": {

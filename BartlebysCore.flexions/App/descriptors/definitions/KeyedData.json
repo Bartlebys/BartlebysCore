@@ -10,7 +10,8 @@
         "default":"$Default.NO_KEY",
         "supervisable": false,
         "serializable": true,
-        "cryptable": false
+        "cryptable": false,
+        "dynamic":false
       },
       "data": {
         "type": "data",
@@ -18,7 +19,8 @@
         "default":"Data()",
         "supervisable": false,
         "serializable": true,
-        "cryptable": false
+        "cryptable": false,
+        "dynamic":false
       }
     },
     "metadata": {

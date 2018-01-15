@@ -8,37 +8,43 @@
         "type": "integer",
         "description": "The print entry counter",
         "default": -1,
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "line": {
         "type": "integer",
         "description": "The referent line",
         "default": -1,
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "elapsedTime": {
         "type": "double",
         "description": "The elasped duration",
         "default": -1,
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "message": {
         "type": "string",
         "description": "the message",
         "default": "$Default.NO_MESSAGE",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "file": {
         "type": "string",
         "description": "the file",
         "default": "$Default.NO_FILE",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "function": {
         "type": "string",
         "description": "the function",
         "default": "$Default.NO_FUNCTION",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "category": {
         "type": "enum",
@@ -51,20 +57,23 @@
           "critical"
         ],
         "default": ".standard",
-        "supervisable":false
+        "supervisable":false,
+        "dynamic":false
       },
       "decorative": {
         "type": "boolean",
         "description": "Is the entry decorative or significant? decoration includes separators, etc...",
         "default": "false",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       },
       "_runUID": {
         "type": "string",
         "description": "Is the entry decorative or significant? decoration includes separators, etc...",
         "default": "$Session.runUID",
         "scope": "private",
-        "supervisable": false
+        "supervisable": false,
+        "dynamic":false
       }
     },
     "metadata": {
