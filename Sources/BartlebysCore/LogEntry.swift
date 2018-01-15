@@ -44,8 +44,8 @@ open class LogEntry:Model{
 	//Is the entry decorative or significant? decoration includes separators, etc...
 	open var decorative:Bool = false
 
-	//Is the entry decorative or significant? decoration includes separators, etc...
-	private var _runUID:String = Session.runUID
+	//A session runUID identifyer
+	open var runUID:String = Session.runUID
 
 
     // MARK: - Codable
@@ -60,7 +60,7 @@ open class LogEntry:Model{
 		case function
 		case category
 		case decorative
-		case _runUID
+		case runUID
     }
 
     required public init(from decoder: Decoder) throws{
@@ -75,7 +75,7 @@ open class LogEntry:Model{
 			self.function = try values.decode(String.self,forKey:.function)
 			self.category = LogEntry.Category(rawValue: try values.decode(String.self,forKey:.category)) ?? .standard
 			self.decorative = try values.decode(Bool.self,forKey:.decorative)
-			self._runUID = try values.decode(String.self,forKey:._runUID)
+			self.runUID = try values.decode(String.self,forKey:.runUID)
         }
     }
 
@@ -90,7 +90,7 @@ open class LogEntry:Model{
 		try container.encode(self.function,forKey:.function)
 		try container.encode(self.category.rawValue ,forKey:.category)
 		try container.encode(self.decorative,forKey:.decorative)
-		try container.encode(self._runUID,forKey:._runUID)
+		try container.encode(self.runUID,forKey:.runUID)
     }
 
 
@@ -115,3 +115,55 @@ open class LogEntry:Model{
         return LogEntry.collectionName
     }
 }
+
+
+
+#if os(macOS)
+
+// You Can use Dynamic Override to support Cocoa Bindings
+// This class can be used in a CollectionOf<T>
+
+@objc open class DynamicLogEntry:LogEntry{
+
+    @objc override dynamic open var  counter : Int{
+        set{ super.counter = newValue }
+        get{ return super.counter }
+    }
+
+    @objc override dynamic open var  line : Int{
+        set{ super.line = newValue }
+        get{ return super.line }
+    }
+
+    @objc override dynamic open var  elapsedTime : Double{
+        set{ super.elapsedTime = newValue }
+        get{ return super.elapsedTime }
+    }
+
+    @objc override dynamic open var  message : String{
+        set{ super.message = newValue }
+        get{ return super.message }
+    }
+
+    @objc override dynamic open var  file : String{
+        set{ super.file = newValue }
+        get{ return super.file }
+    }
+
+    @objc override dynamic open var  function : String{
+        set{ super.function = newValue }
+        get{ return super.function }
+    }
+
+    @objc override dynamic open var  decorative : Bool{
+        set{ super.decorative = newValue }
+        get{ return super.decorative }
+    }
+
+    @objc override dynamic open var  runUID : String{
+        set{ super.runUID = newValue }
+        get{ return super.runUID }
+    }
+}
+s
+#endif

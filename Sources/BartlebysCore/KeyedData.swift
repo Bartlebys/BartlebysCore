@@ -68,3 +68,25 @@ open class KeyedData:Model{
         return KeyedData.collectionName
     }
 }
+
+
+
+#if os(macOS)
+
+// You Can use Dynamic Override to support Cocoa Bindings
+// This class can be used in a CollectionOf<T>
+
+@objc open class DynamicKeyedData:KeyedData{
+
+    @objc override dynamic open var  key : String{
+        set{ super.key = newValue }
+        get{ return super.key }
+    }
+
+    @objc override dynamic open var  data : Data{
+        set{ super.data = newValue }
+        get{ return super.data }
+    }
+}
+s
+#endif

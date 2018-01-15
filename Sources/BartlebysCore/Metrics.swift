@@ -96,3 +96,40 @@ open class Metrics:Model{
         return Metrics.collectionName
     }
 }
+
+
+
+#if os(macOS)
+
+// You Can use Dynamic Override to support Cocoa Bindings
+// This class can be used in a CollectionOf<T>
+
+@objc open class DynamicMetrics:Metrics{
+
+    @objc override dynamic open var  operationName : String{
+        set{ super.operationName = newValue }
+        get{ return super.operationName }
+    }
+
+    @objc override dynamic open var  elapsed : Double{
+        set{ super.elapsed = newValue }
+        get{ return super.elapsed }
+    }
+
+    @objc override dynamic open var  requestDuration : Double{
+        set{ super.requestDuration = newValue }
+        get{ return super.requestDuration }
+    }
+
+    @objc override dynamic open var  serializationDuration : Double{
+        set{ super.serializationDuration = newValue }
+        get{ return super.serializationDuration }
+    }
+
+    @objc override dynamic open var  totalDuration : Double{
+        set{ super.totalDuration = newValue }
+        get{ return super.totalDuration }
+    }
+}
+s
+#endif
