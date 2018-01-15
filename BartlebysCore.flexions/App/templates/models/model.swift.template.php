@@ -1,11 +1,15 @@
 <?php echo GenerativeHelperForSwift::defaultHeader($f,$d); ?>
 
-<?php echo $imports ?>
-
+<?php echo $imports.cr(2) ?>
+#if os(macOS) && USE_COCOA_BINDINGS
+public typealias <?php echo ucfirst($d->name)?> = Dynamic<?php echo ucfirst($d->name).cr()?>
+#else
+public typealias <?php echo ucfirst($d->name)?> = Common<?php echo ucfirst($d->name).cr()?>
+#endif
 
 // MARK: <?php echo $d->description?>
 
-open class <?php echo ucfirst($d->name)?>:<?php echo GenerativeHelperForSwift::getBaseClass($d); ?>{
+open class Common<?php echo ucfirst($d->name)?>:<?php echo GenerativeHelperForSwift::getBaseClass($d); ?>{
 
     public typealias CollectedType = <?php echo ucfirst($d->name)?>
 
@@ -108,7 +112,7 @@ while ( $d ->iterateOnProperties() === true ) {
 // You Can use Dynamic Override to support Cocoa Bindings
 // This class can be used in a CollectionOf<T>
 
-@objc open class Dynamic<?php echo ucfirst($d->name)?>:<?php echo ucfirst($d->name)?>{
+@objc open class Dynamic<?php echo ucfirst($d->name)?>:Common<?php echo ucfirst($d->name)?>{
 <?php
 $d->resetPropertyIndex(); // Reset the iterator
 while ( $d ->iterateOnProperties() === true ) {
