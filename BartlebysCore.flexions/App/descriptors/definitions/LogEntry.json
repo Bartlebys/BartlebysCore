@@ -9,42 +9,42 @@
         "description": "The print entry counter",
         "default": -1,
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "line": {
         "type": "integer",
         "description": "The referent line",
         "default": -1,
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "elapsedTime": {
         "type": "double",
         "description": "The elasped duration",
         "default": -1,
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "message": {
         "type": "string",
         "description": "the message",
         "default": "$Default.NO_MESSAGE",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "file": {
         "type": "string",
         "description": "the file",
         "default": "$Default.NO_FILE",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "function": {
         "type": "string",
         "description": "the function",
         "default": "$Default.NO_FUNCTION",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "category": {
         "type": "enum",
@@ -58,22 +58,21 @@
         ],
         "default": ".standard",
         "supervisable":false,
-        "dynamic":false
+        "dynamic" : true
       },
       "decorative": {
         "type": "boolean",
         "description": "Is the entry decorative or significant? decoration includes separators, etc...",
         "default": "false",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
-      "_runUID": {
+      "runUID": {
         "type": "string",
-        "description": "Is the entry decorative or significant? decoration includes separators, etc...",
+        "description": "A session runUID identifyer",
         "default": "$Session.runUID",
-        "scope": "private",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       }
     },
     "metadata": {

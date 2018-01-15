@@ -10,35 +10,35 @@
         "default": "$Default.NO_NAME",
         "required":true,
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "elapsed":{
         "description":"The elasped time since app started up.",
         "type":"double",
         "default":0,
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "requestDuration":{
         "description":"The time interval in seconds from the time the request started to the time the request completed.",
         "type":"double",
         "default":"0",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "serializationDuration":{
         "description":" The time interval in seconds from the time the request completed to the time response serialization completed.",
         "type":"double",
         "default":"0",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "totalDuration":{
         "description":"The time interval in seconds from the time the request started to the time response serialization completed.",
         "type":"double",
         "default":"0",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       }
       ,"streamOrientation": {
         "type": "enum",
@@ -51,7 +51,7 @@
         ],
         "default": ".upStream",
         "supervisable": false,
-        "dynamic":false
+        "dynamic" : true
       }
     },
     "metadata": {

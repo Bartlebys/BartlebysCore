@@ -11,7 +11,7 @@
         "supervisable": false,
         "serializable": true,
         "cryptable": false,
-        "dynamic":false
+        "dynamic" : true
       },
       "data": {
         "type": "data",
@@ -20,7 +20,7 @@
         "supervisable": false,
         "serializable": true,
         "cryptable": false,
-        "dynamic":false
+        "dynamic" : true
       }
     },
     "metadata": {

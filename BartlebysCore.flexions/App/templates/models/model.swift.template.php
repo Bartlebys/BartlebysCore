@@ -28,7 +28,7 @@ while ( $d ->iterateOnProperties() === true ) {
 
     // Dynamism, method, scope, and mutability support
 
-    $dynanic=($property->isDynamic ? '@objc dynamic ':'');
+    $dynanic=($property->isDynamic ? '':''); // Dynamic has been transfered to mac Only DynamicEntities
     $method=($property->method==Method::IS_CLASS ? 'static ' : '' );
     $scope='';
     if($property->scope==Scope::IS_PRIVATE){
@@ -100,3 +100,68 @@ while ( $d ->iterateOnProperties() === true ) {
         return <?php echo ucfirst($d->name)?>.collectionName
     }
 }
+
+
+
+#if os(macOS)
+
+// You Can use Dynamic Override to support Cocoa Bindings
+// This class can be used in a CollectionOf<T>
+
+@objc open class Dynamic<?php echo ucfirst($d->name)?>:<?php echo ucfirst($d->name)?>{
+<?php
+$d->resetPropertyIndex(); // Reset the iterator
+while ( $d ->iterateOnProperties() === true ) {
+
+
+    $property = $d->getProperty();
+    $name = $property->name;
+    $method = ($property->method == Method::IS_CLASS ? 'static ' : '');
+    $scope = '';
+    if ($property->scope == Scope::IS_PRIVATE) {
+        $scope = 'private ';
+    } else if ($property->scope == Scope::IS_PROTECTED) {
+        $scope = 'internal ';
+    } else {
+        $scope = 'open '; // We could may be switch to public?
+    }
+    $mutable = ($property->mutability == Mutability::IS_VARIABLE ? 'var ' : 'let ');
+    $prefix = '@objc override dynamic ' . $method . $scope . $mutable;
+
+
+    if ($property->isDynamic) {
+
+        $typeName = '';
+        if ($property->type == FlexionsTypes::ENUM) {
+            $typeName = ucfirst($name);
+        } else if ($property->type == FlexionsTypes::COLLECTION) {
+            $instanceOf = FlexionsSwiftLang::nativeTypeFor($property->instanceOf);
+            if ($instanceOf == FlexionsTypes::NOT_SUPPORTED) {
+                $instanceOf = $property->instanceOf;
+            }
+            $typeName = '[' . ucfirst($instanceOf) . ']';
+        } else if ($property->type == FlexionsTypes::OBJECT) {
+            $typeName = ucfirst($property->instanceOf);
+        } else {
+            $nativeType = FlexionsSwiftLang::nativeTypeFor($property->type);
+            if (strpos($nativeType, FlexionsTypes::NOT_SUPPORTED) === false) {
+                $typeName = $nativeType;
+            } else {
+                $typeName = 'Not_Supported()';
+            }
+        }
+            echo("
+    $prefix $name : $typeName{
+        set{ super.$name = newValue }
+        get{ return super.$name }
+    }
+");
+
+
+
+    }
+}
+?>
+}
+s
+#endif
