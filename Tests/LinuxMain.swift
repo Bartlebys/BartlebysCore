@@ -7,4 +7,5 @@ XCTMain([
     testCase(AliasesTests.allTests),
     testCase(RelationsTests.allTests),
     testCase(DataPointKVS.allTests)
-])
+    ])
+
