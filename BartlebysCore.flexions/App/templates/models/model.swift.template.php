@@ -115,6 +115,10 @@ while ( $d ->iterateOnProperties() === true ) {
 
 
     $property = $d->getProperty();
+    if ($property->mutability != Mutability::IS_VARIABLE){
+        // Skip the non mutable props
+        continue;
+    }
     $name = $property->name;
     $method = ($property->method == Method::IS_CLASS ? 'static ' : '');
     $scope = '';
@@ -125,11 +129,15 @@ while ( $d ->iterateOnProperties() === true ) {
     } else {
         $scope = 'open '; // We could may be switch to public?
     }
-    $mutable = ($property->mutability == Mutability::IS_VARIABLE ? 'var ' : 'let ');
+
     $prefix = '@objc override dynamic ' . $method . $scope . $mutable;
 
 
     if ($property->isDynamic) {
+        $optionalOrNot='';
+        if(!isset($property->default)){
+            $optionalOrNot='?';
+        }
 
         $typeName = '';
         if ($property->type == FlexionsTypes::ENUM) {
@@ -151,7 +159,7 @@ while ( $d ->iterateOnProperties() === true ) {
             }
         }
             echo("
-    $prefix $name : $typeName{
+    $prefix $name : $typeName$optionalOrNot{
         set{ super.$name = newValue }
         get{ return super.$name }
     }
