@@ -34,27 +34,31 @@ public protocol FileStorage {
 
     // MARK: - Synchronous
 
-
-    /// Loads synchronously a file persistent proxy
-    /// Should normally not be used on Collections.
-    /// This method relay tasks progression
+    /// Loads a codable in the data point container Synchronously
+    /// Should normally not be used on registered Collections.
+    /// This method does not relay tasks progression
     ///
     /// - Parameters:
-    ///   - proxy: the proxy reference
-    /// - Throws: throws decoding issues
-    func loadSync<T:Codable & FilePersistent & Initializable>(proxy: inout T)throws
-
+    ///   - fileName: the file name
+    ///   - relativeFolderPath: the relative folder path
+    /// - Returns: the instance
+    func loadSync<T:Codable & Initializable >(fileName:String,relativeFolderPath:String)throws->T
 
     /// Save synchronously an Encodable & FilePersitent
     ///
     /// - Parameters:
     ///   - element: the element to save
-    ///   - coder: the coder to use
     /// - Throws: throws encoding and file IO errors
-    func saveSync<T:Codable & FilePersistent & Initializable>(element:T)throws
+    func saveSync<T:Codable>(element:T,fileName:String,relativeFolderPath:String)throws
+
+
+    /// Erases the file if there is one
+    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
+    ///
+    /// - Parameter collection: the collection
+    func eraseFile(fileName:String,relativeFolderPath:String)
 
     // MARK : -
-
 
     /// Returns the URL of a FilePersistent element
     ///
@@ -63,5 +67,12 @@ public protocol FileStorage {
     func getURL<T:FilePersistent>(of element:T) -> URL
 
 
+    /// Returns the URL
+    ///
+    /// - Parameters:
+    ///   - named: the name without the extension
+    ///   - relativeFolderPath: the relative folder path
+    /// - Returns: the URL
+    func getURL(ofFile named:String,within relativeFolderPath:String) -> URL
 }
 

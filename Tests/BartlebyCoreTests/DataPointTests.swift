@@ -13,19 +13,13 @@ import XCTest
 #endif
 
 
-fileprivate struct PersistentSample:Codable,Initializable,FilePersistent{
+fileprivate struct PersistentObject:Codable,Initializable{
 
 
     var x:Int = 0
 
     // MARK: - Initializable
     init() {}
-
-    //MARK: - FilePersistent
-
-    var fileName: String = "Sample"
-
-    var relativeFolderPath: String = Default.VOID_STRING
 
 }
 
@@ -170,6 +164,23 @@ class DataPointTests: BaseDataPointTestCase{
 
 
     func test003_saveAndLoadSync(){
+
+        var o = PersistentObject()
+        o.x = 666
+        do{
+            let datapoint = MyDataPoint()
+            let fileName = "persistentObject"
+            try datapoint.storage.saveSync(element: o, fileName:fileName , relativeFolderPath: "")
+
+            let o2:PersistentObject = try datapoint.storage.loadSync(fileName: fileName, relativeFolderPath: "")
+            XCTAssert(o2.x == o.x, "o2.x should equal o.x, currentValue: \(o2.x)")
+
+            datapoint.storage.eraseFile(fileName: fileName, relativeFolderPath: "")
+
+        }catch{
+            XCTFail("\(error)")
+        }
+
 
 
     }

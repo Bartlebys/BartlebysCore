@@ -224,36 +224,35 @@ extension Storage: FileStorage{
     // MARK: - Synchronous
 
 
-    /// Loads synchronously a file persistent proxy
-    /// Should normally not be used on Collections.
-    /// This method does not relay tasks progression
+    /// Loads a codable in the data point container Synchronously
     ///
     /// - Parameters:
-    ///   - proxy: the proxy reference
-    /// - Throws: throws decoding issues
-    public func loadSync<T:Codable & FilePersistent & Initializable>(proxy: inout T)throws{
+    ///   - fileName: the file name
+    ///   - relativeFolderPath: the relative folder path
+    /// - Returns: the instance
+    public func loadSync<T:Codable & Initializable >(fileName:String,relativeFolderPath:String)throws->T{
         if !self._volatile{
-            let url = self.getURL(of: proxy)
+            let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
             // We do not use the storage file manager.
             // That performs on an async utility queue
-            if FileManager.default.fileExists(atPath: url.path) {
+            if Storage._fileManager.fileExists(atPath: url.path) {
                 let data = try Data(contentsOf: url)
-                proxy = try self.coder.decode(T.self, from: data)
+                return try self.coder.decode(T.self, from: data)
             }
-
         }
+        return T()
     }
 
 
-    /// Save synchronously an FilePersitent & Encodable
+    /// Save synchronously an Encodable & FilePersitent
     ///
     /// - Parameters:
     ///   - element: the element to save
     /// - Throws: throws encoding and file IO errors
-    public func saveSync<T:Codable & FilePersistent & Initializable>(element:T)throws{
+    public func saveSync<T:Codable>(element:T,fileName:String,relativeFolderPath:String)throws{
         if !self._volatile  {
-            let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
-            let url = self.getURL(of: element)
+            let directoryURL = self.baseUrl.appendingPathComponent(relativeFolderPath)
+            let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
 
             var isDirectory: ObjCBool = true
             if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
@@ -267,6 +266,22 @@ extension Storage: FileStorage{
         }
     }
 
+
+    /// Erases the file if there is one
+    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
+    ///
+    /// - Parameter collection: the collection
+    public func eraseFile(fileName:String,relativeFolderPath:String){
+        do{
+            let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
+            if Storage._fileManager.fileExists(atPath: url.path) {
+                try Storage._fileManager.removeItem(at: url)
+            }
+        }catch{
+            Logger.log("\(error)",category: .critical)
+        }
+    }
+
     // MARK : -
 
     /// Returns the URL of a FilePersistent element
@@ -274,8 +289,23 @@ extension Storage: FileStorage{
     /// - Parameter collection: the collection
     /// - Returns: the collection file URL
     public func getURL<T:FilePersistent>(of element:T) -> URL {
-        return self.baseUrl.appendingPathComponent(element.relativeFolderPath).appendingPathComponent(element.fileName + self.fileExtension)
+        return self.getURL(ofFile: element.fileName, within: element.relativeFolderPath)
     }
+
+
+
+    /// Returns the URL
+    ///
+    /// - Parameters:
+    ///   - named: the name without the extension
+    ///   - relativeFolderPath: the relative folder path
+    /// - Returns: the URL
+    public func getURL(ofFile named:String,within relativeFolderPath:String) -> URL {
+        return self.baseUrl.appendingPathComponent(relativeFolderPath).appendingPathComponent(named + self.fileExtension)
+    }
+
+
+
 
 
     
