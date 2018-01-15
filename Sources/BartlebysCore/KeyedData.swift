@@ -16,10 +16,10 @@ open class KeyedData:Model{
     public typealias CollectedType = KeyedData
 
 	//The key
-	@objc dynamic open var key:String = Default.NO_KEY
+	open var key:String = Default.NO_KEY
 
 	//The Data
-	@objc dynamic open var data:Data = Data()
+	open var data:Data = Data()
 
 
     // MARK: - Codable

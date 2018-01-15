@@ -12,7 +12,7 @@ import XCTest
 #endif
 
 
-class CollectionOfTests: BaseDataPointTestCase{
+class ObjectCollectionTests: BaseDataPointTestCase{
 
     // MARK: - Tests
     
@@ -24,7 +24,7 @@ class CollectionOfTests: BaseDataPointTestCase{
         ("test005_Count", test005_Count),
         ("test006_UnicityOnUpserts",test006_UnicityOnUpserts),
         ("test007_PluralityOnAppends",test007_PluralityOnAppends),
-        ("test008_Selection_persistency",test008_Selection_persistency),
+       // ("test008_Selection_persistency",test008_Selection_persistency), /// XCTestExpectation fails on Linux
         ]
     
     
@@ -166,6 +166,7 @@ class CollectionOfTests: BaseDataPointTestCase{
         }
     }
 
+    #if !os(Linux)
 
     func test008_Selection_persistency(){
 
@@ -255,7 +256,6 @@ class CollectionOfTests: BaseDataPointTestCase{
 
         wait(for: [expectation], timeout: 1.0)
     }
-
-
+    #endif
 
 }

@@ -17,7 +17,7 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
     // MARK: - Collectable
 
     // The id 
-    @objc dynamic public var id:UID = Utilities.createUID()
+   public var id:UID = Utilities.createUID()
 
     // A reference to the holding dataPoint
     public var dataPoint:DataPoint?
@@ -70,7 +70,7 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
 
     // MARK: Collectable.Identifiable
 
-    @objc dynamic public var UID:UID {
+    public var UID:UID {
         set{
             self.id = UID
         }
@@ -97,7 +97,7 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
     // MARK: - Properties used for Relational Model
 
     //The UIDS of the owners
-    @objc dynamic open var ownedBy:[String] = [String]()  {
+    open var ownedBy:[String] = [String]()  {
         didSet {
             if !self.wantsQuietChanges && ownedBy != oldValue {
                 self.indistinctCollection?.didChange()
@@ -106,7 +106,7 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
     }
 
     //The UIDS of the free relations
-    @objc dynamic open var freeRelations:[String] = [String]()  {
+    open var freeRelations:[String] = [String]()  {
         didSet {
             if !self.wantsQuietChanges && ownedBy != oldValue {
                 self.indistinctCollection?.didChange()
@@ -115,7 +115,7 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
     }
 
     //The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
-    @objc dynamic open var owns:[String] = [String]()
+    open var owns:[String] = [String]()
 
 
 
@@ -192,6 +192,21 @@ open class Model:Object,Collectable,Codable,CopyingProtocol,Payload{
         self._quietChanges=true
         changes()
         self._quietChanges=false
+    }
+
+
+    /// MARK: - CustomStringConvertible
+
+    open override var description: String {
+        do{
+            let data =  try JSON.prettyEncoder.encode(self)
+            if let json = String(data:data,encoding:.utf8){
+                return json
+            }
+        }catch{
+            return "\(error)"
+        }
+        return "Description is not available"
     }
 
 }

@@ -16,19 +16,19 @@ open class Metrics:Model{
     public typealias CollectedType = Metrics
 
 	//The action name e.g: UpdateUser
-	@objc dynamic open var operationName:String = Default.NO_NAME
+	open var operationName:String = Default.NO_NAME
 
 	//The elasped time since app started up.
-	@objc dynamic open var elapsed:Double = 0
+	open var elapsed:Double = 0
 
 	//The time interval in seconds from the time the request started to the time the request completed.
-	@objc dynamic open var requestDuration:Double = 0
+	open var requestDuration:Double = 0
 
 	// The time interval in seconds from the time the request completed to the time response serialization completed.
-	@objc dynamic open var serializationDuration:Double = 0
+	open var serializationDuration:Double = 0
 
 	//The time interval in seconds from the time the request started to the time response serialization completed.
-	@objc dynamic open var totalDuration:Double = 0
+	open var totalDuration:Double = 0
 
 	//the verification method
 	public enum StreamOrientation:String{

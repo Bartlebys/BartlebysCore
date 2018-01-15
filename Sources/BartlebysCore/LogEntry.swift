@@ -16,22 +16,22 @@ open class LogEntry:Model{
     public typealias CollectedType = LogEntry
 
 	//The print entry counter
-	@objc dynamic open var counter:Int = -1
+	open var counter:Int = -1
 
 	//The referent line
-	@objc dynamic open var line:Int = -1
+	open var line:Int = -1
 
 	//The elasped duration
-	@objc dynamic open var elapsedTime:Double = -1
+	open var elapsedTime:Double = -1
 
 	//the message
-	@objc dynamic open var message:String = Default.NO_MESSAGE
+	open var message:String = Default.NO_MESSAGE
 
 	//the file
-	@objc dynamic open var file:String = Default.NO_FILE
+	open var file:String = Default.NO_FILE
 
 	//the function
-	@objc dynamic open var function:String = Default.NO_FUNCTION
+	open var function:String = Default.NO_FUNCTION
 
 	//the log category
 	public enum Category:String{
@@ -42,10 +42,10 @@ open class LogEntry:Model{
 	open var category:Category = .standard
 
 	//Is the entry decorative or significant? decoration includes separators, etc...
-	@objc dynamic open var decorative:Bool = false
+	open var decorative:Bool = false
 
 	//Is the entry decorative or significant? decoration includes separators, etc...
-	@objc dynamic private var _runUID:String = Session.runUID
+	private var _runUID:String = Session.runUID
 
 
     // MARK: - Codable

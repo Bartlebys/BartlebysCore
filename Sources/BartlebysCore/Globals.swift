@@ -18,13 +18,13 @@ public typealias UID = String
 // MARK: - Time
 
 // The start Time is define when launching.
-fileprivate let _startTime = CFAbsoluteTimeGetCurrent()
+fileprivate let _startTime = AbsoluteTimeGetCurrent()
 
 /// Returns the elapsed time since launch time.
 ///
 /// - Returns: the elapsed tile
 public func getElapsedTime()->Double {
-    return CFAbsoluteTimeGetCurrent() - _startTime
+    return AbsoluteTimeGetCurrent() - _startTime
 }
 
 #if os(Linux)
@@ -34,5 +34,12 @@ public func getElapsedTime()->Double {
         public init(){
         }
     }
+
+
+    public func NSLocalizedString(_ key: String, tableName: String, comment: String) -> String{
+        return key   // @Todo Linux
+    }
+
+
 #endif
 

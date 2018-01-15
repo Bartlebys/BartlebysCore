@@ -19,7 +19,7 @@ public class TestObject:Model{
     public typealias CollectedType = TestObject
 
     // Test String
-    @objc dynamic open var string:String = Default.VOID_STRING
+    open var string:String = Default.VOID_STRING
 
     open var aliasOfKD:AliasOf<KeyedData>?
 

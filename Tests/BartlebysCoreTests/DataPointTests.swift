@@ -27,12 +27,13 @@ class DataPointTests: BaseDataPointTestCase{
     // MARK: - Tests
 
     static var allTests = [
-        ("test001_SaveDataPointAndReloadItsClone", test001_SaveDataPointAndReloadItsClone),
+        //("test001_SaveDataPointAndReloadItsClone", test001_SaveDataPointAndReloadItsClone), // Linux does not support XCTestExpectation
         ("test002_CollectionsReferences", test002_CollectionsReferences),
+        ("test003_saveAndLoadSync",test003_saveAndLoadSync),
     ]
 
     
-
+    #if !os(Linux)
     func test001_SaveDataPointAndReloadItsClone() {
 
 
@@ -138,7 +139,7 @@ class DataPointTests: BaseDataPointTestCase{
         wait(for: [expectation], timeout: 5.0)
     }
 
-
+    #endif
 
     func test002_CollectionsReferences() {
         do {

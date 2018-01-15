@@ -29,12 +29,12 @@ import Dispatch
 
 #elseif os(Linux)
 
-    open class Object {}
+    open class Object :NSObject {}
 
     public protocol CopyingProtocol {}
 
     public func AbsoluteTimeGetCurrent()->Double{
-        return Double(CFAbsoluteTimeGetCurrent())
+        return 0 // @todo linux
     }
 
 #endif

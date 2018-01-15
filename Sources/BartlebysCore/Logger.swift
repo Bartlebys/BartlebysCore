@@ -11,8 +11,8 @@ import Foundation
 extension LogEntry{
 
     /// Text Formatted log description
-    open override var description: String {
-        let filestr: NSString = file as NSString
+    open var toString: String {
+        let filestr: NSString = NSString(string: self.file)
         let elapsedSeconds = Int(self.elapsedTime).paddedString(8)
         return "\(self.counter.paddedString()) \(elapsedSeconds) \(self.category)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
     }
