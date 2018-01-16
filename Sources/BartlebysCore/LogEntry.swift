@@ -41,9 +41,10 @@ open class CommonLogEntry:Model{
 
 	//the log category
 	public enum Category:String{
+		case critical = "critical"
+		case warning = "warning"
 		case standard = "standard"
 		case temporary = "temporary"
-		case critical = "critical"
 	}
 	open var category:Category = .standard
 
