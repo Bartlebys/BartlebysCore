@@ -40,17 +40,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     public var delegate: DataPointDelegate = DataPointDelegatePlaceHolder()
 
     // The storage IO object: reads an writes the ObjectsCollections
-    public var storage = Storage()
-
-    // The base URL
-    public var baseWrapperURL:URL{
-        get{
-            return self.storage.baseUrl
-        }
-        set{
-            self.storage.baseUrl = newValue
-        }
-    }
+    public var storage:StorageProtocol = Storage()
 
     /// The associated session
     public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)

@@ -77,7 +77,7 @@ public final class Storage{
 
 // MARK: - FileStorage
 
-extension Storage: FileStorage{
+extension Storage: StorageProtocol{
 
 
     // MARK: - Asynchronous (on an serial queue)
@@ -172,28 +172,7 @@ extension Storage: FileStorage{
         Storage._serialQueue.async(execute: workItem)
     }
 
-    
-    /// Erases the file(s) of the collection if there is one
-    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
-    /// That's why it is synchronous.
-    ///
-    /// - Parameter collection: the collection
-    public func eraseFilesOfCollection<T:FilePersistent>(of element:T){
-        if self._volatile == true {
-            return
-        }
-        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
-            do{
-                let url = self.getURL(of: element)
-                if Storage._fileManager.fileExists(atPath: url.path) {
-                    try Storage._fileManager.removeItem(at: url)
-                }
-            }catch{
-                Logger.log("\(error)",category: .critical)
-            }
-        }
-        Storage._serialQueue.sync(execute: workItem)
-    }
+
 
     /// Relays to the observers and clean up the _progress
     ///
@@ -265,22 +244,6 @@ extension Storage: FileStorage{
         }
     }
 
-
-    /// Erases the file if there is one
-    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
-    ///
-    /// - Parameter collection: the collection
-    public func eraseFile(fileName:String,relativeFolderPath:String){
-        do{
-            let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
-            if Storage._fileManager.fileExists(atPath: url.path) {
-                try Storage._fileManager.removeItem(at: url)
-            }
-        }catch{
-            Logger.log("\(error)",category: .critical)
-        }
-    }
-
     // MARK : -
 
     /// Returns the URL of a FilePersistent element
@@ -304,7 +267,64 @@ extension Storage: FileStorage{
     }
 
 
+    // MARK: - File Erasure
 
+    /// Erases the file(s) of the collection if there is one
+    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
+    /// That's why it is synchronous.
+    ///
+    /// - Parameter collection: the collection
+    public func eraseFilesOfCollection<T:FilePersistent>(of element:T){
+        if self._volatile == true {
+            return
+        }
+        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
+            do{
+                let url = self.getURL(of: element)
+                if Storage._fileManager.fileExists(atPath: url.path) {
+                    try Storage._fileManager.removeItem(at: url)
+                }
+            }catch{
+                Logger.log("\(error)",category: .critical)
+            }
+        }
+        Storage._serialQueue.sync(execute: workItem)
+    }
+
+    /// Erases all the files.
+    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
+    /// That's why it is synchronous.
+    public func eraseFiles(){
+        if self._volatile == true {
+            return
+        }
+        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
+            do{
+                let url = self.baseUrl
+                if Storage._fileManager.fileExists(atPath: url.path) {
+                    try Storage._fileManager.removeItem(at: url)
+                }
+            }catch{
+                Logger.log("\(error)",category: .critical)
+            }
+        }
+        Storage._serialQueue.sync(execute: workItem)
+    }
+
+    /// Erases the file if there is one
+    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
+    ///
+    /// - Parameter collection: the collection
+    public func eraseFile(fileName:String,relativeFolderPath:String){
+        do{
+            let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
+            if Storage._fileManager.fileExists(atPath: url.path) {
+                try Storage._fileManager.removeItem(at: url)
+            }
+        }catch{
+            Logger.log("\(error)",category: .critical)
+        }
+    }
 
 
     

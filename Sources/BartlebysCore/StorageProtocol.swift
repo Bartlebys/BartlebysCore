@@ -8,7 +8,28 @@
 
 import Foundation
 
-public protocol FileStorage {
+public protocol StorageProtocol {
+
+    // The storage concrete coder
+    var coder:ConcreteCoder { get set }
+
+    /// Adds a progress observer
+    ///
+    /// - Parameter observer: the observer
+    func addProgressObserver(observer:StorageProgressDelegate)
+
+    /// Removes the progress observer
+    ///
+    /// - Parameter observer: the observer
+    func removeProgressObserver(observer:StorageProgressDelegate)
+
+    // The storage Base URL
+    var baseUrl:URL { get set}
+
+    /// If you call once this method the datapoint will not persist out of the memory anymore
+    /// You cannot turn back _volatile to false
+    /// This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
+    func becomeVolatile()
 
     // MARK: - Asynchronous (on an serial queue)
 
@@ -23,14 +44,6 @@ public protocol FileStorage {
     /// - Parameters:
     ///   - collection: the collection reference
     func saveCollection<T>(element:CollectionOf<T>)
-
-
-    /// Erases the file(s) of the collection if there is one
-    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
-    ///
-    /// - Parameter collection: the collection
-    func eraseFilesOfCollection<T>(of collection:CollectionOf<T>)
-
 
     // MARK: - Synchronous
 
@@ -51,28 +64,5 @@ public protocol FileStorage {
     /// - Throws: throws encoding and file IO errors
     func saveSync<T:Codable>(element:T,fileName:String,relativeFolderPath:String)throws
 
-
-    /// Erases the file if there is one
-    /// This method is very rarely useful (we currently use it in Unit tests tear downs for clean up)
-    ///
-    /// - Parameter collection: the collection
-    func eraseFile(fileName:String,relativeFolderPath:String)
-
-    // MARK : -
-
-    /// Returns the URL of a FilePersistent element
-    ///
-    /// - Parameter collection: the collection
-    /// - Returns: the collection file URL
-    func getURL<T:FilePersistent>(of element:T) -> URL
-
-
-    /// Returns the URL
-    ///
-    /// - Parameters:
-    ///   - named: the name without the extension
-    ///   - relativeFolderPath: the relative folder path
-    /// - Returns: the URL
-    func getURL(ofFile named:String,within relativeFolderPath:String) -> URL
 }
 

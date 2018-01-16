@@ -15,7 +15,7 @@ public enum AuthenticationMethod {
 /// Base Session Delegate check also ConcreteDataPoint
 public protocol SessionDelegate {
 
-    var storage:Storage { get set }
+    var storage:StorageProtocol { get set }
 
     /// The credentials should generaly not change during the session
     var credentials:Credentials { get set }

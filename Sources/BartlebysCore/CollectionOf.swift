@@ -244,10 +244,6 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    public var all:Array<T> {
       return self._items
    }
-
-   public var fileURL: URL? {
-      return self.dataPoint?.storage.getURL(of: self)
-   }
    
    // MARK: - Codable
 
