@@ -196,8 +196,8 @@ class ObjectCollectionTests: BaseDataPointTestCase{
             }else{
 
                 if progress.totalUnitCount > dataPoint.collectionsCount(){
-                    //XCTFail("progress.totalUnitCount == \(progress.totalUnitCount)")
-                    //expectation.fulfill()
+                    XCTFail("progress.totalUnitCount == \(progress.totalUnitCount)")
+                    expectation.fulfill()
                 }
 
                 if progress.completedUnitCount == progress.totalUnitCount{

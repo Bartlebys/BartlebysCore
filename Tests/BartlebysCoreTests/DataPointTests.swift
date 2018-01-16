@@ -48,7 +48,7 @@ class DataPointTests: BaseDataPointTestCase{
             let datapoint = self.getNewDataPoint()
 
             let metricsFileName = MyDataPoint.FileNames.metrics.rawValue
-            let managedModelsFileName = MyDataPoint.FileNames.models.rawValue
+            ///let managedModelsFileName = MyDataPoint.FileNames.models.rawValue
 
             // -----------------------------------
             // 1# Create or load the collection

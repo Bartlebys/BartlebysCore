@@ -24,7 +24,13 @@ public class Session {
     public static let voidPayload = VoidPayload()
 
     // The session Identifier
-    public var identifier: String = Default.NO_UID
+    public var identifier: String = Default.NO_UID{
+        didSet{
+            if oldValue != Default.NO_UID{
+                Logger.log("Attempt to reset the Session identifier", category: LogEntry.Category.critical)
+            }
+        }
+    }
 
     // A unique run identifier that changes on each launch
     open static let runUID: String = Utilities.createUID()
