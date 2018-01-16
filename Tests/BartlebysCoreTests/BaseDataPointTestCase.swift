@@ -92,12 +92,12 @@ public class MyDataPoint: DataPoint {
 
     public enum FileNames:String{
         case metrics
-        case models
+        case testObjects
     }
 
     // MARK: -  Collections of Models proxys
     public var metricsCollection: CollectionOf<Metrics> = CollectionOf<Metrics>(named:FileNames.metrics.rawValue,relativePath:"tests")
-    public var testObjectsCollection: CollectionOf<TestObject> = CollectionOf<TestObject>(named:FileNames.models.rawValue,relativePath:"tests")
+    public var testObjectsCollection: CollectionOf<TestObject> = CollectionOf<TestObject>(named:FileNames.testObjects.rawValue,relativePath:"tests")
 
     override public func prepareCollections(volatile: Bool) throws {
         try super.prepareCollections(volatile: volatile)
