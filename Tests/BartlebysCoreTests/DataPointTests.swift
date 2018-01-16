@@ -112,12 +112,7 @@ class DataPointTests: BaseDataPointTestCase{
                                                 }
                                             })
                                             dataPointClone.storage.addProgressObserver(observer: reloadHandler)
-
-                                      
-                                    }else{
-                                        XCTAssert(fileName == managedModelsFileName, "file name should be \"\(managedModelsFileName)\", current value: \(fileName)")
                                     }
-
                                 }
                             })
 
@@ -174,7 +169,7 @@ class DataPointTests: BaseDataPointTestCase{
             let o2:PersistentObject = try datapoint.storage.loadSync(fileName: fileName, relativeFolderPath: "")
             XCTAssert(o2.x == o.x, "o2.x should equal o.x, currentValue: \(o2.x)")
 
-            datapoint.storage.eraseFile(fileName: fileName, relativeFolderPath: "")
+            (datapoint.storage as? FileStorageProtocol)?.eraseFile(fileName: fileName, relativeFolderPath: "")
 
         }catch{
             XCTFail("\(error)")

@@ -24,7 +24,7 @@ public class Session {
     public static let voidPayload = VoidPayload()
 
     // The session Identifier
-    public var sessionIdentifier: String
+    public var identifier: String = Default.NO_UID
 
     // A unique run identifier that changes on each launch
     open static let runUID: String = Utilities.createUID()
@@ -39,9 +39,8 @@ public class Session {
     public let startTime = AbsoluteTimeGetCurrent()
 
 
-    public init(delegate:ConcreteDataPoint,sessionIdentifier:String) {
+    public init(delegate:ConcreteDataPoint) {
         self.delegate = delegate
-        self.sessionIdentifier = sessionIdentifier
     }
     
     public var elapsedTime:Double {
@@ -82,7 +81,7 @@ public class Session {
     public func runCall<T: Collectable, P>(_ operation: CallOperation<T, P>) throws {
         
         // We inject the session identifier in the call operation
-        operation.sessionIdentifier = self.sessionIdentifier
+        operation.sessionIdentifier = self.identifier
         
         let request: URLRequest
         request = try self.delegate.requestFor(operation)

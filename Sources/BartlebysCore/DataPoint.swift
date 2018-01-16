@@ -43,10 +43,17 @@ open class DataPoint: Object,ConcreteDataPoint{
     public var storage:StorageProtocol = Storage()
 
     /// The associated session
-    public lazy var session:Session = Session(delegate: self, sessionIdentifier:self.sessionIdentifier)
+    public lazy var session:Session = Session(delegate: self)
     
     /// Its session identifier
-    public var sessionIdentifier: String = "NOT_IDENTIFIED"
+    public var sessionIdentifier: String {
+        get{
+            return self.session.identifier
+        }
+        set{
+            self.session.identifier = newValue
+        }
+    }
 
     /// Contains all the data Point collections
     /// Populated by registerCollection
