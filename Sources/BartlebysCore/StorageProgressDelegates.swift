@@ -63,10 +63,10 @@ open class AutoRemovableStorageProgressHandler:ProgressDelegate{
     ///   - message: a contextual messsage
     ///   - progress: the progress object
     override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
-        self.handler(fileName, success, message, progress)
         if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.storage.removeProgressObserver(observer: self)
         }
+        self.handler(fileName, success, message, progress)
     }
 }
 
@@ -91,13 +91,13 @@ public class AutoRemovableSavingDelegate:ProgressDelegate{
     ///   - message: a contextual messsage
     ///   - progress: the progress object
     override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
+        if progress.totalUnitCount == progress.completedUnitCount{
+            self.dataPoint.storage.removeProgressObserver(observer: self)
+        }
         if !success{
             self.dataPoint.delegate.collectionDidFailToSave(message:message ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.delegate.collectionDidSaveSuccessFully()
-        }
-        if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.storage.removeProgressObserver(observer: self)
         }
     }
 }
@@ -123,13 +123,13 @@ public class AutoRemovableLoadingDelegate:ProgressDelegate{
     ///   - message: a contextual messsage
     ///   - progress: the progress object
     override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
+        if progress.totalUnitCount == progress.completedUnitCount{
+            self.dataPoint.storage.removeProgressObserver(observer: self)
+        }
         if !success{
             self.dataPoint.delegate.collectionDidFailToLoad(message: message ?? "Failure when loading \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.delegate.collectionDidLoadSuccessFully()
-        }
-        if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.storage.removeProgressObserver(observer: self)
         }
     }
 }
