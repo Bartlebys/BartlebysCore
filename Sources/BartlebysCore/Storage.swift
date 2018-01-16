@@ -60,7 +60,15 @@ public final class Storage{
     
     fileprivate var _progress = Progress()
 
+    fileprivate func _incrementProgressTotalUnitCount(){
+        self._progress.totalUnitCount += 1
+    }
+
     public func addProgressObserver(observer:StorageProgressDelegate){
+        guard self._observers.index(where:{ $0.identifier == observer.identifier }) == nil else{
+            Logger.log("Attempt to a StorageProgressDelegate multiple times \(observer.identifier)", category: .warning)
+            return
+        }
         self._observers.append(observer)
     }
     
@@ -94,28 +102,17 @@ extension Storage: StorageProtocol{
             return
         }
 
-        guard let dataPoint = proxy.dataPoint else {
-            let error = FileStorageError.undefinedDataPoint
-            self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: false, error: error)
-            return
-        }
-
-        DispatchQueue.main.async {
-            self._progress.totalUnitCount += 1
-        }
-
+        self._incrementProgressTotalUnitCount()
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
             do {
                 let url = self.getURL(of: proxy)
                 if Storage._fileManager.fileExists(atPath: url.path) {
                     let data = try Data(contentsOf: url)
                     let collection = try self.coder.decode(CollectionOf<T>.self, from: data)
-                    print("\(getElapsedTime()), \(String(describing: type(of: dataPoint))), url= \(url)")
                     DispatchQueue.main.async {
                         proxy.append(contentsOf: collection)
                     }
                 }
-                
                 // The collection has been saved.
                 self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: true, error: nil)
 
@@ -124,6 +121,7 @@ extension Storage: StorageProtocol{
             }
         }
         Storage._serialQueue.async(execute: workItem)
+
     }
     
     
@@ -140,27 +138,22 @@ extension Storage: StorageProtocol{
             return
         }
 
-        DispatchQueue.main.async {
-            self._progress.totalUnitCount += 1
-        }
-
+        self._incrementProgressTotalUnitCount()
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
-            
+
             do {
                 let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
                 let url = self.getURL(of: element)
-                
+
                 var isDirectory: ObjCBool = true
                 if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
                     try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                 }
-                
+
                 let data = try self.coder.encode(element)
                 try data.write(to: url)
                 element.hasChanged = false
 
-
-                
                 // The collection has been saved.
                 self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: true, error: nil)
 
@@ -168,7 +161,6 @@ extension Storage: StorageProtocol{
                 self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: false, error: error)
             }
         }
-
         Storage._serialQueue.async(execute: workItem)
     }
 
