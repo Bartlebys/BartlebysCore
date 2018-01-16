@@ -29,7 +29,7 @@ import Dispatch
 
 #elseif os(Linux)
 
-    open class Object :NSObject {}
+    open class Object : NSObject {}
 
     public protocol CopyingProtocol {}
 
