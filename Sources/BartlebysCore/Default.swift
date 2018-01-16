@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Default{
+public class Default{
 
     static public let VOID_STRING=""
     static public let NO_STRING_ERROR: String = "NO_STRING_ERROR"
