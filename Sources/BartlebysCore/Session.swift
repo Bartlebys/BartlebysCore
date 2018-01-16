@@ -26,8 +26,8 @@ public class Session {
     // The session Identifier
     public var identifier: String = Default.NO_UID{
         didSet{
-            if oldValue != Default.NO_UID{
-                Logger.log("Attempt to reset the Session identifier", category: LogEntry.Category.critical)
+            if oldValue != Default.NO_UID {
+                Logger.log("The Session identifier has been reset, old identifier:\(oldValue) new identifier: \(identifier) ", category: .warning)
             }
         }
     }
