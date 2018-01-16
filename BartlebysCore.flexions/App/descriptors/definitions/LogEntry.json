@@ -52,9 +52,10 @@
         "enumPreciseType": "LogEntry.Category",
         "description": "the log category",
         "enum": [
+          "critical",
+          "warning",
           "standard",
-          "temporary",
-          "critical"
+          "temporary"
         ],
         "default": ".standard",
         "supervisable":false,
