@@ -149,8 +149,9 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       self.hasChanged = true
       if let idx = self.index(where: {$0.id == element.id}) {
          self[idx] = element
+         self.reference(element)
       } else {
-         self._items.append(element)
+         self.append(element)
       }
    }
 
