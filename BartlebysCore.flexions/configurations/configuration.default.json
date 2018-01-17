@@ -1,0 +1,18 @@
+{
+    "description": "A configuration file for flexions 3.0.",
+    "informations": "https://bartlebys.org/documentation/targetfiles",
+    "targets": {
+        "YouDub": {
+            "project": "${ConfPath}",
+            "stage": "development",
+            "variables": {
+                "CorexOS_exportPath": "${CoreSources}",
+                "eraseFilesOnGeneration": false
+            }
+        }
+    },
+    "variables": {
+        "CoreSources":"../Sources/BartlebysCore",
+        "ConfPath": "../BartlebysCore.flexions/App"
+    }
+}

@@ -2,7 +2,7 @@
   "name": "KeyedData",
   "definition": {
     "explicitType": "Model",
-    "description": "A simple wrapper to associate a key and a Data",
+    "description": "A simple wrapper to associate a key and a Data (used by core KVS)",
     "properties": {
       "key": {
         "type": "string",
