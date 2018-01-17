@@ -16,7 +16,7 @@ public typealias KeyedData = DynamicKeyedData
 public typealias KeyedData = CommonKeyedData
 #endif
 
-// MARK: A simple wrapper to associate a key and a Data
+// MARK: A simple wrapper to associate a key and a Data (used by core KVS)
 open class CommonKeyedData:Model{
 
     public typealias CollectedType = KeyedData
