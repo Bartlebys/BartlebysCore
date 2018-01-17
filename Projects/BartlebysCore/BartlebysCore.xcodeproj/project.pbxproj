@@ -827,6 +827,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5EC9F871FF655C4008BF543 /* Build configuration list for PBXNativeTarget "BartlebysCore macOS" */;
 			buildPhases = (
+				E5439425200FB4C900BD36B9 /* ShellScript */,
 				E5EC9F711FF655C4008BF543 /* Sources */,
 				E5EC9F721FF655C4008BF543 /* Frameworks */,
 				E5EC9F731FF655C4008BF543 /* Headers */,
@@ -953,6 +954,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5F3CE0A200D1C2000AB9A44 /* Build configuration list for PBXNativeTarget "BartlebysCore macOSCocoaBindings" */;
 			buildPhases = (
+				E5439424200F8F2500BD36B9 /* ShellScript */,
 				E5F3CDC2200D1C2000AB9A44 /* Sources */,
 				E5F3CE06200D1C2000AB9A44 /* Frameworks */,
 				E5F3CE07200D1C2000AB9A44 /* Headers */,
@@ -1092,6 +1094,35 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E5439424200F8F2500BD36B9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/../../BartlebysCore.flexions/\n./generate.sh";
+		};
+		E5439425200FB4C900BD36B9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/../../BartlebysCore.flexions/\n./generate.sh";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E5EC9F711FF655C4008BF543 /* Sources */ = {
