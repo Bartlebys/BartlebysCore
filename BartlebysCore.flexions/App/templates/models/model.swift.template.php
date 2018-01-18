@@ -90,7 +90,7 @@ while ( $d ->iterateOnProperties() === true ) {
         <?php echo $superInit ?>
     }
 <?php
-    $ImplementUniversalType = (GenerativeHelperForSwift::getBaseClass($d) == "Model");
+    $ImplementUniversalType = (GenerativeHelperForSwift::getBaseClass($d) == "Model" || GenerativeHelperForSwift::getBaseClass($d) == "ManagedModel" );
     if ($ImplementUniversalType == true ){
         echo("
     // MARK: - UniversalType
