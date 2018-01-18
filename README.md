@@ -124,7 +124,7 @@ public typealias MyModel = CommonMyModel
 
 - How to deal with Relations between Entities? BartlebysCore's approaches are described in [RelationsBetweenModels.md](Documents/RelationsBetweenModels.md)
 
-![Bartleby's](Documents/bartlebys.jpg)
+![Bartleby's](Documents/assets/bartlebys.jpg)
 
 
 # Bartleby's Core License

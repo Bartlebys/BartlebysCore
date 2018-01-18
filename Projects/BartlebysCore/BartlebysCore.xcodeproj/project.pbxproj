@@ -461,6 +461,8 @@
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+AliasesResolutions.swift"; sourceTree = "<group>"; };
 		E56AAA17201097080082D4D6 /* CodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableObject.swift; sourceTree = "<group>"; };
+		E56AAA1D2010A0710082D4D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		E56AAA1E2010A08E0082D4D6 /* Documents */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Documents; path = ../../Documents; sourceTree = "<group>"; };
 		E58556CF200DF79700734D28 /* BartlebysCore.flexions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BartlebysCore.flexions; path = ../../BartlebysCore.flexions; sourceTree = "<group>"; };
 		E59315F9200E335800680C07 /* FileStorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorageProtocol.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
@@ -570,6 +572,8 @@
 		4D55FC271FDAF5AC001D91CE = {
 			isa = PBXGroup;
 			children = (
+				E56AAA1D2010A0710082D4D6 /* README.md */,
+				E56AAA1E2010A08E0082D4D6 /* Documents */,
 				E58556CF200DF79700734D28 /* BartlebysCore.flexions */,
 				4D55FC3C1FDAF5CF001D91CE /* Sources */,
 				E5F3CDA8200CE50100AB9A44 /* BartlebysCoreTests */,
