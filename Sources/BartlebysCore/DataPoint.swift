@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if !MERGE_SWIFT_MODULES
+    import BTree
+#endif
 
 public enum DataPointError : Error{
     case invalidURL
@@ -67,8 +70,8 @@ open class DataPoint: Object,ConcreteDataPoint{
     fileprivate var _collectionsPerCollectedTypeName = [String:FileSavable]()
 
     // this centralized dictionary allows to access to any referenced object by its UID
-    // Future versions will use A binary tree.
-    fileprivate var _instancesByUID=[String: Any]()
+    // Uses a binary tree
+    fileprivate var _instancesByUID=Map<UID,Any>()
 
     /// Defered Ownership
     /// If we receive a Instance that refers to an unexisting Owner
