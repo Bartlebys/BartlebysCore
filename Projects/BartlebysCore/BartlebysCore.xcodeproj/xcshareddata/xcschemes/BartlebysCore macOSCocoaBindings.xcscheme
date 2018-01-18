@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E5EC9F7D1FF655C4008BF543"
+               BuildableName = "BartlebysCore macOSTests.xctest"
+               BlueprintName = "BartlebysCore macOSTests"
+               ReferencedContainer = "container:BartlebysCore.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E5F3CDC1200D1C2000AB9A44"
+            BuildableName = "BartlebysCore.framework"
+            BlueprintName = "BartlebysCore macOSCocoaBindings"
+            ReferencedContainer = "container:BartlebysCore.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

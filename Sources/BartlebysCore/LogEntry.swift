@@ -121,6 +121,7 @@ open class CommonLogEntry:Model{
     override  open var d_collectionName:String{
         return LogEntry.collectionName
     }
+
 }
 
 

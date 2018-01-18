@@ -89,20 +89,27 @@ while ( $d ->iterateOnProperties() === true ) {
     required public init() {
         <?php echo $superInit ?>
     }
-
+<?php
+    $ImplementUniversalType = (GenerativeHelperForSwift::getBaseClass($d) == "Model");
+    if ($ImplementUniversalType == true ){
+        echo("
     // MARK: - UniversalType
 
-    <?php echo $inheritancePrefix?> open class var typeName:String{
-        return "<?php echo ucfirst($d->name) ?>"
+    $inheritancePrefix open class var typeName:String{
+        return \"".ucfirst($d->name)."\"
     }
 
-    <?php echo $inheritancePrefix?> open class var collectionName:String{
-        return "<?php echo lcfirst(Pluralization::pluralize($d->name)) ?>"
+    $inheritancePrefix open class var collectionName:String{
+        return \"".lcfirst(Pluralization::pluralize($d->name))."\"
     }
 
-    <?php echo $inheritancePrefix?> open var d_collectionName:String{
-        return <?php echo ucfirst($d->name)?>.collectionName
+    $inheritancePrefix open var d_collectionName:String{
+        return ".ucfirst($d->name).".collectionName
     }
+");
+    }
+?>
+
 }
 
 
