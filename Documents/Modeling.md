@@ -7,19 +7,22 @@ It will converge as much as possible with [JSON Schema](http://json-schema.org/e
 
 - You can find Bartleby's core generated entities models in [BartlebysCore.flexions/App/descriptors/definitions](../BartlebysCore.flexions/App/descriptors/definitions/) 
 
+The entity
+
 ```json
 {
-     // the entity 
-  
   "name": "Metrics", 
-  	
-  
+  "metadata": {},
   "definition": {
     "explicitType":"Model",
     "description": "Bartleby's Core: a value object used to record metrics",  
-	 
-	 // the properties 
-	 
+    ...
+
+```
+
+The properties
+
+```json
     "properties": {
       "operationName":{
         "type": "string",
@@ -70,11 +73,7 @@ It will converge as much as possible with [JSON Schema](http://json-schema.org/e
         "supervisable": false,
         "dynamic" : true
       }
-    },
-    "metadata": {
-    }
-  }
-}
+	...
 ```
 
 
