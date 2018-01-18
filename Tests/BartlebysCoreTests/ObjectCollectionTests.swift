@@ -24,8 +24,8 @@ class ObjectCollectionTests: BaseDataPointTestCase{
         ("test005_Count", test005_Count),
         ("test006_UnicityOnUpserts",test006_UnicityOnUpserts),
         ("test007_PluralityOnAppends",test007_PluralityOnAppends),
-       // ("test008_Selection_persistency",test008_Selection_persistency), /// XCTestExpectation fails on Linux
-        ]
+        // ("test008_Selection_persistency",test008_Selection_persistency), /// XCTestExpectation fails on Linux
+    ]
     
     
     override func setUp() {
@@ -175,6 +175,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
         let dataPoint = self.getNewDataPoint()
         let collection = dataPoint.metricsCollection
 
+
         let metrics1 = Metrics()
         metrics1.operationName = "op1"
         let metrics2 = Metrics()
@@ -189,73 +190,102 @@ class ObjectCollectionTests: BaseDataPointTestCase{
         // select some items
         collection.selectedItems = [metrics3,metrics1]
 
-        let saveHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
-            if !success{
-                XCTFail("datapoint.save() did fail: \(String(describing: message))")
+
+        // The delegate encapsulates the tests logic
+        class Test008Delegate:DataPointDelegate{
+
+            var expectation:XCTestExpectation
+            var collection:CollectionOf<Metrics>
+            var dataPoint:MyDataPoint
+            var metrics1UID:String
+            var metrics3UID:String
+
+            init(expectation: XCTestExpectation,
+                 collection: CollectionOf<Metrics>,
+                 dataPoint: MyDataPoint,
+                 metrics1UID: UID,
+                 metrics3UID: UID){
+                self.expectation = expectation
+                self.collection = collection
+                self.dataPoint = dataPoint
+                self.metrics1UID = metrics1UID
+                self.metrics3UID = metrics3UID
+            }
+
+            func collectionDidLoadSuccessFully(){
+                // That's normal
+            }
+            func collectionDidFailToLoad(message:String){
+                XCTFail("collectionDidFailToLoad: \(message)")
                 expectation.fulfill()
-            }else{
-                // @FRANK
-                if progress.totalUnitCount > dataPoint.collectionsCount(){
-                    print("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(dataPoint.collectionsCount())")
-                    print("-")
-                    //XCTFail()
-                    //expectation.fulfill()
-                    return
+            }
+            func collectionDidSaveSuccessFully(){
+
+                // That's the main test
+                // The collection has been saved
+                // Let's reload after
+                // reseting the selectedItems
+                // cleaning up the key data Storage
+
+                self.collection.selectedItems = [Metrics]()
+                while self.dataPoint.keyedDataCollection.count > 0{
+                    self.dataPoint.keyedDataCollection.remove(at: 0)
                 }
 
-                if progress.completedUnitCount == progress.totalUnitCount{
-                    print("progress.totalUnitCount \(progress.totalUnitCount) progress.completedUnitCount \(progress.completedUnitCount)")
-                        // It is finished
-                        // Let's reload after
-                        // reseting the selectedItems
-                        // cleaning up the key data Storage
-                        collection.selectedItems = [Metrics]()
-                        while dataPoint.keyedDataCollection.count > 0{
-                            dataPoint.keyedDataCollection.remove(at: 0)
+                let reloadHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
+                    if !success{
+                        XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
+                        self.expectation.fulfill()
+                    }else{
+                        print("progress.totalUnitCount \(progress.totalUnitCount) progress.completedUnitCount  \(progress.completedUnitCount)")
+                        if progress.totalUnitCount > self.dataPoint.collectionsCount(){
+                            XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.dataPoint.collectionsCount())")
+                            self.expectation.fulfill()
+                            return
+                        }
+                        if progress.completedUnitCount == progress.totalUnitCount{
+                            // It is finished
+                            guard let selectedItems = self.dataPoint.metricsCollection.selectedItems else{
+                                XCTFail("Void metricsCollection.selectedItems")
+                                self.expectation.fulfill()
+                                return
+                            }
+                            XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
+                            XCTAssert(selectedItems.filter{ $0.operationName == "op3"}.count == 1, "Should contain a op3")
+                            XCTAssert(selectedItems.filter{ $0.operationName == "op1"}.count == 1, "Should contain a op1")
+                            XCTAssert(selectedItems.filter{ $0.UID == self.metrics3UID }.count == 1, "Should contain metrics3")
+                            XCTAssert(selectedItems.filter{ $0.UID == self.metrics1UID }.count == 1, "Should contain metrics1")
+                            self.expectation.fulfill()
                         }
 
-                        let reloadHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
-                            if !success{
-                                XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
-                                expectation.fulfill()
-                            }else{
-                                if fileName == dataPoint.metricsCollection.fileName{
-
-                                    if progress.completedUnitCount == progress.totalUnitCount{
-                                        // It is finished
-                                        guard let selectedItems = dataPoint.metricsCollection.selectedItems else{
-                                            XCTFail("Void metricsCollection.selectedItems")
-                                            expectation.fulfill()
-                                            return
-                                        }
-                                        XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
-                                        XCTAssert(selectedItems.filter{ $0.operationName == "op3"}.count == 1, "Should contain a op3")
-                                        XCTAssert(selectedItems.filter{ $0.operationName == "op1"}.count == 1, "Should contain a op1")
-                                        XCTAssert(selectedItems.filter{ $0.UID == metrics3.UID }.count == 1, "Should contain metrics3")
-                                        XCTAssert(selectedItems.filter{ $0.UID == metrics1.UID }.count == 1, "Should contain metrics1")
-                                        expectation.fulfill()
-                                    }
-                                }
-                            }
-                        })
-                        // Reload the metrics
-                        dataPoint.storage.addProgressObserver(observer: reloadHandler)
-                        dataPoint.storage.loadCollection(on: dataPoint.keyedDataCollection)
-                        dataPoint.storage.loadCollection(on: dataPoint.metricsCollection)
-                
-                }
+                    }
+                })
+                // Reload the metrics
+                dataPoint.storage.addProgressObserver(observer: reloadHandler)
+                dataPoint.storage.loadCollection(on: dataPoint.keyedDataCollection)
+                dataPoint.storage.loadCollection(on: dataPoint.metricsCollection)
             }
-        })
 
+            func collectionDidFailToSave(message:String){
+                XCTFail("collectionDidFailToSave: \(message)")
+                expectation.fulfill()
+            }
+        }
+
+        // We use a special delegate
+        dataPoint.delegate = Test008Delegate(expectation: expectation,
+                                             collection: collection,
+                                             dataPoint: dataPoint,
+                                             metrics1UID: metrics1.UID,
+                                             metrics3UID: metrics3.UID)
         do {
-            dataPoint.storage.addProgressObserver(observer: saveHandler)
             try dataPoint.save()
         }catch{
             XCTFail("\(error)")
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 10.0)
     }
     #endif
 
