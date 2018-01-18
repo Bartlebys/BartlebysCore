@@ -23,12 +23,12 @@ public struct Alias:Codable,Aliased{
     // We use the Model.ModelCodingKeys because we want to be able define if the id is encoded as `_id` or `id`
 
     public init(from decoder: Decoder) throws{
-        let values = try decoder.container(keyedBy: Model.ModelCodingKeys.self)
+        let values = try decoder.container(keyedBy: CodableObject.CodableModelCodingKeys.self)
         self.UID = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
     }
 
     public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy:  Model.ModelCodingKeys.self)
+        var container = encoder.container(keyedBy:  CodableObject.CodableModelCodingKeys.self)
         try container.encode(self.UID,forKey:MODELS_PRIMARY_KEY)
     }
 

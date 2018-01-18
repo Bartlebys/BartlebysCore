@@ -10,7 +10,7 @@ import Foundation
 
 // Bartleby 1.0 for MongodB (can be set-up uses Model.ModelCodingKeys._id)
 // In Most context Model.ModelCodingKeys.id is relevant.
-public var MODELS_PRIMARY_KEY:Model.ModelCodingKeys = Model.ModelCodingKeys.id
+public var MODELS_PRIMARY_KEY:CodableObject.CodableModelCodingKeys = CodableObject.CodableModelCodingKeys.id
 
 // the explicit UID type used for expressivity
 public typealias UID = String
