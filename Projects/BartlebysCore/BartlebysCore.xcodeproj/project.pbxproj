@@ -838,7 +838,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5EC9F871FF655C4008BF543 /* Build configuration list for PBXNativeTarget "BartlebysCore macOS" */;
 			buildPhases = (
-				E5439425200FB4C900BD36B9 /* ShellScript */,
+				E5439425200FB4C900BD36B9 /* Invoke Flexions */,
 				E5EC9F711FF655C4008BF543 /* Sources */,
 				E5EC9F721FF655C4008BF543 /* Frameworks */,
 				E5EC9F731FF655C4008BF543 /* Headers */,
@@ -875,6 +875,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5EC9FDD1FF65691008BF543 /* Build configuration list for PBXNativeTarget "BartlebysCore iOS" */;
 			buildPhases = (
+				E56AAA1F2010AA8A0082D4D6 /* Invoke Flexions */,
 				E5EC9FC71FF65691008BF543 /* Sources */,
 				E5EC9FC81FF65691008BF543 /* Frameworks */,
 				E5EC9FC91FF65691008BF543 /* Headers */,
@@ -911,6 +912,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5ECA0361FF65765008BF543 /* Build configuration list for PBXNativeTarget "BartlebysCore tvOS" */;
 			buildPhases = (
+				E56AAA202010AA990082D4D6 /* Invoke Flexions */,
 				E5ECA0201FF65765008BF543 /* Sources */,
 				E5ECA0211FF65765008BF543 /* Frameworks */,
 				E5ECA0221FF65765008BF543 /* Headers */,
@@ -947,6 +949,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5ECA0821FF6581D008BF543 /* Build configuration list for PBXNativeTarget "BartlebysCore watchOS" */;
 			buildPhases = (
+				E56AAA212010AAA80082D4D6 /* Invoke Flexions */,
 				E5ECA0781FF6581D008BF543 /* Sources */,
 				E5ECA0791FF6581D008BF543 /* Frameworks */,
 				E5ECA07A1FF6581D008BF543 /* Headers */,
@@ -965,7 +968,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5F3CE0A200D1C2000AB9A44 /* Build configuration list for PBXNativeTarget "BartlebysCore macOSCocoaBindings" */;
 			buildPhases = (
-				E5439424200F8F2500BD36B9 /* ShellScript */,
+				E5439424200F8F2500BD36B9 /* Invoke Flexions */,
 				E5F3CDC2200D1C2000AB9A44 /* Sources */,
 				E5F3CE06200D1C2000AB9A44 /* Frameworks */,
 				E5F3CE07200D1C2000AB9A44 /* Headers */,
@@ -1107,26 +1110,70 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E5439424200F8F2500BD36B9 /* ShellScript */ = {
+		E5439424200F8F2500BD36B9 /* Invoke Flexions */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Invoke Flexions";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd $SRCROOT/../../BartlebysCore.flexions/\n./generate.sh";
 		};
-		E5439425200FB4C900BD36B9 /* ShellScript */ = {
+		E5439425200FB4C900BD36B9 /* Invoke Flexions */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Invoke Flexions";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/../../BartlebysCore.flexions/\n./generate.sh";
+		};
+		E56AAA1F2010AA8A0082D4D6 /* Invoke Flexions */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Invoke Flexions";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/../../BartlebysCore.flexions/\n./generate.sh";
+		};
+		E56AAA202010AA990082D4D6 /* Invoke Flexions */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Invoke Flexions";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd $SRCROOT/../../BartlebysCore.flexions/\n./generate.sh";
+		};
+		E56AAA212010AAA80082D4D6 /* Invoke Flexions */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Invoke Flexions";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
