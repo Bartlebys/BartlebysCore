@@ -79,4 +79,34 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
         return copy
     }
 
+
+    // MARK: - Partial implementation of ProvisionChanges for Generative compatibility
+
+    ////Internal flag used not to propagate changes (for example during deserialization) -> Check + ProvisionChanges for detailled explanantions
+    internal var _quietChanges:Bool = false
+
+    /// Performs the deserialization without invoking provisionChanges
+    ///
+    /// - parameter changes: the changes closure
+    public func quietThrowingChanges(_ changes:()throws->())rethrows{
+        self._quietChanges=true
+        try changes()
+        self._quietChanges=false
+    }
+
+
+    /// the Accessor to the underlining quiet state
+    public var wantsQuietChanges:Bool{
+        return self._quietChanges
+    }
+
+    /// Performs the deserialization without invoking provisionChanges
+    ///
+    /// - parameter changes: the changes closure
+    public func quietChanges(_ changes: () -> ()) {
+        self._quietChanges=true
+        changes()
+        self._quietChanges=false
+    }
+
 }
