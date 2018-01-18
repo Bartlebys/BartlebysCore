@@ -192,25 +192,13 @@ class ObjectCollectionTests: BaseDataPointTestCase{
 
 
         // The delegate encapsulates the tests logic
-        class Test008Delegate:DataPointDelegate{
+        struct Test008Delegate:DataPointDelegate{
 
             var expectation:XCTestExpectation
             var collection:CollectionOf<Metrics>
             var dataPoint:MyDataPoint
             var metrics1UID:String
             var metrics3UID:String
-
-            init(expectation: XCTestExpectation,
-                 collection: CollectionOf<Metrics>,
-                 dataPoint: MyDataPoint,
-                 metrics1UID: UID,
-                 metrics3UID: UID){
-                self.expectation = expectation
-                self.collection = collection
-                self.dataPoint = dataPoint
-                self.metrics1UID = metrics1UID
-                self.metrics3UID = metrics3UID
-            }
 
             func collectionDidLoadSuccessFully(){
                 // That's normal
