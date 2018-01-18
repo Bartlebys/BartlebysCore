@@ -57,11 +57,14 @@ public final class Storage{
     
     // A unique file manager used exclusively on the shared queue
     fileprivate static var _fileManager = FileManager()
-    
+
+    // The progress is incremented / decremented via DispatchQueue.main.async
     fileprivate var _progress = Progress()
 
     fileprivate func _incrementProgressTotalUnitCount(){
-        self._progress.totalUnitCount += 1
+         DispatchQueue.main.async {
+            self._progress.totalUnitCount += 1
+        }
     }
 
     public func addProgressObserver(observer:StorageProgressDelegate){
