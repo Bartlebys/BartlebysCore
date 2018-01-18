@@ -23,8 +23,6 @@ public protocol StorageProtocol {
     /// - Parameter observer: the observer
     func removeProgressObserver(observer:StorageProgressDelegate)
 
-    // The storage Base URL
-    var baseUrl:URL { get set}
 
     /// If you call once this method the datapoint will not persist out of the memory anymore
     /// You cannot turn back _volatile to false

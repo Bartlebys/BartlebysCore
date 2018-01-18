@@ -12,6 +12,9 @@ public protocol FileStorageProtocol:StorageProtocol{
 
     // MARK: URL
 
+    // The storage Base URL
+    var baseUrl:URL { get set }
+
     /// Returns the URL of a FilePersistent element
     ///
     /// - Parameter collection: the collection
