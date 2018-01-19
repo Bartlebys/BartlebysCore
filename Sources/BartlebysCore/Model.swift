@@ -80,7 +80,7 @@ open class Model:CodableObject,Collectable,Payload{
     // MARK: - Properties used for Relational Model
 
     //The UIDS of the owners
-    open var ownedBy:[String] = [String]()  {
+    open var ownedBy:[UID] = [String]()  {
         didSet {
             if !self.wantsQuietChanges && ownedBy != oldValue {
                 self.indistinctCollection?.didChange()
@@ -89,7 +89,7 @@ open class Model:CodableObject,Collectable,Payload{
     }
 
     //The UIDS of the free relations
-    open var freeRelations:[String] = [String]()  {
+    open var freeRelations:[UID] = [String]()  {
         didSet {
             if !self.wantsQuietChanges && ownedBy != oldValue {
                 self.indistinctCollection?.didChange()
@@ -98,7 +98,7 @@ open class Model:CodableObject,Collectable,Payload{
     }
 
     //The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
-    open var owns:[String] = [String]()
+    open var owns:[UID] = [String]()
 
 
 

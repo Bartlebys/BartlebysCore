@@ -20,17 +20,17 @@ public enum DataPointError : Error{
 }
 
 public protocol DataPointDelegate{
-    func collectionDidLoadSuccessFully()
-    func collectionDidFailToLoad(message:String)
-    func collectionDidSaveSuccessFully()
-    func collectionDidFailToSave(message:String)
+    func collectionsDidLoadSuccessFully()
+    func collectionsDidFailToLoad(message:String)
+    func collectionsDidSaveSuccessFully()
+    func collectionsDidFailToSave(message:String)
 }
 
 struct DataPointDelegatePlaceHolder:DataPointDelegate {
-    func collectionDidLoadSuccessFully(){}
-    func collectionDidFailToLoad(message:String){}
-    func collectionDidSaveSuccessFully(){}
-    func collectionDidFailToSave(message:String){}
+    func collectionsDidLoadSuccessFully(){}
+    func collectionsDidFailToLoad(message:String){}
+    func collectionsDidSaveSuccessFully(){}
+    func collectionsDidFailToSave(message:String){}
 }
 
 // Abstract class

@@ -289,9 +289,6 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    fileprivate let _selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
 
-   fileprivate let _doNotPropagateSelection:Bool = false
-
-
    // Recovers the selectedUIDS
    fileprivate var _selectedUIDs:[UID]{
       set{
