@@ -16,6 +16,25 @@ extension LogEntry{
         let elapsedSeconds = Int(self.elapsedTime).paddedString(8)
         return "\(self.counter.paddedString()) \(elapsedSeconds) \(self.category)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
     }
+
+
+}
+
+extension LogEntry.Category{
+
+    public var syslogPriority:Int32 {
+        switch self {
+        case .critical:
+            return LOG_CRIT
+        case .warning :
+            return LOG_WARNING
+        case .temporary:
+            return LOG_DEBUG
+        default:
+            return LOG_INFO
+        }
+    }
+
 }
 
 
@@ -56,6 +75,13 @@ public struct Logger {
         }
         
         self.counter += 1
+
+        func __syslog(priority : Int32, _ message : String, _ args : CVarArg...) {
+            withVaList(args) { vsyslog(priority, message, $0) }
+        }
+
+        __syslog(priority: entry.category.syslogPriority, entry.toString)
+
     }
-    
+
 }
