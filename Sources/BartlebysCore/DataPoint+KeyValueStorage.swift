@@ -25,7 +25,7 @@ extension DataPoint:KeyValueStorage{
     ///   - key: the identification key (must be unique)
     public func storeInKVS<T:Codable>(_ value:T,identifiedBy key:String)throws->(){
         // We use base64Encoder and decoder to secure for example [String] storage
-        let data = try JSON.base64Encoder.encode(value)
+        let data = try JSON.encoder.encode(value)
         let keyedData = KeyedData()
         keyedData.key = key
         keyedData.data = data
@@ -48,7 +48,7 @@ extension DataPoint:KeyValueStorage{
         }
         let data = keyedData.data
         // We use base64Encoder and decoder to secure for example [String] storage
-        let instance = try JSON.base64Decoder.decode(T.self, from: data)
+        let instance = try JSON.decoder.decode(T.self, from: data)
         return instance
     }
 
