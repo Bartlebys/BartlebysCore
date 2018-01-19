@@ -58,6 +58,6 @@ public protocol Relational:Identifiable{
     /// - Parameters:
     ///   - relationship:  the nature of the contract
     /// - Returns: the UIDS
-    func getContractedRelations(_ relationship:Relationship)->[String]
+    func getContractedRelations(_ relationship:Relationship)->[UID]
 
 }

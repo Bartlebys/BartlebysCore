@@ -21,8 +21,6 @@ public protocol RelationsResolution{
     func relations<T:Relational>(_ relationship:Relationship)->[T]
 
 
-
-
     /// Resolve the Related Objects
     ///
     /// - Parameters:

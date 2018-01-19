@@ -17,7 +17,7 @@ public protocol Collectable : UniversalType,Identifiable, Initializable {
     associatedtype CollectedType
 
     // The reference to the dataPoint
-    var dataPoint:DataPoint? { get}
+    var dataPoint:DataPoint? { get }
 
     /// Sets the dataPoint Reference
     ///
