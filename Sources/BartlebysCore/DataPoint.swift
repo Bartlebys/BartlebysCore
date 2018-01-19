@@ -7,9 +7,7 @@
 //
 
 import Foundation
-#if !MERGE_SWIFT_MODULES
-    import BTree
-#endif
+import BTree
 
 public enum DataPointError : Error{
     case invalidURL

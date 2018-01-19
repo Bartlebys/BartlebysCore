@@ -1861,7 +1861,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = iphoneos;
@@ -1886,7 +1886,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-iOS";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = iphoneos;
@@ -1947,7 +1947,7 @@
 				INFOPLIST_FILE = "BartlebysCore tvOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-tvOS";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = appletvos;
@@ -1971,7 +1971,7 @@
 				INFOPLIST_FILE = "BartlebysCore tvOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-tvOS";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = appletvos;
@@ -2032,7 +2032,7 @@
 				INFOPLIST_FILE = "BartlebysCore watchOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-watchOS";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = watchos;
@@ -2057,7 +2057,7 @@
 				INFOPLIST_FILE = "BartlebysCore watchOS/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-watchOS";
 				PRODUCT_NAME = BartlebysCore;
 				SDKROOT = watchos;
@@ -2085,7 +2085,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_SWIFT_FLAGS = "-DUSE_COCOA_BINDINGS -DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "-DUSE_COCOA_BINDINGS";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS";
 				PRODUCT_NAME = BartlebysCore;
 				SKIP_INSTALL = YES;
@@ -2109,7 +2109,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_SWIFT_FLAGS = "-DUSE_COCOA_BINDINGS -DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "-DUSE_COCOA_BINDINGS";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS";
 				PRODUCT_NAME = BartlebysCore;
 				SKIP_INSTALL = YES;
