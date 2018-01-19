@@ -26,8 +26,14 @@ import Dispatch
         return Double(CFAbsoluteTimeGetCurrent())
     }
 
+    public func random<T: BinaryInteger> (_ n: T) -> T {
+        return numericCast( arc4random_uniform( numericCast(n) ) )
+    }
+
 
 #elseif os(Linux)
+
+    import Glibc
 
     open class Object : NSObject {}
 
@@ -35,6 +41,17 @@ import Dispatch
 
     public func AbsoluteTimeGetCurrent()->Double{
         return 0 // @todo linux
+    }
+
+    public func random<T: BinaryInteger> (_ n: T) -> T {
+        precondition(n > 0)
+
+        let upperLimit = RAND_MAX - RAND_MAX % numericCast(n)
+
+        while true {
+            let x = Glibc.random()
+            if x < upperLimit { return numericCast(x) % n }
+        }
     }
 
 #endif
