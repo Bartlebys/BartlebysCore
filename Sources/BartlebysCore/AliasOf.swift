@@ -13,7 +13,7 @@ open class AliasOf<T:Aliasable>:Codable,Aliased{
 
     public let UID:UID
     
-    public init(UID:UID) {
+    public required init(UID:UID) {
         self.UID = UID
     }
 
