@@ -136,19 +136,19 @@ class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
 
     // MARK: - DataPointDelegate
 
-    func collectionDidSaveSuccessFully() {
+    func collectionsDidSaveSuccessFully() {
         print("Did Save")
     }
 
-    func collectionDidFailToSave(message: String) {
+    func collectionsDidFailToSave(message: String) {
         print(message)
     }
 
-    func collectionDidLoadSuccessFully() {
+    func collectionsDidLoadSuccessFully() {
         print("Did Load")
     }
 
-    func collectionDidFailToLoad(message: String) {
+    func collectionsDidFailToLoad(message: String) {
         print(message)
     }
 

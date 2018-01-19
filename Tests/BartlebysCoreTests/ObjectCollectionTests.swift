@@ -200,14 +200,14 @@ class ObjectCollectionTests: BaseDataPointTestCase{
             var metrics1UID:String
             var metrics3UID:String
 
-            func collectionDidLoadSuccessFully(){
+            func collectionsDidLoadSuccessFully(){
                 // That's normal
             }
-            func collectionDidFailToLoad(message:String){
+            func collectionsDidFailToLoad(message:String){
                 XCTFail("collectionDidFailToLoad: \(message)")
                 expectation.fulfill()
             }
-            func collectionDidSaveSuccessFully(){
+            func collectionsDidSaveSuccessFully(){
 
                 // That's the main test
                 // The collection has been saved
@@ -254,7 +254,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                 dataPoint.storage.loadCollection(on: dataPoint.metricsCollection)
             }
 
-            func collectionDidFailToSave(message:String){
+            func collectionsDidFailToSave(message:String){
                 XCTFail("collectionDidFailToSave: \(message)")
                 expectation.fulfill()
             }
