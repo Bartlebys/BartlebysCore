@@ -32,6 +32,11 @@
 		E52527AA2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AB2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
+		E540CB752011E97C00A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB762011E97C00A531A9 /* BTree.framework */; };
+		E540CB772011E98800A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB782011E98800A531A9 /* BTree.framework */; };
+		E540CB792011E99000A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7A2011E99000A531A9 /* BTree.framework */; };
+		E540CB7B2011E99700A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7C2011E99700A531A9 /* BTree.framework */; };
+		E540CB7D2011E99D00A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7E2011E99D00A531A9 /* BTree.framework */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E553813720035CFF0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
 		E553813820036C7C0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
@@ -89,86 +94,6 @@
 		E5DBB1E020022A1D0079F4C6 /* AliasOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D5200224C60079F4C6 /* AliasOf.swift */; };
 		E5DBB1E120022A1D0079F4C6 /* AliasOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D5200224C60079F4C6 /* AliasOf.swift */; };
 		E5DBB1E220022A1D0079F4C6 /* DataPoint+KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */; };
-		E5E4A5EA20111848001F75CA /* SortedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DA20111848001F75CA /* SortedSet.swift */; };
-		E5E4A5EB20111848001F75CA /* SortedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DA20111848001F75CA /* SortedSet.swift */; };
-		E5E4A5EC20111848001F75CA /* SortedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DA20111848001F75CA /* SortedSet.swift */; };
-		E5E4A5ED20111848001F75CA /* SortedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DA20111848001F75CA /* SortedSet.swift */; };
-		E5E4A5EE20111848001F75CA /* SortedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DA20111848001F75CA /* SortedSet.swift */; };
-		E5E4A5EF20111848001F75CA /* BTreeComparisons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DB20111848001F75CA /* BTreeComparisons.swift */; };
-		E5E4A5F020111848001F75CA /* BTreeComparisons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DB20111848001F75CA /* BTreeComparisons.swift */; };
-		E5E4A5F120111848001F75CA /* BTreeComparisons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DB20111848001F75CA /* BTreeComparisons.swift */; };
-		E5E4A5F220111848001F75CA /* BTreeComparisons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DB20111848001F75CA /* BTreeComparisons.swift */; };
-		E5E4A5F320111848001F75CA /* BTreeComparisons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DB20111848001F75CA /* BTreeComparisons.swift */; };
-		E5E4A5F420111848001F75CA /* SortedBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DC20111848001F75CA /* SortedBag.swift */; };
-		E5E4A5F520111848001F75CA /* SortedBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DC20111848001F75CA /* SortedBag.swift */; };
-		E5E4A5F620111848001F75CA /* SortedBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DC20111848001F75CA /* SortedBag.swift */; };
-		E5E4A5F720111848001F75CA /* SortedBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DC20111848001F75CA /* SortedBag.swift */; };
-		E5E4A5F820111848001F75CA /* SortedBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DC20111848001F75CA /* SortedBag.swift */; };
-		E5E4A5F920111848001F75CA /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DD20111848001F75CA /* Compatibility.swift */; };
-		E5E4A5FA20111848001F75CA /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DD20111848001F75CA /* Compatibility.swift */; };
-		E5E4A5FB20111848001F75CA /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DD20111848001F75CA /* Compatibility.swift */; };
-		E5E4A5FC20111848001F75CA /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DD20111848001F75CA /* Compatibility.swift */; };
-		E5E4A5FD20111848001F75CA /* Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DD20111848001F75CA /* Compatibility.swift */; };
-		E5E4A5FE20111848001F75CA /* BTreePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DE20111848001F75CA /* BTreePath.swift */; };
-		E5E4A5FF20111848001F75CA /* BTreePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DE20111848001F75CA /* BTreePath.swift */; };
-		E5E4A60020111848001F75CA /* BTreePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DE20111848001F75CA /* BTreePath.swift */; };
-		E5E4A60120111848001F75CA /* BTreePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DE20111848001F75CA /* BTreePath.swift */; };
-		E5E4A60220111848001F75CA /* BTreePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DE20111848001F75CA /* BTreePath.swift */; };
-		E5E4A60320111848001F75CA /* BTreeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DF20111848001F75CA /* BTreeIterator.swift */; };
-		E5E4A60420111848001F75CA /* BTreeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DF20111848001F75CA /* BTreeIterator.swift */; };
-		E5E4A60520111848001F75CA /* BTreeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DF20111848001F75CA /* BTreeIterator.swift */; };
-		E5E4A60620111848001F75CA /* BTreeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DF20111848001F75CA /* BTreeIterator.swift */; };
-		E5E4A60720111848001F75CA /* BTreeIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5DF20111848001F75CA /* BTreeIterator.swift */; };
-		E5E4A60820111848001F75CA /* BridgedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E020111848001F75CA /* BridgedList.swift */; };
-		E5E4A60920111848001F75CA /* BridgedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E020111848001F75CA /* BridgedList.swift */; };
-		E5E4A60A20111848001F75CA /* BridgedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E020111848001F75CA /* BridgedList.swift */; };
-		E5E4A60B20111848001F75CA /* BridgedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E020111848001F75CA /* BridgedList.swift */; };
-		E5E4A60C20111848001F75CA /* BridgedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E020111848001F75CA /* BridgedList.swift */; };
-		E5E4A60D20111848001F75CA /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E120111848001F75CA /* List.swift */; };
-		E5E4A60E20111848001F75CA /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E120111848001F75CA /* List.swift */; };
-		E5E4A60F20111848001F75CA /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E120111848001F75CA /* List.swift */; };
-		E5E4A61020111848001F75CA /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E120111848001F75CA /* List.swift */; };
-		E5E4A61120111848001F75CA /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E120111848001F75CA /* List.swift */; };
-		E5E4A61220111848001F75CA /* BTreeCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E220111848001F75CA /* BTreeCursor.swift */; };
-		E5E4A61320111848001F75CA /* BTreeCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E220111848001F75CA /* BTreeCursor.swift */; };
-		E5E4A61420111848001F75CA /* BTreeCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E220111848001F75CA /* BTreeCursor.swift */; };
-		E5E4A61520111848001F75CA /* BTreeCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E220111848001F75CA /* BTreeCursor.swift */; };
-		E5E4A61620111848001F75CA /* BTreeCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E220111848001F75CA /* BTreeCursor.swift */; };
-		E5E4A61720111848001F75CA /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E320111848001F75CA /* BTree.swift */; };
-		E5E4A61820111848001F75CA /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E320111848001F75CA /* BTree.swift */; };
-		E5E4A61920111848001F75CA /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E320111848001F75CA /* BTree.swift */; };
-		E5E4A61A20111848001F75CA /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E320111848001F75CA /* BTree.swift */; };
-		E5E4A61B20111848001F75CA /* BTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E320111848001F75CA /* BTree.swift */; };
-		E5E4A61C20111848001F75CA /* BTreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E420111848001F75CA /* BTreeBuilder.swift */; };
-		E5E4A61D20111848001F75CA /* BTreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E420111848001F75CA /* BTreeBuilder.swift */; };
-		E5E4A61E20111848001F75CA /* BTreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E420111848001F75CA /* BTreeBuilder.swift */; };
-		E5E4A61F20111848001F75CA /* BTreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E420111848001F75CA /* BTreeBuilder.swift */; };
-		E5E4A62020111848001F75CA /* BTreeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E420111848001F75CA /* BTreeBuilder.swift */; };
-		E5E4A62120111848001F75CA /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E520111848001F75CA /* Map.swift */; };
-		E5E4A62220111848001F75CA /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E520111848001F75CA /* Map.swift */; };
-		E5E4A62320111848001F75CA /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E520111848001F75CA /* Map.swift */; };
-		E5E4A62420111848001F75CA /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E520111848001F75CA /* Map.swift */; };
-		E5E4A62520111848001F75CA /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E520111848001F75CA /* Map.swift */; };
-		E5E4A62620111848001F75CA /* BTreeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E620111848001F75CA /* BTreeIndex.swift */; };
-		E5E4A62720111848001F75CA /* BTreeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E620111848001F75CA /* BTreeIndex.swift */; };
-		E5E4A62820111848001F75CA /* BTreeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E620111848001F75CA /* BTreeIndex.swift */; };
-		E5E4A62920111848001F75CA /* BTreeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E620111848001F75CA /* BTreeIndex.swift */; };
-		E5E4A62A20111848001F75CA /* BTreeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E620111848001F75CA /* BTreeIndex.swift */; };
-		E5E4A62B20111848001F75CA /* BTreeMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E720111848001F75CA /* BTreeMerger.swift */; };
-		E5E4A62C20111848001F75CA /* BTreeMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E720111848001F75CA /* BTreeMerger.swift */; };
-		E5E4A62D20111848001F75CA /* BTreeMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E720111848001F75CA /* BTreeMerger.swift */; };
-		E5E4A62E20111848001F75CA /* BTreeMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E720111848001F75CA /* BTreeMerger.swift */; };
-		E5E4A62F20111848001F75CA /* BTreeMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E720111848001F75CA /* BTreeMerger.swift */; };
-		E5E4A63020111848001F75CA /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E820111848001F75CA /* Weak.swift */; };
-		E5E4A63120111848001F75CA /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E820111848001F75CA /* Weak.swift */; };
-		E5E4A63220111848001F75CA /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E820111848001F75CA /* Weak.swift */; };
-		E5E4A63320111848001F75CA /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E820111848001F75CA /* Weak.swift */; };
-		E5E4A63420111848001F75CA /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E820111848001F75CA /* Weak.swift */; };
-		E5E4A63520111848001F75CA /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E920111848001F75CA /* BTreeNode.swift */; };
-		E5E4A63620111848001F75CA /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E920111848001F75CA /* BTreeNode.swift */; };
-		E5E4A63720111848001F75CA /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E920111848001F75CA /* BTreeNode.swift */; };
-		E5E4A63820111848001F75CA /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E920111848001F75CA /* BTreeNode.swift */; };
-		E5E4A63920111848001F75CA /* BTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E4A5E920111848001F75CA /* BTreeNode.swift */; };
 		E5EC9F7F1FF655C4008BF543 /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */; };
 		E5EC9F861FF655C4008BF543 /* BartlebysCore_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC9F911FF655F4008BF543 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC821FDAF688001D91CE /* Metrics.swift */; };
@@ -537,6 +462,12 @@
 		E52A847A1FF50D5800F2408B /* Model+Erasure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Erasure.swift"; sourceTree = "<group>"; };
 		E52A847C1FF5294500F2408B /* ManagedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCollection.swift; sourceTree = "<group>"; };
 		E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		E540CB732011DCF600A531A9 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../../Package.swift; sourceTree = "<group>"; };
+		E540CB762011E97C00A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E540CB782011E98800A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E540CB7A2011E99000A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E540CB7C2011E99700A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E540CB7E2011E99D00A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E54826351FFBBB3700FB854E /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+AliasesResolutions.swift"; sourceTree = "<group>"; };
@@ -557,22 +488,6 @@
 		E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
 		E5DBB1D0200224770079F4C6 /* Aliased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliased.swift; sourceTree = "<group>"; };
 		E5DBB1D5200224C60079F4C6 /* AliasOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasOf.swift; sourceTree = "<group>"; };
-		E5E4A5DA20111848001F75CA /* SortedSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedSet.swift; sourceTree = "<group>"; };
-		E5E4A5DB20111848001F75CA /* BTreeComparisons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreeComparisons.swift; sourceTree = "<group>"; };
-		E5E4A5DC20111848001F75CA /* SortedBag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedBag.swift; sourceTree = "<group>"; };
-		E5E4A5DD20111848001F75CA /* Compatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Compatibility.swift; sourceTree = "<group>"; };
-		E5E4A5DE20111848001F75CA /* BTreePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreePath.swift; sourceTree = "<group>"; };
-		E5E4A5DF20111848001F75CA /* BTreeIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreeIterator.swift; sourceTree = "<group>"; };
-		E5E4A5E020111848001F75CA /* BridgedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BridgedList.swift; sourceTree = "<group>"; };
-		E5E4A5E120111848001F75CA /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
-		E5E4A5E220111848001F75CA /* BTreeCursor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreeCursor.swift; sourceTree = "<group>"; };
-		E5E4A5E320111848001F75CA /* BTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTree.swift; sourceTree = "<group>"; };
-		E5E4A5E420111848001F75CA /* BTreeBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreeBuilder.swift; sourceTree = "<group>"; };
-		E5E4A5E520111848001F75CA /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
-		E5E4A5E620111848001F75CA /* BTreeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreeIndex.swift; sourceTree = "<group>"; };
-		E5E4A5E720111848001F75CA /* BTreeMerger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreeMerger.swift; sourceTree = "<group>"; };
-		E5E4A5E820111848001F75CA /* Weak.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
-		E5E4A5E920111848001F75CA /* BTreeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BTreeNode.swift; sourceTree = "<group>"; };
 		E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore_macOS.h; sourceTree = "<group>"; };
 		E5EC9F791FF655C4008BF543 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -607,6 +522,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E540CB752011E97C00A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -622,6 +538,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E540CB792011E99000A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,6 +554,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E540CB7B2011E99700A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +570,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E540CB7D2011E99D00A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +578,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E540CB772011E98800A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +588,7 @@
 		4D55FC271FDAF5AC001D91CE = {
 			isa = PBXGroup;
 			children = (
+				E540CB732011DCF600A531A9 /* Package.swift */,
 				E56AAA1D2010A0710082D4D6 /* README.md */,
 				E56AAA1E2010A08E0082D4D6 /* Documents */,
 				E58556CF200DF79700734D28 /* BartlebysCore.flexions */,
@@ -675,6 +596,7 @@
 				E5F3CDA8200CE50100AB9A44 /* BartlebysCoreTests */,
 				E5EC9FC61FF6565B008BF543 /* Targets */,
 				4D55FC321FDAF5AC001D91CE /* Products */,
+				E540CB742011E97C00A531A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -696,7 +618,6 @@
 		4D55FC3C1FDAF5CF001D91CE /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				E5E4A5D920111848001F75CA /* BTree */,
 				4D55FC3D1FDAF5CF001D91CE /* BartlebysCore */,
 			);
 			name = Sources;
@@ -795,27 +716,16 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
-		E5E4A5D920111848001F75CA /* BTree */ = {
+		E540CB742011E97C00A531A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E5E4A5DA20111848001F75CA /* SortedSet.swift */,
-				E5E4A5DB20111848001F75CA /* BTreeComparisons.swift */,
-				E5E4A5DC20111848001F75CA /* SortedBag.swift */,
-				E5E4A5DD20111848001F75CA /* Compatibility.swift */,
-				E5E4A5DE20111848001F75CA /* BTreePath.swift */,
-				E5E4A5DF20111848001F75CA /* BTreeIterator.swift */,
-				E5E4A5E020111848001F75CA /* BridgedList.swift */,
-				E5E4A5E120111848001F75CA /* List.swift */,
-				E5E4A5E220111848001F75CA /* BTreeCursor.swift */,
-				E5E4A5E320111848001F75CA /* BTree.swift */,
-				E5E4A5E420111848001F75CA /* BTreeBuilder.swift */,
-				E5E4A5E520111848001F75CA /* Map.swift */,
-				E5E4A5E620111848001F75CA /* BTreeIndex.swift */,
-				E5E4A5E720111848001F75CA /* BTreeMerger.swift */,
-				E5E4A5E820111848001F75CA /* Weak.swift */,
-				E5E4A5E920111848001F75CA /* BTreeNode.swift */,
+				E540CB7E2011E99D00A531A9 /* BTree.framework */,
+				E540CB7C2011E99700A531A9 /* BTree.framework */,
+				E540CB7A2011E99000A531A9 /* BTree.framework */,
+				E540CB782011E98800A531A9 /* BTree.framework */,
+				E540CB762011E97C00A531A9 /* BTree.framework */,
 			);
-			path = BTree;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		E5EC9F771FF655C4008BF543 /* BartlebysCore macOS */ = {
@@ -1312,21 +1222,16 @@
 				E5EC9F991FF655F9008BF543 /* FilePersistent.swift in Sources */,
 				E5EC9FA31FF655FE008BF543 /* Credentials.swift in Sources */,
 				E52527A92000E54700D9A148 /* IndistinctCollection.swift in Sources */,
-				E5E4A60820111848001F75CA /* BridgedList.swift in Sources */,
-				E5E4A5F420111848001F75CA /* SortedBag.swift in Sources */,
-				E5E4A62620111848001F75CA /* BTreeIndex.swift in Sources */,
 				E5DBB1D6200224C60079F4C6 /* AliasOf.swift in Sources */,
 				E5EC9F9E1FF655F9008BF543 /* RelationsResolution.swift in Sources */,
 				E5EC9FAC1FF655FE008BF543 /* Int+Padding.swift in Sources */,
 				E5EC9FC11FF655FE008BF543 /* Storage.swift in Sources */,
-				E5E4A61720111848001F75CA /* BTree.swift in Sources */,
 				E5EC9FC01FF655FE008BF543 /* Status.swift in Sources */,
 				E5EC9FAF1FF655FE008BF543 /* Logger.swift in Sources */,
 				E5EC9FBE1FF655FE008BF543 /* Schemes.swift in Sources */,
 				E5D6CDF22001366900A3D975 /* KeyedData.swift in Sources */,
 				E5EC9FB91FF655FE008BF543 /* Object.swift in Sources */,
 				E5EC9FA91FF655FE008BF543 /* Globals.swift in Sources */,
-				E5E4A5F920111848001F75CA /* Compatibility.swift in Sources */,
 				E5EC9FC41FF655FE008BF543 /* Utilities.swift in Sources */,
 				E5EC9F951FF655F9008BF543 /* Identifiable.swift in Sources */,
 				E5EC9FB41FF655FE008BF543 /* Model.swift in Sources */,
@@ -1339,26 +1244,20 @@
 				E5EC9FA21FF655FE008BF543 /* CallOperation.swift in Sources */,
 				E5EC9F911FF655F4008BF543 /* Metrics.swift in Sources */,
 				E56AAA18201097080082D4D6 /* CodableObject.swift in Sources */,
-				E5E4A63520111848001F75CA /* BTreeNode.swift in Sources */,
 				E5EC9FBC1FF655FE008BF543 /* Paths.swift in Sources */,
 				E5EC9FAB1FF655FE008BF543 /* HTTPResponse.swift in Sources */,
-				E5E4A5FE20111848001F75CA /* BTreePath.swift in Sources */,
 				E5EC9F931FF655F9008BF543 /* ConcreteCoder.swift in Sources */,
 				E5DBB1D1200224770079F4C6 /* Aliased.swift in Sources */,
 				E5EC9F9F1FF655F9008BF543 /* UniversalType.swift in Sources */,
 				E59315FA200E335800680C07 /* FileStorageProtocol.swift in Sources */,
-				E5E4A61C20111848001F75CA /* BTreeBuilder.swift in Sources */,
 				E5EC9FA41FF655FE008BF543 /* DataPoint.swift in Sources */,
-				E5E4A63020111848001F75CA /* Weak.swift in Sources */,
 				E5EC9F9B1FF655F9008BF543 /* Payload.swift in Sources */,
 				E52527A42000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5EC9FA51FF655FE008BF543 /* DataResponse.swift in Sources */,
-				E5E4A5EA20111848001F75CA /* SortedSet.swift in Sources */,
 				E553813720035CFF0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E5EC9FB21FF655FE008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5EC9FC31FF655FE008BF543 /* Upload.swift in Sources */,
 				E5D6CDFA2001391700A3D975 /* DataPoint+KeyValueStorage.swift in Sources */,
-				E5E4A61220111848001F75CA /* BTreeCursor.swift in Sources */,
 				E5EC9FAE1FF655FE008BF543 /* JSONCoder.swift in Sources */,
 				E52527A02000E4D700D9A148 /* Model+Aliasable.swift in Sources */,
 				E5EC9FB11FF655FE008BF543 /* Model+Relational.swift in Sources */,
@@ -1373,21 +1272,16 @@
 				E5EC9F941FF655F9008BF543 /* ConcreteDataPoint.swift in Sources */,
 				E5EC9FB61FF655FE008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5EC9F9A1FF655F9008BF543 /* HTTPOperation.swift in Sources */,
-				E5E4A62B20111848001F75CA /* BTreeMerger.swift in Sources */,
 				E5EC9F921FF655F9008BF543 /* Collectable.swift in Sources */,
-				E5E4A60320111848001F75CA /* BTreeIterator.swift in Sources */,
-				E5E4A5EF20111848001F75CA /* BTreeComparisons.swift in Sources */,
 				E5EC9FAA1FF655FE008BF543 /* HTTPMethod.swift in Sources */,
 				E5D6CDEE2001329200A3D975 /* Selection.swift in Sources */,
 				E5EC9FA11FF655F9008BF543 /* Tolerent.swift in Sources */,
 				E5BAB6C2200120E400386A9B /* AliasesResolution.swift in Sources */,
-				E5E4A62120111848001F75CA /* Map.swift in Sources */,
 				E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FA61FF655FE008BF543 /* Download.swift in Sources */,
 				E5EC9FBF1FF655FE008BF543 /* Session.swift in Sources */,
 				E5EC9FC51FF655FE008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA0200CA74B00AB9A44 /* FileSavable.swift in Sources */,
-				E5E4A60D20111848001F75CA /* List.swift in Sources */,
 				E5D6CDFE200142E000A3D975 /* KeyValueStorage.swift in Sources */,
 				E5EC9F961FF655F9008BF543 /* Initializable.swift in Sources */,
 				E5EC9FBD1FF655FE008BF543 /* Relationship.swift in Sources */,
@@ -1417,21 +1311,16 @@
 				E5EC9FEC1FF656AF008BF543 /* FilePersistent.swift in Sources */,
 				E5EC9FF61FF656AF008BF543 /* Credentials.swift in Sources */,
 				E52527AA2000E54700D9A148 /* IndistinctCollection.swift in Sources */,
-				E5E4A60A20111848001F75CA /* BridgedList.swift in Sources */,
-				E5E4A5F620111848001F75CA /* SortedBag.swift in Sources */,
-				E5E4A62820111848001F75CA /* BTreeIndex.swift in Sources */,
 				E5DBB1DF20022A1C0079F4C6 /* AliasOf.swift in Sources */,
 				E5EC9FF11FF656AF008BF543 /* RelationsResolution.swift in Sources */,
 				E58A27761FFBDC5C00079CB5 /* ManagedCollection.swift in Sources */,
 				E5EC9FFF1FF656AF008BF543 /* Int+Padding.swift in Sources */,
-				E5E4A61920111848001F75CA /* BTree.swift in Sources */,
 				E5ECA0141FF656AF008BF543 /* Storage.swift in Sources */,
 				E5ECA0131FF656AF008BF543 /* Status.swift in Sources */,
 				E5ECA0021FF656AF008BF543 /* Logger.swift in Sources */,
 				E5ECA0111FF656AF008BF543 /* Schemes.swift in Sources */,
 				E5ECA00C1FF656AF008BF543 /* Object.swift in Sources */,
 				E5DBB1D820022A090079F4C6 /* AliasesResolution.swift in Sources */,
-				E5E4A5FB20111848001F75CA /* Compatibility.swift in Sources */,
 				E5EC9FFC1FF656AF008BF543 /* Globals.swift in Sources */,
 				E5ECA0171FF656AF008BF543 /* Utilities.swift in Sources */,
 				E5EC9FE81FF656AF008BF543 /* Identifiable.swift in Sources */,
@@ -1444,26 +1333,20 @@
 				E5EC9FEB1FF656AF008BF543 /* StorageProtocol.swift in Sources */,
 				E5EC9FF51FF656AF008BF543 /* CallOperation.swift in Sources */,
 				E56AAA1A201097080082D4D6 /* CodableObject.swift in Sources */,
-				E5E4A63720111848001F75CA /* BTreeNode.swift in Sources */,
 				E5EC9FE41FF656AF008BF543 /* Metrics.swift in Sources */,
 				E5ECA00F1FF656AF008BF543 /* Paths.swift in Sources */,
-				E5E4A60020111848001F75CA /* BTreePath.swift in Sources */,
 				E5EC9FFE1FF656AF008BF543 /* HTTPResponse.swift in Sources */,
 				E5D6CDFB2001391700A3D975 /* DataPoint+KeyValueStorage.swift in Sources */,
 				E5DBB1D2200224980079F4C6 /* Aliased.swift in Sources */,
 				E59315FC200E38D400680C07 /* FileStorageProtocol.swift in Sources */,
-				E5E4A61E20111848001F75CA /* BTreeBuilder.swift in Sources */,
 				E5D6CDFF200142E000A3D975 /* KeyValueStorage.swift in Sources */,
-				E5E4A63220111848001F75CA /* Weak.swift in Sources */,
 				E5EC9FE61FF656AF008BF543 /* ConcreteCoder.swift in Sources */,
 				E5EC9FF21FF656AF008BF543 /* UniversalType.swift in Sources */,
 				E5EC9FF71FF656AF008BF543 /* DataPoint.swift in Sources */,
-				E5E4A5EC20111848001F75CA /* SortedSet.swift in Sources */,
 				E58A276F1FFBDC4D00079CB5 /* Default.swift in Sources */,
 				E553813820036C7C0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E52527A52000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5EC9FEE1FF656AF008BF543 /* Payload.swift in Sources */,
-				E5E4A61420111848001F75CA /* BTreeCursor.swift in Sources */,
 				E5EC9FF81FF656AF008BF543 /* DataResponse.swift in Sources */,
 				E5ECA0051FF656AF008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5D6CDF32001366900A3D975 /* KeyedData.swift in Sources */,
@@ -1478,21 +1361,16 @@
 				E5ECA00D1FF656AF008BF543 /* CollectionOf.swift in Sources */,
 				E5ECA0001FF656AF008BF543 /* JSON.swift in Sources */,
 				E5EC9FE71FF656AF008BF543 /* ConcreteDataPoint.swift in Sources */,
-				E5E4A62D20111848001F75CA /* BTreeMerger.swift in Sources */,
 				E5ECA0091FF656AF008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
-				E5E4A60520111848001F75CA /* BTreeIterator.swift in Sources */,
-				E5E4A5F120111848001F75CA /* BTreeComparisons.swift in Sources */,
 				E5EC9FED1FF656AF008BF543 /* HTTPOperation.swift in Sources */,
 				E5EC9FE51FF656AF008BF543 /* Collectable.swift in Sources */,
 				E5EC9FFD1FF656AF008BF543 /* HTTPMethod.swift in Sources */,
 				E5EC9FF41FF656AF008BF543 /* Tolerent.swift in Sources */,
-				E5E4A62320111848001F75CA /* Map.swift in Sources */,
 				E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E5ECA0121FF656AF008BF543 /* Session.swift in Sources */,
 				E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA1200CA74B00AB9A44 /* FileSavable.swift in Sources */,
-				E5E4A60F20111848001F75CA /* List.swift in Sources */,
 				E5D6CDE520012F2800A3D975 /* Notify.swift in Sources */,
 				E5EC9FE91FF656AF008BF543 /* Initializable.swift in Sources */,
 				E5ECA0101FF656AF008BF543 /* Relationship.swift in Sources */,
@@ -1522,21 +1400,16 @@
 				E5ECA0451FF6579F008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA04F1FF657A6008BF543 /* Credentials.swift in Sources */,
 				E52527AB2000E54700D9A148 /* IndistinctCollection.swift in Sources */,
-				E5E4A60B20111848001F75CA /* BridgedList.swift in Sources */,
-				E5E4A5F720111848001F75CA /* SortedBag.swift in Sources */,
-				E5E4A62920111848001F75CA /* BTreeIndex.swift in Sources */,
 				E5DBB1E020022A1D0079F4C6 /* AliasOf.swift in Sources */,
 				E5ECA04A1FF6579F008BF543 /* RelationsResolution.swift in Sources */,
 				E58A277C1FFBDC5D00079CB5 /* ManagedCollection.swift in Sources */,
 				E5ECA0581FF657A6008BF543 /* Int+Padding.swift in Sources */,
-				E5E4A61A20111848001F75CA /* BTree.swift in Sources */,
 				E5ECA06D1FF657A6008BF543 /* Storage.swift in Sources */,
 				E5ECA06C1FF657A6008BF543 /* Status.swift in Sources */,
 				E5ECA05B1FF657A6008BF543 /* Logger.swift in Sources */,
 				E5ECA06A1FF657A6008BF543 /* Schemes.swift in Sources */,
 				E5ECA0651FF657A6008BF543 /* Object.swift in Sources */,
 				E5DBB1DA20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
-				E5E4A5FC20111848001F75CA /* Compatibility.swift in Sources */,
 				E5ECA0551FF657A6008BF543 /* Globals.swift in Sources */,
 				E5ECA0701FF657A6008BF543 /* Utilities.swift in Sources */,
 				E5ECA0411FF6579F008BF543 /* Identifiable.swift in Sources */,
@@ -1549,26 +1422,20 @@
 				E5ECA0441FF6579F008BF543 /* StorageProtocol.swift in Sources */,
 				E5ECA04E1FF657A6008BF543 /* CallOperation.swift in Sources */,
 				E56AAA1B201097080082D4D6 /* CodableObject.swift in Sources */,
-				E5E4A63820111848001F75CA /* BTreeNode.swift in Sources */,
 				E5ECA03D1FF6579B008BF543 /* Metrics.swift in Sources */,
 				E5ECA0681FF657A6008BF543 /* Paths.swift in Sources */,
-				E5E4A60120111848001F75CA /* BTreePath.swift in Sources */,
 				E5ECA0571FF657A6008BF543 /* HTTPResponse.swift in Sources */,
 				E5D6CDFC2001391700A3D975 /* DataPoint+KeyValueStorage.swift in Sources */,
 				E5DBB1D3200224980079F4C6 /* Aliased.swift in Sources */,
 				E59315FD200E38D500680C07 /* FileStorageProtocol.swift in Sources */,
-				E5E4A61F20111848001F75CA /* BTreeBuilder.swift in Sources */,
 				E5D6CE00200142E000A3D975 /* KeyValueStorage.swift in Sources */,
-				E5E4A63320111848001F75CA /* Weak.swift in Sources */,
 				E5ECA03F1FF6579F008BF543 /* ConcreteCoder.swift in Sources */,
 				E5ECA04B1FF6579F008BF543 /* UniversalType.swift in Sources */,
 				E5ECA0501FF657A6008BF543 /* DataPoint.swift in Sources */,
-				E5E4A5ED20111848001F75CA /* SortedSet.swift in Sources */,
 				E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */,
 				E553813920036C7C0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E52527A62000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
 				E5ECA0471FF6579F008BF543 /* Payload.swift in Sources */,
-				E5E4A61520111848001F75CA /* BTreeCursor.swift in Sources */,
 				E5ECA0511FF657A6008BF543 /* DataResponse.swift in Sources */,
 				E5ECA05E1FF657A6008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5D6CDF42001366900A3D975 /* KeyedData.swift in Sources */,
@@ -1583,21 +1450,16 @@
 				E5ECA0661FF657A6008BF543 /* CollectionOf.swift in Sources */,
 				E5ECA0591FF657A6008BF543 /* JSON.swift in Sources */,
 				E5ECA0401FF6579F008BF543 /* ConcreteDataPoint.swift in Sources */,
-				E5E4A62E20111848001F75CA /* BTreeMerger.swift in Sources */,
 				E5ECA0621FF657A6008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
-				E5E4A60620111848001F75CA /* BTreeIterator.swift in Sources */,
-				E5E4A5F220111848001F75CA /* BTreeComparisons.swift in Sources */,
 				E5ECA0461FF6579F008BF543 /* HTTPOperation.swift in Sources */,
 				E5ECA03E1FF6579F008BF543 /* Collectable.swift in Sources */,
 				E5ECA0561FF657A6008BF543 /* HTTPMethod.swift in Sources */,
 				E5ECA04D1FF6579F008BF543 /* Tolerent.swift in Sources */,
-				E5E4A62420111848001F75CA /* Map.swift in Sources */,
 				E50C5C9E1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5ECA0521FF657A6008BF543 /* Download.swift in Sources */,
 				E5ECA06B1FF657A6008BF543 /* Session.swift in Sources */,
 				E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA2200CA74B00AB9A44 /* FileSavable.swift in Sources */,
-				E5E4A61020111848001F75CA /* List.swift in Sources */,
 				E5D6CDE620012F2800A3D975 /* Notify.swift in Sources */,
 				E5ECA0421FF6579F008BF543 /* Initializable.swift in Sources */,
 				E5ECA0691FF657A6008BF543 /* Relationship.swift in Sources */,
@@ -1627,21 +1489,16 @@
 				E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA0981FF65851008BF543 /* Credentials.swift in Sources */,
 				E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */,
-				E5E4A60C20111848001F75CA /* BridgedList.swift in Sources */,
-				E5E4A5F820111848001F75CA /* SortedBag.swift in Sources */,
-				E5E4A62A20111848001F75CA /* BTreeIndex.swift in Sources */,
 				E553813B20036C890023ED88 /* KeyedData.swift in Sources */,
 				E5ECA0931FF6584A008BF543 /* RelationsResolution.swift in Sources */,
 				E5DBB1E120022A1D0079F4C6 /* AliasOf.swift in Sources */,
 				E58A27821FFBDC5E00079CB5 /* ManagedCollection.swift in Sources */,
-				E5E4A61B20111848001F75CA /* BTree.swift in Sources */,
 				E5ECA0A11FF65851008BF543 /* Int+Padding.swift in Sources */,
 				E5ECA0B61FF65851008BF543 /* Storage.swift in Sources */,
 				E5ECA0B51FF65851008BF543 /* Status.swift in Sources */,
 				E5ECA0A41FF65851008BF543 /* Logger.swift in Sources */,
 				E5ECA0B31FF65851008BF543 /* Schemes.swift in Sources */,
 				E5ECA0AE1FF65851008BF543 /* Object.swift in Sources */,
-				E5E4A5FD20111848001F75CA /* Compatibility.swift in Sources */,
 				E5ECA09E1FF65851008BF543 /* Globals.swift in Sources */,
 				E5ECA0B91FF65851008BF543 /* Utilities.swift in Sources */,
 				E5ECA08A1FF6584A008BF543 /* Identifiable.swift in Sources */,
@@ -1654,26 +1511,20 @@
 				E5ECA08D1FF6584A008BF543 /* StorageProtocol.swift in Sources */,
 				E5ECA0971FF65851008BF543 /* CallOperation.swift in Sources */,
 				E56AAA1C201097080082D4D6 /* CodableObject.swift in Sources */,
-				E5E4A63920111848001F75CA /* BTreeNode.swift in Sources */,
 				E5ECA0861FF6584A008BF543 /* Metrics.swift in Sources */,
 				E5ECA0B11FF65851008BF543 /* Paths.swift in Sources */,
-				E5E4A60220111848001F75CA /* BTreePath.swift in Sources */,
 				E5ECA0A01FF65851008BF543 /* HTTPResponse.swift in Sources */,
 				E5ECA0881FF6584A008BF543 /* ConcreteCoder.swift in Sources */,
 				E5DBB1DD20022A160079F4C6 /* KeyValueStorage.swift in Sources */,
 				E59315FE200E38D600680C07 /* FileStorageProtocol.swift in Sources */,
-				E5E4A62020111848001F75CA /* BTreeBuilder.swift in Sources */,
 				E5ECA0941FF6584A008BF543 /* UniversalType.swift in Sources */,
-				E5E4A63420111848001F75CA /* Weak.swift in Sources */,
 				E5ECA0991FF65851008BF543 /* DataPoint.swift in Sources */,
 				E58A27711FFBDC4F00079CB5 /* Default.swift in Sources */,
 				E52527A72000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
-				E5E4A5EE20111848001F75CA /* SortedSet.swift in Sources */,
 				E5ECA0901FF6584A008BF543 /* Payload.swift in Sources */,
 				E5ECA09A1FF65851008BF543 /* DataResponse.swift in Sources */,
 				E5ECA0A71FF65851008BF543 /* Model+RelationsResolution.swift in Sources */,
 				E5ECA0B81FF65851008BF543 /* Upload.swift in Sources */,
-				E5E4A61620111848001F75CA /* BTreeCursor.swift in Sources */,
 				E52527A32000E4D700D9A148 /* Model+Aliasable.swift in Sources */,
 				E5DBB1DC20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
 				E5ECA0A31FF65851008BF543 /* JSONCoder.swift in Sources */,
@@ -1688,21 +1539,16 @@
 				E5ECA0A21FF65851008BF543 /* JSON.swift in Sources */,
 				E5ECA0891FF6584A008BF543 /* ConcreteDataPoint.swift in Sources */,
 				E5ECA0AB1FF65851008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
-				E5E4A62F20111848001F75CA /* BTreeMerger.swift in Sources */,
 				E5ECA08F1FF6584A008BF543 /* HTTPOperation.swift in Sources */,
-				E5E4A60720111848001F75CA /* BTreeIterator.swift in Sources */,
-				E5E4A5F320111848001F75CA /* BTreeComparisons.swift in Sources */,
 				E5ECA0871FF6584A008BF543 /* Collectable.swift in Sources */,
 				E5ECA09F1FF65851008BF543 /* HTTPMethod.swift in Sources */,
 				E5ECA0961FF6584A008BF543 /* Tolerent.swift in Sources */,
 				E50C5C9F1FFD2EFC00A3C9DA /* LogEntry.swift in Sources */,
-				E5E4A62520111848001F75CA /* Map.swift in Sources */,
 				E5ECA09B1FF65851008BF543 /* Download.swift in Sources */,
 				E553813A20036C7D0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E5ECA0B41FF65851008BF543 /* Session.swift in Sources */,
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA3200CA74B00AB9A44 /* FileSavable.swift in Sources */,
-				E5E4A61120111848001F75CA /* List.swift in Sources */,
 				E5D6CDE720012F2800A3D975 /* Notify.swift in Sources */,
 				E5ECA08B1FF6584A008BF543 /* Initializable.swift in Sources */,
 				E5ECA0B21FF65851008BF543 /* Relationship.swift in Sources */,
@@ -1719,21 +1565,16 @@
 				E5F3CDC5200D1C2000AB9A44 /* FilePersistent.swift in Sources */,
 				E5F3CDC6200D1C2000AB9A44 /* Credentials.swift in Sources */,
 				E5F3CDC7200D1C2000AB9A44 /* IndistinctCollection.swift in Sources */,
-				E5E4A60920111848001F75CA /* BridgedList.swift in Sources */,
-				E5E4A5F520111848001F75CA /* SortedBag.swift in Sources */,
-				E5E4A62720111848001F75CA /* BTreeIndex.swift in Sources */,
 				E5F3CDC8200D1C2000AB9A44 /* AliasOf.swift in Sources */,
 				E5F3CDC9200D1C2000AB9A44 /* RelationsResolution.swift in Sources */,
 				E5F3CDCA200D1C2000AB9A44 /* Int+Padding.swift in Sources */,
 				E5F3CDCB200D1C2000AB9A44 /* Storage.swift in Sources */,
-				E5E4A61820111848001F75CA /* BTree.swift in Sources */,
 				E5F3CDCC200D1C2000AB9A44 /* Status.swift in Sources */,
 				E5F3CDCD200D1C2000AB9A44 /* Logger.swift in Sources */,
 				E5F3CDCE200D1C2000AB9A44 /* Schemes.swift in Sources */,
 				E5F3CDCF200D1C2000AB9A44 /* KeyedData.swift in Sources */,
 				E5F3CDD0200D1C2000AB9A44 /* Object.swift in Sources */,
 				E5F3CDD1200D1C2000AB9A44 /* Globals.swift in Sources */,
-				E5E4A5FA20111848001F75CA /* Compatibility.swift in Sources */,
 				E5F3CDD2200D1C2000AB9A44 /* Utilities.swift in Sources */,
 				E5F3CDD3200D1C2000AB9A44 /* Identifiable.swift in Sources */,
 				E5F3CDD4200D1C2000AB9A44 /* Model.swift in Sources */,
@@ -1746,26 +1587,20 @@
 				E5F3CDDB200D1C2000AB9A44 /* CallOperation.swift in Sources */,
 				E5F3CDDC200D1C2000AB9A44 /* Metrics.swift in Sources */,
 				E56AAA19201097080082D4D6 /* CodableObject.swift in Sources */,
-				E5E4A63620111848001F75CA /* BTreeNode.swift in Sources */,
 				E5F3CDDD200D1C2000AB9A44 /* Paths.swift in Sources */,
 				E5F3CDDE200D1C2000AB9A44 /* HTTPResponse.swift in Sources */,
-				E5E4A5FF20111848001F75CA /* BTreePath.swift in Sources */,
 				E5F3CDDF200D1C2000AB9A44 /* ConcreteCoder.swift in Sources */,
 				E5F3CDE0200D1C2000AB9A44 /* Aliased.swift in Sources */,
 				E5F3CDE1200D1C2000AB9A44 /* UniversalType.swift in Sources */,
 				E59315FB200E38D300680C07 /* FileStorageProtocol.swift in Sources */,
-				E5E4A61D20111848001F75CA /* BTreeBuilder.swift in Sources */,
 				E5F3CDE2200D1C2000AB9A44 /* DataPoint.swift in Sources */,
-				E5E4A63120111848001F75CA /* Weak.swift in Sources */,
 				E5F3CDE3200D1C2000AB9A44 /* Payload.swift in Sources */,
 				E5F3CDE4200D1C2000AB9A44 /* Model+AliasesResolution.swift in Sources */,
 				E5F3CDE5200D1C2000AB9A44 /* DataResponse.swift in Sources */,
-				E5E4A5EB20111848001F75CA /* SortedSet.swift in Sources */,
 				E5F3CDE6200D1C2000AB9A44 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E5F3CDE7200D1C2000AB9A44 /* Model+RelationsResolution.swift in Sources */,
 				E5F3CDE8200D1C2000AB9A44 /* Upload.swift in Sources */,
 				E5F3CDE9200D1C2000AB9A44 /* DataPoint+KeyValueStorage.swift in Sources */,
-				E5E4A61320111848001F75CA /* BTreeCursor.swift in Sources */,
 				E5F3CDEA200D1C2000AB9A44 /* JSONCoder.swift in Sources */,
 				E5F3CDEB200D1C2000AB9A44 /* Model+Aliasable.swift in Sources */,
 				E5F3CDEC200D1C2000AB9A44 /* Model+Relational.swift in Sources */,
@@ -1780,21 +1615,16 @@
 				E5F3CDF5200D1C2000AB9A44 /* ConcreteDataPoint.swift in Sources */,
 				E5F3CDF6200D1C2000AB9A44 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5F3CDF7200D1C2000AB9A44 /* HTTPOperation.swift in Sources */,
-				E5E4A62C20111848001F75CA /* BTreeMerger.swift in Sources */,
 				E5F3CDF8200D1C2000AB9A44 /* Collectable.swift in Sources */,
-				E5E4A60420111848001F75CA /* BTreeIterator.swift in Sources */,
-				E5E4A5F020111848001F75CA /* BTreeComparisons.swift in Sources */,
 				E5F3CDF9200D1C2000AB9A44 /* HTTPMethod.swift in Sources */,
 				E5F3CDFA200D1C2000AB9A44 /* Selection.swift in Sources */,
 				E5F3CDFB200D1C2000AB9A44 /* Tolerent.swift in Sources */,
 				E5F3CDFC200D1C2000AB9A44 /* AliasesResolution.swift in Sources */,
-				E5E4A62220111848001F75CA /* Map.swift in Sources */,
 				E5F3CDFD200D1C2000AB9A44 /* LogEntry.swift in Sources */,
 				E5F3CDFE200D1C2000AB9A44 /* Download.swift in Sources */,
 				E5F3CDFF200D1C2000AB9A44 /* Session.swift in Sources */,
 				E5F3CE00200D1C2000AB9A44 /* VoidPayload.swift in Sources */,
 				E5F3CE01200D1C2000AB9A44 /* FileSavable.swift in Sources */,
-				E5E4A60E20111848001F75CA /* List.swift in Sources */,
 				E5F3CE02200D1C2000AB9A44 /* KeyValueStorage.swift in Sources */,
 				E5F3CE03200D1C2000AB9A44 /* Initializable.swift in Sources */,
 				E5F3CE04200D1C2000AB9A44 /* Relationship.swift in Sources */,
@@ -1951,7 +1781,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS";
 				PRODUCT_NAME = BartlebysCore;
 				SKIP_INSTALL = YES;
@@ -1975,7 +1805,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				OTHER_SWIFT_FLAGS = "-DMERGE_SWIFT_MODULES";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pereira-da-silva.BartlebysCore-macOS";
 				PRODUCT_NAME = BartlebysCore;
 				SKIP_INSTALL = YES;

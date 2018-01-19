@@ -60,7 +60,17 @@ public class Session {
     // MARK: - Scheduler
     
     //@todo: scheduling ==> schedule the next Call Operation Bunch
-    
+    /*
+   func runGetOperationFrom(with session: Session, operationData: Data){
+        do {
+            let operation: CallOperation<Character,VoidPayload> = try JSON.decoder.decode(CallOperation<Character,VoidPayload>.self, from: operationData)
+            try session.runCall(operation)
+        } catch {
+            Logger.log("\(error)", category: .critical)
+        }
+    }
+     */
+
     // MARK: - Operations Runtime
     
     public func execute<T:Collectable,P>(_ operation: CallOperation<T,P>){
