@@ -14,7 +14,7 @@ import Foundation
 open class ProgressDelegate:StorageProgressDelegate{
 
     // This identifier is used to distinguish the Observers
-    public let identifier: String = Utilities.createUID()
+    public let identifier: UID = Utilities.createUID()
 
     // The referent dataPoint
     public let dataPoint:DataPoint
@@ -39,11 +39,10 @@ open class ProgressDelegate:StorageProgressDelegate{
 // A Storage progress that uses an handler
 open class AutoRemovableStorageProgressHandler:ProgressDelegate{
 
-    public typealias  StorageProgress = (_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress)->()
+    public typealias StorageProgress = (_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress)->()
 
     // The handler to handle the progress
     public var handler:StorageProgress
-
 
     /// An initializer with the dataPoint & the Handler
     ///
@@ -95,9 +94,9 @@ public class AutoRemovableSavingDelegate:ProgressDelegate{
             self.dataPoint.storage.removeProgressObserver(observer: self)
         }
         if !success{
-            self.dataPoint.delegate.collectionDidFailToSave(message:message ?? "Failure when saving \(fileName)")
+            self.dataPoint.delegate.collectionsDidFailToSave(message:message ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.delegate.collectionDidSaveSuccessFully()
+            self.dataPoint.delegate.collectionsDidSaveSuccessFully()
         }
     }
 }
@@ -127,9 +126,9 @@ public class AutoRemovableLoadingDelegate:ProgressDelegate{
             self.dataPoint.storage.removeProgressObserver(observer: self)
         }
         if !success{
-            self.dataPoint.delegate.collectionDidFailToLoad(message: message ?? "Failure when loading \(fileName)")
+            self.dataPoint.delegate.collectionsDidFailToLoad(message: message ?? "Failure when loading \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.delegate.collectionDidLoadSuccessFully()
+            self.dataPoint.delegate.collectionsDidLoadSuccessFully()
         }
     }
 }

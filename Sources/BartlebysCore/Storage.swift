@@ -15,7 +15,7 @@ public enum FileStorageError:Error {
 
 public protocol StorageProgressDelegate{
     
-    var identifier:String { get }
+    var identifier:UID { get }
     
     func onProgress(_ fileName:String,_ success:Bool,_ message:String?, _ progress:Progress)->()
 }
@@ -24,20 +24,13 @@ public protocol StorageProgressDelegate{
 /// The storage layer
 public final class Storage{
 
-
     /// The coder: encodes and decodes the Data
     public var coder: ConcreteCoder = JSONCoder()
-    
 
     /// If set to true the Storage is volatile
     /// It means it persist in memory only
     /// The FileStorage storage methods are ignored at runtime
-    fileprivate var _volatile:Bool = false {
-        didSet {
-            print("_volatile = \(self._volatile)")
-        }
-    }
-
+    fileprivate var _volatile:Bool = false
 
     /// If you call once this method the datapoint will not persist out of the memory anymore
     /// You cannot turn back _volatile to false
@@ -86,9 +79,9 @@ public final class Storage{
     
 }
 
-// MARK: - FileStorage
+// MARK: - FileStorageProtocol
 
-extension Storage: StorageProtocol{
+extension Storage: FileStorageProtocol{
 
 
     // MARK: - Asynchronous (on an serial queue)
