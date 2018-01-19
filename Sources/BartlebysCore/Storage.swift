@@ -136,7 +136,6 @@ extension Storage: FileStorageProtocol{
 
         self._incrementProgressTotalUnitCount()
         let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
-
             do {
                 let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
                 let url = self.getURL(of: element)
