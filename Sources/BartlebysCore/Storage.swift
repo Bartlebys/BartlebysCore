@@ -99,7 +99,7 @@ extension Storage: FileStorageProtocol{
         }
 
         self._incrementProgressTotalUnitCount()
-        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
+        let workItem = DispatchWorkItem.init(qos:.utility, flags:.enforceQoS) {
             do {
                 let url = self.getURL(of: proxy)
                 if Storage._fileManager.fileExists(atPath: url.path) {
@@ -135,7 +135,7 @@ extension Storage: FileStorageProtocol{
         }
 
         self._incrementProgressTotalUnitCount()
-        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
+        let workItem = DispatchWorkItem.init(qos:.utility, flags:.enforceQoS) {
             do {
                 let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
                 let url = self.getURL(of: element)
