@@ -15,9 +15,9 @@ BartlebysCore's goal is to keep things simples and "Swifty" by Design.
 
 If your data can be totally loaded in Memory, Bartleby's Core is probably a good solution for your App. It will allow to use simple functional programming approach to manipulate your data synchronously very efficiently, and integrate easily with your RESTFul API.
 
-# Dependency BTree
+## In Memory Binary Trees
 
-- The collection, and the datapoint object registry are relying on Karoy Lorentey's  Binary Tree implementation. Btree has been forked from [Karoy Lorentey's BTree](https://github.com/attaswift/BTree). and is licensed under the [MIT license](LicenseBTree.md)
+- The collection, and the datapoint object registry are relying on [Karoy Lorentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation.
 
 # Installation
 
