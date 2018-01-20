@@ -278,7 +278,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
          guard let dataPoint = self.dataPoint else {
             throw CollectionOfError.collectionIsNotRegistred
          }
-         dataPoint.storage.saveCollection(element: self)
+         dataPoint.storage.saveCollection(self)
       }
    }
 

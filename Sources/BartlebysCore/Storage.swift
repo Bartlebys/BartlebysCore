@@ -58,11 +58,16 @@ public final class Storage{
     public fileprivate(set) var fileManager = FileManager()
 
     // The progress is incremented / decremented via DispatchQueue.main.async
-    fileprivate var _progress = Progress()
+    public fileprivate(set) var progress = Progress()
 
-    fileprivate func _incrementProgressTotalUnitCount(){
+    fileprivate enum ProgressAction{
+        case loadCollection(named:String)
+        case saveCollection(named:String)
+    }
+
+    fileprivate func _incrementProgressTotalUnitCount(with action:ProgressAction){
         self.observationQueue.async {
-            self._progress.totalUnitCount += 1
+            self.progress.totalUnitCount += 1
         }
     }
 
@@ -104,7 +109,7 @@ extension Storage: FileStorageProtocol{
             return
         }
 
-        self._incrementProgressTotalUnitCount()
+        self._incrementProgressTotalUnitCount(with: ProgressAction.loadCollection(named: proxy.fileName))
 
         self.persistencyQueue.async{
             do {
@@ -132,34 +137,33 @@ extension Storage: FileStorageProtocol{
     /// Saves asynchronously any FilePersistent & Encodable a separate queue
     ///
     /// - Parameters:
-    ///   - element: the collection or object reference
-    public func saveCollection<T>(element:CollectionOf<T>){
+    ///   - collection: the collection reference
+    public func saveCollection<T>(_ collection:CollectionOf<T>){
 
         if self._volatile == true {
-            self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: true, error: nil)
+            self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: true, error: nil)
             return
         }
-
-        self._incrementProgressTotalUnitCount()
+        self._incrementProgressTotalUnitCount(with: ProgressAction.saveCollection(named: collection.fileName))
         self.persistencyQueue.async{
             do {
-                let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
-                let url = self.getURL(of: element)
+                let directoryURL = self.baseUrl.appendingPathComponent(collection.relativeFolderPath)
+                let url = self.getURL(of: collection)
 
                 var isDirectory: ObjCBool = true
                 if !self.fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
                     try self.fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                 }
 
-                let data = try self.coder.encode(element)
+                let data = try self.coder.encode(collection)
                 try data.write(to: url)
-                element.hasChanged = false
+                collection.hasChanged = false
 
                 // The collection has been saved.
-                self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: true, error: nil)
+                self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: true, error: nil)
 
             } catch {
-                self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: false, error: error)
+                self._relayTaskCompletionToProgressObservers(fileName: collection.fileName, success: false, error: error)
             }
         }
     }
@@ -174,18 +178,18 @@ extension Storage: FileStorageProtocol{
     ///   - error: the associated error
     fileprivate func _relayTaskCompletionToProgressObservers(fileName:String,success:Bool, error:Error?){
         self.observationQueue.async {
-            self._progress.completedUnitCount += 1
+            self.progress.completedUnitCount += 1
             for observer in self._observers{
                 if let error = error{
-                    observer.onProgress(fileName, success, "\(error)", self._progress)
+                    observer.onProgress(fileName, success, "\(error)", self.progress)
                 }else{
-                    observer.onProgress(fileName, success, nil, self._progress)
+                    observer.onProgress(fileName, success, nil, self.progress)
                 }
             }
             // Reset if necessary the progress object
-            if self._progress.completedUnitCount == self._progress.totalUnitCount {
-                self._progress.completedUnitCount = 0
-                self._progress.totalUnitCount = 0
+            if self.progress.completedUnitCount == self.progress.totalUnitCount {
+                self.progress.completedUnitCount = 0
+                self.progress.totalUnitCount = 0
             }
         }
     }

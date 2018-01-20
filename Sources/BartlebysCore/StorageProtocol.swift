@@ -41,7 +41,7 @@ public protocol StorageProtocol {
     ///
     /// - Parameters:
     ///   - collection: the collection reference
-    func saveCollection<T>(element:CollectionOf<T>)
+    func saveCollection<T>(_ collection:CollectionOf<T>)
 
     // MARK: - Synchronous
 
