@@ -37,7 +37,7 @@
       "entities": [
         {
           "path": "${TEMPLATES_DIR}/models/model.swift.php",
-          "description": "Music work's managed model template",
+          "description": "Bartleby's core Model template",
           "uid":""
         }
       ],
@@ -49,7 +49,7 @@
     "variables": {
       "isBartlebysCore":true,
       "modelsShouldConformToCodable":true,
-      "modelsShouldConformToExposed": true,
+      "modelsShouldConformToExposed": false,
       "modelsShouldConformToNSSecureCoding": false,
       "modelsShouldConformToMappable": false,
       "excludeEntitiesWith": [
