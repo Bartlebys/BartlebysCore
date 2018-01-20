@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "BartlebysCore", targets: ["BartlebysCore"]),
         ],
     dependencies: [
-        .package(url: "https://github.com/Bartlebys/BTree", from: "4.0.0"),
+        .package(url: "https://github.com/Bartlebys/BTree", from: "4.1.2"),
         ],
     targets: [
         .target(name: "BartlebysCore", dependencies: ["BTree"]),
