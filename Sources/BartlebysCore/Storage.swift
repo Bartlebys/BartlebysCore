@@ -45,11 +45,17 @@ public final class Storage{
     /// to monitor the storage load and save.
     fileprivate var _observers=[StorageProgressDelegate]()
     
-    // We use a static shared serial queue for all our operation
+    /// We use a serial queue for all our IO
     public fileprivate(set) var persistencyQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.collectionsQueue", qos: .utility, attributes: [])
-    
-    // A unique file manager used exclusively on the shared queue
-    fileprivate static var _fileManager = FileManager()
+
+    /// The observation queue (any progress message will be dispatched asynchronously on this queue)
+    public var observationQueue:DispatchQueue = DispatchQueue.main
+
+    /// This queue is used to integrate the loaded data.
+    public var dataQueue:DispatchQueue = DispatchQueue.main
+
+    // A unique file manager used exclusively on the persistencyQueue
+    public fileprivate(set) var fileManager = FileManager()
 
     // The progress is incremented / decremented via DispatchQueue.main.async
     fileprivate var _progress = Progress()
@@ -103,10 +109,10 @@ extension Storage: FileStorageProtocol{
         self.persistencyQueue.async{
             do {
                 let url = self.getURL(of: proxy)
-                if Storage._fileManager.fileExists(atPath: url.path) {
+                if self.fileManager.fileExists(atPath: url.path) {
                     let data = try Data(contentsOf: url)
                     let collection = try self.coder.decode(CollectionOf<T>.self, from: data)
-                    DispatchQueue.main.async {
+                    self.dataQueue.async {
                         proxy.append(contentsOf: collection)
                     }
                 }
@@ -141,8 +147,8 @@ extension Storage: FileStorageProtocol{
                 let url = self.getURL(of: element)
 
                 var isDirectory: ObjCBool = true
-                if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
-                    try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+                if !self.fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
+                    try self.fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                 }
 
                 let data = try self.coder.encode(element)
@@ -167,7 +173,7 @@ extension Storage: FileStorageProtocol{
     ///   - success: the success state
     ///   - error: the associated error
     fileprivate func _relayTaskCompletionToProgressObservers(fileName:String,success:Bool, error:Error?){
-        DispatchQueue.main.async {
+        self.observationQueue.async {
             self._progress.completedUnitCount += 1
             for observer in self._observers{
                 if let error = error{
@@ -199,7 +205,7 @@ extension Storage: FileStorageProtocol{
             let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
             // We do not use the storage file manager.
             // That performs on an async utility queue
-            if Storage._fileManager.fileExists(atPath: url.path) {
+            if self.fileManager.fileExists(atPath: url.path) {
                 let data = try Data(contentsOf: url)
                 return try self.coder.decode(T.self, from: data)
             }
@@ -219,8 +225,8 @@ extension Storage: FileStorageProtocol{
             let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
 
             var isDirectory: ObjCBool = true
-            if !Storage._fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
-                try Storage._fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+            if !self.fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
+                try self.fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
             }
             let data = try self.coder.encode(element)
             try data.write(to: url)
@@ -267,8 +273,8 @@ extension Storage: FileStorageProtocol{
         self.persistencyQueue.sync{
             do{
                 let url = self.getURL(of: element)
-                if Storage._fileManager.fileExists(atPath: url.path) {
-                    try Storage._fileManager.removeItem(at: url)
+                if self.fileManager.fileExists(atPath: url.path) {
+                    try self.fileManager.removeItem(at: url)
                 }
             }catch{
                 Logger.log("\(error)",category: .critical)
@@ -286,8 +292,8 @@ extension Storage: FileStorageProtocol{
         self.persistencyQueue.sync{
             do{
                 let url = self.baseUrl
-                if Storage._fileManager.fileExists(atPath: url.path) {
-                    try Storage._fileManager.removeItem(at: url)
+                if self.fileManager.fileExists(atPath: url.path) {
+                    try self.fileManager.removeItem(at: url)
                 }
             }catch{
                 Logger.log("\(error)",category: .critical)
@@ -302,8 +308,8 @@ extension Storage: FileStorageProtocol{
     public func eraseFile(fileName:String,relativeFolderPath:String){
         do{
             let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
-            if Storage._fileManager.fileExists(atPath: url.path) {
-                try Storage._fileManager.removeItem(at: url)
+            if self.fileManager.fileExists(atPath: url.path) {
+                try self.fileManager.removeItem(at: url)
             }
         }catch{
             Logger.log("\(error)",category: .critical)
