@@ -27,19 +27,29 @@ public func getElapsedTime()->Double {
     return AbsoluteTimeGetCurrent() - _startTime
 }
 
-#if os(Linux)
-    public class Progress {
-        public var totalUnitCount: Int64 = 0
-        public var completedUnitCount: Int64 = 0
-        public init(){
-        }
+// MARK: - Main Thread 
+
+public func syncOnMain(execute block: () -> Void) {
+    if Thread.isMainThread {
+        block()
+    } else {
+        DispatchQueue.main.sync(execute: block)
     }
+}
 
-
-    public func NSLocalizedString(_ key: String, tableName: String, comment: String) -> String{
-        return key   // @Todo Linux
+public func syncThrowableOnMain(execute block: () throws -> Void) rethrows-> (){
+    if Thread.isMainThread {
+        try block()
+    } else {
+        try DispatchQueue.main.sync(execute: block)
     }
+}
 
-
-#endif
+public func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
+    if Thread.isMainThread {
+        return try work()
+    } else {
+        return try DispatchQueue.main.sync(execute: work)
+    }
+}
 
