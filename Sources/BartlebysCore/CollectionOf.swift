@@ -8,6 +8,7 @@
 
 import Foundation
 import Dispatch
+import BTree
 
 public enum CollectionOfError:Error {
    case collectionIsNotRegistred
@@ -25,9 +26,9 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    // MARK: -
 
-   //@todo use a Btree.
-   fileprivate var _items: [T] = [T]()
-
+   // We use a Hooked List
+   // @todo waiting for [SE-0143](https://github.com/apple/swift-evolution/blob/master/proposals/0143-conditional-conformances.md)
+   fileprivate var _items: List<T> = List<T>()
 
    // We expose the collection type
    public var collectedType:T.Type { return T.self }
@@ -248,10 +249,10 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    // MARK: - Accessors
 
 
-   /// Returns all the stored element packaged in an Array
+   /// Returns an array
    /// Used by Array Controllers in cocoa bindings
-   public var all:Array<T> {
-      return self._items
+   public var all:NSArray {
+      return self._items.arrayView
    }
    
    // MARK: - Codable
@@ -264,7 +265,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    required public init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
-      self._items = try values.decode([T].self, forKey:.items)
+      self._items = try values.decode(List<T>.self, forKey:.items)
       self.fileName =  try values.decode(String.self, forKey:.fileName)
       self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
    }
