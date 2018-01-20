@@ -16,12 +16,12 @@ public protocol StorageProtocol {
     /// Adds a progress observer
     ///
     /// - Parameter observer: the observer
-    func addProgressObserver(observer:StorageProgressDelegate)
+    func addProgressObserver(observer:CollectionProgressObserver)
 
     /// Removes the progress observer
     ///
     /// - Parameter observer: the observer
-    func removeProgressObserver(observer:StorageProgressDelegate)
+    func removeProgressObserver(observer:CollectionProgressObserver)
 
 
     /// If you call once this method the datapoint will not persist out of the memory anymore
@@ -35,13 +35,13 @@ public protocol StorageProtocol {
     /// and insert the elements in the collection proxy
     ///
     /// - Parameter proxy: the collection proxy
-    func loadCollection<T>(on proxy:CollectionOf<T>)
+    func loadCollection<T>(on proxy:CollectionOf<T>) throws
 
     /// Saves asynchronously the collection to a file on a separate queue
     ///
     /// - Parameters:
     ///   - collection: the collection reference
-    func saveCollection<T>(_ collection:CollectionOf<T>)
+    func saveCollection<T>(_ collection:CollectionOf<T>) throws
 
     // MARK: - Synchronous
 

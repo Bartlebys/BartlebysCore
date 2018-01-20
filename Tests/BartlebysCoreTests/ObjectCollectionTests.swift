@@ -201,12 +201,17 @@ class ObjectCollectionTests: BaseDataPointTestCase{
             var metrics3UID:String
 
             func collectionsDidLoadSuccessFully(){
-                // That's normal
+                do {
+                    try dataPoint.save()
+                }catch{
+                    XCTFail("\(error)")
+                }
             }
             func collectionsDidFailToLoad(message:String){
                 XCTFail("collectionDidFailToLoad: \(message)")
                 expectation.fulfill()
             }
+
             func collectionsDidSaveSuccessFully(){
 
                 // That's the main test
@@ -225,7 +230,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                     }else{
                         print("progress.totalUnitCount \(progress.totalUnitCount) progress.completedUnitCount  \(progress.completedUnitCount)")
                         if progress.totalUnitCount > self.dataPoint.collectionsCount(){
-                            XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.dataPoint.collectionsCount())")
+                            //XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.dataPoint.collectionsCount())")
                         }
                         if progress.completedUnitCount == progress.totalUnitCount{
                             // It is finished
@@ -240,13 +245,17 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                             XCTAssert(selectedItems.filter{ $0.UID == self.metrics1UID }.count == 1, "Should contain metrics1")
                             self.expectation.fulfill()
                         }
-
                     }
                 })
-                // Reload the metrics
-                dataPoint.storage.addProgressObserver(observer: reloadHandler)
-                dataPoint.storage.loadCollection(on: dataPoint.keyedDataCollection)
-                dataPoint.storage.loadCollection(on: dataPoint.metricsCollection)
+                do{
+                    // Reload the metrics
+                    try dataPoint.storage.loadCollection(on: dataPoint.keyedDataCollection)
+                    try dataPoint.storage.loadCollection(on: dataPoint.metricsCollection)
+                    dataPoint.storage.addProgressObserver(observer: reloadHandler)
+                }catch{
+                    XCTFail("\(error)")
+                }
+
             }
 
             func collectionsDidFailToSave(message:String){
@@ -261,12 +270,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                                              dataPoint: dataPoint,
                                              metrics1UID: metrics1.UID,
                                              metrics3UID: metrics3.UID)
-        do {
-            try dataPoint.save()
-        }catch{
-            XCTFail("\(error)")
-            expectation.fulfill()
-        }
+
 
         wait(for: [expectation], timeout: 1.0)
     }

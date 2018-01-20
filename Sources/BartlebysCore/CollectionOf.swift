@@ -15,7 +15,9 @@ public enum CollectionOfError:Error {
 }
 
 protocol ChangesFlag {
-   var hasChanged: Bool { get set }
+   var hasChanged: Bool { get }
+   func didChange()
+   func changesHasBeenSaved()
 }
 
 open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FileSavable,ChangesFlag where T :  Codable & Collectable {
@@ -34,7 +36,20 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    public var dataPoint:DataPoint?
 
    // If set to true the collection will be saved on the next save operations
-   public var hasChanged: Bool = false
+   // ChangesFlag protocol
+   public fileprivate(set) var hasChanged: Bool = false
+   public func didChange() { self.hasChanged = true }
+   public func changesHasBeenSaved() { self.hasChanged = false }
+
+   // Loading flag
+   public fileprivate(set) var isLoading: Bool = false
+   public func startLoading() { self.isLoading = true }
+   public func didLoad() { self.isLoading = false }
+
+   // Saving flag
+   public fileprivate(set) var isSaving: Bool = false
+   public func startSaving() { self.isLoading = true }
+   public func didSave() { self.isLoading = false }
 
    // You must setup a relativeFolderPath
    public var relativeFolderPath: String
@@ -212,11 +227,6 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
-   /// Called when the collection or one of its member has Changed
-   public func didChange(){
-      self.hasChanged = true
-   }
-
    // MARK: IndistinctCollection.UniversalType
 
    public static var collectionName:String { return CollectionOf._collectionName() }
@@ -278,7 +288,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
          guard let dataPoint = self.dataPoint else {
             throw CollectionOfError.collectionIsNotRegistred
          }
-         dataPoint.storage.saveCollection(self)
+         try dataPoint.storage.saveCollection(self)
       }
    }
 

@@ -1,5 +1,5 @@
 //
-//  StorageProgressDelegates.swift
+//  CollectionIOObserver.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 26/12/2017.
@@ -8,10 +8,10 @@
 
 import Foundation
 
-// MARK: - The base ProgressDelegate
+// MARK: - The base BaseCollectionObserver
 
 /// A base class the handle the storage Progress delegations.
-open class ProgressDelegate:StorageProgressDelegate{
+public class BaseCollectionIOObserver:CollectionProgressObserver{
 
     // This identifier is used to distinguish the Observers
     public let identifier: UID = Utilities.createUID()
@@ -37,7 +37,7 @@ open class ProgressDelegate:StorageProgressDelegate{
 // MARK: - AutoRemovableStorageProgressHandler
 
 // A Storage progress that uses an handler
-open class AutoRemovableStorageProgressHandler:ProgressDelegate{
+public final class AutoRemovableStorageProgressHandler:BaseCollectionIOObserver{
 
     public typealias StorageProgress = (_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress)->()
 
@@ -62,10 +62,10 @@ open class AutoRemovableStorageProgressHandler:ProgressDelegate{
     ///   - message: a contextual messsage
     ///   - progress: the progress object
     override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
+        self.handler(fileName, success, message, progress)
         if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.storage.removeProgressObserver(observer: self)
         }
-        self.handler(fileName, success, message, progress)
     }
 }
 
@@ -73,7 +73,7 @@ open class AutoRemovableStorageProgressHandler:ProgressDelegate{
 // MARK: - AutoRemovableSavingDelegate
 
 // A SavingDelegate that call the DataPoint delegate
-public class AutoRemovableSavingDelegate:ProgressDelegate{
+internal final class AutoRemovableSavingDelegate:BaseCollectionIOObserver{
 
 
     // The initializer
@@ -90,13 +90,13 @@ public class AutoRemovableSavingDelegate:ProgressDelegate{
     ///   - message: a contextual messsage
     ///   - progress: the progress object
     override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
-        if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.storage.removeProgressObserver(observer: self)
-        }
         if !success{
             self.dataPoint.delegate.collectionsDidFailToSave(message:message ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.delegate.collectionsDidSaveSuccessFully()
+        }
+        if progress.totalUnitCount == progress.completedUnitCount{
+            self.dataPoint.storage.removeProgressObserver(observer: self)
         }
     }
 }
@@ -104,7 +104,7 @@ public class AutoRemovableSavingDelegate:ProgressDelegate{
 // MARK: - AutoRemovableLoadingDelegate
 
 // A LoadingDelegate that call the DataPoint delegate
-public class AutoRemovableLoadingDelegate:ProgressDelegate{
+internal final class AutoRemovableLoadingDelegate:BaseCollectionIOObserver{
 
 
     // The initializer
@@ -122,13 +122,13 @@ public class AutoRemovableLoadingDelegate:ProgressDelegate{
     ///   - message: a contextual messsage
     ///   - progress: the progress object
     override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
-        if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.storage.removeProgressObserver(observer: self)
-        }
         if !success{
             self.dataPoint.delegate.collectionsDidFailToLoad(message: message ?? "Failure when loading \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.delegate.collectionsDidLoadSuccessFully()
+        }
+        if progress.totalUnitCount == progress.completedUnitCount{
+            self.dataPoint.storage.removeProgressObserver(observer: self)
         }
     }
 }

@@ -145,7 +145,7 @@
 		E5EC9FBF1FF655FE008BF543 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC461FDAF5CF001D91CE /* Session.swift */; };
 		E5EC9FC01FF655FE008BF543 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC561FDAF5CF001D91CE /* Status.swift */; };
 		E5EC9FC11FF655FE008BF543 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF060E1FEFB87800E57AA2 /* Storage.swift */; };
-		E5EC9FC21FF655FE008BF543 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
+		E5EC9FC21FF655FE008BF543 /* CollectionIOObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */; };
 		E5EC9FC31FF655FE008BF543 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
 		E5EC9FC41FF655FE008BF543 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC411FDAF5CF001D91CE /* Utilities.swift */; };
 		E5EC9FC51FF655FE008BF543 /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
@@ -195,7 +195,7 @@
 		E5ECA0121FF656AF008BF543 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC461FDAF5CF001D91CE /* Session.swift */; };
 		E5ECA0131FF656AF008BF543 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC561FDAF5CF001D91CE /* Status.swift */; };
 		E5ECA0141FF656AF008BF543 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF060E1FEFB87800E57AA2 /* Storage.swift */; };
-		E5ECA0151FF656AF008BF543 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
+		E5ECA0151FF656AF008BF543 /* CollectionIOObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */; };
 		E5ECA0161FF656AF008BF543 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
 		E5ECA0171FF656AF008BF543 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC411FDAF5CF001D91CE /* Utilities.swift */; };
 		E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
@@ -245,7 +245,7 @@
 		E5ECA06B1FF657A6008BF543 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC461FDAF5CF001D91CE /* Session.swift */; };
 		E5ECA06C1FF657A6008BF543 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC561FDAF5CF001D91CE /* Status.swift */; };
 		E5ECA06D1FF657A6008BF543 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF060E1FEFB87800E57AA2 /* Storage.swift */; };
-		E5ECA06E1FF657A6008BF543 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
+		E5ECA06E1FF657A6008BF543 /* CollectionIOObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */; };
 		E5ECA06F1FF657A6008BF543 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
 		E5ECA0701FF657A6008BF543 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC411FDAF5CF001D91CE /* Utilities.swift */; };
 		E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
@@ -294,7 +294,7 @@
 		E5ECA0B41FF65851008BF543 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC461FDAF5CF001D91CE /* Session.swift */; };
 		E5ECA0B51FF65851008BF543 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC561FDAF5CF001D91CE /* Status.swift */; };
 		E5ECA0B61FF65851008BF543 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EF060E1FEFB87800E57AA2 /* Storage.swift */; };
-		E5ECA0B71FF65851008BF543 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
+		E5ECA0B71FF65851008BF543 /* CollectionIOObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */; };
 		E5ECA0B81FF65851008BF543 /* Upload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D65E67C1FDFFA9200034787 /* Upload.swift */; };
 		E5ECA0B91FF65851008BF543 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC411FDAF5CF001D91CE /* Utilities.swift */; };
 		E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */; };
@@ -362,7 +362,7 @@
 		E5F3CDEA200D1C2000AB9A44 /* JSONCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */; };
 		E5F3CDEB200D1C2000AB9A44 /* Model+Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E525279A2000E4D600D9A148 /* Model+Aliasable.swift */; };
 		E5F3CDEC200D1C2000AB9A44 /* Model+Relational.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A846A1FF5033E00F2408B /* Model+Relational.swift */; };
-		E5F3CDED200D1C2000AB9A44 /* StorageProgressDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */; };
+		E5F3CDED200D1C2000AB9A44 /* CollectionIOObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */; };
 		E5F3CDEE200D1C2000AB9A44 /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E5F3CDEF200D1C2000AB9A44 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC881FDAF68F001D91CE /* SessionDelegate.swift */; };
 		E5F3CDF0200D1C2000AB9A44 /* Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6BF200120C900386A9B /* Aliasable.swift */; };
@@ -483,7 +483,7 @@
 		E59315F9200E335800680C07 /* FileStorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorageProtocol.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* ConcreteDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteDataPoint.swift; sourceTree = "<group>"; };
 		E5A1FDAC2013549400558CF8 /* Compatibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compatibility.swift; sourceTree = "<group>"; };
-		E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProgressDelegates.swift; sourceTree = "<group>"; };
+		E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionIOObservers.swift; sourceTree = "<group>"; };
 		E5BAB6BF200120C900386A9B /* Aliasable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliasable.swift; sourceTree = "<group>"; };
 		E5BAB6C1200120E400386A9B /* AliasesResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasesResolution.swift; sourceTree = "<group>"; };
 		E5BC2D121FF133C200EC45F6 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
@@ -675,7 +675,7 @@
 				4D55FC461FDAF5CF001D91CE /* Session.swift */,
 				4D55FC561FDAF5CF001D91CE /* Status.swift */,
 				E5EF060E1FEFB87800E57AA2 /* Storage.swift */,
-				E5ADBAFB1FF242F300B6AA28 /* StorageProgressDelegates.swift */,
+				E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */,
 				4D65E67C1FDFFA9200034787 /* Upload.swift */,
 				4D55FC411FDAF5CF001D91CE /* Utilities.swift */,
 				4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */,
@@ -1269,7 +1269,7 @@
 				E5EC9FAE1FF655FE008BF543 /* JSONCoder.swift in Sources */,
 				E52527A02000E4D700D9A148 /* Model+Aliasable.swift in Sources */,
 				E5EC9FB11FF655FE008BF543 /* Model+Relational.swift in Sources */,
-				E5EC9FC21FF655FE008BF543 /* StorageProgressDelegates.swift in Sources */,
+				E5EC9FC21FF655FE008BF543 /* CollectionIOObservers.swift in Sources */,
 				E54826361FFBBB3700FB854E /* Default.swift in Sources */,
 				E5EC9FA01FF655F9008BF543 /* SessionDelegate.swift in Sources */,
 				E5BAB6C0200120C900386A9B /* Aliasable.swift in Sources */,
@@ -1364,7 +1364,7 @@
 				E5D6CDEF2001329200A3D975 /* Selection.swift in Sources */,
 				E5ECA0011FF656AF008BF543 /* JSONCoder.swift in Sources */,
 				E5ECA0041FF656AF008BF543 /* Model+Relational.swift in Sources */,
-				E5ECA0151FF656AF008BF543 /* StorageProgressDelegates.swift in Sources */,
+				E5ECA0151FF656AF008BF543 /* CollectionIOObservers.swift in Sources */,
 				E5EC9FF31FF656AF008BF543 /* SessionDelegate.swift in Sources */,
 				E5EC9FFA1FF656AF008BF543 /* Failure.swift in Sources */,
 				E5ECA00D1FF656AF008BF543 /* CollectionOf.swift in Sources */,
@@ -1454,7 +1454,7 @@
 				E5D6CDF02001329200A3D975 /* Selection.swift in Sources */,
 				E5ECA05A1FF657A6008BF543 /* JSONCoder.swift in Sources */,
 				E5ECA05D1FF657A6008BF543 /* Model+Relational.swift in Sources */,
-				E5ECA06E1FF657A6008BF543 /* StorageProgressDelegates.swift in Sources */,
+				E5ECA06E1FF657A6008BF543 /* CollectionIOObservers.swift in Sources */,
 				E5ECA04C1FF6579F008BF543 /* SessionDelegate.swift in Sources */,
 				E5ECA0531FF657A6008BF543 /* Failure.swift in Sources */,
 				E5ECA0661FF657A6008BF543 /* CollectionOf.swift in Sources */,
@@ -1540,7 +1540,7 @@
 				E5DBB1DC20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
 				E5ECA0A31FF65851008BF543 /* JSONCoder.swift in Sources */,
 				E5ECA0A61FF65851008BF543 /* Model+Relational.swift in Sources */,
-				E5ECA0B71FF65851008BF543 /* StorageProgressDelegates.swift in Sources */,
+				E5ECA0B71FF65851008BF543 /* CollectionIOObservers.swift in Sources */,
 				E5ECA0951FF6584A008BF543 /* SessionDelegate.swift in Sources */,
 				E5DBB1DE20022A170079F4C6 /* Selection.swift in Sources */,
 				E5DBB1DB20022A0B0079F4C6 /* Aliasable.swift in Sources */,
@@ -1616,7 +1616,7 @@
 				E5F3CDEA200D1C2000AB9A44 /* JSONCoder.swift in Sources */,
 				E5F3CDEB200D1C2000AB9A44 /* Model+Aliasable.swift in Sources */,
 				E5F3CDEC200D1C2000AB9A44 /* Model+Relational.swift in Sources */,
-				E5F3CDED200D1C2000AB9A44 /* StorageProgressDelegates.swift in Sources */,
+				E5F3CDED200D1C2000AB9A44 /* CollectionIOObservers.swift in Sources */,
 				E5F3CDEE200D1C2000AB9A44 /* Default.swift in Sources */,
 				E5F3CDEF200D1C2000AB9A44 /* SessionDelegate.swift in Sources */,
 				E5F3CDF0200D1C2000AB9A44 /* Aliasable.swift in Sources */,
