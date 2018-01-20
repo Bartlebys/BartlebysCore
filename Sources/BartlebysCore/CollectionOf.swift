@@ -248,11 +248,10 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    // MARK: - Accessors
 
-
-   /// Returns an array
-   /// Used by Array Controllers in cocoa bindings
-   public var all:NSArray {
-      return self._items.arrayView
+   /// Returns an array view by reference
+   /// Can be Used by Array Controllers in Cocoa bindings
+   public var arrayView:[Any] {
+      return self._items.arrayView as! [Any]
    }
    
    // MARK: - Codable
