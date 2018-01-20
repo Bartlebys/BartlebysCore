@@ -230,7 +230,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                     }else{
                         print("progress.totalUnitCount \(progress.totalUnitCount) progress.completedUnitCount  \(progress.completedUnitCount)")
                         if progress.totalUnitCount > self.dataPoint.collectionsCount(){
-                            //XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.dataPoint.collectionsCount())")
+                            XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.dataPoint.collectionsCount())")
                         }
                         if progress.completedUnitCount == progress.totalUnitCount{
                             // It is finished
