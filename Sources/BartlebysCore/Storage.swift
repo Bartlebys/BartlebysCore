@@ -61,7 +61,7 @@ public final class Storage{
     fileprivate var _progress = Progress()
 
     fileprivate func _incrementProgressTotalUnitCount(){
-         DispatchQueue.main.async {
+        self.observationQueue.async {
             self._progress.totalUnitCount += 1
         }
     }
