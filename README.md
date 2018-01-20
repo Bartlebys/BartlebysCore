@@ -17,7 +17,7 @@ If your data can be totally loaded in Memory, Bartleby's Core is probably a good
 
 ## Bartleby's core uses in Memory Binary Trees
 
-The collection, and the datapoint object registry are relying on [Karoy Lorentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation.
+The collection, and the datapoint object registry are relying on [Károly Lőrentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation.
 
 # Installation
 
