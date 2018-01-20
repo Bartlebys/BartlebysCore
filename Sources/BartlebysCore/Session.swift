@@ -22,7 +22,7 @@ public class Session {
     
     // A shared void Payload instance
     public static let voidPayload = VoidPayload()
-
+    
     // The session Identifier
     public var identifier: String = Default.NO_UID{
         didSet{
@@ -31,10 +31,10 @@ public class Session {
             }
         }
     }
-
+    
     // A unique run identifier that changes on each launch
     open static let runUID: String = Utilities.createUID()
-
+    
     // shortcuts to the delegate
     public var credentials: Credentials { return self.delegate.credentials }
     public var authenticationMethod: AuthenticationMethod  { return self.delegate.authenticationMethod }
@@ -43,8 +43,8 @@ public class Session {
     public var apiBasePath: String { return self.delegate.apiBasePath }
     
     public let startTime = AbsoluteTimeGetCurrent()
-
-
+    
+    
     public init(delegate:ConcreteDataPoint) {
         self.delegate = delegate
     }
@@ -56,21 +56,21 @@ public class Session {
     public func infos() -> String {
         return "Version 0.0.0"
     }
-
+    
     // MARK: - Scheduler
     
     //@todo: scheduling ==> schedule the next Call Operation Bunch
     /*
-   func runGetOperationFrom(with session: Session, operationData: Data){
-        do {
-            let operation: CallOperation<Character,VoidPayload> = try JSON.decoder.decode(CallOperation<Character,VoidPayload>.self, from: operationData)
-            try session.runCall(operation)
-        } catch {
-            Logger.log("\(error)", category: .critical)
-        }
-    }
+     func runGetOperationFrom(with session: Session, operationData: Data){
+     do {
+     let operation: CallOperation<Character,VoidPayload> = try JSON.decoder.decode(CallOperation<Character,VoidPayload>.self, from: operationData)
+     try session.runCall(operation)
+     } catch {
+     Logger.log("\(error)", category: .critical)
+     }
+     }
      */
-
+    
     // MARK: - Operations Runtime
     
     public func execute<T:Collectable,P>(_ operation: CallOperation<T,P>){
@@ -103,7 +103,7 @@ public class Session {
         request = try self.delegate.requestFor(operation)
         
         let failureClosure: ((Failure) -> ()) = { response in
-            Object.syncOnMain {
+            syncOnMain {
                 
                 let operation = operation
                 
@@ -118,7 +118,7 @@ public class Session {
                 } else {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
                 }
-
+                
             }
         }
         
@@ -130,7 +130,7 @@ public class Session {
             }
             
             let successClosure: ((HTTPResponse) -> ()) = { response in
-                Object.syncOnMain {
+                syncOnMain {
                     
                     let operation = operation
                     
@@ -151,10 +151,10 @@ public class Session {
                 self.callUpload(request: request, resultType: T.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
             }
         default:
-
+            
             self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: { response in
-                Object.syncOnMain {
-
+                syncOnMain {
+                    
                     let operation = operation
                     
                     operation.executionCounter += 1
@@ -164,21 +164,21 @@ public class Session {
                     
                     let notificationName = Notification.Name.CallOperation.didSucceed()
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
-
+                    
                     self.delegate.deleteCallOperation(operation)
                 }
             }, failure: failureClosure)
         }
-
+        
     }
     
     // MARK: - HTTP Engine
     
     public func call<T>(  request: URLRequest,
-                                resultType: T.Type,
-                                resultIsACollection:Bool,
-                                success: @escaping (_ completion: DataResponse<T>)->(),
-                                failure: @escaping (_ completion: Failure)->()
+                          resultType: T.Type,
+                          resultIsACollection:Bool,
+                          success: @escaping (_ completion: DataResponse<T>)->(),
+                          failure: @escaping (_ completion: Failure)->()
         ) {
         
         let metrics = Metrics()
@@ -202,7 +202,7 @@ public class Session {
                             dataResponse.httpStatus = httpResponse.statusCode.status()
                             dataResponse.content = data
                             
-                            Object.syncOnMain {
+                            syncOnMain {
                                 success(dataResponse)
                             }
                         }else{
@@ -213,28 +213,28 @@ public class Session {
                             dataResponse.metrics = metrics
                             dataResponse.httpStatus = httpResponse.statusCode.status()
                             dataResponse.content = data
-
-                            Object.syncOnMain {
+                            
+                            syncOnMain {
                                 success(dataResponse)
                             }
                         }
                         
                     } catch {
-                        Object.syncOnMain {
+                        syncOnMain {
                             failure(Failure(from : httpResponse.statusCode.status(), and: error))
                         }
                     }
                 } else {
                     // There is no data
                     if let error = error {
-                        Object.syncOnMain {
+                        syncOnMain {
                             failure(Failure(from : httpResponse.statusCode.status(), and: error))
                         }
                     } else {
-                        Object.syncOnMain {
+                        syncOnMain {
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-
+                            
                             let dataResponse: DataResponse = DataResponse(result: Array<T>())
                             dataResponse.httpStatus = httpResponse.statusCode.status()
                             dataResponse.content = data
@@ -246,16 +246,16 @@ public class Session {
             }
         }
         task.resume()
-
+        
     }
-
+    
     public func callDownload<T>(  request: URLRequest,
-                        resultType: T.Type,
-                        localFilePath: FilePath,
-                        success: @escaping (_ completion: HTTPResponse)->(),
-                        failure: @escaping (_ completion: Failure)->()
+                                  resultType: T.Type,
+                                  localFilePath: FilePath,
+                                  success: @escaping (_ completion: HTTPResponse)->(),
+                                  failure: @escaping (_ completion: Failure)->()
         ) {
-
+        
         let metrics = Metrics()
         metrics.elapsed = self.elapsedTime
         
@@ -266,14 +266,14 @@ public class Session {
             metrics.totalDuration = metrics.requestDuration
             
             if let error = error {
-                Object.syncOnMain {
+                syncOnMain {
                     let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
                     failure(Failure(from: fileError))
                 }
             } else if let httpURLResponse = response as? HTTPURLResponse {
                 
                 guard let tempURL = temporaryURL else {
-                    Object.syncOnMain {
+                    syncOnMain {
                         failure(Failure(from: httpURLResponse.statusCode.status(), and: SessionError.fileNotFound))
                     }
                     return
@@ -283,17 +283,17 @@ public class Session {
                     let localFileURL = try localFilePath.urlFromSession(session: self)
                     let directoryURL = localFileURL.deletingLastPathComponent()
                     try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-
+                    
                     try FileManager.default.moveItem(at: tempURL, to: localFileURL)
                     
                     let httpResponse = HTTPResponse()
                     httpResponse.httpStatus = httpURLResponse.statusCode.status()
                     httpResponse.metrics = metrics
-                    Object.syncOnMain {
+                    syncOnMain {
                         success(httpResponse)
                     }
                 } catch {
-                    Object.syncOnMain {
+                    syncOnMain {
                         failure(Failure(from: httpURLResponse.statusCode.status(), and: error))
                     }
                 }
@@ -304,10 +304,10 @@ public class Session {
     }
     
     public func callUpload<T>(  request: URLRequest,
-                      resultType: T.Type,
-                      localFilePath: FilePath,
-                      success: @escaping (_ completion: HTTPResponse)->(),
-                      failure: @escaping (_ completion: Failure)->()
+                                resultType: T.Type,
+                                localFilePath: FilePath,
+                                success: @escaping (_ completion: HTTPResponse)->(),
+                                failure: @escaping (_ completion: Failure)->()
         ) {
         
         let metrics = Metrics()
@@ -323,7 +323,7 @@ public class Session {
                 metrics.totalDuration = metrics.requestDuration
                 
                 if let error = error {
-                    Object.syncOnMain {
+                    syncOnMain {
                         let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
                         failure(Failure(from: fileError))
                     }
@@ -334,11 +334,11 @@ public class Session {
                         let httpResponse = HTTPResponse()
                         httpResponse.httpStatus = httpURLResponse.statusCode.status()
                         httpResponse.metrics = metrics
-                        Object.syncOnMain {
+                        syncOnMain {
                             success(httpResponse)
                         }
                     default:
-                        Object.syncOnMain {
+                        syncOnMain {
                             failure(Failure(from: httpURLResponse.statusCode.status()))
                         }
                     }
@@ -348,7 +348,7 @@ public class Session {
         } catch {
             failure(Failure(from: error))
         }
-
+        
     }
-
+    
 }

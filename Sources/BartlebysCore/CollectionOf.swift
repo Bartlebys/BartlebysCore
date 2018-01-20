@@ -46,9 +46,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    public var name:String { return self.fileName }
 
-
    // MARK: - Initializer
-
 
    /// The designated proxy initializer
    ///
@@ -292,7 +290,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    // Recovers the selectedUIDS
    fileprivate var _selectedUIDs:[UID]{
       set{
-         Object.syncOnMain {
+         syncOnMain {
             do{
                try self.dataPoint?.storeInKVS(newValue, identifiedBy: self._selectedUIDSKeys)
             }catch{
@@ -301,7 +299,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
          }
       }
       get{
-         return Object.syncOnMainAndReturn{ () -> [UID] in
+         return syncOnMainAndReturn{ () -> [UID] in
             guard let dataPoint = self.dataPoint else {
                return [UID]()
             }
@@ -316,7 +314,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    public var selectedItems:[T]?{
       get{
-         return Object.syncOnMainAndReturn { () -> [T]? in
+         return syncOnMainAndReturn { () -> [T]? in
             do{
                if let instances: [T] =  try self.dataPoint?.registredObjectsByUIDs(self._selectedUIDs){
                   return instances
@@ -328,7 +326,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
          }
       }
       set{
-         Object.syncOnMain {
+         syncOnMain {
             self._selectedUIDs = newValue?.map{$0.UID} ?? [UID]()
             Notify<T>.postSelectionChanged()
          }
@@ -337,7 +335,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    // A facility to access to the first selected item
    public var firstSelectedItem:T? {
-      return Object.syncOnMainAndReturn{ () -> T? in
+      return syncOnMainAndReturn{ () -> T? in
          return self.selectedItems?.first
       }
    }

@@ -76,7 +76,7 @@ open class JSONCoder:ConcreteCoder{
     ///   - resultType: the result type
     /// - Returns: the patched data
     fileprivate func _patchObject(data: Data, resultType: Tolerent.Type) throws -> Data {
-        return try Object.syncOnMainAndReturn(execute: { () -> Data in
+        return try syncOnMainAndReturn(execute: { () -> Data in
             if var jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Dictionary<String, Any> {
                 resultType.patchDictionary(&jsonDictionary)
                 return try JSONSerialization.data(withJSONObject:jsonDictionary, options:[])
@@ -93,7 +93,7 @@ open class JSONCoder:ConcreteCoder{
     ///   - resultType: the result type
     /// - Returns: the patched data
     fileprivate func _patchCollection(data: Data, resultType: Tolerent.Type) throws -> Data {
-        return try Object.syncOnMainAndReturn(execute: { () -> Data in
+        return try syncOnMainAndReturn(execute: { () -> Data in
             if var jsonObject = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Array<Dictionary<String, Any>> {
                 var index = 0
                 for var jsonElement in jsonObject {
