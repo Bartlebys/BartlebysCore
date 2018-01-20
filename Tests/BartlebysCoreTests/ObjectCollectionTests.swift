@@ -219,23 +219,18 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                 while self.dataPoint.keyedDataCollection.count > 0{
                     self.dataPoint.keyedDataCollection.remove(at: 0)
                 }
-
                 let reloadHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
                     if !success{
                         XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
-                        self.expectation.fulfill()
                     }else{
                         print("progress.totalUnitCount \(progress.totalUnitCount) progress.completedUnitCount  \(progress.completedUnitCount)")
                         if progress.totalUnitCount > self.dataPoint.collectionsCount(){
                             XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.dataPoint.collectionsCount())")
-                            self.expectation.fulfill()
-                            return
                         }
                         if progress.completedUnitCount == progress.totalUnitCount{
                             // It is finished
                             guard let selectedItems = self.dataPoint.metricsCollection.selectedItems else{
                                 XCTFail("Void metricsCollection.selectedItems")
-                                self.expectation.fulfill()
                                 return
                             }
                             XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
@@ -273,7 +268,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 1.0)
     }
     #endif
 

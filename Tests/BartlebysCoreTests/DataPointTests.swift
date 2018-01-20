@@ -131,7 +131,7 @@ class DataPointTests: BaseDataPointTestCase{
             datapoint.storage.addProgressObserver(observer:loadHandler)
 
 
-        wait(for: [expectation], timeout: 5.0)
+        wait(for: [expectation], timeout: 1.0)
     }
 
     #endif
