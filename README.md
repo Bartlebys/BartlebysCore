@@ -61,7 +61,7 @@ Add in your Cartfile:
 
 ```
 github "Bartlebys/BTree"
-github "Bartlebys/BartlebysCore/"
+github "Bartlebys/BartlebysCore"
 ```
 
 # DataPoint
