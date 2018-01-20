@@ -46,7 +46,7 @@ public final class Storage{
     fileprivate var _observers=[StorageProgressDelegate]()
     
     // We use a static shared serial queue for all our operation
-    fileprivate static var _serialQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.collectionsQueue", qos: .utility, attributes: [])
+    public fileprivate(set) var persistencyQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.collectionsQueue", qos: .utility, attributes: [])
     
     // A unique file manager used exclusively on the shared queue
     fileprivate static var _fileManager = FileManager()
@@ -99,7 +99,8 @@ extension Storage: FileStorageProtocol{
         }
 
         self._incrementProgressTotalUnitCount()
-        let workItem = DispatchWorkItem.init(qos:.utility, flags:.enforceQoS) {
+
+        self.persistencyQueue.async{
             do {
                 let url = self.getURL(of: proxy)
                 if Storage._fileManager.fileExists(atPath: url.path) {
@@ -116,7 +117,6 @@ extension Storage: FileStorageProtocol{
                 self._relayTaskCompletionToProgressObservers(fileName: proxy.fileName, success: false, error: error)
             }
         }
-        Storage._serialQueue.async(execute: workItem)
 
     }
     
@@ -135,7 +135,7 @@ extension Storage: FileStorageProtocol{
         }
 
         self._incrementProgressTotalUnitCount()
-        let workItem = DispatchWorkItem.init(qos:.utility, flags:.enforceQoS) {
+        self.persistencyQueue.async{
             do {
                 let directoryURL = self.baseUrl.appendingPathComponent(element.relativeFolderPath)
                 let url = self.getURL(of: element)
@@ -156,7 +156,6 @@ extension Storage: FileStorageProtocol{
                 self._relayTaskCompletionToProgressObservers(fileName: element.fileName, success: false, error: error)
             }
         }
-        Storage._serialQueue.async(execute: workItem)
     }
 
 
@@ -265,7 +264,7 @@ extension Storage: FileStorageProtocol{
         if self._volatile == true {
             return
         }
-        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
+        self.persistencyQueue.sync{
             do{
                 let url = self.getURL(of: element)
                 if Storage._fileManager.fileExists(atPath: url.path) {
@@ -275,7 +274,6 @@ extension Storage: FileStorageProtocol{
                 Logger.log("\(error)",category: .critical)
             }
         }
-        Storage._serialQueue.sync(execute: workItem)
     }
 
     /// Erases all the files.
@@ -285,7 +283,7 @@ extension Storage: FileStorageProtocol{
         if self._volatile == true {
             return
         }
-        let workItem = DispatchWorkItem.init(qos:.utility, flags:.inheritQoS) {
+        self.persistencyQueue.sync{
             do{
                 let url = self.baseUrl
                 if Storage._fileManager.fileExists(atPath: url.path) {
@@ -295,7 +293,6 @@ extension Storage: FileStorageProtocol{
                 Logger.log("\(error)",category: .critical)
             }
         }
-        Storage._serialQueue.sync(execute: workItem)
     }
 
     /// Erases the file if there is one
