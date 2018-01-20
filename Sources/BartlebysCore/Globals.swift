@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Dispatch
 
 // Bartleby 1.0 for MongodB (can be set-up uses Model.ModelCodingKeys._id)
 // In Most context Model.ModelCodingKeys.id is relevant.

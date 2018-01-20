@@ -30,10 +30,6 @@ import Foundation
 
     public protocol CopyingProtocol {}
 
-    open class Object : NSObject {}
-
-    public protocol CopyingProtocol {}
-
     public func AbsoluteTimeGetCurrent()->Double{
         return 0 // @todo linux
     }
