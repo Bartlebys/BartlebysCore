@@ -456,8 +456,6 @@
 		E525279A2000E4D600D9A148 /* Model+Aliasable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+Aliasable.swift"; sourceTree = "<group>"; };
 		E525279B2000E4D600D9A148 /* Model+AliasesResolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+AliasesResolution.swift"; sourceTree = "<group>"; };
 		E52527A82000E54700D9A148 /* IndistinctCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndistinctCollection.swift; sourceTree = "<group>"; };
-		E527D1731FF7C561009EA479 /* BartlebysCore Document macOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document macOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore macOS/BartlebysCore Document macOS.plist"; sourceTree = "<absolute>"; };
-		E527D1B41FF7C5F0009EA479 /* BartlebysCore Document iOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BartlebysCore Document iOS.plist"; path = "/Users/bpds/Documents/Entrepot/Git/Bartlebys/BartlebyKit/BartlebysCore/Projects/BartlebysCore/BartlebysCore iOS/BartlebysCore Document iOS.plist"; sourceTree = "<absolute>"; };
 		E52A84621FF501D400F2408B /* Relationship.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relationship.swift; sourceTree = "<group>"; };
 		E52A84641FF5021F00F2408B /* Relational.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Relational.swift; sourceTree = "<group>"; };
 		E52A84661FF5025500F2408B /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -740,7 +738,6 @@
 			children = (
 				E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */,
 				E5EC9F791FF655C4008BF543 /* Info.plist */,
-				E527D1731FF7C561009EA479 /* BartlebysCore Document macOS.plist */,
 			);
 			path = "BartlebysCore macOS";
 			sourceTree = "<group>";
@@ -772,7 +769,6 @@
 			children = (
 				E5EC9FCE1FF65691008BF543 /* BartlebysCore_iOS.h */,
 				E5EC9FCF1FF65691008BF543 /* Info.plist */,
-				E527D1B41FF7C5F0009EA479 /* BartlebysCore Document iOS.plist */,
 			);
 			path = "BartlebysCore iOS";
 			sourceTree = "<group>";
