@@ -165,9 +165,16 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    /// - Parameter element: the element to be upserted
    public func upsert(_ element: T) {
       self.hasChanged = true
-      if let idx = self.index(where: {$0.id == element.id}) {
-         self[idx] = element
-         self.reference(element)
+      // We first determine if there is an element by using the dataPoint registry
+      // It is faster than determining the index.
+      if let item = self.dataPoint?.registredOpaqueInstanceByUID(element.UID) as? T {
+         // We compute its possiuble 
+         if let idx = self._items.index(where: {$0.UID == element.UID }){
+            self[idx] = item
+            self.reference(element)
+         }else{
+            self.append(element)
+         }
       } else {
          self.append(element)
       }
