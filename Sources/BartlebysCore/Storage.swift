@@ -198,15 +198,6 @@ extension Storage: FileStorageProtocol{
     fileprivate func _relayTaskCompletionToObservers<T>(collection:CollectionOf<T>,success:Bool, error:Error?){
         self.observationQueue.async {
             self.progress.completedUnitCount += 1
-
-            if self.progress.completedUnitCount == self.progress.totalUnitCount {
-                if collection.isLoading{
-                    collection.didLoad()
-                }else if collection.isSaving{
-                    collection.didSave()
-                }
-            }
-
             for observer in self._observers{
                 if let error = error{
                     observer.onProgress(collection.fileName, success, "\(error)", self.progress)
