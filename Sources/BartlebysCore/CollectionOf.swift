@@ -265,7 +265,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       if let list = self._items as? List<T>{
          return list.arrayView as! [Any]
       }else{
-         return self._items as! [Any]
+         return self._items as [Any]
       }
    }
    
