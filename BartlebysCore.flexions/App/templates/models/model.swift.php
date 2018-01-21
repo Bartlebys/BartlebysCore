@@ -141,7 +141,9 @@ import Foundation";
 }else{
     $imports = "
 import Foundation
-import BartlebysCore";
+#if !USE_EMBEDDED_MODULES
+   import BartlebysCore
+#endif";
 }
 
 
