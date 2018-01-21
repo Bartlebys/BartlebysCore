@@ -8,7 +8,9 @@
 
 import Foundation
 import Dispatch
-import BTree
+#if !USE_EMBEDDED_MODULES
+   import BTree
+#endif
 
 public enum CollectionOfError:Error {
    case collectionIsNotRegistred
@@ -21,6 +23,8 @@ protocol ChangesFlag {
    func changesHasBeenSaved()
 }
 
+fileprivate typealias _ContainerType = Array
+
 open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FileSavable,ChangesFlag where T :  Codable & Collectable {
 
 
@@ -28,7 +32,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    // We use a Hooked List
    // @todo waiting for [SE-0143](https://github.com/apple/swift-evolution/blob/master/proposals/0143-conditional-conformances.md)
-   fileprivate var _items: List<T> = List<T>()
+   fileprivate var _items: _ContainerType<T> = _ContainerType<T>()
 
    // We expose the collection type
    public var collectedType:T.Type { return T.self }
@@ -251,7 +255,11 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    /// Returns an array view by reference
    /// Can be Used by Array Controllers in Cocoa bindings
    public var arrayView:[Any] {
-      return self._items.arrayView as! [Any]
+      if let list = self._items as? List<T>{
+         return list.arrayView as! [Any]
+      }else{
+         return self._items as! [Any]
+      }
    }
    
    // MARK: - Codable
@@ -264,7 +272,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    required public init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
-      self._items = try values.decode(List<T>.self, forKey:.items)
+      self._items = try values.decode(_ContainerType<T>.self, forKey:.items)
       self.fileName =  try values.decode(String.self, forKey:.fileName)
       self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
    }

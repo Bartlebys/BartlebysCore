@@ -7,7 +7,9 @@
 //
 
 import Foundation
-import BTree
+#if !USE_EMBEDDED_MODULES
+    import BTree
+#endif
 
 public enum DataPointError : Error{
     case invalidURL
@@ -32,6 +34,8 @@ struct DataPointDelegatePlaceHolder:DataPointDelegate {
     func collectionsDidSaveSuccessFully(){}
     func collectionsDidFailToSave(message:String){}
 }
+
+fileprivate typealias _ContainerType = Dictionary
 
 // Abstract class
 open class DataPoint: Object,ConcreteDataPoint{
@@ -69,7 +73,7 @@ open class DataPoint: Object,ConcreteDataPoint{
 
     // this centralized dictionary allows to access to any referenced object by its UID
     // Uses a binary tree
-    fileprivate var _instancesByUID=Map<UID,Any>()
+    fileprivate var _instancesByUID=_ContainerType<UID,Any>()
 
     /// Defered Ownership
     /// If we receive a Instance that refers to an unexisting Owner
