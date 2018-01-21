@@ -77,9 +77,12 @@ public struct Logger {
         self.counter += 1
 
         func __syslog(priority : Int32, _ message : String, _ args : CVarArg...) {
-            withVaList(args) { vsyslog(priority, message, $0) }
+            #if os(iOS) || os(tvOS)   || os(watchOS) 
+                NSLog(message, args)
+            #else
+                withVaList(args) { vsyslog(priority, message, $0) }
+            #endif
         }
-
         __syslog(priority: entry.category.syslogPriority, entry.toString)
 
     }
