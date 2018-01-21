@@ -15,17 +15,19 @@ BartlebysCore's goal is to keep things simples and "Swifty" by Design.
 
 If your data can be totally loaded in Memory, Bartleby's Core is probably a good solution for your App. It will allow to use simple functional programming approach to manipulate your data synchronously very efficiently, and integrate easily with your RESTFul API.
 
-## Bartleby's core uses in Memory Binary Trees
+## Bartleby's core Data containers
 
-The collection, and the datapoint object registry are relying on [Károly Lőrentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation.
+The collection, and the datapoint object registry can use[Károly Lőrentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation. To use the Binary trees set up : `CollectionOf typealias _ContainerType = List` and  `DataPoint typealias _ContainerType = Map`. Benchmarks are still in progress, but the BinaryTrees seems not to perform better than Array on real World object.
+
 
 # Installation
 
 You can use the Swift Package Manager, a git submodule, or Carthage to install **BartlebysCore Framework**.
+You can clone [BartlebyKit](https://github.com/BartlebyBartlebyKit) and run `./install.sh`. It will synchronise update the submodules a offer a configured workspace.
 
 ## Using the swift Package manager
 
-You can check the [SPM sample](https://github.com/Bartlebys/SPMCoreSample)
+You can check the [SPM sample](https://github.com/Bartlebys/SPMCoreSample) **CURRENTLY A USELESS PLACEHOLDER**
 
 
 ## Linking BartlebysCore as a Submodule in Xcode
