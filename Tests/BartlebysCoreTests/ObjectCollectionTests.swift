@@ -172,8 +172,8 @@ class ObjectCollectionTests: BaseDataPointTestCase{
 
         let expectation = XCTestExpectation(description: "Selection")
 
-        let dataPoint = self.getNewDataPoint()
-        let collection = dataPoint.metricsCollection
+        let myDataPoint = self.getNewDataPoint()
+        let collection = myDataPoint.metricsCollection
 
 
         let metrics1 = Metrics()
@@ -196,23 +196,32 @@ class ObjectCollectionTests: BaseDataPointTestCase{
 
             var expectation:XCTestExpectation
             var collection:CollectionOf<Metrics>
-            var dataPoint:MyDataPoint
+            var myDataPoint:MyDataPoint
             var metrics1UID:String
             var metrics3UID:String
 
-            func collectionsDidLoadSuccessFully(){
+            func collectionsDidLoadSuccessFully(dataPoint: DataPointProtocol){
+                guard let dataPoint = dataPoint as? MyDataPoint else{
+                    XCTFail("DataPoint type Miss Match")
+                    return
+                }
                 do {
                     try dataPoint.save()
                 }catch{
                     XCTFail("\(error)")
                 }
             }
-            func collectionsDidFailToLoad(message:String){
+            func collectionsDidFailToLoad(dataPoint: DataPointProtocol,message:String){
                 XCTFail("collectionDidFailToLoad: \(message)")
                 expectation.fulfill()
             }
 
-            func collectionsDidSaveSuccessFully(){
+            func collectionsDidSaveSuccessFully(dataPoint: DataPointProtocol){
+
+                guard let dataPoint = dataPoint as? MyDataPoint else{
+                    XCTFail("DataPoint type Miss Match")
+                    return
+                }
 
                 // That's the main test
                 // The collection has been saved
@@ -221,20 +230,20 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                 // cleaning up the key data Storage
 
                 self.collection.selectedItems = [Metrics]()
-                while self.dataPoint.keyedDataCollection.count > 0{
-                    self.dataPoint.keyedDataCollection.remove(at: 0)
+                while self.myDataPoint.keyedDataCollection.count > 0{
+                    self.myDataPoint.keyedDataCollection.remove(at: 0)
                 }
                 let reloadHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
                     if !success{
                         XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
                     }else{
                         print("progress.totalUnitCount \(progress.totalUnitCount) progress.completedUnitCount  \(progress.completedUnitCount)")
-                        if progress.totalUnitCount > self.dataPoint.collectionsCount(){
-                            XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.dataPoint.collectionsCount())")
+                        if progress.totalUnitCount > self.myDataPoint.collectionsCount(){
+                            XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.myDataPoint.collectionsCount())")
                         }
                         if progress.completedUnitCount == progress.totalUnitCount{
                             // It is finished
-                            guard let selectedItems = self.dataPoint.metricsCollection.selectedItems else{
+                            guard let selectedItems = self.myDataPoint.metricsCollection.selectedItems else{
                                 XCTFail("Void metricsCollection.selectedItems")
                                 return
                             }
@@ -248,9 +257,12 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                     }
                 })
                 do{
+
+
+
                     // Reload the metrics
-                    try dataPoint.storage.loadCollection(on: dataPoint.keyedDataCollection)
-                    try dataPoint.storage.loadCollection(on: dataPoint.metricsCollection)
+                    try self.myDataPoint.storage.loadCollection(on: self.myDataPoint.keyedDataCollection)
+                    try self.myDataPoint.storage.loadCollection(on: self.myDataPoint.metricsCollection)
                     dataPoint.storage.addProgressObserver(observer: reloadHandler)
                 }catch{
                     XCTFail("\(error)")
@@ -258,16 +270,16 @@ class ObjectCollectionTests: BaseDataPointTestCase{
 
             }
 
-            func collectionsDidFailToSave(message:String){
+            func collectionsDidFailToSave(dataPoint: DataPointProtocol,message:String){
                 XCTFail("collectionDidFailToSave: \(message)")
                 expectation.fulfill()
             }
         }
 
         // We use a special delegate
-        dataPoint.delegate = Test008Delegate(expectation: expectation,
+        myDataPoint.delegate = Test008Delegate(expectation: expectation,
                                              collection: collection,
-                                             dataPoint: dataPoint,
+                                             myDataPoint: myDataPoint,
                                              metrics1UID: metrics1.UID,
                                              metrics3UID: metrics3.UID)
 

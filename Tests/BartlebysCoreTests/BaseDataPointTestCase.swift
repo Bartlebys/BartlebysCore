@@ -112,6 +112,8 @@ public class MyDataPoint: DataPoint {
 
 class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
 
+
+
     static var associatedDataPoints = [DataPoint]()
 
     override func tearDown() {
@@ -136,19 +138,19 @@ class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
 
     // MARK: - DataPointDelegate
 
-    func collectionsDidSaveSuccessFully() {
+    func collectionsDidSaveSuccessFully(dataPoint: DataPointProtocol) {
         print("Did Save")
     }
 
-    func collectionsDidFailToSave(message: String) {
+    func collectionsDidFailToSave(dataPoint: DataPointProtocol,message: String) {
         print(message)
     }
 
-    func collectionsDidLoadSuccessFully() {
+    func collectionsDidLoadSuccessFully(dataPoint: DataPointProtocol) {
         print("Did Load")
     }
 
-    func collectionsDidFailToLoad(message: String) {
+    func collectionsDidFailToLoad(dataPoint: DataPointProtocol ,message: String) {
         print(message)
     }
 

@@ -1,5 +1,5 @@
 //
-//  ConcreteDataPoint.swift
+//  DataPointProtocol.swift
 //  BartlebyCore
 //
 //  Created by Benoit Pereira da silva on 06/12/2017.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-// The method any ConcreteDataPoint must override
-public protocol ConcreteDataPoint:SessionDelegate{
+
+public protocol DataPointProtocol:SessionDelegate{
 
     // The current Host: e.g demo.bartlebys.org
     var host:String { get }
 
     // The api base path: e.g /api/v1
     var apiBasePath: String { get }
-
+    
 }

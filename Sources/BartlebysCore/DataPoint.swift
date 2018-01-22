@@ -22,23 +22,23 @@ public enum DataPointError : Error{
 }
 
 public protocol DataPointDelegate{
-    func collectionsDidLoadSuccessFully()
-    func collectionsDidFailToLoad(message:String)
-    func collectionsDidSaveSuccessFully()
-    func collectionsDidFailToSave(message:String)
+    func collectionsDidLoadSuccessFully(dataPoint:DataPointProtocol)
+    func collectionsDidFailToLoad(dataPoint:DataPointProtocol ,message:String)
+    func collectionsDidSaveSuccessFully(dataPoint:DataPointProtocol)
+    func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String)
 }
 
 struct DataPointDelegatePlaceHolder:DataPointDelegate {
-    func collectionsDidLoadSuccessFully(){}
-    func collectionsDidFailToLoad(message:String){}
-    func collectionsDidSaveSuccessFully(){}
-    func collectionsDidFailToSave(message:String){}
+    func collectionsDidLoadSuccessFully(dataPoint:DataPointProtocol){}
+    func collectionsDidFailToLoad(dataPoint:DataPointProtocol ,message:String){}
+    func collectionsDidSaveSuccessFully(dataPoint:DataPointProtocol){}
+    func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String){}
 }
 
 fileprivate typealias _ContainerType = Dictionary
 
 // Abstract class
-open class DataPoint: Object,ConcreteDataPoint{
+open class DataPoint: Object,DataPointProtocol{
     
     // MARK: -
 
@@ -155,7 +155,7 @@ open class DataPoint: Object,ConcreteDataPoint{
     }
 
     
-    // MARK: - ConcreteDataPoint
+    // MARK: - DataPointProtocol
 
     // The current Host: e.g demo.bartlebys.org
     open var host: String = "NO_HOST"

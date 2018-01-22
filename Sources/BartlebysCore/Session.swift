@@ -18,7 +18,7 @@ public class Session {
     
     // The Concrete data point implements the SessionDelegate, and any logic required to perform.
     // The session delegate defines the Scheme, Host, Current Credentials, and configures the requests
-    public var delegate : ConcreteDataPoint
+    public var delegate : DataPointProtocol
     
     // A shared void Payload instance
     public static let voidPayload = VoidPayload()
@@ -45,7 +45,7 @@ public class Session {
     public let startTime = AbsoluteTimeGetCurrent()
     
     
-    public init(delegate:ConcreteDataPoint) {
+    public init(delegate:DataPointProtocol) {
         self.delegate = delegate
     }
     

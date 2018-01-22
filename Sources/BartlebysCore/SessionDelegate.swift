@@ -12,7 +12,7 @@ public enum AuthenticationMethod {
 }
 
 
-/// Base Session Delegate check also ConcreteDataPoint
+/// Base Session Delegate check also DataPointProtocol
 public protocol SessionDelegate {
 
     // We can use any coding dialect
