@@ -63,7 +63,7 @@ public class Session {
     /*
      func runGetOperationFrom(with session: Session, operationData: Data){
      do {
-     let operation: CallOperation<Character,VoidPayload> = try JSON.decoder.decode(CallOperation<Character,VoidPayload>.self, from: operationData)
+     let operation: CallOperation<Character,VoidPayload> = try Session.operationsCoder.decode(CallOperation<Character,VoidPayload>.self, from: operationData)
      try session.runCall(operation)
      } catch {
      Logger.log("\(error)", category: .critical)
@@ -194,7 +194,7 @@ public class Session {
                 if let data = data {
                     do {
                         if resultIsACollection{
-                            let decoded = try self.delegate.storage.coder.decodeArrayOf(T.self, from: data)
+                            let decoded = try self.delegate.operationsCoder.decodeArrayOf(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
                             let dataResponse = DataResponse(result: decoded)
@@ -206,7 +206,7 @@ public class Session {
                                 success(dataResponse)
                             }
                         }else{
-                            let decoded = try self.delegate.storage.coder.decode(T.self, from: data)
+                            let decoded = try self.delegate.operationsCoder.decode(T.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
                             let dataResponse = DataResponse(result: [decoded])

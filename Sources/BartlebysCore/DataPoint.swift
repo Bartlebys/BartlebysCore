@@ -44,6 +44,9 @@ open class DataPoint: Object,ConcreteDataPoint{
 
     public var delegate: DataPointDelegate = DataPointDelegatePlaceHolder()
 
+    // The coder used by the HTTP operations.
+    public var operationsCoder: ConcreteCoder = JSONCoder()
+
     // The storage IO object: reads an writes the ObjectsCollections
     public var storage:StorageProtocol = Storage()
 

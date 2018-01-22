@@ -15,6 +15,10 @@ public enum AuthenticationMethod {
 /// Base Session Delegate check also ConcreteDataPoint
 public protocol SessionDelegate {
 
+    // We can use any coding dialect
+    // That may be different than the storage's
+    var operationsCoder:ConcreteCoder { get set }
+
     var storage:StorageProtocol { get set }
 
     /// The credentials should generaly not change during the session
