@@ -280,18 +280,19 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
-   /*
+
    /// Returns a set with all the collected elements
    ///
    /// - Returns: the extracted set.
-   public func setView<T>() -> Set<T>{
+   public func setView() -> Set<T>{
       var set = Set<T>()
       for item in self._items{
          set.insert(item)
       }
       return set
    }
-*/
+
+
    // MARK: - Codable
 
    public enum CollectionCodingKeys: String, CodingKey {
