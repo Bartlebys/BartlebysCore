@@ -13,11 +13,6 @@ import Dispatch
 // In Most context Model.ModelCodingKeys.id is relevant.
 public var MODELS_PRIMARY_KEY:CodableObject.CodableModelCodingKeys = CodableObject.CodableModelCodingKeys.id
 
-// Used to define the root item key
-// Should be set to  CollectionOf.CollectionCodingKeys._storage or  CollectionOf.CollectionCodingKeys.items
-public var COLLECTION_ITEMS_KEY:CollectionOfCodingKeys = CollectionOfCodingKeys.items
-
-
 // the explicit UID type used for expressivity
 public typealias UID = String
 

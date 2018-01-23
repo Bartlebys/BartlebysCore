@@ -9,6 +9,14 @@
 import Foundation
 import Dispatch
 
+#if USE_BTREE
+#if !USE_EMBEDDED_MODULES
+   import BTree
+#endif
+   fileprivate typealias _ContainerType = List
+#else
+   fileprivate typealias _ContainerType = Array
+#endif
 
 public enum CollectionOfError:Error {
    case collectionIsNotRegistred
@@ -20,26 +28,8 @@ protocol ChangesFlag {
    func didChange()
    func changesHasBeenSaved()
 }
-#if USE_BTREE
-   #if !USE_EMBEDDED_MODULES
-      import BTree
-   #endif
-   fileprivate typealias _ContainerType = List
-#else
-   fileprivate typealias _ContainerType = Array
-#endif
 
 
-public enum CollectionOfCodingKeys: String, CodingKey {
-   // Storage key
-   // the selected value is defined by Gobals COLLECTION_ITEMS_KEY
-   case items
-   case _storage
-
-   // Other keys
-   case fileName
-   case relativeFolderPath
-}
 
 open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FileSavable,ChangesFlag where T :  Codable & Collectable {
 
@@ -311,16 +301,22 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    // MARK: - Codable
 
+   public enum CollectionCodingKeys: String, CodingKey {
+      case items
+      case fileName
+      case relativeFolderPath
+   }
+
    required public init(from decoder: Decoder) throws {
-      let values = try decoder.container(keyedBy: CollectionOfCodingKeys.self)
-      self._items = try values.decode(_ContainerType<T>.self, forKey:COLLECTION_ITEMS_KEY)
-      self.fileName =  try values.decodeIfPresent(String.self, forKey:.fileName) ?? T.collectionName
-      self.relativeFolderPath = try values.decodeIfPresent(String.self,forKey:.relativeFolderPath) ?? ""
+      let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
+      self._items = try values.decode(_ContainerType<T>.self, forKey:.items)
+      self.fileName =  try values.decode(String.self, forKey:.fileName)
+      self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
    }
 
    open func encode(to encoder: Encoder) throws {
-      var container = encoder.container(keyedBy: CollectionOfCodingKeys.self)
-      try container.encode(self._items, forKey:COLLECTION_ITEMS_KEY)
+      var container = encoder.container(keyedBy: CollectionCodingKeys.self)
+      try container.encode(self._items, forKey:.items)
       try container.encode(self.fileName, forKey:.fileName)
       try container.encode(self.relativeFolderPath, forKey: .relativeFolderPath)
    }
