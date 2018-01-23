@@ -289,7 +289,7 @@ open class DataPoint: Object,DataPointProtocol{
 
     // MARK: - Load and Save
 
-    public final func save() throws {
+    open func save() throws {
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
