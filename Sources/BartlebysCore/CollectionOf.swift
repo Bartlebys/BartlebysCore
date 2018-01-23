@@ -257,18 +257,38 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    }
 
 
-   // MARK: - Accessors
+   // MARK: - Views
 
-   /// Returns an array view by reference
+   /// Returns an array of Any view by reference
    /// Can be Used by Array Controllers in Cocoa bindings
-   public var arrayView:[Any] {
+   public var unTypedArrayView:[Any] {
       if let list = self._items as? List<T>{
          return list.arrayView as! [Any]
       }else{
          return self._items as [Any]
       }
    }
-   
+
+   /// Returns an array view by reference
+   public var arrayView:[T]{
+      if let list = self._items as? List<T>{
+         return list.arrayView as! [T]
+      }else{
+         return self._items
+      }
+   }
+
+   /// Returns a set with all the collected elements
+   ///
+   /// - Returns: the extracted set.
+   public func setView<T>() -> Set<T> where T : Hashable{
+      var set = Set<T>()
+      for item in self._items{
+         set.insert(item)
+      }
+      return set
+   }
+
    // MARK: - Codable
 
    public enum CollectionCodingKeys: String, CodingKey {

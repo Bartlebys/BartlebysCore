@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol Collectable : AnyObject, UniversalType,Identifiable, Initializable {
+public protocol Collectable : AnyObject, UniversalType, Hashable, Identifiable, Initializable {
 
     // Universally Unique identifier (check Globals.swift for details on the primary key MODELS_PRIMARY_KEY)
     var id:String { get set }
