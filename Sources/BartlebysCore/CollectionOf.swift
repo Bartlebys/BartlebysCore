@@ -156,6 +156,8 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    public var first: Element? { return self._items.first }
 
+   public var last: Element? { return self._items.last }
+
    public var count: Int { return self._items.count }
 
    // MARK: - Extended behaviour
