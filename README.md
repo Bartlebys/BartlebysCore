@@ -17,7 +17,7 @@ If your data can be totally loaded in Memory, Bartleby's Core is probably a good
 
 ## Bartleby's core Data containers
 
-The collection, and the datapoint object registry can use[Károly Lőrentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation. To use the Binary trees set up : `CollectionOf typealias _ContainerType = List` and  `DataPoint typealias _ContainerType = Map`. Benchmarks are still in progress, but the BinaryTrees seems not to perform better than Array on real World object.
+The collection, and the datapoint object registry can use[Károly Lőrentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation. To use the Binary trees set up : add `USE_BTREE` to your swift flags. Benchmarks are still in progress, but the BinaryTrees seems not to perform better than Array on real World object.
 
 
 # Installation
