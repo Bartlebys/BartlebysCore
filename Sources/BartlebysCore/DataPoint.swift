@@ -7,9 +7,16 @@
 //
 
 import Foundation
-#if !USE_EMBEDDED_MODULES
-    import BTree
+
+#if !USE_BTREE
+    #if !USE_EMBEDDED_MODULES
+        import BTree
+    #endif
+    fileprivate typealias _ContainerType = Map
+    #else
+    fileprivate typealias _ContainerType = Dictionary
 #endif
+
 
 public enum DataPointError : Error{
     case invalidURL
@@ -34,8 +41,6 @@ struct DataPointDelegatePlaceHolder:DataPointDelegate {
     func collectionsDidSaveSuccessFully(dataPoint:DataPointProtocol){}
     func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String){}
 }
-
-fileprivate typealias _ContainerType = Dictionary
 
 // Abstract class
 open class DataPoint: Object,DataPointProtocol{
