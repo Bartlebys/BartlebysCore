@@ -9,11 +9,11 @@
 import Foundation
 
 #if !USE_BTREE
-    #if !USE_EMBEDDED_MODULES
-        import BTree
-    #endif
+#if !USE_EMBEDDED_MODULES
+    import BTree
+#endif
     fileprivate typealias _ContainerType = Map
-    #else
+#else
     fileprivate typealias _ContainerType = Dictionary
 #endif
 
@@ -26,6 +26,8 @@ public enum DataPointError : Error{
     case duplicatedRegistration(fileName:String)
     case instanceNotFound
     case instanceTypeMissMatch
+    case callOperationCollectionNotFound
+    case callOperationIndexNotFound
 }
 
 public protocol DataPointDelegate{
@@ -42,9 +44,14 @@ struct DataPointDelegatePlaceHolder:DataPointDelegate {
     func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String){}
 }
 
+
 // Abstract class
 open class DataPoint: Object,DataPointProtocol{
-    
+
+    // KVS keys
+    static public let sessionLastExecutionKVSKey = "sessionLastExecutionKVSKey"
+    static public let noContainerRootKey = "noContainerRootKey"
+
     // MARK: -
 
     public var delegate: DataPointDelegate = DataPointDelegatePlaceHolder()
@@ -56,8 +63,10 @@ open class DataPoint: Object,DataPointProtocol{
     public var storage:StorageProtocol = Storage()
 
     /// The associated session
-    public lazy var session:Session = Session(delegate: self)
-    
+    public lazy fileprivate(set) var session:Session = Session(delegate: self, lastExecutionOrder:self._getLastOrderOfExecution())
+
+
+
     /// Its session identifier
     public var sessionIdentifier: String {
         get{
@@ -118,7 +127,16 @@ open class DataPoint: Object,DataPointProtocol{
         if volatile {
             self.storage.becomeVolatile()
         }
-        try self.registerCollection(collection:self.keyedDataCollection)
+
+        do{
+            // The KVS collection is loaded synchronously and saved asynchronouly
+            let loadedKeyedDataCollection:CollectionOf<KeyedData> = try self.storage.loadSync(fileName: self.keyedDataCollection.fileName, relativeFolderPath: self.keyedDataCollection.relativeFolderPath)
+            self.keyedDataCollection = loadedKeyedDataCollection
+        }catch{
+            Logger.log("\(error)", category: .critical)
+        }
+
+        self._configureColletion(self.keyedDataCollection)
     }
 
     /// Registers the collection into the data point
@@ -132,11 +150,7 @@ open class DataPoint: Object,DataPointProtocol{
             }
             return false
         }){
-            self._collections.append(collection)
-            self._collectionsPerFileName[collection.fileName] = collection
-            self._collectionsPerCollectedTypeName[T.typeName] = collection
-            collection.dataPoint = self
-
+            self._configureColletion(collection)
             // Creates or asynchronously load the collection on registration
             try self.storage.loadCollection(on: collection)
 
@@ -145,6 +159,14 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
+
+    fileprivate func _configureColletion<T>(_ collection:CollectionOf<T>){
+        self._collections.append(collection)
+        self._collectionsPerFileName[collection.fileName] = collection
+        self._collectionsPerCollectedTypeName[T.typeName] = collection
+        collection.dataPoint = self
+
+    }
 
     /// Returns the collection by its file name
     ///
@@ -277,24 +299,49 @@ open class DataPoint: Object,DataPointProtocol{
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
-    public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>){
-        if let pendingCallOperations = self._collections.first(where:{
-            if let callOp =  $0 as? CallOperation<T,P>{
-                return callOp.operationName == operation.operationName
-            }else{
-                return false
-            }
-        }) as? CollectionOf<CallOperation<T,P>> {
-            if let idx = pendingCallOperations.index(where: { $0.id == operation.id }) {
-                let _ = pendingCallOperations.remove(at: idx)
+    public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>)throws{
+        let (collection, index) = try self._find(operation:operation)
+        collection.remove(at: index)
+    }
+
+
+    /// Finds the index of a Call Operation
+    ///
+    /// - Parameter operation: the call operation to be found
+    /// - Returns: the the collection and the index of the callOperation
+    /// - Throws: DataPointError is the operation or its collection are not found
+    fileprivate func _find<T,P>(operation:CallOperation<T,P>)throws -> (CollectionOf<CallOperation<T,P>>,CollectionOf<CallOperation<T,P>>.Index) {
+        var parentCollection:CollectionOf<CallOperation<T,P>>?
+        var index : Int = -1
+        for collection in self._collections{
+            if let collection = collection as? CollectionOf<CallOperation<T,P>>{
+                parentCollection = collection
+                index = collection.index(of: operation) ?? -1
+                if index >= 0{
+                    break;
+                }
             }
         }
+        guard index >= 0 else{
+            throw DataPointError.callOperationIndexNotFound
+        }
+        guard let collection = parentCollection else{
+            throw DataPointError.callOperationCollectionNotFound
+        }
+        return (collection,index)
     }
+
 
 
     // MARK: - Load and Save
 
     open func save() throws {
+
+        // Store the state in KVS
+        try self.storeInKVS(self.session.lastExecutionOrder, identifiedBy: DataPoint.sessionLastExecutionKVSKey)
+        // The KVS is loaded synchronously and saved asynchronouly
+        try self.storage.saveCollection(self.keyedDataCollection)
+
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
@@ -305,7 +352,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// Called before erasure by ManagedModel.erase() of a managedModel Descendant
     /// You should override this method to perform for example associated files deletions...
     ///
-    /// - Parameter instance: the managedModel
+    /// - Parameter instance: the managedModelx
     open func willErase(_ instance:Model){}
 
 
@@ -505,5 +552,21 @@ extension DataPoint{
         }
     }
 
+
+    // MARK: - Private plumbing
+
+    fileprivate func _getLastOrderOfExecution()->Int{
+        do{
+            if let order:Int = try self.getFromKVS(key: DataPoint.sessionLastExecutionKVSKey){
+                return order
+            }
+        }catch KeyValueStorageError.keyNotFound{
+            // it may be the first time
+        }catch{
+            // That's not normal
+            Logger.log("\(error)", category: .critical)
+        }
+        return ORDER_OF_EXECUTION_UNDEFINED
+    }
 }
 
