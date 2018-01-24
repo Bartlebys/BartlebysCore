@@ -11,6 +11,7 @@ import Dispatch
 
 public enum FileStorageError:Error {
     case undefinedDataPoint
+    case notFound
 }
 
 public enum CollectionIOError<T:Collectable & Codable>:Error{
@@ -223,7 +224,7 @@ extension Storage: FileStorageProtocol{
     ///   - fileName: the file name
     ///   - relativeFolderPath: the relative folder path
     /// - Returns: the instance
-    public func loadSync<T:Codable & Initializable >(fileName:String,relativeFolderPath:String)throws->T{
+    public func loadSync<T:Codable  >(fileName:String,relativeFolderPath:String)throws->T{
         if !self.isVolatile{
             let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
             // We do not use the storage file manager.
@@ -233,7 +234,7 @@ extension Storage: FileStorageProtocol{
                 return try self.coder.decode(T.self, from: data)
             }
         }
-        return T()
+        throw FileStorageError.notFound
     }
 
 
