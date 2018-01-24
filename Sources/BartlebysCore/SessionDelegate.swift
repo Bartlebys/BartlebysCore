@@ -52,6 +52,14 @@ public protocol SessionDelegate {
     /// - Throws: issue on URL creation or Parameters deserialization
     func requestFor<P:Payload>( path: String, queryString: String, method: HTTPMethod , parameter:P)throws -> URLRequest
 
+    // MARK: - CallOperation
+
+
+    /// Provisions the operation in the relevent collection
+    ///
+    /// - Parameter operation: the call operation
+    /// - Throws: error if the collection hasn't be found
+    func provision<T,P>(_ operation:CallOperation<T,P>) throws
 
     /// Returns the relevent request for a given call Operation
     ///
@@ -59,9 +67,6 @@ public protocol SessionDelegate {
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
     func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest
-
-    
-    // MARK: - Response & CallOperation
 
     
     /// The response.result shoud be stored in it DataPoint storage layer

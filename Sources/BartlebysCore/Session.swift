@@ -70,12 +70,20 @@ public class Session {
     /// Provision and Executes the Call operation immediately if runing live
     /// Else the operation is stored with an execution order for future usage.
     ///
-    ///
     /// - Parameter operation: the call operation
     public func execute<T:Collectable,P>(_ operation: CallOperation<T,P>){
         if operation.scheduledOrderOfExecution != ORDER_OF_EXECUTION_UNDEFINED{
             self.lastExecutionOrder += 1
-            self._provision(operation)
+            // Store the scheduledOrderOfExecution and the sessionIdentifier
+            operation.scheduledOrderOfExecution = self.lastExecutionOrder
+            operation.sessionIdentifier = self.identifier
+            do {
+                // Provision the call operation
+                try self.delegate.provision(operation)
+            } catch {
+                Logger.log("Error: \(error)", category: .critical)
+            }
+
         }
         if self.isRuningLive{
             do {
@@ -87,9 +95,7 @@ public class Session {
     }
 
     fileprivate func _provision<T:Collectable,P>(_ operation: CallOperation<T,P>){
-        // Store the scheduledOrderOfExecution and the sessionIdentifier
-        operation.scheduledOrderOfExecution = self.lastExecutionOrder
-        operation.sessionIdentifier = self.identifier
+
     }
 
     /// Runs a call operation

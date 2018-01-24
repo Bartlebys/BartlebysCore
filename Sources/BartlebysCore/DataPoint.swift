@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if !USE_BTREE
+#if USE_BTREE
 #if !USE_EMBEDDED_MODULES
     import BTree
 #endif
@@ -51,6 +51,10 @@ open class DataPoint: Object,DataPointProtocol{
     // KVS keys
     static public let sessionLastExecutionKVSKey = "sessionLastExecutionKVSKey"
     static public let noContainerRootKey = "noContainerRootKey"
+
+    public enum RelativePaths:String{
+        case forCallOperationCollection = "operations/"
+    }
 
     // MARK: -
 
@@ -132,11 +136,13 @@ open class DataPoint: Object,DataPointProtocol{
             // The KVS collection is loaded synchronously and saved asynchronouly
             let loadedKeyedDataCollection:CollectionOf<KeyedData> = try self.storage.loadSync(fileName: self.keyedDataCollection.fileName, relativeFolderPath: self.keyedDataCollection.relativeFolderPath)
             self.keyedDataCollection = loadedKeyedDataCollection
+        }catch FileStorageError.notFound{
+            // It may be the first time don't panic
         }catch{
             Logger.log("\(error)", category: .critical)
         }
 
-        self._configureColletion(self.keyedDataCollection)
+        self._configureCollection(self.keyedDataCollection)
     }
 
     /// Registers the collection into the data point
@@ -150,7 +156,7 @@ open class DataPoint: Object,DataPointProtocol{
             }
             return false
         }){
-            self._configureColletion(collection)
+            self._configureCollection(collection)
             // Creates or asynchronously load the collection on registration
             try self.storage.loadCollection(on: collection)
 
@@ -159,8 +165,7 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
-
-    fileprivate func _configureColletion<T>(_ collection:CollectionOf<T>){
+    fileprivate func _configureCollection<T>(_ collection:CollectionOf<T>){
         self._collections.append(collection)
         self._collectionsPerFileName[collection.fileName] = collection
         self._collectionsPerCollectedTypeName[T.typeName] = collection
@@ -253,6 +258,17 @@ open class DataPoint: Object,DataPointProtocol{
         return request
     }
 
+
+    /// Provisions the operation in the relevent collection
+    ///
+    /// - Parameter operation: the call operation
+    /// - Throws: error if the collection hasn't be found
+    public func provision<T,P>(_ operation:CallOperation<T,P>) throws{
+        // Upsert automatically the Operation
+        let (collection, _) = try self._findCollectionFor(operation:operation)
+        collection.upsert(operation)
+    }
+
     /// Returns the relevent request for a given call Operation
     ///
     /// - Parameter operation: the operation
@@ -300,9 +316,13 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameter operation: the targeted Call Operation
     public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>)throws{
-        let (collection, index) = try self._find(operation:operation)
+        let (collection, index) = try self._findCollectionFor(operation:operation)
+        guard index >= 0 else{
+            throw DataPointError.callOperationIndexNotFound
+        }
         collection.remove(at: index)
     }
+
 
 
     /// Finds the index of a Call Operation
@@ -310,7 +330,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the call operation to be found
     /// - Returns: the the collection and the index of the callOperation
     /// - Throws: DataPointError is the operation or its collection are not found
-    fileprivate func _find<T,P>(operation:CallOperation<T,P>)throws -> (CollectionOf<CallOperation<T,P>>,CollectionOf<CallOperation<T,P>>.Index) {
+    fileprivate func _findCollectionFor<T,P>(operation:CallOperation<T,P>)throws -> (CollectionOf<CallOperation<T,P>>,CollectionOf<CallOperation<T,P>>.Index) {
         var parentCollection:CollectionOf<CallOperation<T,P>>?
         var index : Int = -1
         for collection in self._collections{
@@ -322,14 +342,24 @@ open class DataPoint: Object,DataPointProtocol{
                 }
             }
         }
-        guard index >= 0 else{
-            throw DataPointError.callOperationIndexNotFound
+        if index == -1 {
+            // Auto declare the call Operation Collection
+            let tMirror = Mirror(reflecting: T.self)
+            let Tname = tMirror.description.replacingOccurrences(of: "Mirror for ", with: "").replacingOccurrences(of: ".Type", with: "")
+            let pMirror = Mirror(reflecting: P.self)
+            let Pname = pMirror.description.replacingOccurrences(of: "Mirror for ", with: "").replacingOccurrences(of: ".Type", with: "")
+            let collectionFileName = "CollectionOf_CallOperation_\(Tname)_\(Pname)"
+            let newCollection =  CollectionOf<CallOperation<T, P>>(named:collectionFileName , relativePath: DataPoint.RelativePaths.forCallOperationCollection.rawValue)
+            self._configureCollection(newCollection)
+            parentCollection = newCollection
         }
         guard let collection = parentCollection else{
             throw DataPointError.callOperationCollectionNotFound
         }
         return (collection,index)
     }
+
+
 
 
 
