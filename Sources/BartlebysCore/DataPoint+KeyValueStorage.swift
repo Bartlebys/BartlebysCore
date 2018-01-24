@@ -15,6 +15,7 @@ public enum KeyValueStorageError:Error{
 
 extension DataPoint:KeyValueStorage{
 
+
     // MARK: - Codable
 
     /// Save the state of a codable into the dataPoint keyedData
@@ -24,8 +25,17 @@ extension DataPoint:KeyValueStorage{
     ///   - value: the value
     ///   - key: the identification key (must be unique)
     public func storeInKVS<T:Codable>(_ value:T,identifiedBy key:String)throws->(){
-        // We use base64Encoder and decoder to secure for example [String] storage
-        let data = try JSON.encoder.encode(value)
+        let data:Data
+        // JSON need a container
+        // single Int is Codable but is not a valid json
+        let collectionsTypes = Set(arrayLiteral: "Set", "Array", "Dictionary")
+        let typeString = String(describing: type(of: value))
+        if collectionsTypes.contains(typeString){
+            data = try JSON.encoder.encode(value)
+        }else{
+
+            data = try JSON.encoder.encode([DataPoint.noContainerRootKey:value])
+        }
         let keyedData = KeyedData()
         keyedData.key = key
         keyedData.data = data
@@ -47,9 +57,18 @@ extension DataPoint:KeyValueStorage{
             throw KeyValueStorageError.keyNotFound
         }
         let data = keyedData.data
-        // We use base64Encoder and decoder to secure for example [String] storage
-        let instance = try JSON.decoder.decode(T.self, from: data)
-        return instance
+        do{
+            let instance = try JSON.decoder.decode(T.self, from: data)
+            return instance
+        }catch{
+            let container:[String:T] = try JSON.decoder.decode([String:T].self, from: data)
+            if let instance = container[DataPoint.noContainerRootKey]{
+                return instance
+            }else{
+                // rethrow the original error
+                throw error
+            }
+        }
     }
 
 
