@@ -35,14 +35,33 @@ public extension Notification.Name {
 }
 
 public protocol CallOperationProtocol {
+
+    // The unique id of the Session
     var sessionIdentifier: String { get }
+
+    // The operation name should be unique
+    // E.g: `getTagsWithIds` will refer to a specific endpoint
     var operationName: String { get }
+
     var path: String { get }
+
     var queryString: String { get }
+
     var method: HTTPMethod { get }
+
     var resultIsACollection:Bool { get }
+
+    /// the desired execution order set by the Session
+    var scheduledOrderOfExecution:Int { get }
+
+    /// A counter that is incremented on any execution
     var executionCounter:Int { get }
+
+    /// The last execution date
     var lastAttemptDate:Date { get }
+
+    /// Called on any execution
+    func hasBeenExecuted()
 }
 
 /// A CallOperation is:
@@ -53,20 +72,30 @@ public protocol CallOperationProtocol {
 /// Check Session.swift for execution details.
 public final class CallOperation<T, P> : Model, CallOperationProtocol where T : Codable, P : Payload {
 
+
+    // The unique id of the Session
+    public var sessionIdentifier: String = Default.NO_UID
+
     // The operation name should be unique
     // E.g: `getTagsWithIds` will refer to a specific endpoint
     public var operationName: String = Default.NO_NAME
-    public var sessionIdentifier: String = Default.NO_UID
+
     public var path: String = Default.NO_PATH
     public var queryString: String = Default.NO_QUERY_STRING
     public var method: HTTPMethod = .GET
     public var resultType: T.Type = T.self
     public var resultIsACollection:Bool = true
     public var payload: P?
+
+    /// the desired execution order set by the Session
+    public var scheduledOrderOfExecution: Int = ORDER_OF_EXECUTION_UNDEFINED
+
     public var executionCounter:Int = 0
+
     public var lastAttemptDate:Date = Date()
 
-    public init(operationName:String, path: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool,parameter: P?) {
+
+    public required init(operationName:String, path: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool,parameter: P?) {
         self.operationName = operationName
         self.path = path
         self.queryString = queryString
@@ -76,6 +105,14 @@ public final class CallOperation<T, P> : Model, CallOperationProtocol where T : 
         self.payload = parameter
         super.init()
     }
+
+
+    /// Called on any execution by the Session
+    public func hasBeenExecuted(){
+        self.executionCounter += 1
+        self.lastAttemptDate = Date()
+    }
+
 
     // MARK: - Codable
 

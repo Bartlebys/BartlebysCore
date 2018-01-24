@@ -53,7 +53,7 @@ public protocol StorageProtocol {
     ///   - fileName: the file name
     ///   - relativeFolderPath: the relative folder path
     /// - Returns: the instance
-    func loadSync<T:Codable & Initializable >(fileName:String,relativeFolderPath:String)throws->T
+    func loadSync<T:Codable>(fileName:String,relativeFolderPath:String)throws->T
 
     /// Save synchronously an Encodable & FilePersitent
     ///

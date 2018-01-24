@@ -60,10 +60,10 @@ public protocol SessionDelegate {
     /// - Throws: issue on URL creation and operation Parameters serialization
     func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest
 
-
     
     // MARK: - Response & CallOperation
 
+    
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
@@ -72,5 +72,8 @@ public protocol SessionDelegate {
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
-    func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>)
+    /// - Throws: throws error is the call operation or its collection is not found
+    func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>) throws
+
+    
 }

@@ -31,10 +31,15 @@ public class Session {
             }
         }
     }
-    
+
+    // the last executionOrder
+    public fileprivate(set) var lastExecutionOrder:Int = ORDER_OF_EXECUTION_UNDEFINED
+
     // A unique run identifier that changes on each launch
     open static let runUID: String = Utilities.createUID()
-    
+
+    public fileprivate(set) var isRuningLive:Bool = true
+
     // shortcuts to the delegate
     public var credentials: Credentials { return self.delegate.credentials }
     public var authenticationMethod: AuthenticationMethod  { return self.delegate.authenticationMethod }
@@ -45,8 +50,9 @@ public class Session {
     public let startTime = AbsoluteTimeGetCurrent()
     
     
-    public init(delegate:DataPointProtocol) {
+    public init(delegate:DataPointProtocol,lastExecutionOrder:Int ) {
         self.delegate = delegate
+        self.lastExecutionOrder = lastExecutionOrder
     }
     
     public var elapsedTime:Double {
@@ -56,49 +62,42 @@ public class Session {
     public func infos() -> String {
         return "Version 0.0.0"
     }
-    
-    // MARK: - Scheduler
-    
-    //@todo: scheduling ==> schedule the next Call Operation Bunch
-    /*
-     func runGetOperationFrom(with session: Session, operationData: Data){
-     do {
-     let operation: CallOperation<Character,VoidPayload> = try Session.operationsCoder.decode(CallOperation<Character,VoidPayload>.self, from: operationData)
-     try session.runCall(operation)
-     } catch {
-     Logger.log("\(error)", category: .critical)
-     }
-     }
-     */
+
     
     // MARK: - Operations Runtime
-    
+
+
+    /// Provision and Executes the Call operation immediately if runing live
+    /// Else the operation is stored with an execution order for future usage.
+    ///
+    ///
+    /// - Parameter operation: the call operation
     public func execute<T:Collectable,P>(_ operation: CallOperation<T,P>){
-        self.provisionOperation(operation)
-        do {
-            try self.runCall(operation)
-        } catch {
-            Logger.log("Error: \(error)", category: .critical)
+        if operation.scheduledOrderOfExecution != ORDER_OF_EXECUTION_UNDEFINED{
+            self.lastExecutionOrder += 1
+            self._provision(operation)
+        }
+        if self.isRuningLive{
+            do {
+                try self._runCall(operation)
+            } catch {
+                Logger.log("Error: \(error)", category: .critical)
+            }
         }
     }
-    
-    /// Insure the persistency of the operation
-    ///
-    /// - Parameters:
-    ///   - operationData: the operation data
-    ///   - operationName: the classifier
-    public func provisionOperation<T,P>(_ operation: CallOperation<T,P>){
-        // @todo! provisionning
-    }
-    
-    /// Run the operation
-    ///
-    /// - Parameter operation: the operation
-    public func runCall<T: Collectable, P>(_ operation: CallOperation<T, P>) throws {
-        
-        // We inject the session identifier in the call operation
+
+    fileprivate func _provision<T:Collectable,P>(_ operation: CallOperation<T,P>){
+        // Store the scheduledOrderOfExecution and the sessionIdentifier
+        operation.scheduledOrderOfExecution = self.lastExecutionOrder
         operation.sessionIdentifier = self.identifier
-        
+    }
+
+    /// Runs a call operation
+    ///
+    /// - Parameter operation: the call operation
+    /// - Throws: errors on preflight
+    fileprivate func _runCall<T: Collectable, P>(_ operation: CallOperation<T, P>) throws {
+
         let request: URLRequest
         request = try self.delegate.requestFor(operation)
         
@@ -106,9 +105,7 @@ public class Session {
             syncOnMain {
                 
                 let operation = operation
-                
-                operation.executionCounter += 1
-                operation.lastAttemptDate = Date()
+                operation.hasBeenExecuted()
                 
                 let notificationName = Notification.Name.CallOperation.didFail()
                 
@@ -133,15 +130,17 @@ public class Session {
                 syncOnMain {
                     
                     let operation = operation
-                    
-                    operation.executionCounter += 1
-                    operation.lastAttemptDate = Date()
+                    operation.hasBeenExecuted()
                     
                     let notificationName = Notification.Name.CallOperation.didSucceed()
                     
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.filePathKey : filePath])
-                    
-                    self.delegate.deleteCallOperation(operation)
+                    do{
+                        try  self.delegate.deleteCallOperation(operation)
+                    }catch{
+                        Logger.log("\(error)", category: .critical)
+                    }
+
                 }
             }
             
@@ -156,16 +155,17 @@ public class Session {
                 syncOnMain {
                     
                     let operation = operation
-                    
-                    operation.executionCounter += 1
-                    operation.lastAttemptDate = Date()
+                    operation.hasBeenExecuted()
                     
                     self.delegate.integrateResponse(response)
                     
                     let notificationName = Notification.Name.CallOperation.didSucceed()
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
-                    
-                    self.delegate.deleteCallOperation(operation)
+                    do{
+                        try self.delegate.deleteCallOperation(operation)
+                    }catch{
+                        Logger.log("\(error)", category: .critical)
+                    }
                 }
             }, failure: failureClosure)
         }

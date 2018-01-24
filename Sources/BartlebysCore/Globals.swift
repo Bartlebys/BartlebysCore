@@ -16,6 +16,9 @@ public var MODELS_PRIMARY_KEY:CodableObject.CodableModelCodingKeys = CodableObje
 // the explicit UID type used for expressivity
 public typealias UID = String
 
+// A flag to distinguish non provisioned call operation
+public let ORDER_OF_EXECUTION_UNDEFINED:Int = -1
+
 // MARK: - Time
 
 // The start Time is define when launching.
