@@ -38,7 +38,7 @@ public class Session {
     // A unique run identifier that changes on each launch
     open static let runUID: String = Utilities.createUID()
 
-    public fileprivate(set) var isRuningLive:Bool = true
+    public fileprivate(set) var isRunningLive:Bool = true
 
     // shortcuts to the delegate
     public var credentials: Credentials { return self.delegate.credentials }
@@ -85,17 +85,13 @@ public class Session {
             }
 
         }
-        if self.isRuningLive{
+        if self.isRunningLive {
             do {
                 try self._runCall(operation)
             } catch {
                 Logger.log("\(error)", category: .critical)
             }
         }
-    }
-
-    fileprivate func _provision<T:Collectable,P>(_ operation: CallOperation<T,P>){
-
     }
 
     /// Runs a call operation
