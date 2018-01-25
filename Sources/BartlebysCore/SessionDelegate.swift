@@ -59,26 +59,26 @@ public protocol SessionDelegate {
     ///
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
-    func provision<T,P>(_ operation:CallOperation<T,P>) throws
+    func provision<P, R>(_ operation:CallOperation<P, R>) throws
 
     /// Returns the relevent request for a given call Operation
     ///
     /// - Parameter operation: the operation
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
-    func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest
+    func requestFor<P, R>(_ operation: CallOperation<P, R>) throws -> URLRequest
 
     
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    func integrateResponse<T>(_ response:DataResponse<T>)
+    func integrateResponse<R>(_ response:DataResponse<R>)
 
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
     /// - Throws: throws error is the call operation or its collection is not found
-    func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>) throws
+    func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>) throws
 
     
 }

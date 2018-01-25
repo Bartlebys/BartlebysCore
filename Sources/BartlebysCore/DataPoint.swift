@@ -280,7 +280,7 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
-    public func provision<T,P>(_ operation:CallOperation<T,P>) throws{
+    public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
         // Upsert automatically the Operation
         let (collection, _) = try self._findCollectionFor(operation:operation)
         collection.upsert(operation)
@@ -291,9 +291,9 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the operation
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
-    public final func requestFor<T,P>(_ operation: CallOperation<T,P>) throws -> URLRequest {
+    public final func requestFor<P, R>(_ operation: CallOperation<P, R>) throws -> URLRequest {
 
-        if T.self is Download.Type || T.self is Upload.Type {
+        if R.self is Download.Type || R.self is Upload.Type {
             guard let payload = operation.payload else {
                 throw DataPointError.payloadIsNil
             }
@@ -319,9 +319,9 @@ open class DataPoint: Object,DataPointProtocol{
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
-    public final func integrateResponse<T>(_ response: DataResponse<T>) {
-        if let firstCollection = self._collections.first(where:{ $0 as? CollectionOf<T> != nil }) {
-            if let concreteCollection = firstCollection as? CollectionOf<T>{
+    public final func integrateResponse<R>(_ response: DataResponse<R>) {
+        if let firstCollection = self._collections.first(where:{ $0 as? CollectionOf<R> != nil }) {
+            if let concreteCollection = firstCollection as? CollectionOf<R>{
                 for instance in response.result {
                     concreteCollection.upsert(instance)
                 }
@@ -332,7 +332,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// Implements the concrete Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
-    public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>)throws{
+    public final func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>)throws{
         do{
             let (collection, index) = try self._findCollectionFor(operation:operation)
             guard index >= 0 else{
@@ -351,11 +351,11 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the call operation to be found
     /// - Returns: the the collection and the index of the callOperation
     /// - Throws: DataPointError is the operation or its collection are not found
-    fileprivate func _findCollectionFor<T,P>(operation:CallOperation<T,P>)throws -> (CollectionOf<CallOperation<T,P>>,CollectionOf<CallOperation<T,P>>.Index) {
-        var parentCollection:CollectionOf<CallOperation<T,P>>?
+    fileprivate func _findCollectionFor<P, R>(operation:CallOperation<P, R>)throws -> (CollectionOf<CallOperation<P, R>>,CollectionOf<CallOperation<P, R>>.Index) {
+        var parentCollection:CollectionOf<CallOperation<P, R>>?
         var index : Int = -1
         for collection in self._collections{
-            if let collection = collection as? CollectionOf<CallOperation<T,P>>{
+            if let collection = collection as? CollectionOf<CallOperation<P, R>>{
                 parentCollection = collection
                 index = collection.index(of: operation) ?? -1
                 if index >= 0{
@@ -364,10 +364,10 @@ open class DataPoint: Object,DataPointProtocol{
             }
         }
         if index == -1 {
-            throw DataPointError.callOperationIndexNotFound(named: CollectionOf<CallOperation<T,P>>.collectionName)
+            throw DataPointError.callOperationIndexNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
         }
         guard let collection = parentCollection else{
-            throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<T,P>>.collectionName)
+            throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
         }
         return (collection,index)
     }
