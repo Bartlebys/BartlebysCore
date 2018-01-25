@@ -63,12 +63,10 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    public func didSave() { self.isLoading = false }
 
    // You must setup a relativeFolderPath
-   public var relativeFolderPath: String
+   public lazy var relativeFolderPath: String = Default.NO_PATH
 
-   // We can have several collection with the same type (e.g: some CallOperation)
-   // so we we use also a file name to distiguish the collections.
-   // Part of the FilePersistentCollection protocol
-   public var fileName:String
+   // You can define a specific File name
+   public var fileName:String = Default.NO_NAME
 
    public var name:String { return self.fileName }
 
@@ -79,9 +77,9 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
    /// - Parameters:
    ///   - named: the name of the collection is also its fileName
    ///   - relativePath: a relative path to be able to group/classify collections.
-   public required init(named:String, relativePath:String){
-      self.fileName = named
-      self.relativeFolderPath = relativePath
+   public required init(named name:String = T.collectionName, relativePath:String = DataPoint.RelativePaths.forCollections.rawValue ){
+         self.fileName = name
+         self.relativeFolderPath = relativePath
    }
 
    // MARK: - Functional Programing layer support
