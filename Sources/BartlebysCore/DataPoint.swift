@@ -145,9 +145,12 @@ open class DataPoint: Object,DataPointProtocol{
         }
 
         self._configureCollection(self.keyedDataCollection)
+        
+        // Declare CallOperations for download and upload
+        try self.declareSupportedCallOperations(payload: FilePath.self, resultType: Download.self)
+        try self.declareSupportedCallOperations(payload: FilePath.self, resultType: Upload.self)
+
     }
-
-
 
     /// Declares the supported operation type
     /// Registers a collection if necessary
