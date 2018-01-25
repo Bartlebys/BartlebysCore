@@ -81,7 +81,7 @@ public class Session {
                 // Provision the call operation
                 try self.delegate.provision(operation)
             } catch {
-                Logger.log("Error: \(error)", category: .critical)
+                Logger.log("\(error)", category: .critical)
             }
 
         }
@@ -89,7 +89,7 @@ public class Session {
             do {
                 try self._runCall(operation)
             } catch {
-                Logger.log("Error: \(error)", category: .critical)
+                Logger.log("\(error)", category: .critical)
             }
         }
     }

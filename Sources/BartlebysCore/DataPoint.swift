@@ -26,8 +26,8 @@ public enum DataPointError : Error{
     case duplicatedRegistration(fileName:String)
     case instanceNotFound
     case instanceTypeMissMatch
-    case callOperationCollectionNotFound
-    case callOperationIndexNotFound
+    case callOperationCollectionNotFound(named:String)
+    case callOperationIndexNotFound(named:String)
 }
 
 public protocol DataPointDelegate{
@@ -121,7 +121,11 @@ open class DataPoint: Object,DataPointProtocol{
 
     /// You cannot turn back storage volatility to false
     /// This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
-    /// That the place where you should call : self.registerCollection(concreteCollection)
+    /// That the place where you should call :
+    ///
+    ///     self.registerCollection(concreteCollection)
+    ///     and
+    ///     declareSupportedCallOperations(...)
     ///
     /// - Parameter volatile: If set to true the storage will be in memory
     /// - Throws: errors on registration
@@ -142,6 +146,21 @@ open class DataPoint: Object,DataPointProtocol{
 
         self._configureCollection(self.keyedDataCollection)
     }
+
+
+
+    /// Declares the supported operation type
+    /// Registers a collection if necessary
+    ///
+    /// - Parameters:
+    ///   - resultType: the resultType
+    ///   - payload: the payLoad
+    public final func declareSupportedCallOperations<T:Codable,P:Payload>(resultType:T.Type,payload:P.Type)throws{
+        let collection = CollectionOf<CallOperation<T,P>>()
+        try self.registerCollection(collection: collection)
+    }
+
+
 
     /// Registers the collection into the data point
     ///
@@ -314,12 +333,15 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameter operation: the targeted Call Operation
     public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>)throws{
-        let (collection, index) = try self._findCollectionFor(operation:operation)
-        guard index >= 0 else{
-            return
-            // throw DataPointError.callOperationIndexNotFound
+        do{
+            let (collection, index) = try self._findCollectionFor(operation:operation)
+            guard index >= 0 else{
+                return
+            }
+            collection.remove(at: index)
+        }catch{
+            Logger.log("\(error)", category: .critical)
         }
-        collection.remove(at: index)
     }
 
 
@@ -341,22 +363,11 @@ open class DataPoint: Object,DataPointProtocol{
                 }
             }
         }
-
         if index == -1 {
-            throw DataPointError.callOperationIndexNotFound
-            /*
-            // Auto declare the call Operation Collection
-            let Tname = String(describing: type(of: T.self))
-            let Pname = String(describing: type(of:P.self))
-            let collectionFileName = "Operations_\(Tname)_\(Pname)"
-            let newCollection =  CollectionOf<CallOperation<T, P>>(named:collectionFileName , relativePath: DataPoint.RelativePaths.forCallOperations.rawValue)
-            self._configureCollection(newCollection)
-            try self.storage.loadCollection(on: newCollection)
-            parentCollection = newCollection
- */
+            throw DataPointError.callOperationIndexNotFound(named: CollectionOf<CallOperation<T,P>>.collectionName)
         }
         guard let collection = parentCollection else{
-            throw DataPointError.callOperationCollectionNotFound
+            throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<T,P>>.collectionName)
         }
         return (collection,index)
     }
