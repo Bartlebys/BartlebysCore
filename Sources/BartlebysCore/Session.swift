@@ -72,11 +72,11 @@ public class Session {
     ///
     /// - Parameter operation: the call operation
     public func execute<P, R:Collectable>(_ operation: CallOperation<P, R>){
+        operation.sessionIdentifier = self.identifier
         if operation.scheduledOrderOfExecution != ORDER_OF_EXECUTION_UNDEFINED{
             self.lastExecutionOrder += 1
             // Store the scheduledOrderOfExecution and the sessionIdentifier
             operation.scheduledOrderOfExecution = self.lastExecutionOrder
-            operation.sessionIdentifier = self.identifier
             do {
                 // Provision the call operation
                 try self.delegate.provision(operation)
