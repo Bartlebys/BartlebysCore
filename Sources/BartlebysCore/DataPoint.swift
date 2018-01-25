@@ -53,7 +53,8 @@ open class DataPoint: Object,DataPointProtocol{
     static public let noContainerRootKey = "noContainerRootKey"
 
     public enum RelativePaths:String{
-        case forCallOperationCollection = "operations/"
+        case forCallOperations = "operations/"
+        case forCollections = ""
     }
 
     // MARK: -
@@ -68,8 +69,6 @@ open class DataPoint: Object,DataPointProtocol{
 
     /// The associated session
     public lazy fileprivate(set) var session:Session = Session(delegate: self, lastExecutionOrder:self._getLastOrderOfExecution())
-
-
 
     /// Its session identifier
     public var sessionIdentifier: String {
@@ -131,7 +130,6 @@ open class DataPoint: Object,DataPointProtocol{
         if volatile {
             self.storage.becomeVolatile()
         }
-
         do{
             // The KVS collection is loaded synchronously and saved asynchronouly
             let loadedKeyedDataCollection:CollectionOf<KeyedData> = try self.storage.loadSync(fileName: self.keyedDataCollection.fileName, relativeFolderPath: self.keyedDataCollection.relativeFolderPath)
@@ -149,9 +147,9 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameter collection: the collection
     open func registerCollection<T>(collection:CollectionOf<T>)throws{
-
         if !self._collections.contains(where: { (existingCollection) -> Bool in
             if let c = existingCollection as? CollectionOf<T>{
+                // @todo to be removed
                 return c.d_collectionName == collection.d_collectionName && c.fileName == collection.fileName
             }
             return false
@@ -318,7 +316,8 @@ open class DataPoint: Object,DataPointProtocol{
     public final func deleteCallOperation<T,P>(_ operation: CallOperation<T,P>)throws{
         let (collection, index) = try self._findCollectionFor(operation:operation)
         guard index >= 0 else{
-            throw DataPointError.callOperationIndexNotFound
+            return
+            // throw DataPointError.callOperationIndexNotFound
         }
         collection.remove(at: index)
     }
@@ -342,16 +341,19 @@ open class DataPoint: Object,DataPointProtocol{
                 }
             }
         }
+
         if index == -1 {
+            throw DataPointError.callOperationIndexNotFound
+            /*
             // Auto declare the call Operation Collection
-            let tMirror = Mirror(reflecting: T.self)
-            let Tname = tMirror.description.replacingOccurrences(of: "Mirror for ", with: "").replacingOccurrences(of: ".Type", with: "")
-            let pMirror = Mirror(reflecting: P.self)
-            let Pname = pMirror.description.replacingOccurrences(of: "Mirror for ", with: "").replacingOccurrences(of: ".Type", with: "")
-            let collectionFileName = "CollectionOf_CallOperation_\(Tname)_\(Pname)"
-            let newCollection =  CollectionOf<CallOperation<T, P>>(named:collectionFileName , relativePath: DataPoint.RelativePaths.forCallOperationCollection.rawValue)
+            let Tname = String(describing: type(of: T.self))
+            let Pname = String(describing: type(of:P.self))
+            let collectionFileName = "Operations_\(Tname)_\(Pname)"
+            let newCollection =  CollectionOf<CallOperation<T, P>>(named:collectionFileName , relativePath: DataPoint.RelativePaths.forCallOperations.rawValue)
             self._configureCollection(newCollection)
+            try self.storage.loadCollection(on: newCollection)
             parentCollection = newCollection
+ */
         }
         guard let collection = parentCollection else{
             throw DataPointError.callOperationCollectionNotFound
