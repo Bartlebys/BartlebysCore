@@ -9,22 +9,4 @@
 import Foundation
 
 public struct VoidPayload : Payload {
-    
-    public var id: String = Utilities.createUID()
-
-    public static var collectionName: String {
-        return "voidPayloads"
-    }
-
-    public var d_collectionName: String{
-        return VoidPayload.collectionName
-    }
-
-    public static var typeName: String {
-        return "VoidPayload"
-    }
-
-    public init() {
-        
-    }
 }

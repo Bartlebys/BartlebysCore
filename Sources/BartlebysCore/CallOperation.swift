@@ -34,6 +34,9 @@ public extension Notification.Name {
     }
 }
 
+
+
+
 public protocol CallOperationProtocol {
 
     // The unique id of the Session
@@ -83,9 +86,13 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     public var path: String = Default.NO_PATH
     public var queryString: String = Default.NO_QUERY_STRING
     public var method: HTTPMethod = .GET
+
+    public var payload: P?
+    public var payloadType: P.Type = P.self
+
     public var resultType: R.Type = R.self
     public var resultIsACollection:Bool = true
-    public var payload: P?
+
 
     /// the desired execution order set by the Session
     public var scheduledOrderOfExecution: Int = ORDER_OF_EXECUTION_UNDEFINED
@@ -100,7 +107,6 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         self.path = path
         self.queryString = queryString
         self.method = method
-        self.resultType = R.self
         self.resultIsACollection = resultIsACollection
         self.payload = parameter
         super.init()
@@ -137,7 +143,6 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         self.path = try values.decode(String.self,forKey:.path)
         self.queryString = try values.decode(String.self,forKey:.queryString)
         self.method = HTTPMethod(rawValue: try values.decode(String.self,forKey:.method)) ?? HTTPMethod.GET
-        self.resultType = R.self
         self.resultIsACollection = try values.decode(Bool.self,forKey:.resultIsACollection)
         self.payload = try values.decode(P.self,forKey:.parameter)
         self.executionCounter = try values.decode(Int.self,forKey:.executionCounter)
@@ -155,7 +160,6 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         try container.encode(self.path,forKey:.path)
         try container.encode(self.queryString,forKey:.queryString)
         try container.encode(self.method.rawValue,forKey:.method)
-        // No need to encode the resultType.
         try container.encode(self.resultIsACollection, forKey: .resultIsACollection)
         try container.encode(self.payload,forKey:.parameter)
         try container.encode(self.executionCounter,forKey:.executionCounter)
