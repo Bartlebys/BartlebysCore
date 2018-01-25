@@ -153,10 +153,10 @@ open class DataPoint: Object,DataPointProtocol{
     /// Registers a collection if necessary
     ///
     /// - Parameters:
-    ///   - resultType: the resultType
     ///   - payload: the payLoad
-    public final func declareSupportedCallOperations<T:Codable,P:Payload>(resultType:T.Type,payload:P.Type)throws{
-        let collection = CollectionOf<CallOperation<T,P>>()
+    ///   - resultType: the resultType
+    public final func declareSupportedCallOperations<P:Payload, R:Codable>(payload:P.Type, resultType:R.Type) throws {
+        let collection = CollectionOf<CallOperation<P, R>>()
         try self.registerCollection(collection: collection)
     }
 

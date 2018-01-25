@@ -71,7 +71,7 @@ public class Session {
     /// Else the operation is stored with an execution order for future usage.
     ///
     /// - Parameter operation: the call operation
-    public func execute<T:Collectable,P>(_ operation: CallOperation<T,P>){
+    public func execute<P, R:Collectable>(_ operation: CallOperation<P, R>){
         if operation.scheduledOrderOfExecution != ORDER_OF_EXECUTION_UNDEFINED{
             self.lastExecutionOrder += 1
             // Store the scheduledOrderOfExecution and the sessionIdentifier
@@ -102,7 +102,7 @@ public class Session {
     ///
     /// - Parameter operation: the call operation
     /// - Throws: errors on preflight
-    fileprivate func _runCall<T: Collectable, P>(_ operation: CallOperation<T, P>) throws {
+    fileprivate func _runCall<P, R: Collectable>(_ operation: CallOperation<P, R>) throws {
 
         let request: URLRequest
         request = try self.delegate.requestFor(operation)
@@ -125,7 +125,7 @@ public class Session {
             }
         }
         
-        switch T.self {
+        switch R.self {
         case is Download.Type, is Upload.Type:
             
             guard let filePath = operation.payload as? FilePath else {
@@ -150,14 +150,14 @@ public class Session {
                 }
             }
             
-            if T.self is Download.Type {
-                self.callDownload(request: request, resultType: T.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
+            if R.self is Download.Type {
+                self.callDownload(request: request, resultType: R.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
             } else {
-                self.callUpload(request: request, resultType: T.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
+                self.callUpload(request: request, resultType: R.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
             }
         default:
             
-            self.call(request:request, resultType:T.self, resultIsACollection: operation.resultIsACollection, success: { response in
+            self.call(request:request, resultType:R.self, resultIsACollection: operation.resultIsACollection, success: { response in
                 syncOnMain {
                     
                     let operation = operation
@@ -180,10 +180,10 @@ public class Session {
     
     // MARK: - HTTP Engine
     
-    public func call<T>(  request: URLRequest,
-                          resultType: T.Type,
+    public func call<R>(  request: URLRequest,
+                          resultType: R.Type,
                           resultIsACollection:Bool,
-                          success: @escaping (_ completion: DataResponse<T>)->(),
+                          success: @escaping (_ completion: DataResponse<R>)->(),
                           failure: @escaping (_ completion: Failure)->()
         ) {
         
@@ -200,7 +200,7 @@ public class Session {
                 if let data = data {
                     do {
                         if resultIsACollection{
-                            let decoded = try self.delegate.operationsCoder.decodeArrayOf(T.self, from: data)
+                            let decoded = try self.delegate.operationsCoder.decodeArrayOf(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
                             let dataResponse = DataResponse(result: decoded)
@@ -212,7 +212,7 @@ public class Session {
                                 success(dataResponse)
                             }
                         }else{
-                            let decoded = try self.delegate.operationsCoder.decode(T.self, from: data)
+                            let decoded = try self.delegate.operationsCoder.decode(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
                             let dataResponse = DataResponse(result: [decoded])
@@ -241,7 +241,7 @@ public class Session {
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
                             
-                            let dataResponse: DataResponse = DataResponse(result: Array<T>())
+                            let dataResponse: DataResponse = DataResponse(result: Array<R>())
                             dataResponse.httpStatus = httpResponse.statusCode.status()
                             dataResponse.content = data
                             dataResponse.metrics = metrics
@@ -255,8 +255,8 @@ public class Session {
         
     }
     
-    public func callDownload<T>(  request: URLRequest,
-                                  resultType: T.Type,
+    public func callDownload<R>(  request: URLRequest,
+                                  resultType: R.Type,
                                   localFilePath: FilePath,
                                   success: @escaping (_ completion: HTTPResponse)->(),
                                   failure: @escaping (_ completion: Failure)->()
@@ -309,8 +309,8 @@ public class Session {
         task.resume()
     }
     
-    public func callUpload<T>(  request: URLRequest,
-                                resultType: T.Type,
+    public func callUpload<R>(  request: URLRequest,
+                                resultType: R.Type,
                                 localFilePath: FilePath,
                                 success: @escaping (_ completion: HTTPResponse)->(),
                                 failure: @escaping (_ completion: Failure)->()

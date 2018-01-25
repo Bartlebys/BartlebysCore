@@ -245,7 +245,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
-   // MARK: IndistinctCollection.UniversalType
+   // MARK: - UniversalType (IndistinctCollection)
 
    public static var collectionName:String { return CollectionOf._collectionName() }
 

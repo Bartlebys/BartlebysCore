@@ -70,7 +70,7 @@ public protocol CallOperationProtocol {
 /// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public final class CallOperation<T, P> : Model, CallOperationProtocol where T : Codable, P : Payload {
+public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Codable {
 
 
     // The unique id of the Session
@@ -83,7 +83,7 @@ public final class CallOperation<T, P> : Model, CallOperationProtocol where T : 
     public var path: String = Default.NO_PATH
     public var queryString: String = Default.NO_QUERY_STRING
     public var method: HTTPMethod = .GET
-    public var resultType: T.Type = T.self
+    public var resultType: R.Type = R.self
     public var resultIsACollection:Bool = true
     public var payload: P?
 
@@ -95,12 +95,12 @@ public final class CallOperation<T, P> : Model, CallOperationProtocol where T : 
     public var lastAttemptDate:Date = Date()
 
 
-    public required init(operationName:String, path: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool,parameter: P?) {
+    public required init(operationName:String, path: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, parameter: P?) {
         self.operationName = operationName
         self.path = path
         self.queryString = queryString
         self.method = method
-        self.resultType = T.self
+        self.resultType = R.self
         self.resultIsACollection = resultIsACollection
         self.payload = parameter
         super.init()
@@ -137,7 +137,7 @@ public final class CallOperation<T, P> : Model, CallOperationProtocol where T : 
         self.path = try values.decode(String.self,forKey:.path)
         self.queryString = try values.decode(String.self,forKey:.queryString)
         self.method = HTTPMethod(rawValue: try values.decode(String.self,forKey:.method)) ?? HTTPMethod.GET
-        self.resultType = T.self
+        self.resultType = R.self
         self.resultIsACollection = try values.decode(Bool.self,forKey:.resultIsACollection)
         self.payload = try values.decode(P.self,forKey:.parameter)
         self.executionCounter = try values.decode(Int.self,forKey:.executionCounter)
@@ -162,18 +162,18 @@ public final class CallOperation<T, P> : Model, CallOperationProtocol where T : 
         try container.encode(self.lastAttemptDate,forKey:.lastAttemptDate)
     }
 
-    // MARK: Collectable.UniversalType
+    // MARK: UniversalType (Collectable)
 
     open override class var typeName:String{
-        let Tname = String(describing: type(of: T.self))
+        let Rname = String(describing: type(of: R.self))
         let Pname = String(describing: type(of: P.self))
-        return "CallOperation_\(Tname)_\(Pname)"
+        return "CallOperation_\(Rname)_\(Pname)"
     }
 
     open class override var collectionName:String{
-        let Tname = String(describing: type(of: T.self))
+        let Rname = String(describing: type(of: R.self))
         let Pname = String(describing: type(of: P.self))
-        return "CollectionOf_CallOperations_\(Tname)_\(Pname)"
+        return "CollectionOf_CallOperations_\(Rname)_\(Pname)"
     }
 
     open override var d_collectionName:String{
