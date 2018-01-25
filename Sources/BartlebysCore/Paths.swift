@@ -43,12 +43,16 @@ public class Paths {
     /// - Parameter relativeFolderPath: the relative folder path
     /// - Returns: a directory URL
     /// - Throws: issue on failure
-    public static func directoryURL(relativeFolderPath: String) throws -> URL {
+    public static func directoryURL(relativeFolderPath: String?) throws -> URL {
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
             let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
             if let _url = urls.first {
                 let applicationDirectoryURL = _url.appendingPathComponent(Paths.applicationDirectoryName, isDirectory: true)
-                return applicationDirectoryURL.appendingPathComponent(relativeFolderPath, isDirectory: true)
+                if let relativeFolderPath = relativeFolderPath {
+                    return applicationDirectoryURL.appendingPathComponent(relativeFolderPath, isDirectory: true)
+                } else {
+                    return applicationDirectoryURL
+                }
             }
         #elseif os(Linux)
             // linux @todo
