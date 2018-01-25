@@ -162,5 +162,23 @@ public final class CallOperation<T, P> : Model, CallOperationProtocol where T : 
         try container.encode(self.lastAttemptDate,forKey:.lastAttemptDate)
     }
 
+    // MARK: Collectable.UniversalType
+
+    open override class var typeName:String{
+        let Tname = String(describing: type(of: T.self))
+        let Pname = String(describing: type(of: P.self))
+        return "CallOperation_\(Tname)_\(Pname)"
+    }
+
+    open class override var collectionName:String{
+        let Tname = String(describing: type(of: T.self))
+        let Pname = String(describing: type(of: P.self))
+        return "CollectionOf_CallOperations_\(Tname)_\(Pname)"
+    }
+
+    open override var d_collectionName:String{
+        return CallOperation.collectionName
+    }
+
 
 }
