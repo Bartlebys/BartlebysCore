@@ -355,14 +355,14 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Returns: the the collection and the index of the callOperation
     /// - Throws: DataPointError is the operation or its collection are not found
     fileprivate func _findCollectionFor<P, R>(operation:CallOperation<P, R>)throws -> (CollectionOf<CallOperation<P, R>>,CollectionOf<CallOperation<P, R>>.Index) {
-        var parentCollection:CollectionOf<CallOperation<P, R>>?
+        var parentCollection: CollectionOf<CallOperation<P, R>>?
         var index : Int = -1
         for collection in self._collections{
-            if let collection = collection as? CollectionOf<CallOperation<P, R>>{
+            if let collection = collection as? CollectionOf<CallOperation<P, R>> {
                 parentCollection = collection
                 index = collection.index(of: operation) ?? -1
-                if index >= 0{
-                    break;
+                if index >= 0 {
+                    break
                 }
             }
         }

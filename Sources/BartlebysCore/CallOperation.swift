@@ -169,15 +169,15 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     // MARK: UniversalType (Collectable)
 
     open override class var typeName:String{
-        let Rname = String(describing: type(of: R.self))
         let Pname = String(describing: type(of: P.self))
-        return "CallOperation_\(Rname)_\(Pname)"
+        let Rname = String(describing: type(of: R.self))
+        return "CallOperation_\(Pname)_\(Rname)"
     }
 
     open class override var collectionName:String{
-        let Rname = String(describing: type(of: R.self))
         let Pname = String(describing: type(of: P.self))
-        return "CollectionOf_CallOperations_\(Rname)_\(Pname)"
+        let Rname = String(describing: type(of: R.self))
+        return "CollectionOf_CallOperations_\(Pname)_\(Rname)"
     }
 
     open override var d_collectionName:String{
