@@ -30,20 +30,12 @@ public enum DataPointError : Error{
     case callOperationIndexNotFound(named:String)
 }
 
-public protocol DataPointDelegate{
+public protocol DataPointLifeCycle{
     func collectionsDidLoadSuccessFully(dataPoint:DataPointProtocol)
     func collectionsDidFailToLoad(dataPoint:DataPointProtocol ,message:String)
     func collectionsDidSaveSuccessFully(dataPoint:DataPointProtocol)
     func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String)
 }
-
-struct DataPointDelegatePlaceHolder:DataPointDelegate {
-    func collectionsDidLoadSuccessFully(dataPoint:DataPointProtocol){}
-    func collectionsDidFailToLoad(dataPoint:DataPointProtocol ,message:String){}
-    func collectionsDidSaveSuccessFully(dataPoint:DataPointProtocol){}
-    func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String){}
-}
-
 
 // Abstract class
 open class DataPoint: Object,DataPointProtocol{
@@ -59,7 +51,7 @@ open class DataPoint: Object,DataPointProtocol{
 
     // MARK: -
 
-    public var delegate: DataPointDelegate = DataPointDelegatePlaceHolder()
+    public var delegate: DataPointLifeCycle?
 
     // The coder used by the HTTP operations.
     public var operationsCoder: ConcreteCoder = JSONCoder()
@@ -104,6 +96,9 @@ open class DataPoint: Object,DataPointProtocol{
 
     /// The pending Call operations
     fileprivate var _sortedPendingCalls:[CallOperationProtocol] = [CallOperationProtocol]()
+
+    //A dictionary with collection.d_collectionName as Key
+    fileprivate var _callOperationsCollections:[String:IndistinctCollection] = [String:IndistinctCollection]()
 
     // MARK: -
 
@@ -198,11 +193,16 @@ open class DataPoint: Object,DataPointProtocol{
     }
 
     fileprivate func _configureCollection<T>(_ collection:CollectionOf<T>){
+        // Reference the DataPoint
+        collection.dataPoint = self
         self._collections.append(collection)
         self._collectionsPerFileName[collection.fileName] = collection
         self._collectionsPerCollectedTypeName[T.typeName] = collection
-        collection.dataPoint = self
-
+        // it is a call Operation collection
+        if let _ = collection.dynamicCallOperations{
+            // store a reference in the _callOperationsCollections
+            self._callOperationsCollections[collection.d_collectionName] = collection
+        }
     }
 
     /// Returns the collection by its file name
@@ -371,25 +371,14 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
-
-
     /// Finds the index of a Call Operation
     ///
     /// - Parameter operation: the call operation to be found
     /// - Returns: the the collection and the index of the callOperation
     /// - Throws: DataPointError is the operation or its collection are not found
     fileprivate func _findCollectionFor<P, R>(operation:CallOperation<P, R>, ignoreMissingIndex: Bool)throws -> (CollectionOf<CallOperation<P, R>>,CollectionOf<CallOperation<P, R>>.Index) {
-        var parentCollection: CollectionOf<CallOperation<P, R>>?
-        var index : Int = -1
-        for collection in self._collections{
-            if let collection = collection as? CollectionOf<CallOperation<P, R>> {
-                parentCollection = collection
-                index = collection.index(of: operation) ?? -1
-                if index >= 0 {
-                    break
-                }
-            }
-        }
+        let parentCollection = self._callOperationsCollections[operation.d_collectionName] as? CollectionOf<CallOperation<P, R>>
+        let index : Int = parentCollection?.index(of: operation) ?? -1
         if index == -1 && !ignoreMissingIndex {
             throw DataPointError.callOperationIndexNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
         }
@@ -398,9 +387,6 @@ open class DataPoint: Object,DataPointProtocol{
         }
         return (collection,index)
     }
-
-
-
 
 
     // MARK: - Load and Save
@@ -459,6 +445,45 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Returns: the collection
     open func collectionFor<T:Collectable & Codable> ()->CollectionOf<T>?{
         return self._collectionsPerCollectedTypeName[T.typeName] as? CollectionOf<T>
+    }
+
+
+
+    // MARK: - DataPointProtocol.DataPointLifeCycle
+
+    // The data point implements its own delegate
+    /// That relays to its delegate
+
+    public func collectionsDidLoadSuccessFully(dataPoint:DataPointProtocol){
+        self.delegate?.collectionsDidLoadSuccessFully(dataPoint: dataPoint)
+        self._recoverThePendingCallOperations()
+    }
+
+    public func collectionsDidFailToLoad(dataPoint:DataPointProtocol ,message:String){
+        self.delegate?.collectionsDidFailToLoad(dataPoint: dataPoint, message: message)
+    }
+
+    public func collectionsDidSaveSuccessFully(dataPoint: DataPointProtocol) {
+        self.delegate?.collectionsDidSaveSuccessFully(dataPoint: dataPoint)
+    }
+
+    public func collectionsDidFailToSave(dataPoint: DataPointProtocol, message: String) {
+        self.delegate?.collectionsDidFailToSave(dataPoint: dataPoint, message: message)
+    }
+
+    /// Stores the call operation in _sortedPendingCalls
+    /// Sorted by scheduledOrderOfExecution
+    fileprivate func _recoverThePendingCallOperations(){
+        for collection in self._collections{
+            if let collection = collection as? IndistinctCollection{
+                if let callOperations = collection.dynamicCallOperations{
+                    self._sortedPendingCalls.append(contentsOf: callOperations)
+                }
+            }
+        }
+        self._sortedPendingCalls.sort { (lCalOp, rCalOp) -> Bool in
+            return lCalOp.scheduledOrderOfExecution < rCalOp.scheduledOrderOfExecution
+        }
     }
 
 }
@@ -651,3 +676,9 @@ extension DataPoint{
         self.uploads.removeAll()
     }
 }
+
+
+
+
+
+

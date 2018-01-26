@@ -91,9 +91,9 @@ internal final class AutoRemovableSavingDelegate:BaseCollectionIOObserver{
     ///   - progress: the progress object
     override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         if !success{
-            self.dataPoint.delegate.collectionsDidFailToSave(dataPoint: self.dataPoint, message:message ?? "Failure when saving \(fileName)")
+            self.dataPoint.collectionsDidFailToSave(dataPoint: self.dataPoint, message:message ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.delegate.collectionsDidSaveSuccessFully(dataPoint: self.dataPoint)
+            self.dataPoint.collectionsDidSaveSuccessFully(dataPoint: self.dataPoint)
         }
         if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.storage.removeProgressObserver(observer: self)
@@ -123,9 +123,9 @@ internal final class AutoRemovableLoadingDelegate:BaseCollectionIOObserver{
     ///   - progress: the progress object
     override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         if !success{
-            self.dataPoint.delegate.collectionsDidFailToLoad(dataPoint: self.dataPoint, message: message ?? "Failure when loading \(fileName)")
+            self.dataPoint.collectionsDidFailToLoad(dataPoint: self.dataPoint, message: message ?? "Failure when loading \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{
-            self.dataPoint.delegate.collectionsDidLoadSuccessFully(dataPoint: self.dataPoint)
+            self.dataPoint.collectionsDidLoadSuccessFully(dataPoint: self.dataPoint)
         }
         if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.storage.removeProgressObserver(observer: self)

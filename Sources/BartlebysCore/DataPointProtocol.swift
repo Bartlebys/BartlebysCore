@@ -9,7 +9,7 @@
 import Foundation
 
 
-public protocol DataPointProtocol:SessionDelegate{
+public protocol DataPointProtocol:SessionDelegate,DataPointLifeCycle{
 
     // The current Host: e.g demo.bartlebys.org
     var host:String { get }

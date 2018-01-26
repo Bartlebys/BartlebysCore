@@ -31,12 +31,11 @@ protocol ChangesFlag {
 
 
 
-open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FileSavable,ChangesFlag where T :  Codable & Collectable {
+open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FileSavable, ChangesFlag where T :  Codable & Collectable {
 
 
    // MARK: -
 
-   // We use a Hooked List
    // @todo waiting for [SE-0143](https://github.com/apple/swift-evolution/blob/master/proposals/0143-conditional-conformances.md)
    fileprivate var _items: _ContainerType<T> = _ContainerType<T>()
 
@@ -257,7 +256,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
    }
 
-   // MARK: - UniversalType (IndistinctCollection)
+   // MARK: - IndistinctCollection.UniversalType
 
    public static var collectionName:String { return CollectionOf._collectionName() }
 

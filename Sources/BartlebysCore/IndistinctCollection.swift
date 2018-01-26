@@ -24,4 +24,9 @@ public protocol IndistinctCollection:UniversalType{
 
     /// Called when the collection or one of its member has Changed
     func didChange()
+
+    /// Used to access to call operations
+    /// Returns the call operation if revelent
+    /// If the result is not null it means that the collection is a collection of CallOperation
+    var dynamicCallOperations:[CallOperationProtocol]?{ get }
 }
