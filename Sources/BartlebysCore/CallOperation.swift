@@ -39,6 +39,8 @@ public extension Notification.Name {
 
 public protocol CallOperationProtocol {
 
+    var UID:String { get }
+
     // The unique id of the Session
     var sessionIdentifier: String { get }
 
@@ -63,8 +65,14 @@ public protocol CallOperationProtocol {
     /// The last execution date
     var lastAttemptDate:Date { get }
 
+
+    /// Executes the call operation
+    func execute()
+
     /// Called on any execution
     func hasBeenExecuted()
+
+
 }
 
 /// A CallOperation is:
@@ -73,7 +81,7 @@ public protocol CallOperationProtocol {
 /// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result {
+public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result & Collectable{
 
 
     // The unique id of the Session
@@ -107,7 +115,6 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         return CollectionOf<CallOperation<P, R>>()
     }
 
-
     public required init(operationName:String, path: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, parameter: P?) {
         self.operationName = operationName
         self.path = path
@@ -125,6 +132,10 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         self.lastAttemptDate = Date()
     }
 
+    /// Executes the call operation
+    public func execute(){
+        self.dataPoint?.session.execute(self)
+    }
 
     // MARK: - Codable
 
