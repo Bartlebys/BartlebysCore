@@ -72,7 +72,7 @@ public class Session {
     /// Else the operation is stored with an execution order for future usage.
     ///
     /// - Parameter operation: the call operation
-    public func execute<P, R:Collectable>(_ operation: CallOperation<P, R>){
+    public func execute<P, R>(_ operation: CallOperation<P, R>){
         operation.sessionIdentifier = self.identifier
         if operation.scheduledOrderOfExecution == ORDER_OF_EXECUTION_UNDEFINED{
             self.lastExecutionOrder += 1
@@ -98,7 +98,7 @@ public class Session {
     ///
     /// - Parameter operation: the call operation
     /// - Throws: errors on preflight
-    fileprivate func _runCall<P, R: Collectable>(_ operation: CallOperation<P, R>) throws {
+    fileprivate func _runCall<P, R>(_ operation: CallOperation<P, R>) throws {
 
         let request: URLRequest
         request = try self.delegate.requestFor(operation)
