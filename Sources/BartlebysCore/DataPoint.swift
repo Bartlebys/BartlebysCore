@@ -102,8 +102,10 @@ open class DataPoint: Object,DataPointProtocol{
     /// [notAvailableOwnerUID][relatedOwnedUIDS]
     fileprivate var _deferredOwnerships=[UID:[UID]]()
 
-    // MARK: -
+    /// The pending Call operations
+    fileprivate var _sortedPendingCalls:[CallOperationProtocol] = [CallOperationProtocol]()
 
+    // MARK: -
 
     /// A collection used to perform Key Value Storage
     public var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.collectionName,relativePath:"")
@@ -166,7 +168,7 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameter type: the call Payload and resultType
     /// - Throws: erros on collection registration.
-    open func registerCallOperationsFor<T:Payload & Result>(type:T.Type) throws {
+    open func registerCallOperationsFor<T:Payload & Result & Collectable>(type:T.Type) throws {
         //self._callOperationsTypes.append(type)
         let upStreamOperations = CallOperation<T,VoidResult>.registrableCollection
         let downStreamOperations = CallOperation<VoidPayload,T>.registrableCollection
@@ -294,10 +296,17 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
     public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
-        // Upsert automatically the Operation
+
+        // Upsert the relevent call Operation collection
         let (collection, _) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: true)
         collection.upsert(operation)
+        // Append to pending Calls
+        self._sortedPendingCalls.append(operation)
     }
+
+
+
+
 
     /// Returns the relevent request for a given call Operation
     ///
@@ -342,10 +351,15 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
-    /// Implements the concrete Removal of the CallOperation on success
+    /// Implements the  Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
     public final func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>)throws{
+        // Remove the call operation from the pending calls
+        if let index = self._sortedPendingCalls.index(where: { $0.UID == operation.UID} ){
+            self._sortedPendingCalls.remove(at: index)
+        }
+        // Remove the call operation from its persistency layer.
         do{
             let (collection, index) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: false)
             guard index >= 0 else{
@@ -353,7 +367,7 @@ open class DataPoint: Object,DataPointProtocol{
             }
             collection.remove(at: index)
         }catch{
-            Logger.log("\(error)", category: .critical)
+            Logger.log(error, category: .critical)
         }
     }
 
@@ -448,6 +462,7 @@ open class DataPoint: Object,DataPointProtocol{
     }
 
 }
+
 
 // MARK: - Centralized Instances Registration
 
@@ -590,15 +605,6 @@ extension DataPoint{
         return items
     }
 
-    // MARK: - Download / Uploads
-
-    public func cancelUploads(){
-        self.downloads.removeAll()
-    }
-    public func cancelDownloads(){
-        self.uploads.removeAll()
-    }
-
     // MARK: -
 
     /// Stores the ownee when the owner is not already available
@@ -634,3 +640,14 @@ extension DataPoint{
     }
 }
 
+// MARK: - Download / Uploads
+
+extension DataPoint{
+
+    public func cancelUploads(){
+        self.downloads.removeAll()
+    }
+    public func cancelDownloads(){
+        self.uploads.removeAll()
+    }
+}
