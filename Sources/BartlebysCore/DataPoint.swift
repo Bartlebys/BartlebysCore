@@ -289,7 +289,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Throws: error if the collection hasn't be found
     public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
         // Upsert automatically the Operation
-        let (collection, _) = try self._findCollectionFor(operation:operation)
+        let (collection, _) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: true)
         collection.upsert(operation)
     }
 
@@ -341,7 +341,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the targeted Call Operation
     public final func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>)throws{
         do{
-            let (collection, index) = try self._findCollectionFor(operation:operation)
+            let (collection, index) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: false)
             guard index >= 0 else{
                 return
             }
@@ -358,7 +358,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the call operation to be found
     /// - Returns: the the collection and the index of the callOperation
     /// - Throws: DataPointError is the operation or its collection are not found
-    fileprivate func _findCollectionFor<P, R>(operation:CallOperation<P, R>)throws -> (CollectionOf<CallOperation<P, R>>,CollectionOf<CallOperation<P, R>>.Index) {
+    fileprivate func _findCollectionFor<P, R>(operation:CallOperation<P, R>, ignoreMissingIndex: Bool)throws -> (CollectionOf<CallOperation<P, R>>,CollectionOf<CallOperation<P, R>>.Index) {
         var parentCollection: CollectionOf<CallOperation<P, R>>?
         var index : Int = -1
         for collection in self._collections{
@@ -370,7 +370,7 @@ open class DataPoint: Object,DataPointProtocol{
                 }
             }
         }
-        if index == -1 {
+        if index == -1 && !ignoreMissingIndex {
             throw DataPointError.callOperationIndexNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
         }
         guard let collection = parentCollection else{
