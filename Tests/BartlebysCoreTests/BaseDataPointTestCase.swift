@@ -110,7 +110,7 @@ public class MyDataPoint: DataPoint {
 // MARK: - BaseDataPointTestCase
 
 
-class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
+class BaseDataPointTestCase: XCTestCase,DataPointLifeCycle {
 
 
 
@@ -136,7 +136,7 @@ class BaseDataPointTestCase: XCTestCase,DataPointDelegate {
         return dataPoint
     }
 
-    // MARK: - DataPointDelegate
+    // MARK: - DataPointLifeCycle
 
     func collectionsDidSaveSuccessFully(dataPoint: DataPointProtocol) {
         print("Did Save")

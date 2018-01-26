@@ -192,7 +192,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
 
 
         // The delegate encapsulates the tests logic
-        struct Test008Delegate:DataPointDelegate{
+        struct Test008Delegate:DataPointLifeCycle{
 
             var expectation:XCTestExpectation
             var collection:CollectionOf<Metrics>
