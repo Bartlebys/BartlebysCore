@@ -84,6 +84,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    /// Used to access to call operations
    /// Returns the call operation if revelent
+   /// If the result is not null it means that the collection is a collection of CallOperation
    public var dynamicCallOperations:[CallOperationProtocol]? {
       return self._items as? [CallOperationProtocol]
    }
