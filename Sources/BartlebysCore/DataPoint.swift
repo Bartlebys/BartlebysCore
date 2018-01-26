@@ -106,7 +106,11 @@ open class DataPoint: Object,DataPointProtocol{
 
 
     /// A collection used to perform Key Value Storage
-    public var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.typeName.lowercased(),relativePath:"")
+    public var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.collectionName,relativePath:"")
+
+    // Special call Operations Donwloads and Uploads
+    public var downloads = CollectionOf<CallOperation<FilePath,Download>>()
+    public var uploads = CollectionOf<CallOperation<FilePath,Upload>>()
 
     /// Initializes the dataPoint
     /// - Throws: Children may throw while populating the collections
@@ -146,9 +150,11 @@ open class DataPoint: Object,DataPointProtocol{
 
         self._configureCollection(self.keyedDataCollection)
 
-        try self.registerCollection(collection: CallOperation<FilePath,Download>.registrableCollection)
-        try self.registerCollection(collection: CallOperation<FilePath,Upload>.registrableCollection)
+        // Special Call Operations (Downloads and Uploads)
+        try self.registerCollection(collection: self.downloads)
+        try self.registerCollection(collection: self.uploads)
 
+        // Generated Models
         try self.registerCallOperationsFor(type: Metrics.self)
         try self.registerCallOperationsFor(type: KeyedData.self)
         try self.registerCallOperationsFor(type: LogEntry.self)
@@ -584,6 +590,14 @@ extension DataPoint{
         return items
     }
 
+    // MARK: - Download / Uploads
+
+    public func cancelUploads(){
+        self.downloads.removeAll()
+    }
+    public func cancelDownloads(){
+        self.uploads.removeAll()
+    }
 
     // MARK: -
 
