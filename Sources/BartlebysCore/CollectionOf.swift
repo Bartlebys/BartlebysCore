@@ -164,6 +164,10 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
 
    public var count: Int { return self._items.count }
 
+   public func removeAll(){
+      self._items.removeAll()
+   }
+
    // MARK: - Extended behaviour
 
    /// Appends or update the element
