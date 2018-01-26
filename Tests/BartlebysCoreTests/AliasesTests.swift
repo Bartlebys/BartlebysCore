@@ -89,7 +89,12 @@ class AliasesTests: BaseDataPointTestCase{
         datapoint.testObjectsCollection.append(o)
         o.aliasOfKD = kd.aliasOf()
 
-        if let kdFromAlias:KeyedData = o.optionalInstance(from: o.aliasOfKD!){
+        guard let oAliasOfKD = o.aliasOfKD else {
+            XCTFail("kdFromAlias should exist")
+            return
+        }
+        
+        if let kdFromAlias:KeyedData = o.optionalInstance(from: oAliasOfKD) {
             XCTAssert(kdFromAlias == kd, "kdFromAlias should be equal to kd")
             XCTAssert(kdFromAlias === kd, "kdFromAlias should be kd")
         }else{

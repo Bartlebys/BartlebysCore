@@ -596,7 +596,7 @@ extension DataPoint{
     ///   - ownerUID: the currently unavailable owner UID
     public func appendToDeferredOwnershipsList<T:Codable & Collectable>(_ ownee:T,ownerUID:UID){
         if self._deferredOwnerships.keys.contains(ownerUID) {
-            self._deferredOwnerships[ownerUID]!.append(ownee.id)
+            self._deferredOwnerships[ownerUID]?.append(ownee.id)
         }else{
             self._deferredOwnerships[ownerUID]=[ownee.id]
         }
