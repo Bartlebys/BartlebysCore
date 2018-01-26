@@ -8,5 +8,5 @@
 
 import Foundation
 
-public struct VoidPayload : Payload {
+public class VoidPayload : Model, Payload {
 }

@@ -8,5 +8,5 @@
 
 import Foundation
 
-public struct VoidResult : Result{
+public class VoidResult : Model, Result{
 }
