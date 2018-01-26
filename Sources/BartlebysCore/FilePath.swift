@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FilePath : Model {
+public class FilePath : Model, Payload, Result {
     
     public var relativePath: String = Default.NOT_SPECIFIED
     

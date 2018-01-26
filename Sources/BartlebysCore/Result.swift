@@ -1,5 +1,5 @@
 //
-//  VoidResult.swift
+//  Result.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 25/01/2018.
@@ -8,5 +8,8 @@
 
 import Foundation
 
-public struct VoidResult : Result{
+/// An informal protocol used to allow a Codable to be considerate has a result.
+public protocol Result : Codable {
+
 }
+

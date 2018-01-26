@@ -73,7 +73,7 @@ public protocol CallOperationProtocol {
 /// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Codable {
+public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result {
 
 
     // The unique id of the Session
@@ -100,6 +100,12 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     public var executionCounter:Int = 0
 
     public var lastAttemptDate:Date = Date()
+
+
+    /// This collection is used to register the collection in the datapoint
+    public static var registrableCollection:CollectionOf<CallOperation<P, R>> {
+        return CollectionOf<CallOperation<P, R>>()
+    }
 
 
     public required init(operationName:String, path: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, parameter: P?) {
@@ -186,3 +192,5 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
 
 }
+
+

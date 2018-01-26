@@ -17,7 +17,7 @@ public typealias LogEntry = CommonLogEntry
 #endif
 
 // MARK: Bartleby's Core: A single Log entry
-open class CommonLogEntry:Model{
+open class CommonLogEntry : Model, Payload, Result{
 
     public typealias CollectedType = LogEntry
 

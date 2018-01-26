@@ -17,7 +17,7 @@ public typealias Metrics = CommonMetrics
 #endif
 
 // MARK: Bartleby's Core: a value object used to record metrics
-open class CommonMetrics:Model{
+open class CommonMetrics : Model, Payload, Result{
 
     public typealias CollectedType = Metrics
 

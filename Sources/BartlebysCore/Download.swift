@@ -8,5 +8,5 @@
 
 import Foundation
 
-public class Download : Model {    
+public class Download : Model, Payload, Result {    
 }

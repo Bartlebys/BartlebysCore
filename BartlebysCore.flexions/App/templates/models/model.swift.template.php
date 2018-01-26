@@ -9,7 +9,7 @@ public typealias <?php echo ucfirst($d->name)?> = Common<?php echo ucfirst($d->n
 
 // MARK: <?php echo $d->description?>
 
-open class Common<?php echo ucfirst($d->name)?>:<?php echo GenerativeHelperForSwift::getBaseClass($d); ?>{
+open class Common<?php echo ucfirst($d->name)?> : <?php echo GenerativeHelperForSwift::getBaseClass($d); ?>, Payload, Result{
 
     public typealias CollectedType = <?php echo ucfirst($d->name)?>
 

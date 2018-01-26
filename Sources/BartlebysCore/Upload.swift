@@ -8,5 +8,5 @@
 
 import Foundation
 
-public class Upload : Model {
+public class Upload : Model, Payload, Result  {
 }

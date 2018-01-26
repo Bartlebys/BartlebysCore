@@ -119,15 +119,15 @@ open class DataPoint: Object,DataPointProtocol{
 
     // MARK: -
 
-    /// You cannot turn back storage volatility to false
-    /// This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
+    /// Prepares the collections before loading the data in memory.
     /// That the place where you should call :
     ///
-    ///     self.registerCollection(concreteCollection)
-    ///     and
-    ///     declareSupportedCallOperations(...)
+    /// try self.registerCollection(collection:concreteCollection)
+    /// and
+    /// try self.registerCallOperationsFor(type: Metrics.self)
     ///
-    /// - Parameter volatile: If set to true the storage will be in memory
+    /// - Parameter volatile: If set to true the storage will be in memory You cannot turn back storage volatility to false
+    ///                       This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
     /// - Throws: errors on registration
     open func prepareCollections(volatile: Bool) throws {
         print("\(String(describing: type(of: self))) - \(getElapsedTime()) \n-------")
@@ -145,24 +145,28 @@ open class DataPoint: Object,DataPointProtocol{
         }
 
         self._configureCollection(self.keyedDataCollection)
-        
-        // Declare CallOperations for download and upload
-        try self.declareSupportedCallOperations(payload: FilePath.self, resultType: Download.self)
-        try self.declareSupportedCallOperations(payload: FilePath.self, resultType: Upload.self)
 
+        try self.registerCollection(collection: CallOperation<FilePath,Download>.registrableCollection)
+        try self.registerCollection(collection: CallOperation<FilePath,Upload>.registrableCollection)
+
+        try self.registerCallOperationsFor(type: Metrics.self)
+        try self.registerCallOperationsFor(type: KeyedData.self)
+        try self.registerCallOperationsFor(type: LogEntry.self)
     }
 
-    /// Declares the supported operation type
-    /// Registers a collection if necessary
+
+    /// Registers the CallOperations collections
+    /// that provision the call for Off line support & fault tolerence
     ///
-    /// - Parameters:
-    ///   - payload: the payLoad
-    ///   - resultType: the resultType
-    public final func declareSupportedCallOperations<P:Payload, R:Codable>(payload:P.Type, resultType:R.Type) throws {
-        let collection = CollectionOf<CallOperation<P, R>>()
-        try self.registerCollection(collection: collection)
+    /// - Parameter type: the call Payload and resultType
+    /// - Throws: erros on collection registration.
+    open func registerCallOperationsFor<T:Payload & Result>(type:T.Type) throws {
+        //self._callOperationsTypes.append(type)
+        let upStreamOperations = CallOperation<T,VoidResult>.registrableCollection
+        let downStreamOperations = CallOperation<VoidPayload,T>.registrableCollection
+        try self.registerCollection(collection: upStreamOperations)
+        try self.registerCollection(collection: downStreamOperations)
     }
-
 
 
     /// Registers the collection into the data point
