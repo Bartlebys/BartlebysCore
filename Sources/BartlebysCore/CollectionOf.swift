@@ -82,6 +82,14 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
          self.relativeFolderPath = relativePath
    }
 
+
+   /// Used to access to call operations
+   /// Returns the call operation if revelent
+   public var dynamicCallOperations:[CallOperationProtocol]? {
+      return self._items as? [CallOperationProtocol]
+   }
+
+
    // MARK: - Functional Programing layer support
 
    public var startIndex: Int { return self._items.startIndex }
