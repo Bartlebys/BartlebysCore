@@ -13,7 +13,8 @@ enum SessionError : Error {
     case fileNotFound
 }
 
-// Handles a full Session.T
+// Created in a DataPoint
+// Used to execute & re-execute Request & CallOperations
 public class Session {
     
     // The Concrete data point implements the SessionDelegate, and any logic required to perform.
@@ -73,7 +74,7 @@ public class Session {
     /// - Parameter operation: the call operation
     public func execute<P, R:Collectable>(_ operation: CallOperation<P, R>){
         operation.sessionIdentifier = self.identifier
-        if operation.scheduledOrderOfExecution != ORDER_OF_EXECUTION_UNDEFINED{
+        if operation.scheduledOrderOfExecution == ORDER_OF_EXECUTION_UNDEFINED{
             self.lastExecutionOrder += 1
             // Store the scheduledOrderOfExecution and the sessionIdentifier
             operation.scheduledOrderOfExecution = self.lastExecutionOrder
@@ -83,7 +84,6 @@ public class Session {
             } catch {
                 Logger.log("\(error)", category: .critical)
             }
-
         }
         if self.isRunningLive {
             do {
