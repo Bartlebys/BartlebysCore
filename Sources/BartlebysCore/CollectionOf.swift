@@ -31,10 +31,11 @@ protocol ChangesFlag {
 
 
 
-open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable, Selection, FileSavable, ChangesFlag where T :  Codable & Collectable {
+open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable, Selection, FileSavable, ChangesFlag where T :  Codable & Collectable {
 
 
    // MARK: -
+   public let uid: UID = Utilities.createUID()
 
    // @todo waiting for [SE-0143](https://github.com/apple/swift-evolution/blob/master/proposals/0143-conditional-conformances.md)
    fileprivate var _items: _ContainerType<T> = _ContainerType<T>()
@@ -185,9 +186,9 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       self.hasChanged = true
       // We first determine if there is an element by using the dataPoint registry
       // It is faster than determining the index.
-      if let item = self.dataPoint?.registredOpaqueInstanceByUID(element.UID) as? T {
+      if let item = self.dataPoint?.registredOpaqueInstanceByUID(element.uid) as? T {
          // We compute its possiuble 
-         if let idx = self._items.index(where: {$0.UID == element.UID }){
+         if let idx = self._items.index(where: {$0.uid == element.uid }){
             self[idx] = item
             self.reference(element)
          }else{
@@ -233,8 +234,8 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
          // Re-build the own relation.
          item.ownedBy.forEach({ (ownerUID) in
             if let o = dataPoint.registredModelByUID(ownerUID){
-               if !o.owns.contains(item.UID){
-                  o.owns.append(item.UID)
+               if !o.owns.contains(item.uid){
+                  o.owns.append(item.uid)
                }
             }else{
                // If the owner is not already available defer the homologous ownership registration.
@@ -392,7 +393,7 @@ open class CollectionOf<T> : Collection, Sequence,IndistinctCollection, Codable,
       }
       set{
          syncOnMain {
-            self._selectedUIDs = newValue?.map{$0.UID} ?? [UID]()
+            self._selectedUIDs = newValue?.map{$0.uid} ?? [UID]()
             Notify<T>.postSelectionChanged()
          }
       }

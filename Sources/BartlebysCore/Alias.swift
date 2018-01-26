@@ -12,10 +12,10 @@ import Foundation
 public struct Alias:Codable,Aliased{
 
     // We use
-    public let UID:UID
+    public let uid:UID
 
-    public init(UID:UID) {
-        self.UID = UID
+    public init(uid:UID) {
+        self.uid = uid
     }
 
     // MARK: - Codable
@@ -24,12 +24,12 @@ public struct Alias:Codable,Aliased{
 
     public init(from decoder: Decoder) throws{
         let values = try decoder.container(keyedBy: CodableObject.CodableModelCodingKeys.self)
-        self.UID = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
+        self.uid = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy:  CodableObject.CodableModelCodingKeys.self)
-        try container.encode(self.UID,forKey:MODELS_PRIMARY_KEY)
+        try container.encode(self.uid,forKey:MODELS_PRIMARY_KEY)
     }
 
 }

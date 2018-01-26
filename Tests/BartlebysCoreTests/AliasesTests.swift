@@ -301,7 +301,7 @@ class AliasesTests: BaseDataPointTestCase{
         do {
             let data = try JSON.encoder.encode(alias)
             let decodedObject = try JSON.decoder.decode(AliasOf<TestObject>.self, from: data)
-            XCTAssert(decodedObject.UID == object.UID, "UIDs should match")
+            XCTAssert(decodedObject.uid == object.uid, "UIDs should match")
         } catch {
             XCTFail("error = \(error)")
         }
@@ -319,7 +319,7 @@ class AliasesTests: BaseDataPointTestCase{
             print("data = \(String(describing: str))")
             let decodedAliases = try JSON.decoder.decode([AliasOf<TestObject>].self, from: data)
             if let first = decodedAliases.first {
-                XCTAssert(first.UID == object.UID, "UIDs should match")
+                XCTAssert(first.uid == object.uid, "UIDs should match")
             }
             
         } catch {

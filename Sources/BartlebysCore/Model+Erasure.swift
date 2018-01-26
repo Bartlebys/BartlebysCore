@@ -57,7 +57,7 @@ extension Model{
             try self.indistinctCollection?.removeItem(self)
         }
 
-        var erasableUIDS:[String]=[self.UID]
+        var erasableUIDS:[String]=[self.uid]
 
         // Erase recursively
         func __stageForErasure(_ objectUID:String,eraserUID:String="NO_UID")throws->(){
@@ -69,7 +69,7 @@ extension Model{
         }
 
         try self.owns.forEach({ (objectUID) in
-            try __stageForErasure(objectUID,eraserUID: self.UID)
+            try __stageForErasure(objectUID,eraserUID: self.uid)
         })
 
 

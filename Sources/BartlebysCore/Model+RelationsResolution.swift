@@ -71,7 +71,7 @@ extension Model:RelationsResolution{
             if let candidate = try? dataPoint.registredObjectByUID(object) as Model{
                 if let casted = candidate as? T{
                     if  included(casted) == true {
-                        related[casted.UID]=casted
+                        related[casted.uid]=casted
                     }
                 }
             }

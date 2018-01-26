@@ -11,10 +11,10 @@ import Foundation
 /// The generic alias class
 open class AliasOf<T:Aliasable>:Codable,Aliased{
 
-    public let UID:UID
+    public let uid:UID
     
-    public required init(UID:UID) {
-        self.UID = UID
+    public required init(uid:UID) {
+        self.uid = uid
     }
 
     // MARK: - Codable
@@ -23,12 +23,12 @@ open class AliasOf<T:Aliasable>:Codable,Aliased{
 
     public required init(from decoder: Decoder) throws{
         let values = try decoder.container(keyedBy: CodableObject.CodableModelCodingKeys.self)
-        self.UID = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
+        self.uid = try values.decode(String.self,forKey:MODELS_PRIMARY_KEY)
     }
 
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy:  CodableObject.CodableModelCodingKeys.self)
-        try container.encode(self.UID,forKey:MODELS_PRIMARY_KEY)
+        try container.encode(self.uid,forKey:MODELS_PRIMARY_KEY)
     }
 
 }

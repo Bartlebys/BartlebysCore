@@ -18,7 +18,7 @@ extension DataPoint:AliasesResolution{
     public func instance<T : Codable & Collectable >(from alias:Aliased) throws -> T{
         // We want to be able to resolve any object not only Models and ManagedModels
         // So we use the opaque layer.
-        let instance =  self.registredOpaqueInstanceByUID(alias.UID)
+        let instance =  self.registredOpaqueInstanceByUID(alias.uid)
         guard  instance != nil else {
             throw AliasResolverError.notFound
         }
@@ -38,7 +38,7 @@ extension DataPoint:AliasesResolution{
     /// - Returns: the references
     /// - Throws: AliasResolverError
     public func instances<T : Codable  & Collectable  >(from aliases:[Aliased]) throws -> [T] {
-        let UIDs = aliases.map { $0.UID }
+        let UIDs = aliases.map { $0.uid }
         let instances:[T] = try self.registredObjectsByUIDs(UIDs)
         return instances
     }
@@ -51,7 +51,7 @@ extension DataPoint:AliasesResolution{
     /// - Returns: the reference
     /// - Throws: AliasResolverError
     public func optionalInstance<T : Codable  & Collectable >(from alias:Aliased) -> T?{
-        return  self.registredOpaqueInstanceByUID(alias.UID) as? T
+        return  self.registredOpaqueInstanceByUID(alias.uid) as? T
     }
 
     /// Resolves the optional instance alias
@@ -73,7 +73,7 @@ extension DataPoint:AliasesResolution{
     /// - Returns: the references
     public func optionalInstances<T : Codable >(from aliases:[Aliased]) -> [T]{
 
-        let UIDs = aliases.map { $0.UID }
+        let UIDs = aliases.map { $0.uid }
         let instances = self.registredOpaqueInstancesByUIDs(UIDs)
         guard let castedInstances = instances as? [T] else{
             return [T]()

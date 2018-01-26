@@ -60,18 +60,18 @@ extension Model:Relational{
     public func addRelation(_ relationship:Relationship,to object:Relational){
         switch relationship {
         case Relationship.free:
-            if !self.freeRelations.contains(object.UID){
-                self.freeRelations.append(object.UID)
+            if !self.freeRelations.contains(object.uid){
+                self.freeRelations.append(object.uid)
             }
             break
         case Relationship.owns:
-            if !self.owns.contains(object.UID){
-                self.owns.append(object.UID)
+            if !self.owns.contains(object.uid){
+                self.owns.append(object.uid)
             }
             break
         case Relationship.ownedBy:
-            if !self.ownedBy.contains(object.UID){
-                self.ownedBy.append(object.UID)
+            if !self.ownedBy.contains(object.uid){
+                self.ownedBy.append(object.uid)
             }
             break
         }
@@ -101,18 +101,18 @@ extension Model:Relational{
     public func removeRelation(_ relationship:Relationship,to object:Relational){
         switch relationship {
         case Relationship.free:
-            if let idx=self.freeRelations.index(of:object.UID){
+            if let idx=self.freeRelations.index(of:object.uid){
                 self.freeRelations.remove(at: idx)
             }
             break
         case Relationship.owns:
-            if let idx=self.owns.index(of:object.UID){
+            if let idx=self.owns.index(of:object.uid){
                 self.owns.remove(at: idx)
                 object.removeRelation(Relationship.ownedBy, to: self)
             }
             break
         case Relationship.ownedBy:
-            if let idx=self.ownedBy.index(of:object.UID){
+            if let idx=self.ownedBy.index(of:object.uid){
                 self.ownedBy.remove(at: idx)
             }
             break

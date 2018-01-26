@@ -17,7 +17,7 @@ extension Model:Aliasable{
     /// - Returns: the Aliased entity
 
     public func alias()->Alias{
-        return Alias(UID:self.UID)
+        return Alias(uid:self.uid)
     }
 
 
@@ -25,7 +25,7 @@ extension Model:Aliasable{
     ///
     /// - Returns:  the Aliased entity
     public func aliasOf<T>()->AliasOf<T>{
-        return AliasOf(UID:self.UID)
+        return AliasOf(uid:self.uid)
     }
     
 }

@@ -39,7 +39,7 @@ public extension Notification.Name {
 
 public protocol CallOperationProtocol {
 
-    var UID:String { get }
+    var uid:String { get }
 
     // The unique id of the Session
     var sessionIdentifier: String { get }

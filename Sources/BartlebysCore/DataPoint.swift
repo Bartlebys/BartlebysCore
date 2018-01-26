@@ -198,6 +198,12 @@ open class DataPoint: Object,DataPointProtocol{
         self._collections.append(collection)
         self._collectionsPerFileName[collection.fileName] = collection
         self._collectionsPerCollectedTypeName[T.typeName] = collection
+
+        // We don't want to mix Data & File Call Operation
+        guard  collection.uid == self.downloads.uid || collection.uid == self.uploads.uid else {
+            return
+        }
+
         // it is a call Operation collection
         if let _ = collection.dynamicCallOperations{
             // store a reference in the _callOperationsCollections
@@ -356,20 +362,48 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the targeted Call Operation
     public final func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>)throws{
         // Remove the call operation from the pending calls
-        if let index = self._sortedPendingCalls.index(where: { $0.UID == operation.UID} ){
+        // Uploads and Download are exclude
+        if let index = self._sortedPendingCalls.index(where: { $0.uid == operation.uid} ){
             self._sortedPendingCalls.remove(at: index)
         }
-        // Remove the call operation from its persistency layer.
-        do{
-            let (collection, index) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: false)
-            guard index >= 0 else{
-                return
-            }
-            collection.remove(at: index)
-        }catch{
-            Logger.log(error, category: .critical)
+
+        let (collection, index) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: false)
+        guard index >= 0 else{
+            return
         }
+        collection.remove(at: index)
     }
+
+    /// Implements the faulting logic
+    ///
+    /// - Parameters:
+    ///   - operation: the faulting call operation
+    ///   - error: the error
+    public final func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?){
+        // @todo @bpds this is a raw approach that
+        /// What to do ?
+        /// Rexecution + Quarantine + Auto purge on pressure?
+        //if operation.lastAttemptDate ...
+    }
+
+    /// Executes the next call Operation
+    public final func executeNextPendingDataCallOperation(){
+        // On succes we try to run the next pending Call
+        self._sortedPendingCalls.first?.execute()
+    }
+
+
+    // Execute the next Upload
+    public final func executeNextPendingUploadCallOperation(){
+        // @todo
+    }
+
+    // Execute the next Download
+    public final func executeNextPendingDownloadCallOperation(){
+        // @todo
+    }
+
+
 
     /// Finds the index of a Call Operation
     ///

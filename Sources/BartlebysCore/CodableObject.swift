@@ -15,9 +15,9 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
 
     // MARK: Collectable.Identifiable
 
-    public var UID:UID {
+    public var uid:UID {
         set{
-            self.id = UID
+            self.id = uid
         }
         get{
             return self.id

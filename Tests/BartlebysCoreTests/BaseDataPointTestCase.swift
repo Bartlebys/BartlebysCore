@@ -27,7 +27,7 @@ public class TestObject:Model{
 
     open var oneAlias:Alias?
 
-    open var anotherAlias:Alias = Alias(UID: Default.NO_UID)
+    open var anotherAlias:Alias = Alias(uid: Default.NO_UID)
 
     open var aliasesList:[Alias] = [Alias]()
 

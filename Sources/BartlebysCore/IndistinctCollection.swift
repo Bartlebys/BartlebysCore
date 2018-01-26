@@ -10,7 +10,7 @@ import Foundation
 
 // A Collection with erased Collected types
 // Can be Used to perform operations that requires type erasure
-public protocol IndistinctCollection:UniversalType{
+public protocol IndistinctCollection:UniversalType,Identifiable{
 
     /// References the element into the dataPoint registry
     ///

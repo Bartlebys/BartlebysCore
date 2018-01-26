@@ -80,5 +80,22 @@ public protocol SessionDelegate {
     /// - Throws: throws error is the call operation or its collection is not found
     func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>) throws
 
-    
+    /// Implements the faulting logic
+    ///
+    /// - Parameters:
+    ///   - operation: the faulting call operation
+    ///   - error: the error
+    func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?)
+
+    /// Pending Operations
+
+    /// Executes the next call Operation
+    func executeNextPendingDataCallOperation()
+
+    // Execute the next Upload
+    func executeNextPendingUploadCallOperation()
+
+    // Execute the next Download
+    func executeNextPendingDownloadCallOperation()
+
 }

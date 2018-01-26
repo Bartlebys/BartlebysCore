@@ -108,9 +108,12 @@ public class Session {
                 
                 let operation = operation
                 operation.hasBeenExecuted()
-                
+
+                // Relay the failure to the Data Point
+                self.delegate.callOperationExecutionDidFail(operation,error:response.error)
+
+                // Send a notification
                 let notificationName = Notification.Name.CallOperation.didFail()
-                
                 if let error = response.error {
                     // Can be a FileOperationError with associated FilePath
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.errorKey : error])
@@ -139,6 +142,12 @@ public class Session {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.filePathKey : filePath])
                     do{
                         try  self.delegate.deleteCallOperation(operation)
+                        if R.self is Download.Type{
+                            self.delegate.executeNextPendingDownloadCallOperation()
+                        }else if R.self is Upload.Type{
+                            self.delegate.executeNextPendingUploadCallOperation()
+                        }
+
                     }catch{
                         Logger.log("\(error)", category: .critical)
                     }
@@ -165,6 +174,7 @@ public class Session {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
                     do{
                         try self.delegate.deleteCallOperation(operation)
+                        self.delegate.executeNextPendingDataCallOperation()
                     }catch{
                         Logger.log("\(error)", category: .critical)
                     }

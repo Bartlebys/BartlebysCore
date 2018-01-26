@@ -250,8 +250,8 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                             XCTAssert(selectedItems.count == 2,"selectedItems.count == \(selectedItems.count) should be equal to 2" )
                             XCTAssert(selectedItems.filter{ $0.operationName == "op3"}.count == 1, "Should contain a op3")
                             XCTAssert(selectedItems.filter{ $0.operationName == "op1"}.count == 1, "Should contain a op1")
-                            XCTAssert(selectedItems.filter{ $0.UID == self.metrics3UID }.count == 1, "Should contain metrics3")
-                            XCTAssert(selectedItems.filter{ $0.UID == self.metrics1UID }.count == 1, "Should contain metrics1")
+                            XCTAssert(selectedItems.filter{ $0.uid == self.metrics3UID }.count == 1, "Should contain metrics3")
+                            XCTAssert(selectedItems.filter{ $0.uid == self.metrics1UID }.count == 1, "Should contain metrics1")
                             self.expectation.fulfill()
                         }
                     }
@@ -280,8 +280,8 @@ class ObjectCollectionTests: BaseDataPointTestCase{
         myDataPoint.delegate = Test008Delegate(expectation: expectation,
                                              collection: collection,
                                              myDataPoint: myDataPoint,
-                                             metrics1UID: metrics1.UID,
-                                             metrics3UID: metrics3.UID)
+                                             metrics1UID: metrics1.uid,
+                                             metrics3UID: metrics3.uid)
 
 
         wait(for: [expectation], timeout: 1.0)

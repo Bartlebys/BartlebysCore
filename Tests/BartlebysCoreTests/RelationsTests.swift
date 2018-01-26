@@ -49,12 +49,12 @@ class RelationsTests: BaseDataPointTestCase{
             let datapoint = self.getNewDataPoint()
             
             let metrics1 = Metrics()
-            let mUID = metrics1.UID
+            let mUID = metrics1.uid
             metrics1.operationName = "op1"
             datapoint.metricsCollection.append(metrics1)
             
             let o = TestObject()
-            let oUID = o.UID
+            let oUID = o.uid
             datapoint.testObjectsCollection.append(o)
             
             metrics1.declaresOwnership(of: o)
@@ -105,7 +105,7 @@ class RelationsTests: BaseDataPointTestCase{
             datapoint.testObjectsCollection.append(o)
             metrics1.declaresOwnership(of: o)
             
-            let oUID = o.UID
+            let oUID = o.uid
             
             let oRef:Model = try datapoint.registredObjectByUID(oUID)
             XCTAssert(oRef == o, "o should be registred")
