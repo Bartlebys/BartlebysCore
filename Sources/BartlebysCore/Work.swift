@@ -13,15 +13,22 @@ public struct Work {
     public fileprivate(set) var associatedUID:UID
 
     public let dispatchWorkItem: DispatchWorkItem
-    public let interval: TimeInterval
+    public let delay: TimeInterval
 
     var dispatchTime: DispatchTime {
-        return DispatchTime(uptimeNanoseconds: UInt64(interval * Double(NSEC_PER_SEC)))
+        return DispatchTime(uptimeNanoseconds: UInt64(delay * Double(NSEC_PER_SEC)))
     }
 
-    public init(dispatchWorkItem: DispatchWorkItem, interval: TimeInterval, associatedUID:UID = Default.NO_UID  ) {
+
+    /// Work runs automatically on instanciation
+    ///
+    /// - Parameters:
+    ///   - dispatchWorkItem: the CGD DispatchWorkItem
+    ///   - delay: the delay before execution
+    ///   - associatedUID: the associated UID
+    public init(dispatchWorkItem: DispatchWorkItem, delay: TimeInterval, associatedUID:UID = Default.NO_UID  ) {
         self.dispatchWorkItem = dispatchWorkItem
-        self.interval = interval
+        self.delay = delay
         self.associatedUID = associatedUID
         DispatchQueue.main.asyncAfter(deadline: self.dispatchTime, execute: self.dispatchWorkItem)
     }
