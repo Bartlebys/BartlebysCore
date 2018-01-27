@@ -57,11 +57,11 @@
 		E555E68E201C8296007754C0 /* CallSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E68B201C8296007754C0 /* CallSequence.swift */; };
 		E555E68F201C8296007754C0 /* CallSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E68B201C8296007754C0 /* CallSequence.swift */; };
 		E555E690201C8296007754C0 /* CallSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E68B201C8296007754C0 /* CallSequence.swift */; };
-		E555E692201C99F6007754C0 /* Work.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* Work.swift */; };
-		E555E693201C99F6007754C0 /* Work.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* Work.swift */; };
-		E555E694201C99F6007754C0 /* Work.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* Work.swift */; };
-		E555E695201C99F6007754C0 /* Work.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* Work.swift */; };
-		E555E696201C99F6007754C0 /* Work.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* Work.swift */; };
+		E555E692201C99F6007754C0 /* AsyncWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* AsyncWork.swift */; };
+		E555E693201C99F6007754C0 /* AsyncWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* AsyncWork.swift */; };
+		E555E694201C99F6007754C0 /* AsyncWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* AsyncWork.swift */; };
+		E555E695201C99F6007754C0 /* AsyncWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* AsyncWork.swift */; };
+		E555E696201C99F6007754C0 /* AsyncWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E691201C99F6007754C0 /* AsyncWork.swift */; };
 		E55E8A402014DD8F00910D31 /* OSCompatibilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */; };
 		E55E8A412014DD8F00910D31 /* OSCompatibilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */; };
 		E55E8A422014DD8F00910D31 /* OSCompatibilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */; };
@@ -501,7 +501,7 @@
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+AliasesResolutions.swift"; sourceTree = "<group>"; };
 		E555E68B201C8296007754C0 /* CallSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallSequence.swift; sourceTree = "<group>"; };
-		E555E691201C99F6007754C0 /* Work.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Work.swift; sourceTree = "<group>"; };
+		E555E691201C99F6007754C0 /* AsyncWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncWork.swift; sourceTree = "<group>"; };
 		E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCompatibilty.swift; sourceTree = "<group>"; };
 		E56AAA17201097080082D4D6 /* CodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableObject.swift; sourceTree = "<group>"; };
 		E56AAA1D2010A0710082D4D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
@@ -665,6 +665,7 @@
 				4D55FC811FDAF672001D91CE /* Protocols */,
 				E52527992000E4D600D9A148 /* Alias.swift */,
 				E5DBB1D5200224C60079F4C6 /* AliasOf.swift */,
+				E555E691201C99F6007754C0 /* AsyncWork.swift */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
 				E555E68B201C8296007754C0 /* CallSequence.swift */,
 				E56AAA17201097080082D4D6 /* CodableObject.swift */,
@@ -709,7 +710,6 @@
 				4D55FC411FDAF5CF001D91CE /* Utilities.swift */,
 				4D55FC511FDAF5CF001D91CE /* VoidPayload.swift */,
 				E5AE11F2201A104700D7E179 /* VoidResult.swift */,
-				E555E691201C99F6007754C0 /* Work.swift */,
 			);
 			path = BartlebysCore;
 			sourceTree = "<group>";
@@ -1272,7 +1272,7 @@
 				E5D6CDF22001366900A3D975 /* KeyedData.swift in Sources */,
 				E5EC9FB91FF655FE008BF543 /* Object.swift in Sources */,
 				E5EC9FA91FF655FE008BF543 /* Globals.swift in Sources */,
-				E555E692201C99F6007754C0 /* Work.swift in Sources */,
+				E555E692201C99F6007754C0 /* AsyncWork.swift in Sources */,
 				E5EC9FC41FF655FE008BF543 /* Utilities.swift in Sources */,
 				E55E8A402014DD8F00910D31 /* OSCompatibilty.swift in Sources */,
 				E5EC9F951FF655F9008BF543 /* Identifiable.swift in Sources */,
@@ -1367,7 +1367,7 @@
 				E5ECA0111FF656AF008BF543 /* Schemes.swift in Sources */,
 				E5ECA00C1FF656AF008BF543 /* Object.swift in Sources */,
 				E5DBB1D820022A090079F4C6 /* AliasesResolution.swift in Sources */,
-				E555E694201C99F6007754C0 /* Work.swift in Sources */,
+				E555E694201C99F6007754C0 /* AsyncWork.swift in Sources */,
 				E5EC9FFC1FF656AF008BF543 /* Globals.swift in Sources */,
 				E55E8A422014DD8F00910D31 /* OSCompatibilty.swift in Sources */,
 				E5ECA0171FF656AF008BF543 /* Utilities.swift in Sources */,
@@ -1462,7 +1462,7 @@
 				E5ECA06A1FF657A6008BF543 /* Schemes.swift in Sources */,
 				E5ECA0651FF657A6008BF543 /* Object.swift in Sources */,
 				E5DBB1DA20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
-				E555E695201C99F6007754C0 /* Work.swift in Sources */,
+				E555E695201C99F6007754C0 /* AsyncWork.swift in Sources */,
 				E5ECA0551FF657A6008BF543 /* Globals.swift in Sources */,
 				E55E8A432014DD8F00910D31 /* OSCompatibilty.swift in Sources */,
 				E5ECA0701FF657A6008BF543 /* Utilities.swift in Sources */,
@@ -1557,7 +1557,7 @@
 				E5ECA0A41FF65851008BF543 /* Logger.swift in Sources */,
 				E5ECA0B31FF65851008BF543 /* Schemes.swift in Sources */,
 				E5ECA0AE1FF65851008BF543 /* Object.swift in Sources */,
-				E555E696201C99F6007754C0 /* Work.swift in Sources */,
+				E555E696201C99F6007754C0 /* AsyncWork.swift in Sources */,
 				E5ECA09E1FF65851008BF543 /* Globals.swift in Sources */,
 				E55E8A442014DD8F00910D31 /* OSCompatibilty.swift in Sources */,
 				E5ECA0B91FF65851008BF543 /* Utilities.swift in Sources */,
@@ -1639,7 +1639,7 @@
 				E5F3CDCF200D1C2000AB9A44 /* KeyedData.swift in Sources */,
 				E5F3CDD0200D1C2000AB9A44 /* Object.swift in Sources */,
 				E5F3CDD1200D1C2000AB9A44 /* Globals.swift in Sources */,
-				E555E693201C99F6007754C0 /* Work.swift in Sources */,
+				E555E693201C99F6007754C0 /* AsyncWork.swift in Sources */,
 				E5F3CDD2200D1C2000AB9A44 /* Utilities.swift in Sources */,
 				E55E8A412014DD8F00910D31 /* OSCompatibilty.swift in Sources */,
 				E5F3CDD3200D1C2000AB9A44 /* Identifiable.swift in Sources */,

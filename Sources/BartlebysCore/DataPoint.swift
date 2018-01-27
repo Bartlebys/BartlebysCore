@@ -408,7 +408,7 @@ open class DataPoint: Object,DataPointProtocol{
             }
             let delay:TimeInterval = operation.reExecutionDelay
             // @todo We could store the Item for possible cancelation
-            let _ = Work(dispatchWorkItem: workItem, interval: delay, associatedUID:operation.uid)
+            let _ = AsyncWork(dispatchWorkItem: workItem, delay: delay, associatedUID:operation.uid)
         }
     }
 

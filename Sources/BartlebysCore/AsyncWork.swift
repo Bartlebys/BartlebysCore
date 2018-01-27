@@ -8,7 +8,8 @@
 
 import Foundation
 
-public struct Work {
+/// Async Cancellable Work
+public struct AsyncWork {
 
     public fileprivate(set) var associatedUID:UID
 
