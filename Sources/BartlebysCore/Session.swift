@@ -14,7 +14,8 @@ enum SessionError : Error {
 }
 
 // Created in a DataPoint
-// Used to execute & re-execute Request & CallOperations
+// Used to define the context of networking operations
+// And execute & re-execute Request & CallOperations
 public class Session {
     
     // The Concrete data point implements the SessionDelegate, and any logic required to perform.
@@ -130,7 +131,6 @@ public class Session {
             guard let filePath = operation.payload as? FilePath else {
                 throw DataPointError.payloadShouldBeOfFilePathType
             }
-            
             let successClosure: ((HTTPResponse) -> ()) = { response in
                 syncOnMain {
                     
@@ -142,12 +142,7 @@ public class Session {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.filePathKey : filePath])
                     do{
                         try  self.delegate.deleteCallOperation(operation)
-                        if R.self is Download.Type{
-                            self.delegate.executeNextPendingDownloadCallOperation()
-                        }else if R.self is Upload.Type{
-                            self.delegate.executeNextPendingUploadCallOperation()
-                        }
-
+                        self.delegate.executeNext(from: operation.sequenceName)
                     }catch{
                         Logger.log("\(error)", category: .critical)
                     }
@@ -174,7 +169,7 @@ public class Session {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
                     do{
                         try self.delegate.deleteCallOperation(operation)
-                        self.delegate.executeNextPendingDataCallOperation()
+                        self.delegate.executeNext(from: operation.sequenceName)
                     }catch{
                         Logger.log("\(error)", category: .critical)
                     }

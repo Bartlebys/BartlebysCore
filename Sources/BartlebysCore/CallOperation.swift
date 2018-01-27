@@ -41,6 +41,11 @@ public protocol CallOperationProtocol {
 
     var uid:String { get }
 
+    /// Defines the name of the sequence.
+    /// The call operations are Segmented per sequence
+    /// If a sequence is blocked it blocks its members only)
+    var sequenceName:CallSequence.Name { get }
+
     // The unique id of the Session
     var sessionIdentifier: String { get }
 
@@ -65,13 +70,27 @@ public protocol CallOperationProtocol {
     /// The last execution date
     var lastAttemptDate:Date { get }
 
+    /// the delay between two attempts may augment between attempts.
+    var reExecutionDelay:TimeInterval { get set }
+
+    /// The max number of execution attempt
+    var maxNumberOfAttempts:UInt { get }
+
+    /// If the operation is Blocking it is not skippable.
+    /// The CallOperation of the same group will be blocked
+    var isBlocking:Bool { get }
+
+    /// Used to determine if the operation is blocked
+    var isBlocked:Bool { get }
+
+    /// Used to determine if the operation can be destroyed when blocked
+    var isDestroyable:Bool { get }
 
     /// Executes the call operation
     func execute()
 
     /// Called on any execution
     func hasBeenExecuted()
-
 
 }
 
@@ -83,6 +102,12 @@ public protocol CallOperationProtocol {
 /// Check Session.swift for execution details.
 public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result & Collectable{
 
+
+    // The sequence name is used to segment the call operations.
+    // Each sequence is sequential when a Call operation is finished it runs the next.
+    // But the sequences "runs in parallel"
+    // Is set to .data by default.
+    public var sequenceName:CallSequence.Name = CallSequence.Name.data
 
     // The unique id of the Session
     public var sessionIdentifier: String = Default.NO_UID
@@ -109,15 +134,32 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
     public var lastAttemptDate:Date = Date()
 
+    /// the delay between two attempts may augment between attempts.
+    public var reExecutionDelay:TimeInterval = 0
+
+    /// The Max number of attempts
+    public var maxNumberOfAttempts:UInt = UInt.max
+
+    /// If the operation is Blocking it is not skippable.
+    /// The CallOperation of the same group will be blocked
+    public var isBlocking:Bool = true
+
+    /// Used to determine if the operation is blocked
+    public var isBlocked:Bool {
+        return self.isBlocking && self.executionCounter >= maxNumberOfAttempts
+    }
+
+    /// Used to determine if the operation can be destroyed when blocked
+    public var isDestroyable:Bool = false
 
     /// This collection is used to register the collection in the datapoint
     public static var registrableCollection:CollectionOf<CallOperation<P, R>> {
         return CollectionOf<CallOperation<P, R>>()
     }
 
-    public required init(operationName:String, path: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, parameter: P?) {
+    public required init(operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, parameter: P?) {
         self.operationName = operationName
-        self.path = path
+        self.path = operationPath
         self.queryString = queryString
         self.method = method
         self.resultIsACollection = resultIsACollection
@@ -140,7 +182,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     // MARK: - Codable
 
     public enum CallOperationCodingKeys: String, CodingKey {
-        case id
+        case sequenceName
         case operationName
         case path
         case queryString
@@ -150,12 +192,16 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         case parameter
         case executionCounter
         case lastAttemptDate
+        case reExecutionDelay
+        case maxNumberOfAttempts
+        case isBlocking
+        case isDestroyable
     }
 
     public required init(from decoder: Decoder) throws{
         try super.init(from: decoder)
         let values = try decoder.container(keyedBy: CallOperationCodingKeys.self)
-        self.id = try values.decode(String.self,forKey:.id)
+        self.sequenceName = CallSequence.Name(rawValue: try values.decode(String.self,forKey:.sequenceName)) ?? .data
         self.operationName = try values.decode(String.self,forKey:.operationName)
         self.path = try values.decode(String.self,forKey:.path)
         self.queryString = try values.decode(String.self,forKey:.queryString)
@@ -164,6 +210,10 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         self.payload = try values.decode(P.self,forKey:.parameter)
         self.executionCounter = try values.decode(Int.self,forKey:.executionCounter)
         self.lastAttemptDate = try values.decode(Date.self,forKey:.lastAttemptDate)
+        self.reExecutionDelay = try values.decode(TimeInterval.self, forKey: .reExecutionDelay)
+        self.maxNumberOfAttempts = try values.decode(UInt.self, forKey: .maxNumberOfAttempts)
+        self.isBlocking = try values.decode(Bool.self, forKey: .isBlocking)
+        self.isDestroyable = try values.decode(Bool.self, forKey: .isDestroyable)
     }
 
     required public init() {
@@ -172,7 +222,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
     override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CallOperationCodingKeys.self)
-        try container.encode(self.id,forKey:.id)
+        try container.encode(self.sequenceName.rawValue, forKey: .sequenceName)
         try container.encode(self.operationName,forKey:.operationName)
         try container.encode(self.path,forKey:.path)
         try container.encode(self.queryString,forKey:.queryString)
@@ -181,6 +231,10 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         try container.encode(self.payload,forKey:.parameter)
         try container.encode(self.executionCounter,forKey:.executionCounter)
         try container.encode(self.lastAttemptDate,forKey:.lastAttemptDate)
+        try container.encode(self.reExecutionDelay,forKey:.reExecutionDelay)
+        try container.encode(self.maxNumberOfAttempts,forKey:.maxNumberOfAttempts)
+        try container.encode(self.isBlocking,forKey:.isBlocking)
+        try container.encode(self.isDestroyable,forKey:.isDestroyable)
     }
 
     // MARK: UniversalType (Collectable)

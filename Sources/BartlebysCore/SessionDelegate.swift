@@ -87,15 +87,8 @@ public protocol SessionDelegate {
     ///   - error: the error
     func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?)
 
-    /// Pending Operations
+    /// Execute the next Pending Operations for a given the CallSequence Name
+    func executeNext(from callSequenceName:CallSequence.Name)
 
-    /// Executes the next call Operation
-    func executeNextPendingDataCallOperation()
-
-    // Execute the next Upload
-    func executeNextPendingUploadCallOperation()
-
-    // Execute the next Download
-    func executeNextPendingDownloadCallOperation()
 
 }

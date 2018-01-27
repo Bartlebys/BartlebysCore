@@ -95,7 +95,7 @@ open class DataPoint: Object,DataPointProtocol{
     fileprivate var _deferredOwnerships=[UID:[UID]]()
 
     /// The pending Call operations
-    fileprivate var _sortedPendingCalls:[CallOperationProtocol] = [CallOperationProtocol]()
+    fileprivate var _sortedPendingCalls:[CallSequence.Name:[CallOperationProtocol]] = [CallSequence.Name:[CallOperationProtocol]]()
 
     //A dictionary with collection.d_collectionName as Key
     fileprivate var _callOperationsCollections:[String:IndistinctCollection] = [String:IndistinctCollection]()
@@ -307,7 +307,11 @@ open class DataPoint: Object,DataPointProtocol{
         let (collection, _) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: true)
         collection.upsert(operation)
         // Append to pending Calls
-        self._sortedPendingCalls.append(operation)
+        if !self._sortedPendingCalls.keys.contains(operation.sequenceName){
+           self._sortedPendingCalls[operation.sequenceName] = [CallOperationProtocol]()
+        }
+        self._sortedPendingCalls[operation.sequenceName]?.append(operation)
+
     }
 
 
@@ -363,8 +367,8 @@ open class DataPoint: Object,DataPointProtocol{
     public final func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>)throws{
         // Remove the call operation from the pending calls
         // Uploads and Download are exclude
-        if let index = self._sortedPendingCalls.index(where: { $0.uid == operation.uid} ){
-            self._sortedPendingCalls.remove(at: index)
+        if let index = self._sortedPendingCalls[operation.sequenceName]?.index(where: { $0.uid == operation.uid} ){
+            self._sortedPendingCalls[operation.sequenceName]?.remove(at: index)
         }
 
         let (collection, index) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: false)
@@ -380,32 +384,46 @@ open class DataPoint: Object,DataPointProtocol{
     ///   - operation: the faulting call operation
     ///   - error: the error
     public final func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?){
-        // @todo @bpds this is a raw approach that
-        /// What to do ?
-        /// Rexecution + Quarantine + Auto purge on pressure?
-        //if operation.lastAttemptDate ...
+        // Should we detroy the operation?
+        if operation.isBlocked && operation.isDestroyable{
+            do{
+                // The operation is blocked and destroyable.
+                // Let's delete it.
+                 Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
+                try self.deleteCallOperation(operation)
+                /// And execute the next in the Call Sequence
+                self.executeNext(from: operation.sequenceName)
+            }catch{
+                Logger.log(error, category: .critical)
+            }
+        }else{
+            // Re-execution logic
+
+            // @todo review this sensitive implementatio
+            //We double the reExecutionDelay (may be we should use another strategy)
+            operation.reExecutionDelay = operation.reExecutionDelay * 2
+
+            let workItem = DispatchWorkItem.init {
+                operation.execute()
+            }
+            let delay:TimeInterval = operation.reExecutionDelay
+            // @todo We could store the Item for possible cancelation
+            let _ = Work(dispatchWorkItem: workItem, interval: delay, associatedUID:operation.uid)
+        }
     }
 
-    /// Executes the next call Operation
-    public final func executeNextPendingDataCallOperation(){
-        // On succes we try to run the next pending Call
-        self._sortedPendingCalls.first?.execute()
+
+    /// Execute the next Pending Operations for a given the CallSequence Name
+    public final func executeNext(from callSequenceName:CallSequence.Name){
+        // IMPORTANT
+        // @todo use all the CallSequenec logic, Quotas, ...
+        self._sortedPendingCalls[callSequenceName]?.first?.execute()
+
     }
-
-
-    // Execute the next Upload
-    public final func executeNextPendingUploadCallOperation(){
-        // @todo
-    }
-
-    // Execute the next Download
-    public final func executeNextPendingDownloadCallOperation(){
-        // @todo
-    }
-
 
 
     /// Finds the index of a Call Operation
+
     ///
     /// - Parameter operation: the call operation to be found
     /// - Returns: the the collection and the index of the callOperation
@@ -511,12 +529,16 @@ open class DataPoint: Object,DataPointProtocol{
         for collection in self._collections{
             if let collection = collection as? IndistinctCollection{
                 if let callOperations = collection.dynamicCallOperations{
-                    self._sortedPendingCalls.append(contentsOf: callOperations)
+                    if let firstElement = callOperations.first{
+                        self._sortedPendingCalls[firstElement.sequenceName]?.append(contentsOf: callOperations)
+                    }
                 }
             }
         }
-        self._sortedPendingCalls.sort { (lCalOp, rCalOp) -> Bool in
-            return lCalOp.scheduledOrderOfExecution < rCalOp.scheduledOrderOfExecution
+        for sequenceNamed in self._sortedPendingCalls.keys{
+            self._sortedPendingCalls[sequenceNamed]?.sort { (lCalOp, rCalOp) -> Bool in
+                return lCalOp.scheduledOrderOfExecution < rCalOp.scheduledOrderOfExecution
+            }
         }
     }
 
