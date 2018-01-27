@@ -16,5 +16,8 @@ public protocol DataPointProtocol:SessionDelegate,DataPointLifeCycle{
 
     // The api base path: e.g /api/v1
     var apiBasePath: String { get }
+
+    // The current
+    var currentState:OperatingState { get }
     
 }

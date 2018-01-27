@@ -120,6 +120,34 @@ open class DataPoint: Object,DataPointProtocol{
         self.storage.addProgressObserver (observer: AutoRemovableLoadingDelegate(dataPoint: self))
     }
 
+    // MARK: - OperatingState
+
+    // The current Operating state
+    public fileprivate(set) var currentState:OperatingState = .online
+
+    /// Used to transition offline on online
+    ///
+    /// - Parameter state: the new operating state
+    public func transition(to newState:OperatingState){
+        guard newState != self.currentState else{
+            return
+        }
+        self.currentState = newState
+        self.session.applyState()
+        switch newState{
+        case .online:
+            // Resume
+            for sequ in self._sortedPendingCalls.keys{
+                self._sortedPendingCalls[sequ]?.first?.execute()
+            }
+        case .offline:
+            // Cancel futures calls.
+            for sequ in self._futureWorks.keys{
+                self._futureWorks[sequ]?.first?.cancel()
+            }
+        }
+    }
+
 
     // MARK: -
 
@@ -421,9 +449,10 @@ open class DataPoint: Object,DataPointProtocol{
                 // All the CallSequence is stuck
             }
         }else{
+
             // The Operation is not blocked
             // It means we can try to re-implement the running logic
-            if self.session.isRunningLive{
+            if self.currentState == .online{
                 // Re-execution logic
                 //We double the reExecutionDelay (may be we should use another strategy)
                 operation.reExecutionDelay = operation.reExecutionDelay * 2
@@ -438,6 +467,9 @@ open class DataPoint: Object,DataPointProtocol{
                     self._futureWorks[operation.sequenceName] = [AsyncWork]()
                 }
                 self._futureWorks[operation.sequenceName]?.append(work)
+            }else{
+                // We are not running live
+                // So there is no reason to create an AsyncWork
             }
         }
     }
@@ -462,14 +494,15 @@ open class DataPoint: Object,DataPointProtocol{
     public final func executeNext(from callSequenceName:CallSequence.Name){
         // 1) we don't want to execute tasks if the session is not running live
         // 2) We want to execute sequentially the items segmented per CallSequence
-        if self.session.isRunningLive && !_futureWorksArePlanifiedFor(callSequenceName){
+        if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
             self._sortedPendingCalls[callSequenceName]?.first?.execute()
         }
     }
 
-    /// Used to truncate  Operations
+    /// Used to determine if we should destroy some Operations
     /// Returns a quota of operation to preserve for each sequence.
-    /// If the value is over the quota the older matching cancelable operation would be deleted
+    /// If the value is over the quota the older operations are destroyed
+    /// By default Bartleby "would prefer not to" that's why the preservationQuota respond Int.max by defaults
     ///
     /// - Parameter for: the CallSequence name
     /// - Returns: the max number of call operations.
@@ -792,9 +825,3 @@ extension DataPoint{
         self.uploads.removeAll()
     }
 }
-
-
-
-
-
-

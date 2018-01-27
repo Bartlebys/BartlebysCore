@@ -30,6 +30,7 @@ public protocol SessionDelegate {
     /// The current Scheme .https is a must
     var scheme:Schemes { get }
 
+
     // MARK: - URL request
 
     ///  Returns the configured URLrequest
@@ -90,10 +91,10 @@ public protocol SessionDelegate {
     /// Execute the next Pending Operations for a given the CallSequence Name
     func executeNext(from callSequenceName:CallSequence.Name)
 
-
-    /// Used to truncate cancellable Operation
+    /// Used to determine if we should destroy some Operations
     /// Returns a quota of operation to preserve for each sequence.
-    /// If the value is over the quota the older matching cancelable operation would be deleted
+    /// If the value is over the quota the older operations are destroyed
+    /// By default Bartleby "would prefer not to" that's why the preservationQuota respond Int.max by defaults
     ///
     /// - Parameter for: the CallSequence name
     /// - Returns: the max number of call operations.

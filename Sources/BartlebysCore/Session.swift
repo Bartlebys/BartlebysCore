@@ -50,19 +50,33 @@ public class Session {
     public var apiBasePath: String { return self.delegate.apiBasePath }
     
     public let startTime = AbsoluteTimeGetCurrent()
-    
-    
+
+
     public init(delegate:DataPointProtocol,lastExecutionOrder:Int ) {
         self.delegate = delegate
         self.lastExecutionOrder = lastExecutionOrder
     }
-    
+
+
+    /// Applies the current delegate state
+    /// This is the only method to setup self.isRunningLive
+    /// It is called by the DataPoint on state transition
+    public func applyState(){
+        let newState = self.delegate.currentState
+        switch newState{
+        case .online:
+            self.isRunningLive = true
+        case .offline:
+             self.isRunningLive = false
+        }
+    }
+
     public var elapsedTime:Double {
         return AbsoluteTimeGetCurrent() - self.startTime
     }
     
     public func infos() -> String {
-        return "Version 0.0.0"
+        return "v1.1.0"
     }
 
     
@@ -169,7 +183,7 @@ public class Session {
                     NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
                     do{
                         try self.delegate.deleteCallOperation(operation)
-                        self.delegate.executeNext(from: operation.sequenceName)
+                         self.delegate.executeNext(from: operation.sequenceName)
                     }catch{
                         Logger.log("\(error)", category: .critical)
                     }
