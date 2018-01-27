@@ -84,7 +84,9 @@ public protocol CallOperationProtocol {
     var isBlocked:Bool { get }
 
     /// Used to determine if the operation can be destroyed when blocked
-    var isDestroyable:Bool { get }
+    /// Note that All operations become destroyable when we exceed the Preservation Quota
+    /// Check preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type) for implementation details
+    var isDestroyableWhenBlocked:Bool { get }
 
     /// Executes the call operation
     func execute()
@@ -135,7 +137,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     public var lastAttemptDate:Date = Date()
 
     /// the delay between two attempts may augment between attempts.
-    public var reExecutionDelay:TimeInterval = 0
+    public var reExecutionDelay:TimeInterval = 1
 
     /// The Max number of attempts
     public var maxNumberOfAttempts:UInt = UInt.max
@@ -150,7 +152,9 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     }
 
     /// Used to determine if the operation can be destroyed when blocked
-    public var isDestroyable:Bool = false
+    /// Note that All operations are destroyable when exceeding the Preservation Quota
+    /// Check preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type) for implementation details
+    public var isDestroyableWhenBlocked:Bool = false
 
     /// This collection is used to register the collection in the datapoint
     public static var registrableCollection:CollectionOf<CallOperation<P, R>> {
@@ -213,7 +217,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         self.reExecutionDelay = try values.decode(TimeInterval.self, forKey: .reExecutionDelay)
         self.maxNumberOfAttempts = try values.decode(UInt.self, forKey: .maxNumberOfAttempts)
         self.isBlocking = try values.decode(Bool.self, forKey: .isBlocking)
-        self.isDestroyable = try values.decode(Bool.self, forKey: .isDestroyable)
+        self.isDestroyableWhenBlocked = try values.decode(Bool.self, forKey: .isDestroyable)
     }
 
     required public init() {
@@ -234,7 +238,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         try container.encode(self.reExecutionDelay,forKey:.reExecutionDelay)
         try container.encode(self.maxNumberOfAttempts,forKey:.maxNumberOfAttempts)
         try container.encode(self.isBlocking,forKey:.isBlocking)
-        try container.encode(self.isDestroyable,forKey:.isDestroyable)
+        try container.encode(self.isDestroyableWhenBlocked,forKey:.isDestroyable)
     }
 
     // MARK: UniversalType (Collectable)

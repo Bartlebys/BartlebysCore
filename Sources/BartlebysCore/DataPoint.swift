@@ -97,6 +97,9 @@ open class DataPoint: Object,DataPointProtocol{
     /// The pending Call operations
     fileprivate var _sortedPendingCalls:[CallSequence.Name:[CallOperationProtocol]] = [CallSequence.Name:[CallOperationProtocol]]()
 
+    /// The planified future works
+    fileprivate var _futureWorks:[CallSequence.Name:[AsyncWork]] = [CallSequence.Name:[AsyncWork]]()
+
     //A dictionary with collection.d_collectionName as Key
     fileprivate var _callOperationsCollections:[String:IndistinctCollection] = [String:IndistinctCollection]()
 
@@ -298,24 +301,31 @@ open class DataPoint: Object,DataPointProtocol{
 
 
     /// Provisions the operation in the relevent collection
+    /// If the collection exceeds the preservationQuota destroys the first entries
     ///
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
     public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
-
         // Upsert the relevent call Operation collection
         let (collection, _) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: true)
         collection.upsert(operation)
         // Append to pending Calls
         if !self._sortedPendingCalls.keys.contains(operation.sequenceName){
-           self._sortedPendingCalls[operation.sequenceName] = [CallOperationProtocol]()
+            self._sortedPendingCalls[operation.sequenceName] = [CallOperationProtocol]()
         }
         self._sortedPendingCalls[operation.sequenceName]?.append(operation)
 
+        //
+        let maxOperations = self.preservationQuota(callOperationType:CallOperation<P, R>.self)
+        if maxOperations < collection.count{
+            // We should destroy some operations
+            let nbOfOperationToDestroy = collection.count - maxOperations
+            Logger.log("Destroying \(nbOfOperationToDestroy) operation(s) from \(operation.d_collectionName)", category: .standard)
+            for _ in 0..<nbOfOperationToDestroy{
+                collection.remove(at: 0)
+            }
+        }
     }
-
-
-
 
 
     /// Returns the relevent request for a given call Operation
@@ -365,8 +375,9 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameter operation: the targeted Call Operation
     public final func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>)throws{
-        // Remove the call operation from the pending calls
-        // Uploads and Download are exclude
+
+        self._cleanUpFutureWorks(operation)
+
         if let index = self._sortedPendingCalls[operation.sequenceName]?.index(where: { $0.uid == operation.uid} ){
             self._sortedPendingCalls[operation.sequenceName]?.remove(at: index)
         }
@@ -376,6 +387,7 @@ open class DataPoint: Object,DataPointProtocol{
             return
         }
         collection.remove(at: index)
+
     }
 
     /// Implements the faulting logic
@@ -384,47 +396,86 @@ open class DataPoint: Object,DataPointProtocol{
     ///   - operation: the faulting call operation
     ///   - error: the error
     public final func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?){
-        // Should we detroy the operation?
-        if operation.isBlocked && operation.isDestroyable{
-            do{
-                // The operation is blocked and destroyable.
-                // Let's delete it.
-                 Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
-                try self.deleteCallOperation(operation)
-                /// And execute the next in the Call Sequence
-                self.executeNext(from: operation.sequenceName)
-            }catch{
-                Logger.log(error, category: .critical)
+
+        self._cleanUpFutureWorks(operation)
+
+        // Should we detroy the operation on Failure?
+        // Or try to rexecute later.
+        if operation.isBlocked{
+            // Blocked
+            if operation.isDestroyableWhenBlocked{
+                do{
+                    // The operation is blocked and destroyable.
+                    // Let's delete it.
+                    Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
+                    try self.deleteCallOperation(operation)
+
+                    /// And execute the next in the Call Sequence
+                    self.executeNext(from: operation.sequenceName)
+                }catch{
+                    Logger.log(error, category: .critical)
+                }
+            }else{
+                // Blocked & Not Destroyable
+                // The operation is Blocked
+                // All the CallSequence is stuck
             }
         }else{
-            // Re-execution logic
+            // The Operation is not blocked
+            // It means we can try to re-implement the running logic
+            if self.session.isRunningLive{
+                // Re-execution logic
+                //We double the reExecutionDelay (may be we should use another strategy)
+                operation.reExecutionDelay = operation.reExecutionDelay * 2
 
-            // @todo review this sensitive implementatio
-            //We double the reExecutionDelay (may be we should use another strategy)
-            operation.reExecutionDelay = operation.reExecutionDelay * 2
+                let workItem = DispatchWorkItem.init {
+                    operation.execute()
+                }
+                let delay:TimeInterval = operation.reExecutionDelay
 
-            let workItem = DispatchWorkItem.init {
-                operation.execute()
+                let work = AsyncWork(dispatchWorkItem: workItem, delay: delay, associatedUID:operation.uid)
+                if !self._futureWorks.keys.contains(operation.sequenceName){
+                    self._futureWorks[operation.sequenceName] = [AsyncWork]()
+                }
+                self._futureWorks[operation.sequenceName]?.append(work)
             }
-            let delay:TimeInterval = operation.reExecutionDelay
-            // @todo We could store the Item for possible cancelation
-            let _ = AsyncWork(dispatchWorkItem: workItem, delay: delay, associatedUID:operation.uid)
         }
+    }
+
+    fileprivate func _cleanUpFutureWorks<P, R>(_ operation: CallOperation<P, R>){
+        // CleanUp the future works
+        if let index = self._futureWorks[operation.sequenceName]?.index(where: {$0.associatedUID == operation.uid}){
+            self._futureWorks[operation.sequenceName]?.remove(at: index)
+        }
+    }
+
+
+    fileprivate func _futureWorksArePlanifiedFor(_ callSequenceName:CallSequence.Name)->Bool{
+        guard let futuresWorks = self._futureWorks[callSequenceName] else{
+            return false
+        }
+        return futuresWorks.count > 0
     }
 
 
     /// Execute the next Pending Operations for a given the CallSequence Name
     public final func executeNext(from callSequenceName:CallSequence.Name){
-        self._sortedPendingCalls[callSequenceName]?.first?.execute()
+        // 1) we don't want to execute tasks if the session is not running live
+        // 2) We want to execute sequentially the items segmented per CallSequence
+        if self.session.isRunningLive && !_futureWorksArePlanifiedFor(callSequenceName){
+            self._sortedPendingCalls[callSequenceName]?.first?.execute()
+        }
     }
 
-    /// Used to truncate  Operation
+    /// Used to truncate  Operations
     /// Returns a quota of operation to preserve for each sequence.
     /// If the value is over the quota the older matching cancelable operation would be deleted
     ///
     /// - Parameter for: the CallSequence name
     /// - Returns: the max number of call operations.
     open func preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type)->Int{
+        // By default we keep all the call Operations
+        // But you can ovveride this method to limit the size of a call operation collection
         return Int.max
     }
 
@@ -508,7 +559,6 @@ open class DataPoint: Object,DataPointProtocol{
     open func collectionFor<T:Collectable & Codable> ()->CollectionOf<T>?{
         return self._collectionsPerCollectedTypeName[T.typeName] as? CollectionOf<T>
     }
-
 
 
     // MARK: - DataPointProtocol.DataPointLifeCycle

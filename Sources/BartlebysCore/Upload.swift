@@ -25,6 +25,7 @@ public class Upload : Model, Payload, Result  {
         let parameter = FilePath(relativePath: uploadPath)
         let operation = CallOperation<FilePath,Upload>(operationName: operationName, operationPath: operationPath, queryString: queryString, method:method, resultIsACollection: false, parameter: parameter)
         operation.sequenceName = CallSequence.Name.uploads
+        operation.isDestroyableWhenBlocked = false
         return operation
     }
 }

@@ -23,6 +23,7 @@ public class Download : Model, Payload, Result {
         let parameter = FilePath(relativePath: downloadPath)
         let operation = CallOperation<FilePath,Download>(operationName: operationName, operationPath: operationPath, queryString: queryString, method: HTTPMethod.GET, resultIsACollection: false, parameter: parameter)
         operation.sequenceName = CallSequence.Name.downloads
+        operation.isDestroyableWhenBlocked = false
         return operation
     }
 
