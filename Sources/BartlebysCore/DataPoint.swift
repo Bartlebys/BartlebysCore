@@ -57,7 +57,7 @@ open class DataPoint: Object,DataPointProtocol{
     public var operationsCoder: ConcreteCoder = JSONCoder()
 
     // The storage IO object: reads an writes the ObjectsCollections
-    public var storage:StorageProtocol = Storage()
+    public var storage:StorageProtocol = FileStorage()
 
     /// The associated session
     public lazy fileprivate(set) var session:Session = Session(delegate: self, lastExecutionOrder:self._getLastOrderOfExecution())

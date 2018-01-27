@@ -28,7 +28,7 @@ public protocol CollectionProgressObserver{
 
 
 /// The storage layer
-public final class Storage{
+public final class FileStorage{
 
     /// The coder: encodes and decodes the Data
     public var coder: ConcreteCoder = JSONCoder()
@@ -98,7 +98,7 @@ public final class Storage{
 
 // MARK: - FileStorageProtocol
 
-extension Storage: FileStorageProtocol{
+extension FileStorage: FileStorageProtocol{
 
 
     // MARK: - Asynchronous (on an serial queue)
