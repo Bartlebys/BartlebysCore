@@ -415,10 +415,17 @@ open class DataPoint: Object,DataPointProtocol{
 
     /// Execute the next Pending Operations for a given the CallSequence Name
     public final func executeNext(from callSequenceName:CallSequence.Name){
-        // IMPORTANT
-        // @todo use all the CallSequenec logic, Quotas, ...
         self._sortedPendingCalls[callSequenceName]?.first?.execute()
+    }
 
+    /// Used to truncate  Operation
+    /// Returns a quota of operation to preserve for each sequence.
+    /// If the value is over the quota the older matching cancelable operation would be deleted
+    ///
+    /// - Parameter for: the CallSequence name
+    /// - Returns: the max number of call operations.
+    open func preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type)->Int{
+        return Int.max
     }
 
 
@@ -439,6 +446,9 @@ open class DataPoint: Object,DataPointProtocol{
         }
         return (collection,index)
     }
+
+
+
 
 
     // MARK: - Load and Save

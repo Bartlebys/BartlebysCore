@@ -146,7 +146,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
     /// Used to determine if the operation is blocked
     public var isBlocked:Bool {
-        return self.isBlocking && self.executionCounter >= maxNumberOfAttempts
+        return self.isBlocking && self.executionCounter >= self.maxNumberOfAttempts
     }
 
     /// Used to determine if the operation can be destroyed when blocked

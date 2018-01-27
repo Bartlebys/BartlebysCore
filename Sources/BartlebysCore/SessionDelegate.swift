@@ -91,4 +91,13 @@ public protocol SessionDelegate {
     func executeNext(from callSequenceName:CallSequence.Name)
 
 
+    /// Used to truncate cancellable Operation
+    /// Returns a quota of operation to preserve for each sequence.
+    /// If the value is over the quota the older matching cancelable operation would be deleted
+    ///
+    /// - Parameter for: the CallSequence name
+    /// - Returns: the max number of call operations.
+    func preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type)->Int
+
+
 }
