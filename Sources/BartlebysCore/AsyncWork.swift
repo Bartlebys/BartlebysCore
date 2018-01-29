@@ -16,7 +16,7 @@ public struct AsyncWork {
     public let dispatchWorkItem: DispatchWorkItem
     public let delay: TimeInterval
 
-    var dispatchTime: DispatchTime {
+    public var dispatchTime: DispatchTime {
         return DispatchTime(uptimeNanoseconds: UInt64(delay * Double(NSEC_PER_SEC)))
     }
 
@@ -34,7 +34,7 @@ public struct AsyncWork {
         DispatchQueue.main.asyncAfter(deadline: self.dispatchTime, execute: self.dispatchWorkItem)
     }
 
-    func cancel() {
+    public func cancel() {
         self.dispatchWorkItem.cancel()
     }
 }
