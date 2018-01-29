@@ -230,11 +230,6 @@ open class DataPoint: Object,DataPointProtocol{
         self._collectionsPerFileName[collection.fileName] = collection
         self._collectionsPerCollectedTypeName[T.typeName] = collection
 
-        // We don't want to mix Data & File Call Operation
-        guard  collection.uid == self.downloads.uid || collection.uid == self.uploads.uid else {
-            return
-        }
-
         // it is a call Operation collection
         if let _ = collection.dynamicCallOperations{
             // store a reference in the _callOperationsCollections
