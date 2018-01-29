@@ -109,7 +109,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     // Each sequence is sequential when a Call operation is finished it runs the next.
     // But the sequences "runs in parallel"
     // Is set to .data by default.
-    public var sequenceName:CallSequence.Name = CallSequence.Name.data
+    public var sequenceName:CallSequence.Name = CallSequence.data
 
     // The unique id of the Session
     public var sessionIdentifier: String = Default.NO_UID
@@ -205,7 +205,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     public required init(from decoder: Decoder) throws{
         try super.init(from: decoder)
         let values = try decoder.container(keyedBy: CallOperationCodingKeys.self)
-        self.sequenceName = CallSequence.Name(rawValue: try values.decode(String.self,forKey:.sequenceName)) ?? .data
+        self.sequenceName = try values.decode(String.self,forKey:.sequenceName)
         self.operationName = try values.decode(String.self,forKey:.operationName)
         self.path = try values.decode(String.self,forKey:.path)
         self.queryString = try values.decode(String.self,forKey:.queryString)
@@ -226,7 +226,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
     override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CallOperationCodingKeys.self)
-        try container.encode(self.sequenceName.rawValue, forKey: .sequenceName)
+        try container.encode(self.sequenceName, forKey: .sequenceName)
         try container.encode(self.operationName,forKey:.operationName)
         try container.encode(self.path,forKey:.path)
         try container.encode(self.queryString,forKey:.queryString)

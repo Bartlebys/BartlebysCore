@@ -22,7 +22,7 @@ public class Download : Model, Payload, Result {
     public static func callOperation(operationName:String, operationPath: String, queryString: String, downloadPath:String)->CallOperation<FilePath, Download>{
         let parameter = FilePath(relativePath: downloadPath)
         let operation = CallOperation<FilePath,Download>(operationName: operationName, operationPath: operationPath, queryString: queryString, method: HTTPMethod.GET, resultIsACollection: false, parameter: parameter)
-        operation.sequenceName = CallSequence.Name.downloads
+        operation.sequenceName = CallSequence.downloads
         operation.isDestroyableWhenBlocked = false
         return operation
     }
