@@ -186,7 +186,9 @@ class DataPointTests: BaseDataPointTestCase{
         
         do{
             try datapoint.provision(callOp)
+            XCTAssert(datapoint.numberOfPendingCalls == 1,"datapoint.numberOfPendingCalls = \(datapoint.numberOfPendingCalls)")
             try datapoint.deleteCallOperation(callOp)
+            XCTAssert(datapoint.numberOfPendingCalls == 0,"datapoint.numberOfPendingCalls = \(datapoint.numberOfPendingCalls)")
         }catch{
             XCTFail("\(error)")
         }

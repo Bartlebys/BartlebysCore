@@ -89,8 +89,25 @@ class ObjectCollectionTests: BaseDataPointTestCase{
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
         collection.remove(at: 0)
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
-        
-        // @todo remove qqch qui n'existe pas
+
+
+        let m2 = dataPoint.new(type: Metrics.self)
+        XCTAssert(collection.count == 1, "The collection should have exactly one element")
+        do{
+            try collection.removeItem(m2)
+        }catch{
+            XCTFail("\(error)")
+        }
+        XCTAssert(collection.count == 0, "The collection should have exactly zero element")
+
+        let typeMissMatch = dataPoint.new(type: LogEntry.self)
+        do{
+            try collection.removeItem(typeMissMatch)
+            XCTFail("Should Fail on removeItm typeMissMatch")
+        }catch{
+            // Silent catch
+        }
+
     }
     
     func test004_Remove() {
