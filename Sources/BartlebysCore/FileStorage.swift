@@ -131,8 +131,6 @@ extension FileStorage: FileStorageProtocol{
     /// - Parameter proxy: the collection proxy
     public func loadCollection<T>(on proxy:CollectionOf<T>)throws{
 
-        print("AsyncLoading \(self._asyncLoading.count)")
-
         let workUID = proxy.uid + "_" + Utilities.createUID()
 
 
