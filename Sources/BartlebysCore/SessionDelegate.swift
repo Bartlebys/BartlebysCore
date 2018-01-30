@@ -75,21 +75,28 @@ public protocol SessionDelegate {
     /// - Parameter response: the call Response
     func integrateResponse<R>(_ response:DataResponse<R>)
 
-    /// Implements the concrete Removal of the CallOperation on success
+    /// Implements the concrete Removal of the CallOperation
     ///
     /// - Parameter operation: the targeted Call Operation
     /// - Throws: throws error is the call operation or its collection is not found
     func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>) throws
+
+
+    /// Implements Called on success
+    ///
+    /// - Parameters:
+    ///   - operation: the faulting call operation
+    ///   - error: the error
+    func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws
+
 
     /// Implements the faulting logic
     ///
     /// - Parameters:
     ///   - operation: the faulting call operation
     ///   - error: the error
-    func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?)
-
-    /// Execute the next Pending Operations for a given the CallSequence Name
-    func executeNext(from callSequenceName:CallSequence.Name)
+    func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?) throws
+    
 
     /// Used to determine if we should destroy some Operations
     /// Returns a quota of operation to preserve for each sequence.

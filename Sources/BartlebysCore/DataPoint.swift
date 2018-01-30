@@ -28,6 +28,7 @@ public enum DataPointError : Error{
     case instanceTypeMissMatch
     case callOperationCollectionNotFound(named:String)
     case callOperationIndexNotFound(named:String)
+    case multipleProvisioningAttempt(of:CallOperationProtocol)
 }
 
 public protocol DataPointLifeCycle{
@@ -39,29 +40,29 @@ public protocol DataPointLifeCycle{
 
 // Abstract class
 open class DataPoint: Object,DataPointProtocol{
-
+    
     // KVS keys
     static public let sessionLastExecutionKVSKey = "sessionLastExecutionKVSKey"
     static public let noContainerRootKey = "noContainerRootKey"
-
+    
     public enum RelativePaths:String{
         case forCallOperations = "operations/"
         case forCollections = ""
     }
-
+    
     // MARK: -
-
+    
     public var delegate: DataPointLifeCycle?
-
+    
     // The coder used by the HTTP operations.
     public var operationsCoder: ConcreteCoder = JSONCoder()
-
+    
     // The storage IO object: reads an writes the ObjectsCollections
     public var storage:StorageProtocol = FileStorage()
-
+    
     /// The associated session
     public lazy fileprivate(set) var session:Session = Session(delegate: self, lastExecutionOrder:self._getLastOrderOfExecution())
-
+    
     /// Its session identifier
     public var sessionIdentifier: String {
         get{
@@ -71,33 +72,33 @@ open class DataPoint: Object,DataPointProtocol{
             self.session.identifier = newValue
         }
     }
-
+    
     /// Contains all the data Point collections
     /// Populated by registerCollection
     /// - Returns: the data Point model collections
     fileprivate var _collections:[FileSavable] = [FileSavable]()
-
+    
     /// The collection hashed per fileNam
     fileprivate var _collectionsPerFileName = [String:FileSavable]()
-
+    
     /// The collection hashed by typeName
     fileprivate var _collectionsPerCollectedTypeName = [String:FileSavable]()
-
+    
     // this centralized dictionary allows to access to any referenced object by its UID
     // Uses a binary tree
     fileprivate var _instancesByUID=_ContainerType<UID,Any>()
-
+    
     /// Defered Ownership
     /// If we receive a Instance that refers to an unexisting Owner
     /// We store its missing entry is the deferredOwnerships dictionary
     /// For future resolution (on registration)
     /// [notAvailableOwnerUID][relatedOwnedUIDS]
     fileprivate var _deferredOwnerships=[UID:[UID]]()
-
+    
     /// The pending Call operations
     fileprivate var _sortedPendingCalls:[CallSequence.Name:[CallOperationProtocol]] = [CallSequence.Name:[CallOperationProtocol]]()
-
-
+    
+    
     /// The current number of Pending calls
     public var numberOfPendingCalls:Int{
         var n = 0
@@ -106,20 +107,20 @@ open class DataPoint: Object,DataPointProtocol{
         }
         return n
     }
-
+    
     /// The planified future works
     fileprivate var _futureWorks:[CallSequence.Name:[AsyncWork]] = [CallSequence.Name:[AsyncWork]]()
-
+    
     // MARK: -
-
+    
     /// A collection used to perform Key Value Storage
     public var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.collectionName,relativePath:"")
-
+    
     // Special call Operations Donwloads and Uploads
     public var downloads = CollectionOf<CallOperation<FilePath,Download>>()
     public var uploads = CollectionOf<CallOperation<FilePath,Upload>>()
-
-
+    
+    
     /// Initializes the dataPoint
     /// - Throws: Children may throw while populating the collections
     required public override init(){
@@ -127,12 +128,12 @@ open class DataPoint: Object,DataPointProtocol{
         // The loading is asynchronous on separate queue.
         self.storage.addProgressObserver (observer: AutoRemovableLoadingDelegate(dataPoint: self))
     }
-
+    
     // MARK: - OperatingState
-
+    
     // The current Operating state
     public fileprivate(set) var currentState:OperatingState = .online
-
+    
     /// Used to transition offline on online
     ///
     /// - Parameter state: the new operating state
@@ -155,10 +156,10 @@ open class DataPoint: Object,DataPointProtocol{
             }
         }
     }
-
-
+    
+    
     // MARK: -
-
+    
     /// Prepares the collections before loading the data in memory.
     /// That the place where you should call :
     ///
@@ -184,20 +185,20 @@ open class DataPoint: Object,DataPointProtocol{
         }catch{
             Logger.log("\(error)", category: .critical)
         }
-
+        
         self._configureCollection(self.keyedDataCollection)
-
+        
         // Special Call Operations (Downloads and Uploads)
         try self.registerCollection(collection: self.downloads)
         try self.registerCollection(collection: self.uploads)
-
+        
         // Generated Models
         try self.registerCallOperationsFor(type: Metrics.self)
         try self.registerCallOperationsFor(type: KeyedData.self)
         try self.registerCallOperationsFor(type: LogEntry.self)
     }
-
-
+    
+    
     /// Registers the CallOperations collections
     /// that provision the call for Off line support & fault tolerence
     ///
@@ -210,8 +211,8 @@ open class DataPoint: Object,DataPointProtocol{
         try self.registerCollection(collection: upStreamOperations)
         try self.registerCollection(collection: downStreamOperations)
     }
-
-
+    
+    
     /// Registers the collection into the data point
     ///
     /// - Parameter collection: the collection
@@ -226,12 +227,12 @@ open class DataPoint: Object,DataPointProtocol{
             self._configureCollection(collection)
             // Creates or asynchronously load the collection on registration
             try self.storage.loadCollection(on: collection)
-
+            
         }else{
             throw DataPointError.duplicatedRegistration(fileName: collection.fileName)
         }
     }
-
+    
     fileprivate func _configureCollection<T>(_ collection:CollectionOf<T>){
         // Reference the DataPoint
         collection.dataPoint = self
@@ -239,7 +240,7 @@ open class DataPoint: Object,DataPointProtocol{
         self._collectionsPerFileName[collection.fileName] = collection
         self._collectionsPerCollectedTypeName[T.typeName] = collection
     }
-
+    
     /// Returns the collection by its file name
     ///
     /// - Parameter fileName: the fileName of the searched collection
@@ -247,32 +248,32 @@ open class DataPoint: Object,DataPointProtocol{
     public func collection<T>(with fileName:String)->CollectionOf<T>?{
         return self._collectionsPerFileName[fileName] as? CollectionOf<T>
     }
-
+    
     
     public func collectionsCount() -> Int {
         return self._collections.count
     }
-
+    
     
     // MARK: - DataPointProtocol
-
+    
     // The current Host: e.g demo.bartlebys.org
     open var host: String = "NO_HOST"
     
     // The api base path: e.g /api/v1
     open var apiBasePath: String = "NO_BASE_API_PATH"
-
+    
     // MARK: -  SessionDelegate
-
+    
     /// The credentials should generaly not change during the session
-    open var credentials: Credentials = Credentials(username: "NO_NAME", password: "NO_PASSWORD")
+    open var credentials: Credentials = Credentials(username: Default.NO_NAME, password: Default.NO_PASSWORD)
     
     /// The authentication method
     open var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
-
+    
     /// The current Scheme .https is a must
     open var scheme: Schemes = Schemes.https
-
+    
     ///  Returns the configured URLrequest
     ///  This func is public not open
     /// - Parameters:
@@ -282,14 +283,14 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Returns:  the URL request
     /// - Throws: url issues
     open func requestFor(path: String, queryString: String, method: HTTPMethod) throws -> URLRequest {
-
+        
         guard let url = URL(string: self.scheme.rawValue + self.host + path + queryString) else {
             throw DataPointError.invalidURL
         }
-
+        
         var request: URLRequest = URLRequest(url: url)
         request.httpMethod = method.rawValue
-
+        
         switch self.authenticationMethod {
         case .basicHTTPAuth:
             let loginString = "\(self.credentials.username):\(self.credentials.password)"
@@ -298,11 +299,11 @@ open class DataPoint: Object,DataPointProtocol{
                 request.setValue(base64LoginString, forHTTPHeaderField: "Authorization")
             }
         }
-
+        
         return request
     }
-
-
+    
+    
     /// Returns the configured URLrequest
     ///
     /// - Parameters:
@@ -312,66 +313,74 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Returns: the URL request
     /// - Throws: issue on URL creation or Parameters deserialization
     public final func requestFor<P:Payload>(path: String, queryString: String, method: HTTPMethod , parameter:P) throws -> URLRequest {
-
+        
         var request = try self.requestFor(path: path, queryString: queryString, method: method)
-
+        
         if !(parameter is VoidPayload) && !(parameter is FilePath) {
             // By default we encode the JSON parameter in the body
             // If the Parameter is not void
             request.httpBody = try JSONEncoder().encode(parameter)
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
-
+        
         return request
     }
-
-
+    
+    
     /// Provisions the operation in the relevent collection
     /// If the collection exceeds the preservationQuota destroys the first entries
     ///
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
     public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
-
+        
         // Upsert the relevent call Operation collection
         guard let collection = self._collectionsPerCollectedTypeName[CallOperation<P, R>.typeName] as? CollectionOf<CallOperation<P, R>> else{
             throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
         }
+        
+        // Store the call operation into the relevent collection
         collection.upsert(operation)
+        try self._addToPendingCalls(operation)
+        try self._applyQuotaOn(collection)
+
+    }
 
 
-        // Append to pending Calls
+    fileprivate func _addToPendingCalls<P,R>(_ operation:CallOperation<P, R>) throws {
+        // Append the call operation to the pending Calls
         if !self._sortedPendingCalls.keys.contains(operation.sequenceName){
             self._sortedPendingCalls[operation.sequenceName] = [CallOperationProtocol]()
         }
         if (self._sortedPendingCalls[operation.sequenceName]?.index(where: { return $0.uid == operation.uid }) != nil){
-            Logger.log("Excessive provisioning of \(operation.uid) in \(operation.d_collectionName) ", category: .critical)
+            throw DataPointError.multipleProvisioningAttempt(of:operation)
         }else{
             self._sortedPendingCalls[operation.sequenceName]?.append(operation)
-            print("Adding \(operation.uid) -> \( self._sortedPendingCalls[operation.sequenceName]?.count)")
         }
+    }
 
-
-        // Quotas.
+    fileprivate func _applyQuotaOn<P,R>(_ collectionOfCallOperations:CollectionOf<CallOperation<P, R>> ) throws {
+        // Preservation Quotas.
         let maxOperations = self.preservationQuota(callOperationType:CallOperation<P, R>.self)
-        if maxOperations < collection.count{
+        if maxOperations < collectionOfCallOperations.count{
             // We should destroy some operations
-            let nbOfOperationToDestroy = collection.count - maxOperations
-            Logger.log("Destroying \(nbOfOperationToDestroy) operation(s) from \(operation.d_collectionName)", category: .standard)
+            let nbOfOperationToDestroy = collectionOfCallOperations.count - maxOperations
+            Logger.log("Destroying \(nbOfOperationToDestroy) operation(s) from \(collectionOfCallOperations.d_collectionName)", category: .standard)
             for _ in 0..<nbOfOperationToDestroy{
-                collection.remove(at: 0)
+                collectionOfCallOperations.remove(at: 0)
             }
         }
     }
 
-
+    
+    
     /// Returns the relevent request for a given call Operation
     ///
     /// - Parameter operation: the operation
     /// - Returns: the URL request
     /// - Throws: issue on URL creation and operation Parameters serialization
     public final func requestFor<P, R>(_ operation: CallOperation<P, R>) throws -> URLRequest {
-
+        
         if R.self is Download.Type || R.self is Upload.Type {
             guard let payload = operation.payload else {
                 throw DataPointError.payloadIsNil
@@ -382,7 +391,7 @@ open class DataPoint: Object,DataPointProtocol{
             // Return the Download or Upload base request
             return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
         }
-
+        
         if let payload = operation.payload {
             // There is a payload
             return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
@@ -391,10 +400,10 @@ open class DataPoint: Object,DataPointProtocol{
             return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method)
         }
     }
-
-
+    
+    
     // MARK: - Data integration and Operation Life Cycle
-
+    
     /// The response.result shoud be stored in it DataPoint storage layer
     ///
     /// - Parameter response: the call Response
@@ -407,32 +416,67 @@ open class DataPoint: Object,DataPointProtocol{
             }
         }
     }
-
+    
     /// Implements the  Removal of the CallOperation on success
     ///
     /// - Parameter operation: the targeted Call Operation
     public final func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>)throws{
-
+        
         self._cleanUpFutureWorks(operation)
-
+        
         // Sorted pending calls.
         if let index = self._sortedPendingCalls[operation.sequenceName]?.index(where: { $0.uid == operation.uid} ){
             self._sortedPendingCalls[operation.sequenceName]?.remove(at: index)
         }else {
             throw DataPointError.callOperationIndexNotFound(named: operation.operationName)
         }
+        
+    }
+    /// Implements Called on success
+    ///
+    /// - Parameters:
+    ///   - operation: the faulting call operation
+    ///   - error: the error
+    public func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws{
+
+        defer{
+            let notificationName = Notification.Name.CallOperation.didSucceed()
+            var userInfo :[AnyHashable : Any] = [Notification.Name.CallOperation.operationKey : operation]
+            if let filePath = operation.payload as? FilePath {
+                userInfo[Notification.Name.CallOperation.filePathKey] = filePath
+            }
+            NotificationCenter.default.post(name: notificationName, object: nil, userInfo:userInfo)
+        }
+
+
+        operation.hasBeenExecuted()
+        try self.deleteCallOperation(operation)
+        self._executeNextCallOperation(from: operation.sequenceName)
 
     }
+
 
     /// Implements the faulting logic
     ///
     /// - Parameters:
     ///   - operation: the faulting call operation
     ///   - error: the error
-    public final func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?){
+    public final func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?) throws {
+
+        defer{
+            // Send a notification
+            let notificationName = Notification.Name.CallOperation.didFail()
+            if let error = error {
+                // Can be a FileOperationError with associated FilePath
+                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.errorKey : error])
+            } else {
+                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
+            }
+        }
+
+        operation.hasBeenExecuted()
 
         let sequenceName : CallSequence.Name = operation.sequenceName
-
         self._cleanUpFutureWorks(operation)
 
         // Should we detroy the operation on Failure?
@@ -440,36 +484,30 @@ open class DataPoint: Object,DataPointProtocol{
         if operation.isBlocked{
             // Blocked
             if operation.isDestroyableWhenBlocked{
-                do{
-                    // The operation is blocked and destroyable.
-                    // Let's delete it.
-                    Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
-                    try self.deleteCallOperation(operation)
-
-                    /// And execute the next in the Call Sequence
-                    self.executeNext(from: sequenceName)
-                }catch{
-                    Logger.log(error, category: .critical)
-                }
+                // The operation is blocked and destroyable.
+                // Let's delete it.
+                Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
+                try self.deleteCallOperation(operation)
+                /// And then execute the next in the Call Sequence
+                self._executeNextCallOperation(from: sequenceName)
             }else{
                 // Blocked & Not Destroyable
                 // The operation is Blocked
                 // All the CallSequence is stuck
             }
         }else{
-
             // The Operation is not blocked
             // It means we can try to re-implement the running logic
             if self.currentState == .online{
                 // Re-execution logic
                 //We double the reExecutionDelay (may be we should use another strategy)
                 operation.reExecutionDelay = operation.reExecutionDelay * 2
-
+                
                 let workItem = DispatchWorkItem.init {
                     operation.execute()
                 }
                 let delay:TimeInterval = operation.reExecutionDelay
-
+                
                 let work = AsyncWork(dispatchWorkItem: workItem, delay: delay, associatedUID:operation.uid)
                 if !self._futureWorks.keys.contains(operation.sequenceName){
                     self._futureWorks[operation.sequenceName] = [AsyncWork]()
@@ -481,29 +519,32 @@ open class DataPoint: Object,DataPointProtocol{
             }
         }
     }
-
+    
     fileprivate func _cleanUpFutureWorks<P, R>(_ operation: CallOperation<P, R>){
         // CleanUp the future works
         if let index = self._futureWorks[operation.sequenceName]?.index(where: {$0.associatedUID == operation.uid}){
             self._futureWorks[operation.sequenceName]?.remove(at: index)
         }
     }
-
-
+    
+    
     fileprivate func _futureWorksArePlanifiedFor(_ callSequenceName:CallSequence.Name)->Bool{
         guard let futuresWorks = self._futureWorks[callSequenceName] else{
             return false
         }
         return futuresWorks.count > 0
     }
-
-
-    /// Execute the next Pending Operations for a given the CallSequence Name
-    public final func executeNext(from callSequenceName:CallSequence.Name){
+    
+    /// Executes the next Pending Operations for a given the CallSequence Name
+    /// The call sequences are runing in parallel.
+    /// Called on success by the session or on failure in the DataPoint if the Operation is Blocked and Destroyable
+    ///
+    /// - Parameter callSequenceName: the Call sequence name
+    fileprivate func _executeNextCallOperation(from callSequenceName:CallSequence.Name){
         // 1) we don't want to execute tasks if the session is not running live
         // 2) We want to execute sequentially the items segmented per CallSequence
         if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
-            print("NEXT -> Count === \(self._sortedPendingCalls[callSequenceName]?.count) ")
+            print("NEXT -> Count === \(String(describing: self._sortedPendingCalls[callSequenceName]?.count)) ")
             self._sortedPendingCalls[callSequenceName]?.first?.execute()
         }
     }
@@ -631,21 +672,21 @@ open class DataPoint: Object,DataPointProtocol{
 // MARK: - Centralized Instances Registration
 
 extension DataPoint{
-
+    
     // The number of registred object
     public var numberOfRegistredObject: Int {
         get {
             return self._instancesByUID.count
         }
     }
-
+    
     /// Registers an instance
     ///
     /// - Parameter instance: the instance to be registered
     public func register<T:  Codable & Collectable >(_ instance: T) {
         // Store the instance by its UID
         self._instancesByUID[instance.id]=instance
-
+        
         // Check if some deferred Ownership has been recorded
         if let owneesUIDS = self._deferredOwnerships[instance.id] {
             /// This situation occurs for example
@@ -668,15 +709,15 @@ extension DataPoint{
             self._deferredOwnerships.removeValue(forKey: instance.id)
         }
     }
-
-
+    
+    
     /// Removes the registred instance from the registry
     ///
     /// - Parameter instance: the instance
     public func unRegister<T:  Codable & Collectable >(_ instance: T) {
         self._instancesByUID.removeValue(forKey: instance.id)
     }
-
+    
     /// Removes the registred instances from the registry
     ///
     /// - Parameter instance: the instance
@@ -685,9 +726,9 @@ extension DataPoint{
             self.unRegister(instance)
         }
     }
-
+    
     // MARK: Generic level
-
+    
     /// Returns the registred instance of by its UID
     ///
     /// - Parameter UID: the instance unique identifier
@@ -703,7 +744,7 @@ extension DataPoint{
             throw DataPointError.instanceNotFound
         }
     }
-
+    
     ///  Returns the registred instance of by UIDs
     ///
     /// - Parameter UIDs: the UIDs
@@ -723,9 +764,9 @@ extension DataPoint{
         }
         return items
     }
-
+    
     // MARK: Model level
-
+    
     /// Returns a Model by its UID
     /// Those instance are not casted.
     /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
@@ -734,7 +775,7 @@ extension DataPoint{
     public func registredModelByUID(_ UID: UID)-> Model? {
         return try? self.registredObjectByUID(UID)
     }
-
+    
     /// Returns a collection of Model by UIDs
     /// Those instance are not casted.
     /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
@@ -743,10 +784,10 @@ extension DataPoint{
     public func registredModelByUIDs(_ UIDs: [UID])-> [Model]? {
         return try? self.registredObjectsByUIDs(UIDs)
     }
-
-
+    
+    
     // MARK: Opaque level
-
+    
     /// Totaly opaque accessor
     ///
     /// - Parameter UID: the UID
@@ -754,7 +795,7 @@ extension DataPoint{
     public func registredOpaqueInstanceByUID(_ UID: UID)-> Any? {
         return self._instancesByUID[UID]
     }
-
+    
     /// Totaly opaque accessor
     ///
     /// - Parameter UID: the UID
@@ -768,9 +809,9 @@ extension DataPoint{
         }
         return items
     }
-
+    
     // MARK: -
-
+    
     /// Stores the ownee when the owner is not already available
     /// This situation may occur for example on collection deserialization
     /// when the owner is deserialized before the ownee.
@@ -785,10 +826,10 @@ extension DataPoint{
             self._deferredOwnerships[ownerUID]=[ownee.id]
         }
     }
-
-
+    
+    
     // MARK: - Private plumbing
-
+    
     fileprivate func _getLastOrderOfExecution()->Int{
         do{
             if let order:Int = try self.getFromKVS(key: DataPoint.sessionLastExecutionKVSKey){
@@ -807,7 +848,7 @@ extension DataPoint{
 // MARK: - Download / Uploads
 
 extension DataPoint{
-
+    
     public func cancelUploads(){
         self.downloads.removeAll()
     }
