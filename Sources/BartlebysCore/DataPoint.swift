@@ -465,12 +465,14 @@ open class DataPoint: Object,DataPointProtocol{
         defer{
             // Send a notification
             let notificationName = Notification.Name.CallOperation.didFail()
-            if let error = error {
-                // Can be a FileOperationError with associated FilePath
-                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.errorKey : error])
-            } else {
-                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
+            var userInfo :[AnyHashable : Any] = [Notification.Name.CallOperation.operationKey : operation]
+            if let filePath = operation.payload as? FilePath {
+                userInfo[Notification.Name.CallOperation.filePathKey] = filePath
             }
+            if let error = error {
+                userInfo[Notification.Name.CallOperation.errorKey] = error
+            }
+            NotificationCenter.default.post(name: notificationName, object: nil, userInfo:userInfo)
         }
 
         operation.hasBeenExecuted()
