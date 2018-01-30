@@ -697,8 +697,6 @@ extension DataPoint{
                         // Add the owns entry
                         if !o.owns.contains(owneeUID){
                             o.owns.append(owneeUID)
-                        }else{
-                            Swift.print("### !")
                         }
                     }else{
                         Logger.log("Deferred ownership has failed to found \(owneeUID) for \(o.id)", category: .critical)
