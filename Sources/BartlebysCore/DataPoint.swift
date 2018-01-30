@@ -97,6 +97,16 @@ open class DataPoint: Object,DataPointProtocol{
     /// The pending Call operations
     fileprivate var _sortedPendingCalls:[CallSequence.Name:[CallOperationProtocol]] = [CallSequence.Name:[CallOperationProtocol]]()
 
+
+    /// The current number of Pending calls
+    public var numberOfPendingCalls:Int{
+        var n = 0
+        for (_,c) in self._sortedPendingCalls{
+            n += c.count
+        }
+        return n
+    }
+
     /// The planified future works
     fileprivate var _futureWorks:[CallSequence.Name:[AsyncWork]] = [CallSequence.Name:[AsyncWork]]()
 
@@ -108,6 +118,7 @@ open class DataPoint: Object,DataPointProtocol{
     // Special call Operations Donwloads and Uploads
     public var downloads = CollectionOf<CallOperation<FilePath,Download>>()
     public var uploads = CollectionOf<CallOperation<FilePath,Upload>>()
+
 
     /// Initializes the dataPoint
     /// - Throws: Children may throw while populating the collections
@@ -406,11 +417,11 @@ open class DataPoint: Object,DataPointProtocol{
 
         // Sorted pending calls.
         if let index = self._sortedPendingCalls[operation.sequenceName]?.index(where: { $0.uid == operation.uid} ){
-            print("***=>\(  self._sortedPendingCalls[operation.sequenceName]?.count)")
             self._sortedPendingCalls[operation.sequenceName]?.remove(at: index)
-            print("\(self._sortedPendingCalls[operation.sequenceName]?.count)<=**")
-
+        }else {
+            throw DataPointError.callOperationIndexNotFound(named: operation.operationName)
         }
+
     }
 
     /// Implements the faulting logic
