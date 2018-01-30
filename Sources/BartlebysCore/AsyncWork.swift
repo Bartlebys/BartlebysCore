@@ -17,7 +17,7 @@ public struct AsyncWork {
     public let delay: TimeInterval
 
     public var dispatchTime: DispatchTime {
-        return DispatchTime(uptimeNanoseconds: UInt64(delay * Double(NSEC_PER_SEC)))
+        return DispatchTime(uptimeNanoseconds: UInt64(self.delay * Double(NSEC_PER_SEC)))
     }
 
 
@@ -27,11 +27,16 @@ public struct AsyncWork {
     ///   - dispatchWorkItem: the CGD DispatchWorkItem
     ///   - delay: the delay before execution
     ///   - associatedUID: the associated UID
-    public init(dispatchWorkItem: DispatchWorkItem, delay: TimeInterval, associatedUID:UID = Default.NO_UID  ) {
+    ///   - queue: the execution queue
+    public init(dispatchWorkItem: DispatchWorkItem, delay: TimeInterval, associatedUID:UID = Default.NO_UID, queue: DispatchQueue = DispatchQueue.main) {
         self.dispatchWorkItem = dispatchWorkItem
         self.delay = delay
         self.associatedUID = associatedUID
-        DispatchQueue.main.asyncAfter(deadline: self.dispatchTime, execute: self.dispatchWorkItem)
+        if delay > 0{
+            queue.asyncAfter(deadline: self.dispatchTime, execute: self.dispatchWorkItem)
+        }else{
+            queue.async(execute: self.dispatchWorkItem)
+        }
     }
 
     public func cancel() {
