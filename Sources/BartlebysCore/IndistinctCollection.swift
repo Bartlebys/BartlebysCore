@@ -29,4 +29,8 @@ public protocol IndistinctCollection:UniversalType,Identifiable{
     /// Returns the call operation if revelent
     /// If the result is not null it means that the collection is a collection of CallOperation
     var dynamicCallOperations:[CallOperationProtocol]?{ get }
+
+    // The number of items
+    var count: Int { get }
+
 }
