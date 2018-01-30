@@ -63,4 +63,3 @@ public protocol StorageProtocol {
     func saveSync<T:Codable>(element:T,fileName:String,relativeFolderPath:String)throws
 
 }
-

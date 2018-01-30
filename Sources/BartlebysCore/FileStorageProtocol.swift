@@ -49,5 +49,9 @@ public protocol FileStorageProtocol:StorageProtocol{
     ///
     /// - Parameter collection: the collection
     func eraseFile(fileName:String,relativeFolderPath:String)
+
+
+    // A unique file manager used exclusively on the persistencyQueue
+    var fileManager:FileManager { get }
     
 }
