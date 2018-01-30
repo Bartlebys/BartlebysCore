@@ -67,7 +67,7 @@ public class Session {
         case .online:
             self.isRunningLive = true
         case .offline:
-             self.isRunningLive = false
+            self.isRunningLive = false
         }
     }
 
@@ -115,52 +115,29 @@ public class Session {
     /// - Throws: errors on preflight
     fileprivate func _runCall<P, R>(_ operation: CallOperation<P, R>) throws {
 
-        let request: URLRequest
-        request = try self.delegate.requestFor(operation)
+        let request: URLRequest = try self.delegate.requestFor(operation)
         
         let failureClosure: ((Failure) -> ()) = { response in
             syncOnMain {
-                
-                let operation = operation
-                operation.hasBeenExecuted()
-
-                // Relay the failure to the Data Point
-                self.delegate.callOperationExecutionDidFail(operation,error:response.error)
-
-                // Send a notification
-                let notificationName = Notification.Name.CallOperation.didFail()
-                if let error = response.error {
-                    // Can be a FileOperationError with associated FilePath
-                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.errorKey : error])
-                } else {
-                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
+                // Call the delgate
+                do{
+                    // Relay the failure to the Data Point
+                    try self.delegate.callOperationExecutionDidFail(operation,error:response.error)
+                }catch{
+                    Logger.log(error, category: .critical)
                 }
-                
             }
         }
-        
         switch R.self {
         case is Download.Type, is Upload.Type:
             
             guard let filePath = operation.payload as? FilePath else {
                 throw DataPointError.payloadShouldBeOfFilePathType
             }
+
             let successClosure: ((HTTPResponse) -> ()) = { response in
                 syncOnMain {
-                    
-                    let operation = operation
-                    operation.hasBeenExecuted()
-                    
-                    let notificationName = Notification.Name.CallOperation.didSucceed()
-                    
-                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation, Notification.Name.CallOperation.filePathKey : filePath])
-                    do{
-                        try  self.delegate.deleteCallOperation(operation)
-                        self.delegate.executeNext(from: operation.sequenceName)
-                    }catch{
-                        Logger.log("\(error)", category: .critical)
-                    }
-
+                    self._onSuccessOf(operation)
                 }
             }
             
@@ -170,28 +147,29 @@ public class Session {
                 self.callUpload(request: request, resultType: R.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
             }
         default:
-            
             self.call(request:request, resultType:R.self, resultIsACollection: operation.resultIsACollection, success: { response in
                 syncOnMain {
-                    
-                    let operation = operation
-                    operation.hasBeenExecuted()
-                    
                     self.delegate.integrateResponse(response)
-                    
-                    let notificationName = Notification.Name.CallOperation.didSucceed()
-                    NotificationCenter.default.post(name: notificationName, object: nil, userInfo: [Notification.Name.CallOperation.operationKey : operation])
-                    do{
-                        try self.delegate.deleteCallOperation(operation)
-                         self.delegate.executeNext(from: operation.sequenceName)
-                    }catch{
-                        Logger.log("\(error)", category: .critical)
-                    }
+                    self._onSuccessOf(operation)
                 }
             }, failure: failureClosure)
         }
         
     }
+
+    /// Implementation of the Call Operation success.
+    /// Should be called on the main thread
+    ///
+    /// - Parameters:
+    ///   - operation: the callOperation
+    fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>){
+        do{
+            try self.delegate.callOperationExecutionDidSucceed(operation)
+        }catch{
+            Logger.log("\(error)", category: .critical)
+        }
+    }
+
     
     // MARK: - HTTP Engine
     
