@@ -100,9 +100,6 @@ open class DataPoint: Object,DataPointProtocol{
     /// The planified future works
     fileprivate var _futureWorks:[CallSequence.Name:[AsyncWork]] = [CallSequence.Name:[AsyncWork]]()
 
-    //A dictionary with collection.d_collectionName as Key
-    fileprivate var _callOperationsCollections:[String:IndistinctCollection] = [String:IndistinctCollection]()
-
     // MARK: -
 
     /// A collection used to perform Key Value Storage
@@ -162,7 +159,8 @@ open class DataPoint: Object,DataPointProtocol{
     ///                       This mode allows to create temporary in Memory DataPoint to be processed and merged in persistent dataPoints
     /// - Throws: errors on registration
     open func prepareCollections(volatile: Bool) throws {
-        print("\(String(describing: type(of: self))) - \(getElapsedTime()) \n-------")
+        Logger.log("\(String(describing: type(of: self))) - \(getElapsedTime())", category: .standard)
+        Logger.log("----", category:.standard,decorative:true)
         if volatile {
             self.storage.becomeVolatile()
         }
@@ -229,12 +227,6 @@ open class DataPoint: Object,DataPointProtocol{
         self._collections.append(collection)
         self._collectionsPerFileName[collection.fileName] = collection
         self._collectionsPerCollectedTypeName[T.typeName] = collection
-
-        // it is a call Operation collection
-        if let _ = collection.dynamicCallOperations{
-            // store a reference in the _callOperationsCollections
-            self._callOperationsCollections[collection.d_collectionName] = collection
-        }
     }
 
     /// Returns the collection by its file name
@@ -329,16 +321,27 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
     public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
+
         // Upsert the relevent call Operation collection
-        let (collection, _) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: true)
+        guard let collection = self._collectionsPerCollectedTypeName[CallOperation<P, R>.typeName] as? CollectionOf<CallOperation<P, R>> else{
+            throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
+        }
         collection.upsert(operation)
+
+
         // Append to pending Calls
         if !self._sortedPendingCalls.keys.contains(operation.sequenceName){
             self._sortedPendingCalls[operation.sequenceName] = [CallOperationProtocol]()
         }
-        self._sortedPendingCalls[operation.sequenceName]?.append(operation)
+        if (self._sortedPendingCalls[operation.sequenceName]?.index(where: { return $0.uid == operation.uid }) != nil){
+            Logger.log("Excessive provisioning of \(operation.uid) in \(operation.d_collectionName) ", category: .critical)
+        }else{
+            self._sortedPendingCalls[operation.sequenceName]?.append(operation)
+            print("Adding \(operation.uid) -> \( self._sortedPendingCalls[operation.sequenceName]?.count)")
+        }
 
-        //
+
+        // Quotas.
         let maxOperations = self.preservationQuota(callOperationType:CallOperation<P, R>.self)
         if maxOperations < collection.count{
             // We should destroy some operations
@@ -401,16 +404,13 @@ open class DataPoint: Object,DataPointProtocol{
 
         self._cleanUpFutureWorks(operation)
 
+        // Sorted pending calls.
         if let index = self._sortedPendingCalls[operation.sequenceName]?.index(where: { $0.uid == operation.uid} ){
+            print("***=>\(  self._sortedPendingCalls[operation.sequenceName]?.count)")
             self._sortedPendingCalls[operation.sequenceName]?.remove(at: index)
-        }
+            print("\(self._sortedPendingCalls[operation.sequenceName]?.count)<=**")
 
-        let (collection, index) = try self._findCollectionFor(operation:operation, ignoreMissingIndex: false)
-        guard index >= 0 else{
-            return
         }
-        collection.remove(at: index)
-
     }
 
     /// Implements the faulting logic
@@ -419,6 +419,8 @@ open class DataPoint: Object,DataPointProtocol{
     ///   - operation: the faulting call operation
     ///   - error: the error
     public final func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?){
+
+        let sequenceName : CallSequence.Name = operation.sequenceName
 
         self._cleanUpFutureWorks(operation)
 
@@ -434,7 +436,7 @@ open class DataPoint: Object,DataPointProtocol{
                     try self.deleteCallOperation(operation)
 
                     /// And execute the next in the Call Sequence
-                    self.executeNext(from: operation.sequenceName)
+                    self.executeNext(from: sequenceName)
                 }catch{
                     Logger.log(error, category: .critical)
                 }
@@ -490,6 +492,7 @@ open class DataPoint: Object,DataPointProtocol{
         // 1) we don't want to execute tasks if the session is not running live
         // 2) We want to execute sequentially the items segmented per CallSequence
         if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
+            print("NEXT -> Count === \(self._sortedPendingCalls[callSequenceName]?.count) ")
             self._sortedPendingCalls[callSequenceName]?.first?.execute()
         }
     }
@@ -505,25 +508,6 @@ open class DataPoint: Object,DataPointProtocol{
         // By default we keep all the call Operations
         // But you can ovveride this method to limit the size of a call operation collection
         return Int.max
-    }
-
-
-    /// Finds the index of a Call Operation
-
-    ///
-    /// - Parameter operation: the call operation to be found
-    /// - Returns: the the collection and the index of the callOperation
-    /// - Throws: DataPointError is the operation or its collection are not found
-    fileprivate func _findCollectionFor<P, R>(operation:CallOperation<P, R>, ignoreMissingIndex: Bool)throws -> (CollectionOf<CallOperation<P, R>>,CollectionOf<CallOperation<P, R>>.Index) {
-        let parentCollection = self._callOperationsCollections[operation.d_collectionName] as? CollectionOf<CallOperation<P, R>>
-        let index : Int = parentCollection?.index(of: operation) ?? -1
-        if index == -1 && !ignoreMissingIndex {
-            throw DataPointError.callOperationIndexNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
-        }
-        guard let collection = parentCollection else{
-            throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
-        }
-        return (collection,index)
     }
 
 
