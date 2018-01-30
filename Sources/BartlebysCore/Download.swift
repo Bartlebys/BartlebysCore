@@ -20,8 +20,8 @@ public class Download : Model, Payload, Result {
     ///   - downloadPath: the uploadPath
     /// - Returns: the operation
     public static func callOperation(operationName:String, operationPath: String, queryString: String, downloadPath:String)->CallOperation<FilePath, Download>{
-        let parameter = FilePath(relativePath: downloadPath)
-        let operation = CallOperation<FilePath,Download>(operationName: operationName, operationPath: operationPath, queryString: queryString, method: HTTPMethod.GET, resultIsACollection: false, parameter: parameter)
+        let payload = FilePath(relativePath: downloadPath)
+        let operation = CallOperation<FilePath,Download>(operationName: operationName, operationPath: operationPath, queryString: queryString, method: HTTPMethod.GET, resultIsACollection: false, payload: payload)
         operation.sequenceName = CallSequence.downloads
         operation.isDestroyableWhenBlocked = false
         return operation

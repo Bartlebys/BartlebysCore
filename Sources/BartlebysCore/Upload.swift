@@ -22,8 +22,8 @@ public class Upload : Model, Payload, Result  {
     ///   - downloadPath: the uploadPath
     /// - Returns: the operation
     public static func callOperation(operationName:String, operationPath: String, queryString: String,method: HTTPMethod, uploadPath:String)->CallOperation<FilePath, Upload>{
-        let parameter = FilePath(relativePath: uploadPath)
-        let operation = CallOperation<FilePath,Upload>(operationName: operationName, operationPath: operationPath, queryString: queryString, method:method, resultIsACollection: false, parameter: parameter)
+        let payload = FilePath(relativePath: uploadPath)
+        let operation = CallOperation<FilePath,Upload>(operationName: operationName, operationPath: operationPath, queryString: queryString, method:method, resultIsACollection: false, payload: payload)
         operation.sequenceName = CallSequence.uploads
         operation.isDestroyableWhenBlocked = false
         return operation

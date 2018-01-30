@@ -161,13 +161,13 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         return CollectionOf<CallOperation<P, R>>()
     }
 
-    public required init(operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, parameter: P?) {
+    public required init(operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, payload: P?) {
         self.operationName = operationName
         self.path = operationPath
         self.queryString = queryString
         self.method = method
         self.resultIsACollection = resultIsACollection
-        self.payload = parameter
+        self.payload = payload
         super.init()
     }
 

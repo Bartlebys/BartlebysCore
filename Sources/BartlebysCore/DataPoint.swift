@@ -437,7 +437,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameters:
     ///   - operation: the faulting call operation
     ///   - error: the error
-    public func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws{
+    public final func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws{
 
         defer{
             let notificationName = Notification.Name.CallOperation.didSucceed()
@@ -447,7 +447,6 @@ open class DataPoint: Object,DataPointProtocol{
             }
             NotificationCenter.default.post(name: notificationName, object: nil, userInfo:userInfo)
         }
-
 
         operation.hasBeenExecuted()
         try self.deleteCallOperation(operation)
@@ -475,7 +474,6 @@ open class DataPoint: Object,DataPointProtocol{
         }
 
         operation.hasBeenExecuted()
-
         let sequenceName : CallSequence.Name = operation.sequenceName
         self._cleanUpFutureWorks(operation)
 
