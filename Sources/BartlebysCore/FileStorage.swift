@@ -52,7 +52,7 @@ public final class FileStorage{
     fileprivate var _observers=[CollectionProgressObserver]()
     
     /// We use a serial queue for all our IO
-    public fileprivate(set) var persistencyQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.collectionsQueue", qos: .utility, attributes: [])
+    public fileprivate(set) var IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.CollectionIOQueue", qos: .utility, attributes: [])
 
     /// The observation queue (any progress message will be dispatched asynchronously on this queue)
     public var observationQueue:DispatchQueue = DispatchQueue.main
@@ -60,18 +60,24 @@ public final class FileStorage{
     /// This queue is used to integrate the loaded data.
     public var dataQueue:DispatchQueue = DispatchQueue.main
 
+    // Manipulated on the dataQueue
+    fileprivate var _asyncLoading: [AsyncWork] = []
+
+    // Manipulated on the dataQueue
+    fileprivate var _asyncSaving: [AsyncWork] = []
+
     // A unique file manager used exclusively on the persistencyQueue
     public fileprivate(set) var fileManager = FileManager()
 
     // The progress is incremented / decremented via DispatchQueue.main.async
     public fileprivate(set) var progress = Progress()
 
-    fileprivate enum ProgressAction{
-        case loadCollection
-        case saveCollection
+    fileprivate enum WorkNature{
+        case loadCollection(workUID:UID)
+        case saveCollection(workUID:UID)
     }
 
-    fileprivate func _incrementProgressTotalUnitCount(with action:ProgressAction){
+    fileprivate func _incrementProgressTotalUnitCount(for:WorkNature){
         self.observationQueue.async {
             self.progress.totalUnitCount += 1
         }
@@ -101,6 +107,22 @@ public final class FileStorage{
 extension FileStorage: FileStorageProtocol{
 
 
+    public func cancelPendingLoading(){
+        self._asyncSaving.forEach { (work) in
+            work.cancel()
+        }
+        self._asyncSaving.removeAll()
+    }
+
+
+    public func cancelPendingSaving(){
+        self._asyncSaving.forEach { (work) in
+            work.cancel()
+        }
+        self._asyncSaving.removeAll()
+    }
+
+
     // MARK: - Asynchronous (on an serial queue)
     
     /// Loads asynchronously a collection from its file
@@ -109,8 +131,13 @@ extension FileStorage: FileStorageProtocol{
     /// - Parameter proxy: the collection proxy
     public func loadCollection<T>(on proxy:CollectionOf<T>)throws{
 
+        print("AsyncLoading \(self._asyncLoading.count)")
+
+        let workUID = proxy.uid + "_" + Utilities.createUID()
+
+
         if self.isVolatile == true {
-            self._relayTaskCompletionToObservers(collection: proxy, success: true, error: nil)
+            self._conclude(WorkNature.loadCollection(workUID: workUID), collection: proxy, success: true, error: nil)
             return
         }
 
@@ -119,10 +146,11 @@ extension FileStorage: FileStorageProtocol{
         }
 
         proxy.startLoading()
+        self._incrementProgressTotalUnitCount(for: WorkNature.loadCollection(workUID: workUID))
 
-        self._incrementProgressTotalUnitCount(with: ProgressAction.loadCollection)
 
-        self.persistencyQueue.async{
+        // Creates a WorkItem to schedule the call
+        let workItem = DispatchWorkItem.init {
             do {
                 let url = self.getURL(of: proxy)
                 if self.fileManager.fileExists(atPath: url.path) {
@@ -130,15 +158,18 @@ extension FileStorage: FileStorageProtocol{
                     let collection = try self.coder.decode(CollectionOf<T>.self, from: data)
                     self.dataQueue.async {
                         proxy.append(contentsOf: collection)
-                        proxy.didLoad()
                     }
                 }
                 // The collection has been saved.
-                self._relayTaskCompletionToObservers(collection: proxy, success: true, error: nil)
-
+                self._conclude(WorkNature.loadCollection(workUID: workUID), collection: proxy, success: true, error: nil)
             } catch {
-                self._relayTaskCompletionToObservers(collection: proxy, success: false, error: error)
+                self._conclude(WorkNature.loadCollection(workUID: workUID), collection: proxy, success: false, error: error)
             }
+        }
+
+        self.dataQueue.async{
+            let work = AsyncWork(dispatchWorkItem: workItem, delay: 0, associatedUID: workUID,queue:self.IOQueue)
+            self._asyncLoading.append(work)
         }
     }
     
@@ -151,8 +182,10 @@ extension FileStorage: FileStorageProtocol{
     ///   - collection: the collection reference
     public func saveCollection<T>(_ collection:CollectionOf<T>)throws{
 
+        let workUID = collection.uid + "_" + Utilities.createUID()
+
         if self.isVolatile {
-            self._relayTaskCompletionToObservers(collection: collection, success: true, error: nil)
+            self._conclude(WorkNature.saveCollection(workUID: workUID), collection: collection, success: true, error: nil)
             return
         }
 
@@ -162,8 +195,11 @@ extension FileStorage: FileStorageProtocol{
 
         collection.startSaving()
 
-        self._incrementProgressTotalUnitCount(with:ProgressAction.saveCollection)
-        self.persistencyQueue.async{
+
+        self._incrementProgressTotalUnitCount(for:WorkNature.saveCollection(workUID: workUID))
+
+        // Creates a WorkItem to schedule the call
+        let workItem = DispatchWorkItem.init {
             do {
                 let directoryURL = self.baseUrl.appendingPathComponent(collection.relativeFolderPath)
                 let url = self.getURL(of: collection)
@@ -175,30 +211,51 @@ extension FileStorage: FileStorageProtocol{
 
                 let data = try self.coder.encode(collection)
                 try data.write(to: url)
-                collection.changesHasBeenSaved()
-                collection.didSave()
 
                 // The collection has been saved.
-                self._relayTaskCompletionToObservers(collection: collection, success: true, error: nil)
-
+                self._conclude(WorkNature.loadCollection(workUID: workUID),collection: collection, success: true, error: nil)
             } catch {
-                self._relayTaskCompletionToObservers(collection: collection, success: false, error: error)
+                self._conclude(WorkNature.loadCollection(workUID: workUID),collection: collection, success: false, error: error)
             }
+        }
+        self.dataQueue.async {
+            let work = AsyncWork(dispatchWorkItem: workItem, delay: 0, associatedUID: workUID,queue:self.IOQueue)
+            self._asyncSaving.append(work)
         }
     }
 
 
 
-    /// Relays to the observers and clean up the _progress
+    /// Concludes the work:
     ///
     /// - Parameters:
-    ///   - action: the progres action
+    ///   - nature: the progres action
     ///   - fileName: the fileName
     ///   - success: the success state
     ///   - error: the associated error
-    fileprivate func _relayTaskCompletionToObservers<T>(collection:CollectionOf<T>,success:Bool, error:Error?){
+    fileprivate func _conclude<T>(_ nature:WorkNature,collection:CollectionOf<T>,success:Bool, error:Error?){
         self.observationQueue.async {
+
+            switch nature{
+            case .loadCollection(let workUID):
+                // Remove the asyncWork
+                if let index = self._asyncLoading.index(where: {$0.associatedUID == workUID }){
+                    self._asyncLoading.remove(at: index)
+                }
+                collection.didLoad()
+            case .saveCollection(let workUID):
+                // Remove the asyncWork
+                if let index = self._asyncSaving.index(where: {$0.associatedUID == workUID }){
+                    self._asyncSaving.remove(at: index)
+                }
+                collection.changesHasBeenSaved()
+                collection.didSave()
+            }
+
+            // Update the progress
             self.progress.completedUnitCount += 1
+
+            // Relay to the observers
             for observer in self._observers{
                 if let error = error{
                     observer.onProgress(collection.fileName, success, "\(error)", self.progress)
@@ -206,6 +263,7 @@ extension FileStorage: FileStorageProtocol{
                     observer.onProgress(collection.fileName, success, nil, self.progress)
                 }
             }
+
             // Reset if necessary the progress object
             if self.progress.completedUnitCount == self.progress.totalUnitCount {
                 self.progress.completedUnitCount = 0
@@ -292,7 +350,7 @@ extension FileStorage: FileStorageProtocol{
         if self.isVolatile == true {
             return
         }
-        self.persistencyQueue.sync{
+        self.IOQueue.sync{
             do{
                 let url = self.getURL(of: element)
                 if self.fileManager.fileExists(atPath: url.path) {
@@ -311,7 +369,7 @@ extension FileStorage: FileStorageProtocol{
         if self.isVolatile == true {
             return
         }
-        self.persistencyQueue.sync{
+        self.IOQueue.sync{
             do{
                 let url = self.baseUrl
                 if self.fileManager.fileExists(atPath: url.path) {
