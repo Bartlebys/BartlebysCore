@@ -116,10 +116,18 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       }
    }
 
-
    @discardableResult public func remove(at index: Int) -> T {
       self.hasChanged = true
       return self._items.remove(at: index)
+   }
+   
+   @discardableResult public func remove(_ item: T) -> Bool {
+      self.hasChanged = true
+      if let index = self._items.index(of: item) {
+         self.remove(at: index)
+         return true
+      }
+      return false
    }
 
    public func append(_ newElement: T) {
