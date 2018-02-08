@@ -296,7 +296,7 @@ open class DataPoint: Object,DataPointProtocol{
             let loginString = "\(self.credentials.username):\(self.credentials.password)"
             if let loginData: Data = loginString.data(using: .utf8) {
                 let base64LoginString: String = loginData.base64EncodedString()
-                request.setValue(base64LoginString, forHTTPHeaderField: "Authorization")
+                request.setValue("Basic " + base64LoginString, forHTTPHeaderField: "Authorization")
             }
         }
         
@@ -544,7 +544,7 @@ open class DataPoint: Object,DataPointProtocol{
         // 1) we don't want to execute tasks if the session is not running live
         // 2) We want to execute sequentially the items segmented per CallSequence
         if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
-            self._sortedPendingCalls[callSequenceName]?.first?.execute()
+//            self._sortedPendingCalls[callSequenceName]?.first?.execute()
         }
     }
 
