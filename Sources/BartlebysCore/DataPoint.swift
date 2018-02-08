@@ -544,6 +544,8 @@ open class DataPoint: Object,DataPointProtocol{
         // 1) we don't want to execute tasks if the session is not running live
         // 2) We want to execute sequentially the items segmented per CallSequence
         if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
+            
+            // @todo @bpds IMPORTANT
 //            self._sortedPendingCalls[callSequenceName]?.first?.execute()
         }
     }
