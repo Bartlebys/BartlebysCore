@@ -16,6 +16,9 @@ public var MODELS_PRIMARY_KEY:CodableObject.CodableModelCodingKeys = CodableObje
 // the explicit UID type used for expressivity
 public typealias UID = String
 
+// By default, the UIDs are base64 encoded to be compliant with MongodB ids
+public var BASE64_ENCODED_UIDS = true
+
 // A flag to distinguish non provisioned call operation
 public let ORDER_OF_EXECUTION_UNDEFINED:Int = -1
 

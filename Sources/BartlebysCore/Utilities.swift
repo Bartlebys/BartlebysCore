@@ -14,9 +14,16 @@ public struct Utilities {
     ///
     /// - Returns: returns the identifier
     public static func createUID() -> UID {
-        let uid = UUID.init().uuidString
-        let utf8 = uid.data(using: .utf8)!
-        return utf8.base64EncodedString()
+        
+        if BASE64_ENCODED_UIDS {
+            let uid = UUID.init().uuidString
+            let utf8 = uid.data(using: .utf8)!
+            return utf8.base64EncodedString()
+        } else {
+            let uid = UUID.init().uuidString.replacingOccurrences(of: "-", with: "")
+            return uid
+        }
+
     }
     
 }
