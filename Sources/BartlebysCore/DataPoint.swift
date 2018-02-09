@@ -543,9 +543,10 @@ open class DataPoint: Object,DataPointProtocol{
     fileprivate func _executeNextCallOperation(from callSequenceName:CallSequence.Name){
         // 1) we don't want to execute tasks if the session is not running live
         // 2) We want to execute sequentially the items segmented per CallSequence
-        if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
-            
-            // @todo @bpds IMPORTANT
+        // 3) we take account of the current pendingCallsUIDS counts
+        if  self.currentState == .online
+            && !self._futureWorksArePlanifiedFor(callSequenceName)
+            && self.session.pendingCallsUIDS.count == 0 {
             self._sortedPendingCalls[callSequenceName]?.first?.execute()
         }
     }
