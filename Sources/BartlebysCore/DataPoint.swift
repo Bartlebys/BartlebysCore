@@ -437,7 +437,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameters:
     ///   - operation: the faulting call operation
     ///   - error: the error
-    public final func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws{
+    open func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws{
 
         defer{
             let notificationName = Notification.Name.CallOperation.didSucceed()
@@ -460,7 +460,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameters:
     ///   - operation: the faulting call operation
     ///   - error: the error
-    public final func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?) throws {
+    open func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?) throws {
 
         defer{
             // Send a notification
@@ -834,7 +834,7 @@ extension DataPoint{
             if let order:Int = try self.getFromKVS(key: DataPoint.sessionLastExecutionKVSKey){
                 return order
             }
-        }catch KeyValueStorageError.keyNotFound{
+        }catch KeyValueStorageError.keyNotFound(_){
             // it may be the first time
         }catch{
             // That's not normal

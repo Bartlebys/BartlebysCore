@@ -29,4 +29,11 @@ public protocol KeyValueStorage{
     func getFromKVS<T:Codable>(key:String)throws ->T
 
 
+    /// Returns if the KVS contains a value for this key.
+    ///
+    /// - Parameter key: the key
+    /// - Returns: true if the key exists
+    func hasValueFor(key:String) -> Bool
+
+
 }

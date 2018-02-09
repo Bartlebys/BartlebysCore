@@ -9,7 +9,7 @@
 import Foundation
 
 public enum KeyValueStorageError:Error{
-    case keyNotFound
+    case keyNotFound(key:String)
 }
 
 
@@ -54,7 +54,7 @@ extension DataPoint:KeyValueStorage{
     /// - Throws: KeyValueStorageError.keyNotFound if the key is not set, and JSON coder error on decoding issue
     public func getFromKVS<T:Codable>(key:String)throws ->T{
         guard let keyedData = self.keyedDataCollection.first(where:{$0.key == key }) else {
-            throw KeyValueStorageError.keyNotFound
+            throw KeyValueStorageError.keyNotFound(key: key)
         }
         let data = keyedData.data
         do{
@@ -71,10 +71,6 @@ extension DataPoint:KeyValueStorage{
         }
     }
 
-
-    // MARK: - Codable
-
-
     /// Recover the saved instance (For Tolerent instances)
     ///
     /// - Parameter byKey: the identification key (must be unique)
@@ -82,11 +78,21 @@ extension DataPoint:KeyValueStorage{
     /// - Throws: KeyValueStorageError.keyNotFound if the key is not set, and JSON coder error on decoding issue
     public func getFromKVS<T:Codable & Tolerent >(key:String)throws ->T{
         guard let keyedData = self.keyedDataCollection.first(where:{$0.key == key }) else {
-            throw KeyValueStorageError.keyNotFound
+            throw KeyValueStorageError.keyNotFound(key: key)
         }
         let data = keyedData.data
         let instance = try self.storage.coder.decode(T.self, from: data)
         return instance
+    }
+
+
+
+    /// Returns if the KVS contains a value for this key.
+    ///
+    /// - Parameter key: the key
+    /// - Returns: true if the key exists
+    public func hasValueFor(key:String) -> Bool{
+        return self.keyedDataCollection.first(where:{$0.key == key }) != nil
     }
 
 
