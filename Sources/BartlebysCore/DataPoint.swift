@@ -546,7 +546,7 @@ open class DataPoint: Object,DataPointProtocol{
         if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
             
             // @todo @bpds IMPORTANT
-//            self._sortedPendingCalls[callSequenceName]?.first?.execute()
+            self._sortedPendingCalls[callSequenceName]?.first?.execute()
         }
     }
 
