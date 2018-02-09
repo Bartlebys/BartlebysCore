@@ -42,6 +42,10 @@
 		E52527AB2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52E5E32202D95BE00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
+		E52E5E33202D9A0300D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
+		E52E5E34202D9A0D00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
+		E52E5E35202D9A0E00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
+		E52E5E36202D9A0F00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
 		E540CB752011E97C00A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB762011E97C00A531A9 /* BTree.framework */; };
 		E540CB772011E98800A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB782011E98800A531A9 /* BTree.framework */; };
 		E540CB792011E99000A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7A2011E99000A531A9 /* BTree.framework */; };
@@ -1431,6 +1435,7 @@
 				E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E51AF60E201A45EC009E1E0E /* VoidResult.swift in Sources */,
+				E52E5E34202D9A0D00D25B61 /* CallOperationReceiver.swift in Sources */,
 				E5ECA0121FF656AF008BF543 /* Session.swift in Sources */,
 				E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA1200CA74B00AB9A44 /* FileSavable.swift in Sources */,
@@ -1527,6 +1532,7 @@
 				E50C5C9E1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5ECA0521FF657A6008BF543 /* Download.swift in Sources */,
 				E51AF610201A45EE009E1E0E /* VoidResult.swift in Sources */,
+				E52E5E35202D9A0E00D25B61 /* CallOperationReceiver.swift in Sources */,
 				E5ECA06B1FF657A6008BF543 /* Session.swift in Sources */,
 				E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA2200CA74B00AB9A44 /* FileSavable.swift in Sources */,
@@ -1623,6 +1629,7 @@
 				E5ECA09B1FF65851008BF543 /* Download.swift in Sources */,
 				E553813A20036C7D0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E51AF611201A45EF009E1E0E /* VoidResult.swift in Sources */,
+				E52E5E36202D9A0F00D25B61 /* CallOperationReceiver.swift in Sources */,
 				E5ECA0B41FF65851008BF543 /* Session.swift in Sources */,
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA3200CA74B00AB9A44 /* FileSavable.swift in Sources */,
@@ -1706,6 +1713,7 @@
 				E5F3CDFD200D1C2000AB9A44 /* LogEntry.swift in Sources */,
 				E5F3CDFE200D1C2000AB9A44 /* Download.swift in Sources */,
 				E51AF60D201A45EB009E1E0E /* VoidResult.swift in Sources */,
+				E52E5E33202D9A0300D25B61 /* CallOperationReceiver.swift in Sources */,
 				E5F3CDFF200D1C2000AB9A44 /* Session.swift in Sources */,
 				E5F3CE00200D1C2000AB9A44 /* VoidPayload.swift in Sources */,
 				E5F3CE01200D1C2000AB9A44 /* FileSavable.swift in Sources */,
