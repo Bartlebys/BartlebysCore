@@ -41,6 +41,7 @@
 		E52527AA2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AB2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
 		E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527A82000E54700D9A148 /* IndistinctCollection.swift */; };
+		E52E5E32202D95BE00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
 		E540CB752011E97C00A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB762011E97C00A531A9 /* BTree.framework */; };
 		E540CB772011E98800A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB782011E98800A531A9 /* BTree.framework */; };
 		E540CB792011E99000A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7A2011E99000A531A9 /* BTree.framework */; };
@@ -495,6 +496,7 @@
 		E52A846B1FF5033E00F2408B /* Model+RelationsResolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Model+RelationsResolution.swift"; sourceTree = "<group>"; };
 		E52A847A1FF50D5800F2408B /* Model+Erasure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Erasure.swift"; sourceTree = "<group>"; };
 		E52A847C1FF5294500F2408B /* ManagedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedCollection.swift; sourceTree = "<group>"; };
+		E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallOperationReceiver.swift; sourceTree = "<group>"; };
 		E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		E540CB732011DCF600A531A9 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../../Package.swift; sourceTree = "<group>"; };
 		E540CB762011E97C00A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -737,6 +739,7 @@
 				E5BAB6BF200120C900386A9B /* Aliasable.swift */,
 				E5DBB1D0200224770079F4C6 /* Aliased.swift */,
 				E5BAB6C1200120E400386A9B /* AliasesResolution.swift */,
+				E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */,
 				4D55FC861FDAF68F001D91CE /* Collectable.swift */,
 				E51E0EF31FDD47AC00414D6C /* ConcreteCoder.swift */,
 				E5A0E0391FDBEAF300FB4DE3 /* DataPointProtocol.swift */,
@@ -1331,6 +1334,7 @@
 				E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */,
 				E5EC9FA61FF655FE008BF543 /* Download.swift in Sources */,
 				E5AE11F3201A104700D7E179 /* VoidResult.swift in Sources */,
+				E52E5E32202D95BE00D25B61 /* CallOperationReceiver.swift in Sources */,
 				E5EC9FBF1FF655FE008BF543 /* Session.swift in Sources */,
 				E5EC9FC51FF655FE008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA0200CA74B00AB9A44 /* FileSavable.swift in Sources */,

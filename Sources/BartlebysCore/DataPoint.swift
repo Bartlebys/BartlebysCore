@@ -834,7 +834,7 @@ extension DataPoint{
             if let order:Int = try self.getFromKVS(key: DataPoint.sessionLastExecutionKVSKey){
                 return order
             }
-        }catch KeyValueStorageError.keyNotFound(let _){
+        }catch KeyValueStorageError.keyNotFound(_){
             // it may be the first time
         }catch{
             // That's not normal

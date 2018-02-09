@@ -13,7 +13,7 @@ public enum AuthenticationMethod {
 
 
 /// Base Session Delegate check also DataPointProtocol
-public protocol SessionDelegate {
+public protocol SessionDelegate:CallOperationReceiver {
 
     // We can use any coding dialect
     // That may be different than the storage's
@@ -80,23 +80,6 @@ public protocol SessionDelegate {
     /// - Parameter operation: the targeted Call Operation
     /// - Throws: throws error is the call operation or its collection is not found
     func deleteCallOperation<P, R>(_ operation: CallOperation<P, R>) throws
-
-
-    /// Implements Called on success
-    ///
-    /// - Parameters:
-    ///   - operation: the faulting call operation
-    ///   - error: the error
-    func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws
-
-
-    /// Implements the faulting logic
-    ///
-    /// - Parameters:
-    ///   - operation: the faulting call operation
-    ///   - error: the error
-    func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?) throws
-    
 
     /// Used to determine if we should destroy some Operations
     /// Returns a quota of operation to preserve for each sequence.
