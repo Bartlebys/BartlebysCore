@@ -9,14 +9,6 @@
 import Foundation
 import Dispatch
 
-#if USE_BTREE
-#if !USE_EMBEDDED_MODULES
-   import BTree
-#endif
-   fileprivate typealias _ContainerType = List
-#else
-   fileprivate typealias _ContainerType = Array
-#endif
 
 public enum CollectionOfError:Error {
    case collectionIsNotRegistred
@@ -37,8 +29,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    // MARK: -
    public let uid: UID = Utilities.createUID()
 
-   // @todo waiting for [SE-0143](https://github.com/apple/swift-evolution/blob/master/proposals/0143-conditional-conformances.md)
-   fileprivate var _items: _ContainerType<T> = _ContainerType<T>()
+   fileprivate var _items: Array<T> = Array<T>()
 
    // We expose the collection type
    public var collectedType:T.Type { return T.self }
@@ -289,20 +280,12 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    /// Returns an array of Any view by reference
    /// Can be Used by Array Controllers in Cocoa bindings
    public var unTypedArrayView:[Any] {
-      #if USE_BTREE
-         return list.arrayView as! [Any]
-      #else
-         return self._items as [Any]
-      #endif
+      return self._items as [Any]
    }
 
    /// Returns an array view by reference
    public var arrayView:[T]{
-      #if USE_BTREE
-          return list.arrayView as! [T]
-      #else
-         return self._items
-      #endif
+      return self._items
    }
 
 
@@ -328,7 +311,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
 
    required public init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
-      self._items = try values.decode(_ContainerType<T>.self, forKey:.items)
+      self._items = try values.decode(Array<T>.self, forKey:.items)
       self.fileName =  try values.decode(String.self, forKey:.fileName)
       self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
    }

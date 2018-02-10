@@ -8,15 +8,7 @@
 
 import Foundation
 
-#if USE_BTREE
-#if !USE_EMBEDDED_MODULES
-    import BTree
-#endif
-    fileprivate typealias _ContainerType = Map
-#else
-    fileprivate typealias _ContainerType = Dictionary
-#endif
-
+fileprivate typealias _ContainerType = Dictionary
 
 public enum DataPointError : Error{
     case invalidURL
