@@ -43,8 +43,8 @@ public class Session {
 
     public fileprivate(set) var isRunningLive:Bool = true
 
-    // We store the running call operations UIDS to enable to detect multiple simultaneous execution
-    public fileprivate(set) var pendingCallsUIDS = [UID]()
+    // We store the running call operations UIDS
+    public fileprivate(set) var runningCallsUIDS = [UID]()
 
     // shortcuts to the delegate
     public var credentials: Credentials { return self.delegate.credentials }
@@ -84,7 +84,7 @@ public class Session {
     }
 
     
-    // MARK: - CallOperations Runtime
+    // MARK: - CallOperations Level
 
     /// Stores the operaiton with an execution order for future usage.
     /// Executes the Call operation immediately if runing live
@@ -102,18 +102,15 @@ public class Session {
     }
 
     /// Provisions the operation for defered execution
+    /// The execution may occur immediately or not according to the current Load
     ///
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
     public func executeLater<P, R>(_ operation:CallOperation<P, R>){
         self._provision(operation)
+        self.delegate.executeNextCallOperations(from: operation.sequenceName)
     }
 
-
-    //
-    public func resumeExecution(){
-        //@todo @bpds
-    }
 
     fileprivate func _provision<P,R>(_ operation:CallOperation<P,R>){
         operation.sessionIdentifier = self.identifier
@@ -137,18 +134,18 @@ public class Session {
     /// - Throws: errors on preflight
     fileprivate func _runCall<P, R>(_ operation: CallOperation<P, R>) throws {
 
-        guard !self.pendingCallsUIDS.contains(operation.uid) else{
+        guard !self.runningCallsUIDS.contains(operation.uid) else{
             throw SessionError.multipleExecutionAttempts
         }
 
-        self.pendingCallsUIDS.append(operation.uid)
+        self.runningCallsUIDS.append(operation.uid)
 
         let request: URLRequest = try self.delegate.requestFor(operation)
         let failureClosure: ((Failure) -> ()) = { response in
             syncOnMain {
                 // Call the delegate
                 do{
-                    self._removeOperationFromPendingCalls(operation)
+                    self._removeOperationFromRunningCalls(operation)
                     // Relay the failure to the Data Point
                     try self.delegate.callOperationExecutionDidFail(operation,error:response.error)
                 }catch{
@@ -192,24 +189,23 @@ public class Session {
     ///   - operation: the callOperation
     fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>){
         do{
-            self._removeOperationFromPendingCalls(operation)
+            self._removeOperationFromRunningCalls(operation)
             try self.delegate.callOperationExecutionDidSucceed(operation)
         }catch{
             Logger.log("\(error)", category: .critical)
         }
     }
 
-
-    /// Removes the CallOperationUID from the pending Calls.
+    /// Removes the CallOperationUID from the Running Calls.
     ///
     /// - Parameter operation: the operation
-    fileprivate func _removeOperationFromPendingCalls<P,R>(_ operation:CallOperation<P,R>){
-        if let indexOfOperation = self.pendingCallsUIDS.index(of: operation.uid){
-            self.pendingCallsUIDS.remove(at: indexOfOperation)
+    fileprivate func _removeOperationFromRunningCalls<P,R>(_ operation:CallOperation<P,R>){
+        if let indexOfOperation = self.runningCallsUIDS.index(of: operation.uid){
+            self.runningCallsUIDS.remove(at: indexOfOperation)
         }
     }
 
-    // MARK: - HTTP Engine
+    // MARK: - HTTP Engine (Request level)
     
     public func call<R>(  request: URLRequest,
                           resultType: R.Type,

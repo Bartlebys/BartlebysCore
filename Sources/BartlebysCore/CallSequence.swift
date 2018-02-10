@@ -19,4 +19,11 @@ public struct CallSequence {
     public static let uploads:CallSequence.Name = "uploads" // used for files uploads
     public static let downloads:CallSequence.Name = "downloads" // used for files downloads
 
+    // The name of the CallSequence
+    public var name:Name
+
+    // The bunch size define the number of parallel call operations in a call Sequence
+    // The execution order is always garanted (but not the result order if bunchSize > 1)
+    public var bunchSize:Int = 1
+
 }
