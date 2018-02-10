@@ -503,23 +503,28 @@ open class DataPoint: Object,DataPointProtocol{
 
         // We try to maintain a concurrent bunch of CallOperation
         if runningCounter + nbOfFutureWorks  < bunchSize{
-            let nbOfIteration = bunchSize - runningCounter
-            for _ in 0..<nbOfIteration {
-                if let callOperation = self._sortedPendingCalls[callSequenceName]?.first{
-                    if useAsyncWorks{
-                        // Execute after the last future works
-                        self._runOperationInAsyncWork(callOperation, delay: maxFutureDelay)
-                    }else{
-                        do{
-                            try callOperation.runIfProvisioned()
-                        }catch{
-                            Logger.log(error, category: .critical)
-                        }
 
-                    }
+            guard let availableOperations = self._sortedPendingCalls[callSequenceName] else{
+                return
+            }
+
+            let availableNumberOfOperations = availableOperations.count
+            guard availableNumberOfOperations > 0 else{
+                return
+            }
+            let nbOfIteration = min(bunchSize - runningCounter, availableNumberOfOperations)
+            for i in 0..<nbOfIteration {
+                let callOperation = availableOperations[i]
+                if useAsyncWorks{
+                    // Execute after the last future works
+                    self._runOperationInAsyncWork(callOperation, delay: maxFutureDelay)
                 }else{
-                    // There is no more call operation in this CallSequence.
-                    break
+                    do{
+                        try callOperation.runIfProvisioned()
+                    }catch{
+                        Logger.log(error, category: .critical)
+                    }
+
                 }
             }
         }else{
