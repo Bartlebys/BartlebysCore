@@ -26,4 +26,9 @@ public struct CallSequence {
     // The execution order is always garanted (but not the result order if bunchSize > 1)
     public var bunchSize:Int = 1
 
+    public init(name: Name, bunchSize: Int){
+        self.name = name
+        self.bunchSize = bunchSize
+    }
+
 }

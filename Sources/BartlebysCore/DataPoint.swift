@@ -463,7 +463,7 @@ open class DataPoint: Object,DataPointProtocol{
     public final func executeNextCallOperations(from callSequenceName:CallSequence.Name){
 
         // Block the execution if we are explicitly offLine
-        guard self.currentState == .offline else{
+        guard self.currentState == .online else{
             return
         }
 
@@ -510,14 +510,20 @@ open class DataPoint: Object,DataPointProtocol{
                         // Execute after the last future works
                         self._runOperationInAsyncWork(callOperation, delay: maxFutureDelay)
                     }else{
-                        // Execute immediately
-                        callOperation.execute()
+                        do{
+                            try callOperation.runIfProvisioned()
+                        }catch{
+                            Logger.log(error, category: .critical)
+                        }
+
                     }
                 }else{
                     // There is no more call operation in this CallSequence.
                     break
                 }
             }
+        }else{
+            // There are enough running or planified (AsyncWork) CallOperation
         }
     }
 

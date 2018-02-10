@@ -12,6 +12,7 @@ enum SessionError : Error {
     case deserializationFailed
     case fileNotFound
     case multipleExecutionAttempts
+    case unProvisionedOperation
 }
 
 // Created in a DataPoint
@@ -86,29 +87,18 @@ public class Session {
     
     // MARK: - CallOperations Level
 
-    /// Stores the operaiton with an execution order for future usage.
-    /// Executes the Call operation immediately if runing live
-    ///
-    /// - Parameter operation: the call operation
-    public func execute<P, R>(_ operation: CallOperation<P, R>){
-        self._provision(operation)
-        if self.isRunningLive {
-            do {
-                try self._runCall(operation)
-            } catch {
-                Logger.log("\(error)", category: .critical)
-            }
-        }
-    }
 
-    /// Provisions the operation for defered execution
+    /// Provisions the operation
     /// The execution may occur immediately or not according to the current Load
+    /// The order of the call are guaranted not the order of the Results if the Bunchsize is > 1
     ///
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
-    public func executeLater<P, R>(_ operation:CallOperation<P, R>){
+    public func execute<P, R>(_ operation:CallOperation<P, R>){
         self._provision(operation)
-        self.delegate.executeNextCallOperations(from: operation.sequenceName)
+        if self.isRunningLive {
+            self.delegate.executeNextCallOperations(from: operation.sequenceName)
+        }
     }
 
 
@@ -132,7 +122,11 @@ public class Session {
     ///
     /// - Parameter operation: the call operation
     /// - Throws: errors on preflight
-    fileprivate func _runCall<P, R>(_ operation: CallOperation<P, R>) throws {
+    public final func runCall<P, R>(_ operation: CallOperation<P, R>) throws {
+
+        guard operation.scheduledOrderOfExecution > ORDER_OF_EXECUTION_UNDEFINED else{
+            throw SessionError.unProvisionedOperation
+        }
 
         guard !self.runningCallsUIDS.contains(operation.uid) else{
             throw SessionError.multipleExecutionAttempts
