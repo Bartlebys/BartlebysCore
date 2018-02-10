@@ -140,10 +140,11 @@ open class DataPoint: Object,DataPointProtocol{
         self.session.applyState()
         switch newState{
         case .online:
-            // Resume
-            for sequ in self._sortedPendingCalls.keys{
-                self._sortedPendingCalls[sequ]?.first?.execute()
+             // Resume
+            for callSequence in self._callSequences{
+                self.executeNextCallOperations(from: callSequence.name)
             }
+
         case .offline:
             // Cancel futures calls.
             for sequ in self._futureWorks.keys{
@@ -508,13 +509,14 @@ open class DataPoint: Object,DataPointProtocol{
                 return
             }
 
-            let availableNumberOfOperations = availableOperations.count
-            guard availableNumberOfOperations > 0 else{
+            let filteredOperations = availableOperations.filter({!self.session.runningCallsUIDS.contains($0.uid)})
+            let numberOfOperations = filteredOperations.count
+            guard numberOfOperations > 0 else{
                 return
             }
-            let nbOfIteration = min(bunchSize - runningCounter, availableNumberOfOperations)
+            let nbOfIteration = min(bunchSize - runningCounter, numberOfOperations)
             for i in 0..<nbOfIteration {
-                let callOperation = availableOperations[i]
+                let callOperation = filteredOperations[i]
                 if useAsyncWorks{
                     // Execute after the last future works
                     self._runOperationInAsyncWork(callOperation, delay: maxFutureDelay)
