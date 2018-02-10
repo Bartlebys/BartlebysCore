@@ -509,7 +509,21 @@ open class DataPoint: Object,DataPointProtocol{
                 return
             }
 
-            let filteredOperations = availableOperations.filter({!self.session.runningCallsUIDS.contains($0.uid)})
+            // Optimized filtering (we stop when we have reached the required number of operation)
+            // The availableOperations number may be very important.
+            var filteredOperations = [CallOperationProtocol]()
+            var filterCounter = 0
+            for operation in availableOperations{
+                if !self.session.runningCallsUIDS.contains(operation.uid){
+                    filteredOperations.append(operation)
+                    filterCounter += 1
+                }
+                if filterCounter == bunchSize{
+                    break
+                }
+            }
+
+
             let numberOfOperations = filteredOperations.count
             guard numberOfOperations > 0 else{
                 return
