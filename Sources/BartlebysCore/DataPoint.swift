@@ -8,8 +8,6 @@
 
 import Foundation
 
-fileprivate typealias _ContainerType = Dictionary
-
 public enum DataPointError : Error{
     case invalidURL
     case voidURLRequest
@@ -69,17 +67,20 @@ open class DataPoint: Object,DataPointProtocol{
     /// Contains all the data Point collections
     /// Populated by registerCollection
     /// - Returns: the data Point model collections
-    fileprivate var _collections:[FileSavable] = [FileSavable]()
+    fileprivate var _collections:[IndistinctCollection] = [IndistinctCollection]()
     
     /// The collection hashed per fileNam
-    fileprivate var _collectionsPerFileName = [String:FileSavable]()
+    fileprivate var _collectionsByFileName = [String:IndistinctCollection]()
+
+    // The collection by collection name
+    fileprivate var _collectionsByName = [String:IndistinctCollection]()
     
     /// The collection hashed by typeName
-    fileprivate var _collectionsPerCollectedTypeName = [String:FileSavable]()
+    fileprivate var _collectionsByCollectedTypeName = [String:IndistinctCollection]()
     
     // this centralized dictionary allows to access to any referenced object by its UID
     // Uses a binary tree
-    fileprivate var _instancesByUID=_ContainerType<UID,Any>()
+    fileprivate var _instancesByUID = Dictionary<UID,Any>()
     
     /// Defered Ownership
     /// If we receive a Instance that refers to an unexisting Owner
@@ -140,7 +141,7 @@ open class DataPoint: Object,DataPointProtocol{
         self.session.applyState()
         switch newState{
         case .online:
-             // Resume
+            // Resume
             for callSequence in self._callSequences{
                 self.executeNextCallOperations(from: callSequence.name)
             }
@@ -238,8 +239,9 @@ open class DataPoint: Object,DataPointProtocol{
         // Reference the DataPoint
         collection.dataPoint = self
         self._collections.append(collection)
-        self._collectionsPerFileName[collection.fileName] = collection
-        self._collectionsPerCollectedTypeName[T.typeName] = collection
+        self._collectionsByFileName[collection.fileName] = collection
+        self._collectionsByCollectedTypeName[T.typeName] = collection
+        self._collectionsByName[collection.d_collectionName] = collection
     }
 
 
@@ -265,7 +267,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter fileName: the fileName of the searched collection
     /// - Returns: the CollectionOf
     public func collection<T>(with fileName:String)->CollectionOf<T>?{
-        return self._collectionsPerFileName[fileName] as? CollectionOf<T>
+        return self._collectionsByFileName[fileName] as? CollectionOf<T>
     }
     
     
@@ -354,7 +356,7 @@ open class DataPoint: Object,DataPointProtocol{
     public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
         
         // Upsert the relevent call Operation collection
-        guard let collection = self._collectionsPerCollectedTypeName[CallOperation<P, R>.typeName] as? CollectionOf<CallOperation<P, R>> else{
+        guard let collection = self._collectionsByCollectedTypeName[CallOperation<P, R>.typeName] as? CollectionOf<CallOperation<P, R>> else{
             throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
         }
         
@@ -517,7 +519,7 @@ open class DataPoint: Object,DataPointProtocol{
             for operation in availableOperations{
                 // Filter the running and futures works
                 if !self.session.runningCallsUIDS.contains(operation.uid) &&
-                   !futuresWorksUIDs.contains(operation.uid){
+                    !futuresWorksUIDs.contains(operation.uid){
                     filteredOperations.append(operation)
                     filterCounter += 1
                 }
@@ -683,7 +685,7 @@ open class DataPoint: Object,DataPointProtocol{
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
-            try collection.saveToFile()
+            try (collection as? FileSavable)?.saveToFile()
         }
     }
 
@@ -726,7 +728,29 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Returns: the collection
     open func collectionFor<T:Collectable & Codable> ()->CollectionOf<T>?{
-        return self._collectionsPerCollectedTypeName[T.typeName] as? CollectionOf<T>
+        return self._collectionsByCollectedTypeName[T.typeName] as? CollectionOf<T>
+    }
+
+
+    // MARK: - Dynamic collections & Dynamic Upsert (e.g: BartlebyKit Triggers)
+
+
+    /// Recover a collection from its name
+    ///
+    /// - Returns: the collection
+    open func collectionNamed (_ name:String)->IndistinctCollection?{
+        return self._collectionsByName[name]
+    }
+
+    /// Upsert the serialized data into a named collection.
+    ///
+    /// - Parameters:
+    ///   - data: a serialized item
+    ///   - named: the name of the collection
+    open func upsertItem (_ data:Data, intoCollection named:String){
+        if let collection = self.collectionNamed(named){
+            collection.upsertItem(data)
+        }
     }
 
 
@@ -756,13 +780,12 @@ open class DataPoint: Object,DataPointProtocol{
     /// Sorted by scheduledOrderOfExecution
     fileprivate func _recoverThePendingCallOperations(){
         for collection in self._collections{
-            if let collection = collection as? IndistinctCollection{
-                if let callOperations = collection.dynamicCallOperations{
-                    if let firstElement = callOperations.first{
-                        self._sortedPendingCalls[firstElement.sequenceName]?.append(contentsOf: callOperations)
-                    }
+            if let callOperations = collection.dynamicCallOperations{
+                if let firstElement = callOperations.first{
+                    self._sortedPendingCalls[firstElement.sequenceName]?.append(contentsOf: callOperations)
                 }
             }
+
         }
         for sequenceNamed in self._sortedPendingCalls.keys{
             self._sortedPendingCalls[sequenceNamed]?.sort { (lCalOp, rCalOp) -> Bool in

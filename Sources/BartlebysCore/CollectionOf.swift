@@ -182,10 +182,14 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    ///
    /// - Parameter element: the element to be upserted
    public func upsert(_ element: T) {
+      guard let dataPoint = self.dataPoint else{
+         Logger.log("Undefined Datapoint", category:.critical)
+         return
+      }
       self.hasChanged = true
       // We first determine if there is an element by using the dataPoint registry
       // It is faster than determining the index.
-      if let item = self.dataPoint?.registredOpaqueInstanceByUID(element.uid) as? T {
+      if let item = dataPoint.registredOpaqueInstanceByUID(element.uid) as? T {
          // We compute its possiuble 
          if let idx = self._items.index(where: {$0.uid == element.uid }){
             self[idx] = item
@@ -206,7 +210,25 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
          self.upsert(item)
       }
    }
-   
+
+
+   /// Append or update the serialized item
+   /// Can be for example used by BartlebyKit to integrate Triggered data
+   ///
+   /// - Parameter data: the serialized element data
+   public func upsertItem(_ data:Data){
+      guard let dataPoint = self.dataPoint else{
+         Logger.log("Undefined Datapoint", category:.critical)
+         return
+      }
+      do{
+         let item:T = try dataPoint.operationsCoder.decode(T.self, from: data)
+         self.upsert(item)
+      }catch{
+         Logger.log(error, category: .critical)
+      }
+   }
+
    // MARK: - IndistinctCollection
 
    /// References the element into its collection and the dataPoint registry
