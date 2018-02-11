@@ -481,6 +481,7 @@ open class DataPoint: Object,DataPointProtocol{
         let bunchSize = sequence.bunchSize
 
         let futuresWorks = self._futureWorks[callSequenceName] ?? [AsyncWork]()
+        let futuresWorksUIDs:[UID] = futuresWorks.map({$0.associatedUID})
         let nbOfFutureWorks = futuresWorks.count
 
 
@@ -514,7 +515,9 @@ open class DataPoint: Object,DataPointProtocol{
             var filteredOperations = [CallOperationProtocol]()
             var filterCounter = 0
             for operation in availableOperations{
-                if !self.session.runningCallsUIDS.contains(operation.uid){
+                // Filter the running and futures works
+                if !self.session.runningCallsUIDS.contains(operation.uid) &&
+                   !futuresWorksUIDs.contains(operation.uid){
                     filteredOperations.append(operation)
                     filterCounter += 1
                 }
