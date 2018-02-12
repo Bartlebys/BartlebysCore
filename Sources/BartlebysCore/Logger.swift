@@ -82,7 +82,7 @@ public struct Logger {
         self.counter += 1
 
         func __syslog(priority : Int32, _ message : String, _ args : CVarArg...) {
-            #if os(watchOS)
+            #if os(iOS) || os(tvOS) || os(watchOS)
                 // syslog not supported
             #else
                 withVaList(args) { vsyslog(priority, message, $0) }
