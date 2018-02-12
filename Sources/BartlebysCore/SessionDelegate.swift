@@ -91,10 +91,10 @@ public protocol SessionDelegate:CallOperationReceiver {
     func preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type)->Int
 
 
-    /// Executes the next Pending Operations for a given the CallSequence
-    /// The call sequences are runing in parallel
+    /// Executes the next Bunch of call Operations for a given the CallSequence
+    /// The call sequences are running in parallel
     ///
     /// - Parameter callSequenceName: the Call sequence name
-    func executeNextCallOperations(from callSequenceName:CallSequence.Name)
+    func executeNextBunchOfCallOperations(from callSequenceName:CallSequence.Name)
 
 }

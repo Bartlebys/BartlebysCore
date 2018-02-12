@@ -11,9 +11,11 @@ import Foundation
 public class FilePath : Model, Payload, Result {
     
     public var relativePath: String = Default.NOT_SPECIFIED
-    
-    func urlFromSession(session: Session) throws -> URL {
-        return URL(fileURLWithPath: relativePath)
+
+    // @BPDS @todo check if this method is still useful.
+    // its usage seems strange
+    func urlFrom(dataPoint: DataPoint) throws -> URL {
+        return URL(fileURLWithPath: self.relativePath)
     }
     
     public enum FilePathCodingKeys: String, CodingKey {

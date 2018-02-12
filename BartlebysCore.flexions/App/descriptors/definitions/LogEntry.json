@@ -70,8 +70,8 @@
       },
       "runUID": {
         "type": "string",
-        "description": "A session runUID identifyer",
-        "default": "$Session.runUID",
+        "description": "A runUID identifyer",
+        "default": "$DataPoint.runUID",
         "supervisable": false,
         "dynamic" : true
       }

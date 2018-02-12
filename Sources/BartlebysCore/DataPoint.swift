@@ -21,13 +21,20 @@ public enum DataPointError : Error{
     case multipleProvisioningAttempt(of:CallOperationProtocol)
 }
 
+enum SessionError : Error {
+    case deserializationFailed
+    case fileNotFound
+    case multipleExecutionAttempts
+    case unProvisionedOperation
+}
+
+
 public protocol DataPointLifeCycle{
     func collectionsDidLoadSuccessFully(dataPoint:DataPointProtocol)
     func collectionsDidFailToLoad(dataPoint:DataPointProtocol ,message:String)
     func collectionsDidSaveSuccessFully(dataPoint:DataPointProtocol)
     func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String)
 }
-
 
 
 open class DataPoint: Object,DataPointProtocol{
@@ -51,16 +58,13 @@ open class DataPoint: Object,DataPointProtocol{
     // The storage IO object: reads an writes the ObjectsCollections
     public var storage:StorageProtocol = FileStorage()
     
-    /// The associated session
-    public lazy fileprivate(set) var session:Session = Session(delegate: self, lastExecutionOrder:self._getLastOrderOfExecution())
-    
     /// Its session identifier
     public var sessionIdentifier: String {
         get{
-            return self.session.identifier
+            return self.identifier
         }
         set{
-            self.session.identifier = newValue
+            self.identifier = newValue
         }
     }
     
@@ -115,7 +119,41 @@ open class DataPoint: Object,DataPointProtocol{
     // Special call Operations Donwloads and Uploads
     public var downloads = CollectionOf<CallOperation<FilePath,Download>>()
     public var uploads = CollectionOf<CallOperation<FilePath,Upload>>()
-    
+
+
+    // A shared void Payload instance
+    public static let voidPayload = VoidPayload()
+
+    // The session Identifier
+    public var identifier: String = Default.NO_UID{
+        didSet{
+            if oldValue != Default.NO_UID {
+                Logger.log("The Session identifier has been reset, old identifier:\(oldValue) new identifier: \(identifier) ", category: .warning)
+            }
+        }
+    }
+
+    // the last executionOrder
+    public fileprivate(set) var lastExecutionOrder:Int = ORDER_OF_EXECUTION_UNDEFINED
+
+    // A unique run identifier that changes on each launch
+    open static let runUID: String = Utilities.createUID()
+
+    public fileprivate(set) var isRunningLive:Bool = true
+
+    // We store the running call operations UIDS
+    public fileprivate(set) var runningCallsUIDS = [UID]()
+
+    public let startTime = AbsoluteTimeGetCurrent()
+
+    public var elapsedTime:Double {
+        return AbsoluteTimeGetCurrent() - self.startTime
+    }
+
+    public func infos() -> String {
+        return "v1.1.0"
+    }
+
     
     /// Initializes the dataPoint
     /// - Throws: Children may throw while populating the collections
@@ -138,18 +176,22 @@ open class DataPoint: Object,DataPointProtocol{
             return
         }
         self.currentState = newState
-        self.session.applyState()
+        self.applyState()
         switch newState{
         case .online:
             // Resume
             for callSequence in self._callSequences{
-                self.executeNextCallOperations(from: callSequence.name)
+                self.executeNextBunchOfCallOperations(from: callSequence.name)
             }
 
         case .offline:
             // Cancel futures calls.
             for sequ in self._futureWorks.keys{
-                self._futureWorks[sequ]?.first?.cancel()
+                if let works = self._futureWorks[sequ]{
+                    for work in works{
+                        work.cancel()
+                    }
+                }
             }
         }
     }
@@ -183,6 +225,8 @@ open class DataPoint: Object,DataPointProtocol{
         }catch{
             Logger.log("\(error)", category: .critical)
         }
+
+        self.lastExecutionOrder = self._getLastOrderOfExecution()
 
         self.upsertCallSequence(CallSequence(name: CallSequence.data, bunchSize: 1))
         self.upsertCallSequence(CallSequence(name: CallSequence.downloads, bunchSize: 1))
@@ -455,15 +499,11 @@ open class DataPoint: Object,DataPointProtocol{
     }
 
 
-
-    /// Executes the next Pending Operations for a given the CallSequence
-    /// Notes:
+    /// Executes the next Bunch of call Operations for a given the CallSequence
     /// - The call sequences are running in parallel
-    /// - Into each sequence you can define the execution bunchsize
-    /// - The operation are executed immediately or defered using AsyncWorks (on faults)
     ///
     /// - Parameter callSequenceName: the Call sequence name
-    public final func executeNextCallOperations(from callSequenceName:CallSequence.Name){
+    public final func executeNextBunchOfCallOperations(from callSequenceName:CallSequence.Name){
 
         // Block the execution if we are explicitly offLine
         guard self.currentState == .online else{
@@ -489,7 +529,7 @@ open class DataPoint: Object,DataPointProtocol{
 
         var runningCounter = 0
         // Are there some running calls?
-        for uid in self.session.runningCallsUIDS{
+        for uid in self.runningCallsUIDS{
             if let callOperation = self.registredModelByUID(uid) as? CallOperationProtocol{
                 if callOperation.sequenceName == callSequenceName{
                     runningCounter += 1
@@ -518,7 +558,7 @@ open class DataPoint: Object,DataPointProtocol{
             var filterCounter = 0
             for operation in availableOperations{
                 // Filter the running and futures works
-                if !self.session.runningCallsUIDS.contains(operation.uid) &&
+                if !self.runningCallsUIDS.contains(operation.uid) &&
                     !futuresWorksUIDs.contains(operation.uid){
                     filteredOperations.append(operation)
                     filterCounter += 1
@@ -613,7 +653,7 @@ open class DataPoint: Object,DataPointProtocol{
 
         operation.hasBeenExecuted()
         try self.deleteCallOperation(operation)
-        self.executeNextCallOperations(from: operation.sequenceName)
+        self.executeNextBunchOfCallOperations(from: operation.sequenceName)
     }
 
 
@@ -651,7 +691,7 @@ open class DataPoint: Object,DataPointProtocol{
                 Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
                 try self.deleteCallOperation(operation)
                 /// And then execute the next in the Call Sequence
-                self.executeNextCallOperations(from: sequenceName)
+                self.executeNextBunchOfCallOperations(from: sequenceName)
             }else{
                 // Blocked & Not Destroyable
                 // The operation is Blocked
@@ -678,7 +718,7 @@ open class DataPoint: Object,DataPointProtocol{
     open func save() throws {
 
         // Store the state in KVS
-        try self.storeInKVS(self.session.lastExecutionOrder, identifiedBy: DataPoint.sessionLastExecutionKVSKey)
+        try self.storeInKVS(self.lastExecutionOrder, identifiedBy: DataPoint.sessionLastExecutionKVSKey)
         // The KVS is loaded synchronously and saved asynchronouly
         try self.storage.saveCollection(self.keyedDataCollection)
 
@@ -729,6 +769,22 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Returns: the collection
     open func collectionFor<T:Collectable & Codable> ()->CollectionOf<T>?{
         return self._collectionsByCollectedTypeName[T.typeName] as? CollectionOf<T>
+    }
+
+    // MARK: -
+
+
+    /// Applies the current delegate state
+    /// This is the only method to setup self.isRunningLive
+    /// It is called by the DataPoint on state transition
+    public func applyState(){
+        let newState = self.currentState
+        switch newState{
+        case .online:
+            self.isRunningLive = true
+        case .offline:
+            self.isRunningLive = false
+        }
     }
 
 
@@ -792,6 +848,300 @@ open class DataPoint: Object,DataPointProtocol{
                 return lCalOp.scheduledOrderOfExecution < rCalOp.scheduledOrderOfExecution
             }
         }
+    }
+
+
+    // MARK: - CallOperations Level
+
+
+    /// Provisions the operation
+    /// The execution may occur immediately or not according to the current Load
+    /// The order of the call are guaranted not the order of the Results if the Bunchsize is > 1
+    ///
+    /// - Parameter operation: the call operation
+    /// - Throws: error if the collection hasn't be found
+    public func execute<P, R>(_ operation:CallOperation<P, R>){
+        self._provision(operation)
+        if self.isRunningLive {
+            self.executeNextBunchOfCallOperations(from: operation.sequenceName)
+        }
+    }
+
+
+    fileprivate func _provision<P,R>(_ operation:CallOperation<P,R>){
+        operation.sessionIdentifier = self.identifier
+        if operation.scheduledOrderOfExecution == ORDER_OF_EXECUTION_UNDEFINED{
+            self.lastExecutionOrder += 1
+            // Store the scheduledOrderOfExecution and the sessionIdentifier
+            operation.scheduledOrderOfExecution = self.lastExecutionOrder
+            do {
+                // Provision the call operation
+                try self.provision(operation)
+            } catch {
+                Logger.log("\(error)", category: .critical)
+            }
+        }
+    }
+
+
+    /// Runs a call operation
+    ///
+    /// - Parameter operation: the call operation
+    /// - Throws: errors on preflight
+    public final func runCall<P, R>(_ operation: CallOperation<P, R>) throws {
+
+        guard operation.scheduledOrderOfExecution > ORDER_OF_EXECUTION_UNDEFINED else{
+            throw SessionError.unProvisionedOperation
+        }
+
+        guard !self.runningCallsUIDS.contains(operation.uid) else{
+            throw SessionError.multipleExecutionAttempts
+        }
+
+        self.runningCallsUIDS.append(operation.uid)
+
+        let request: URLRequest = try self.requestFor(operation)
+        let failureClosure: ((Failure) -> ()) = { response in
+            syncOnMain {
+                // Call the delegate
+                do{
+                    self._removeOperationFromRunningCalls(operation)
+                    // Relay the failure to the Data Point
+                    try self.callOperationExecutionDidFail(operation,error:response.error)
+                }catch{
+                    Logger.log(error, category: .critical)
+                }
+            }
+        }
+        switch R.self {
+        case is Download.Type, is Upload.Type:
+
+            guard let filePath = operation.payload as? FilePath else {
+                throw DataPointError.payloadShouldBeOfFilePathType
+            }
+
+            let successClosure: ((HTTPResponse) -> ()) = { response in
+                syncOnMain {
+                    self._onSuccessOf(operation)
+                }
+            }
+
+            if R.self is Download.Type {
+                self.callDownload(request: request, resultType: R.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
+            } else {
+                self.callUpload(request: request, resultType: R.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
+            }
+        default:
+            self.call(request:request, resultType:R.self, resultIsACollection: operation.resultIsACollection, success: { response in
+                syncOnMain {
+                    self.integrateResponse(response)
+                    self._onSuccessOf(operation)
+                }
+            }, failure: failureClosure)
+        }
+
+    }
+
+    /// Implementation of the Call Operation success.
+    /// Should be called on the main thread
+    ///
+    /// - Parameters:
+    ///   - operation: the callOperation
+    fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>){
+        do{
+            self._removeOperationFromRunningCalls(operation)
+            try self.callOperationExecutionDidSucceed(operation)
+        }catch{
+            Logger.log("\(error)", category: .critical)
+        }
+    }
+
+    /// Removes the CallOperationUID from the Running Calls.
+    ///
+    /// - Parameter operation: the operation
+    fileprivate func _removeOperationFromRunningCalls<P,R>(_ operation:CallOperation<P,R>){
+        if let indexOfOperation = self.runningCallsUIDS.index(of: operation.uid){
+            self.runningCallsUIDS.remove(at: indexOfOperation)
+        }
+    }
+
+    // MARK: - HTTP Engine (Request level)
+
+    public func call<R>(  request: URLRequest,
+                          resultType: R.Type,
+                          resultIsACollection:Bool,
+                          success: @escaping (_ completion: DataResponse<R>)->(),
+                          failure: @escaping (_ completion: Failure)->()
+        ) {
+
+        let metrics = Metrics()
+        metrics.elapsed = self.elapsedTime
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+            let serverHasRespondedTime = AbsoluteTimeGetCurrent()
+            metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
+
+            if let httpResponse = response as? HTTPURLResponse {
+
+                if let data = data {
+                    do {
+                        if resultIsACollection{
+                            let decoded = try self.operationsCoder.decodeArrayOf(R.self, from: data)
+                            metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
+                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
+                            let dataResponse = DataResponse(result: decoded)
+                            dataResponse.metrics = metrics
+                            dataResponse.httpStatus = httpResponse.statusCode.status()
+                            dataResponse.content = data
+
+                            syncOnMain {
+                                success(dataResponse)
+                            }
+                        }else{
+                            let decoded = try self.operationsCoder.decode(R.self, from: data)
+                            metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
+                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
+                            let dataResponse = DataResponse(result: [decoded])
+                            dataResponse.metrics = metrics
+                            dataResponse.httpStatus = httpResponse.statusCode.status()
+                            dataResponse.content = data
+
+                            syncOnMain {
+                                success(dataResponse)
+                            }
+                        }
+
+                    } catch {
+                        syncOnMain {
+                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                        }
+                    }
+                } else {
+                    // There is no data
+                    if let error = error {
+                        syncOnMain {
+                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                        }
+                    } else {
+                        syncOnMain {
+                            metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
+                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
+
+                            let dataResponse: DataResponse = DataResponse(result: Array<R>())
+                            dataResponse.httpStatus = httpResponse.statusCode.status()
+                            dataResponse.content = data
+                            dataResponse.metrics = metrics
+                            success(dataResponse)
+                        }
+                    }
+                }
+            }
+        }
+        task.resume()
+
+    }
+
+    public func callDownload<R>(  request: URLRequest,
+                                  resultType: R.Type,
+                                  localFilePath: FilePath,
+                                  success: @escaping (_ completion: HTTPResponse)->(),
+                                  failure: @escaping (_ completion: Failure)->()
+        ) {
+
+        let metrics = Metrics()
+        metrics.elapsed = self.elapsedTime
+
+        let task = URLSession.shared.downloadTask(with: request) { (temporaryURL, response, error) in
+
+            let serverHasRespondedTime = AbsoluteTimeGetCurrent()
+            metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
+            metrics.totalDuration = metrics.requestDuration
+
+            if let error = error {
+                syncOnMain {
+                    let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
+                    failure(Failure(from: fileError))
+                }
+            } else if let httpURLResponse = response as? HTTPURLResponse {
+
+                guard let tempURL = temporaryURL else {
+                    syncOnMain {
+                        failure(Failure(from: httpURLResponse.statusCode.status(), and: SessionError.fileNotFound))
+                    }
+                    return
+                }
+
+                do {
+                    let localFileURL = try localFilePath.urlFrom(dataPoint: self)
+                    let directoryURL = localFileURL.deletingLastPathComponent()
+                    try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+
+                    try FileManager.default.moveItem(at: tempURL, to: localFileURL)
+
+                    let httpResponse = HTTPResponse()
+                    httpResponse.httpStatus = httpURLResponse.statusCode.status()
+                    httpResponse.metrics = metrics
+                    syncOnMain {
+                        success(httpResponse)
+                    }
+                } catch {
+                    syncOnMain {
+                        failure(Failure(from: httpURLResponse.statusCode.status(), and: error))
+                    }
+                }
+            }
+
+        }
+        task.resume()
+    }
+
+    public func callUpload<R>(  request: URLRequest,
+                                resultType: R.Type,
+                                localFilePath: FilePath,
+                                success: @escaping (_ completion: HTTPResponse)->(),
+                                failure: @escaping (_ completion: Failure)->()
+        ) {
+
+        let metrics = Metrics()
+        metrics.elapsed = self.elapsedTime
+
+        do {
+            let localFileURL = try localFilePath.urlFrom(dataPoint:self)
+
+            let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
+
+                let serverHasRespondedTime = AbsoluteTimeGetCurrent()
+                metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
+                metrics.totalDuration = metrics.requestDuration
+
+                if let error = error {
+                    syncOnMain {
+                        let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
+                        failure(Failure(from: fileError))
+                    }
+                } else if let httpURLResponse = response as? HTTPURLResponse {
+
+                    switch httpURLResponse.statusCode {
+                    case 200...299:
+                        let httpResponse = HTTPResponse()
+                        httpResponse.httpStatus = httpURLResponse.statusCode.status()
+                        httpResponse.metrics = metrics
+                        syncOnMain {
+                            success(httpResponse)
+                        }
+                    default:
+                        syncOnMain {
+                            failure(Failure(from: httpURLResponse.statusCode.status()))
+                        }
+                    }
+                }
+            }
+            task.resume()
+        } catch {
+            failure(Failure(from: error))
+        }
+
     }
 
 }

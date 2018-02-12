@@ -184,7 +184,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
     /// Executes the call operation (using the execution engine)
     public func execute(){
-        self.dataPoint?.session.execute(self)
+        self.dataPoint?.execute(self)
     }
 
     /// Runs the call operation
@@ -193,7 +193,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         guard self.scheduledOrderOfExecution > ORDER_OF_EXECUTION_UNDEFINED else{
             throw SessionError.unProvisionedOperation
         }
-        try self.dataPoint?.session.runCall(self)
+        try self.dataPoint?.runCall(self)
     }
 
 
