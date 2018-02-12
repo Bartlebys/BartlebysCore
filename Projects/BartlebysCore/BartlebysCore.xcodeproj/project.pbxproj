@@ -46,6 +46,11 @@
 		E52E5E34202D9A0D00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
 		E52E5E35202D9A0E00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
 		E52E5E36202D9A0F00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
+		E540F8A82031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */; };
+		E540F8A92031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */; };
+		E540F8AA2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */; };
+		E540F8AB2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */; };
+		E540F8AC2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E553813720035CFF0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
 		E553813820036C7C0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
@@ -492,6 +497,7 @@
 		E540CB7A2011E99000A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E540CB7C2011E99700A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E540CB7E2011E99D00A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+HTTP.swift"; sourceTree = "<group>"; };
 		E54826351FFBBB3700FB854E /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+AliasesResolutions.swift"; sourceTree = "<group>"; };
@@ -664,6 +670,7 @@
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */,
+				E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */,
 				E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */,
 				4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */,
 				E54826351FFBBB3700FB854E /* Default.swift */,
@@ -1320,6 +1327,7 @@
 				E5EC9F961FF655F9008BF543 /* Initializable.swift in Sources */,
 				E5EC9FBD1FF655FE008BF543 /* Relationship.swift in Sources */,
 				E525279C2000E4D700D9A148 /* Alias.swift in Sources */,
+				E540F8A82031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1415,6 +1423,7 @@
 				E5EC9FE91FF656AF008BF543 /* Initializable.swift in Sources */,
 				E5ECA0101FF656AF008BF543 /* Relationship.swift in Sources */,
 				E525279D2000E4D700D9A148 /* Alias.swift in Sources */,
+				E540F8AA2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1510,6 +1519,7 @@
 				E5ECA0421FF6579F008BF543 /* Initializable.swift in Sources */,
 				E5ECA0691FF657A6008BF543 /* Relationship.swift in Sources */,
 				E525279E2000E4D700D9A148 /* Alias.swift in Sources */,
+				E540F8AB2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1605,6 +1615,7 @@
 				E5ECA08B1FF6584A008BF543 /* Initializable.swift in Sources */,
 				E5ECA0B21FF65851008BF543 /* Relationship.swift in Sources */,
 				E525279F2000E4D700D9A148 /* Alias.swift in Sources */,
+				E540F8AC2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1687,6 +1698,7 @@
 				E5F3CE03200D1C2000AB9A44 /* Initializable.swift in Sources */,
 				E5F3CE04200D1C2000AB9A44 /* Relationship.swift in Sources */,
 				E5F3CE05200D1C2000AB9A44 /* Alias.swift in Sources */,
+				E540F8A92031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
