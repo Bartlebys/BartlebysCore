@@ -18,10 +18,6 @@ Or Invoke on the datapoint.session
 func execute<P, R>(_ operation: CallOperation<P, R>)
 ```
 
-**Do not use `datapoint.session.runCall<P, R>` or `operation.runIfProvisioned()`** directly 
-
-
-
 # CallSequences
 
 Each call sequence runs in parallel. By default we add :
