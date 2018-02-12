@@ -12,7 +12,7 @@ Use:
 ```swift
 operation.execute()
 ```
-Or Invoke on the datapoint.session 
+Or Invoke on the datapoint
 
 ```swift
 func execute<P, R>(_ operation: CallOperation<P, R>)
@@ -37,5 +37,5 @@ self.upsertCallSequence(CallSequence(name: CallSequence.downloads, bunchSize: 5)
 
 By setting the *downloads* bunch size to `5` you allow to run download call operations by bunch of `5`. The call order will be preserved (with no guarantee of the result order)
 
-By default the bunchsize are set to `1` making Operation running sequentially if you use the `datapoint.session.executeLater` method.
+By default the bunchsize are set to `1` making Operation running sequentially.
  
