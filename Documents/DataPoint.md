@@ -18,7 +18,7 @@ Or Invoke on the datapoint.session
 func execute<P, R>(_ operation: CallOperation<P, R>)
 ```
 
-**Do not use `datapoint.session.runCall<P, R>` or `operation.run()`** directly 
+**Do not use `datapoint.session.runCall<P, R>` or `operation.runIfProvisioned()`** directly 
 
 
 
