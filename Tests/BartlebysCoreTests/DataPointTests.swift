@@ -182,7 +182,7 @@ class DataPointTests: BaseDataPointTestCase{
         /// This test is special
         /// We donot want to prepare the collections to prevent
         let datapoint = self.getNewDataPoint()
-        let callOp = Download.callOperation(operationName: "DownloadX", operationPath: "", queryString: " ", downloadPath: "X")
+        let callOp = Download.callOperation(dataPoint: datapoint, operationName: "DownloadX", operationPath: "", queryString: " ", downloadPath: "X")
         
         do{
             try datapoint.provision(callOp)

@@ -165,7 +165,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         return CollectionOf<CallOperation<P, R>>()
     }
 
-    public required init(operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, payload: P?) {
+    public required init(dataPoint:DataPoint, operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, payload: P?) {
         self.operationName = operationName
         self.path = operationPath
         self.queryString = queryString
@@ -173,27 +173,32 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         self.resultIsACollection = resultIsACollection
         self.payload = payload
         super.init()
+        self.dataPoint = dataPoint
     }
 
 
-    /// Called on any execution by the Session
-    public func hasBeenExecuted(){
-        self.executionCounter += 1
-        self.lastAttemptDate = Date()
-    }
+
 
     /// Executes the call operation (using the execution engine)
+    /// The execution may be defered according to CallSequence Load
     public func execute(){
         self.dataPoint?.execute(self)
     }
 
     /// Runs the call operation
     /// This method should normally not be called directly
+    /// The call occurs immediately.
     public func runIfProvisioned() throws{
         guard self.scheduledOrderOfExecution > ORDER_OF_EXECUTION_UNDEFINED else{
             throw SessionError.unProvisionedOperation
         }
-        try self.dataPoint?.runCall(self)
+        try self.dataPoint?.runProvisionedCallOperation(self)
+    }
+
+    /// Called on any execution
+    public func hasBeenExecuted(){
+        self.executionCounter += 1
+        self.lastAttemptDate = Date()
     }
 
 

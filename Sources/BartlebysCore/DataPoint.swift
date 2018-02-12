@@ -859,15 +859,9 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameter operation: the call operation
     /// - Throws: error if the collection hasn't be found
-    public func execute<P, R>(_ operation:CallOperation<P, R>){
-        self._provision(operation)
-        if self.isRunningLive {
-            self.executeNextBunchOfCallOperations(from: operation.sequenceName)
-        }
-    }
+    final internal func execute<P, R>(_ operation:CallOperation<P, R>){
 
-
-    fileprivate func _provision<P,R>(_ operation:CallOperation<P,R>){
+        // Provision the Operation
         operation.sessionIdentifier = self.identifier
         if operation.scheduledOrderOfExecution == ORDER_OF_EXECUTION_UNDEFINED{
             self.lastExecutionOrder += 1
@@ -880,14 +874,24 @@ open class DataPoint: Object,DataPointProtocol{
                 Logger.log("\(error)", category: .critical)
             }
         }
+
+        // Execute the next bunch
+        if self.isRunningLive {
+            self.executeNextBunchOfCallOperations(from: operation.sequenceName)
+        }
     }
 
 
-    /// Runs a call operation
+
+
+
+    /// Runs a call operation immediately
+    /// This method should not be called directly
+    /// We need to expose publicly due to the necessity give a Generic Context in Dynamic calls
     ///
     /// - Parameter operation: the call operation
     /// - Throws: errors on preflight
-    public final func runCall<P, R>(_ operation: CallOperation<P, R>) throws {
+    final internal func runProvisionedCallOperation<P, R>(_ operation: CallOperation<P, R>) throws {
 
         guard operation.scheduledOrderOfExecution > ORDER_OF_EXECUTION_UNDEFINED else{
             throw SessionError.unProvisionedOperation
