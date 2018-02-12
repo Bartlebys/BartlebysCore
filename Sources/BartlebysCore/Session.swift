@@ -11,6 +11,8 @@ import Foundation
 enum SessionError : Error {
     case deserializationFailed
     case fileNotFound
+    case multipleExecutionAttempts
+    case unProvisionedOperation
 }
 
 // Created in a DataPoint
@@ -41,6 +43,9 @@ public class Session {
     open static let runUID: String = Utilities.createUID()
 
     public fileprivate(set) var isRunningLive:Bool = true
+
+    // We store the running call operations UIDS
+    public fileprivate(set) var runningCallsUIDS = [UID]()
 
     // shortcuts to the delegate
     public var credentials: Credentials { return self.delegate.credentials }
@@ -80,14 +85,24 @@ public class Session {
     }
 
     
-    // MARK: - CallOperations Runtime
+    // MARK: - CallOperations Level
 
 
-    /// Provision and Executes the Call operation immediately if runing live
-    /// Else the operation is stored with an execution order for future usage.
+    /// Provisions the operation
+    /// The execution may occur immediately or not according to the current Load
+    /// The order of the call are guaranted not the order of the Results if the Bunchsize is > 1
     ///
     /// - Parameter operation: the call operation
-    public func execute<P, R>(_ operation: CallOperation<P, R>){
+    /// - Throws: error if the collection hasn't be found
+    public func execute<P, R>(_ operation:CallOperation<P, R>){
+        self._provision(operation)
+        if self.isRunningLive {
+            self.delegate.executeNextCallOperations(from: operation.sequenceName)
+        }
+    }
+
+
+    fileprivate func _provision<P,R>(_ operation:CallOperation<P,R>){
         operation.sessionIdentifier = self.identifier
         if operation.scheduledOrderOfExecution == ORDER_OF_EXECUTION_UNDEFINED{
             self.lastExecutionOrder += 1
@@ -100,27 +115,31 @@ public class Session {
                 Logger.log("\(error)", category: .critical)
             }
         }
-        if self.isRunningLive {
-            do {
-                try self._runCall(operation)
-            } catch {
-                Logger.log("\(error)", category: .critical)
-            }
-        }
     }
 
+    
     /// Runs a call operation
     ///
     /// - Parameter operation: the call operation
     /// - Throws: errors on preflight
-    fileprivate func _runCall<P, R>(_ operation: CallOperation<P, R>) throws {
+    public final func runCall<P, R>(_ operation: CallOperation<P, R>) throws {
+
+        guard operation.scheduledOrderOfExecution > ORDER_OF_EXECUTION_UNDEFINED else{
+            throw SessionError.unProvisionedOperation
+        }
+
+        guard !self.runningCallsUIDS.contains(operation.uid) else{
+            throw SessionError.multipleExecutionAttempts
+        }
+
+        self.runningCallsUIDS.append(operation.uid)
 
         let request: URLRequest = try self.delegate.requestFor(operation)
-        
         let failureClosure: ((Failure) -> ()) = { response in
             syncOnMain {
-                // Call the delgate
+                // Call the delegate
                 do{
+                    self._removeOperationFromRunningCalls(operation)
                     // Relay the failure to the Data Point
                     try self.delegate.callOperationExecutionDidFail(operation,error:response.error)
                 }catch{
@@ -164,14 +183,23 @@ public class Session {
     ///   - operation: the callOperation
     fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>){
         do{
+            self._removeOperationFromRunningCalls(operation)
             try self.delegate.callOperationExecutionDidSucceed(operation)
         }catch{
             Logger.log("\(error)", category: .critical)
         }
     }
 
-    
-    // MARK: - HTTP Engine
+    /// Removes the CallOperationUID from the Running Calls.
+    ///
+    /// - Parameter operation: the operation
+    fileprivate func _removeOperationFromRunningCalls<P,R>(_ operation:CallOperation<P,R>){
+        if let indexOfOperation = self.runningCallsUIDS.index(of: operation.uid){
+            self.runningCallsUIDS.remove(at: indexOfOperation)
+        }
+    }
+
+    // MARK: - HTTP Engine (Request level)
     
     public func call<R>(  request: URLRequest,
                           resultType: R.Type,

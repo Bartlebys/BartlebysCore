@@ -9,14 +9,6 @@
 import Foundation
 import Dispatch
 
-#if USE_BTREE
-#if !USE_EMBEDDED_MODULES
-   import BTree
-#endif
-   fileprivate typealias _ContainerType = List
-#else
-   fileprivate typealias _ContainerType = Array
-#endif
 
 public enum CollectionOfError:Error {
    case collectionIsNotRegistred
@@ -37,8 +29,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    // MARK: -
    public let uid: UID = Utilities.createUID()
 
-   // @todo waiting for [SE-0143](https://github.com/apple/swift-evolution/blob/master/proposals/0143-conditional-conformances.md)
-   fileprivate var _items: _ContainerType<T> = _ContainerType<T>()
+   fileprivate var _items: Array<T> = Array<T>()
 
    // We expose the collection type
    public var collectedType:T.Type { return T.self }
@@ -191,10 +182,14 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    ///
    /// - Parameter element: the element to be upserted
    public func upsert(_ element: T) {
+      guard let dataPoint = self.dataPoint else{
+         Logger.log("Undefined Datapoint", category:.critical)
+         return
+      }
       self.hasChanged = true
       // We first determine if there is an element by using the dataPoint registry
       // It is faster than determining the index.
-      if let item = self.dataPoint?.registredOpaqueInstanceByUID(element.uid) as? T {
+      if let item = dataPoint.registredOpaqueInstanceByUID(element.uid) as? T {
          // We compute its possiuble 
          if let idx = self._items.index(where: {$0.uid == element.uid }){
             self[idx] = item
@@ -215,7 +210,25 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
          self.upsert(item)
       }
    }
-   
+
+
+   /// Append or update the serialized item
+   /// Can be for example used by BartlebyKit to integrate Triggered data
+   ///
+   /// - Parameter data: the serialized element data
+   public func upsertItem(_ data:Data){
+      guard let dataPoint = self.dataPoint else{
+         Logger.log("Undefined Datapoint", category:.critical)
+         return
+      }
+      do{
+         let item:T = try dataPoint.operationsCoder.decode(T.self, from: data)
+         self.upsert(item)
+      }catch{
+         Logger.log(error, category: .critical)
+      }
+   }
+
    // MARK: - IndistinctCollection
 
    /// References the element into its collection and the dataPoint registry
@@ -289,20 +302,12 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    /// Returns an array of Any view by reference
    /// Can be Used by Array Controllers in Cocoa bindings
    public var unTypedArrayView:[Any] {
-      #if USE_BTREE
-         return list.arrayView as! [Any]
-      #else
-         return self._items as [Any]
-      #endif
+      return self._items as [Any]
    }
 
    /// Returns an array view by reference
    public var arrayView:[T]{
-      #if USE_BTREE
-          return list.arrayView as! [T]
-      #else
-         return self._items
-      #endif
+      return self._items
    }
 
 
@@ -328,7 +333,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
 
    required public init(from decoder: Decoder) throws {
       let values = try decoder.container(keyedBy: CollectionCodingKeys.self)
-      self._items = try values.decode(_ContainerType<T>.self, forKey:.items)
+      self._items = try values.decode(Array<T>.self, forKey:.items)
       self.fileName =  try values.decode(String.self, forKey:.fileName)
       self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
    }

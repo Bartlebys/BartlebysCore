@@ -46,11 +46,6 @@
 		E52E5E34202D9A0D00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
 		E52E5E35202D9A0E00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
 		E52E5E36202D9A0F00D25B61 /* CallOperationReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E5E31202D95BE00D25B61 /* CallOperationReceiver.swift */; };
-		E540CB752011E97C00A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB762011E97C00A531A9 /* BTree.framework */; };
-		E540CB772011E98800A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB782011E98800A531A9 /* BTree.framework */; };
-		E540CB792011E99000A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7A2011E99000A531A9 /* BTree.framework */; };
-		E540CB7B2011E99700A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7C2011E99700A531A9 /* BTree.framework */; };
-		E540CB7D2011E99D00A531A9 /* BTree.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E540CB7E2011E99D00A531A9 /* BTree.framework */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E553813720035CFF0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
 		E553813820036C7C0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
@@ -568,7 +563,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E540CB752011E97C00A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -584,7 +578,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E540CB792011E99000A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,7 +593,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E540CB7B2011E99700A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -616,7 +608,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E540CB7D2011E99D00A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,7 +615,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E540CB772011E98800A531A9 /* BTree.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,13 +701,13 @@
 				E52A846B1FF5033E00F2408B /* Model+RelationsResolution.swift */,
 				E5D6CDE320012F2800A3D975 /* Notify.swift */,
 				4D55FC591FDAF5CF001D91CE /* Object.swift */,
+				E555E697201CC555007754C0 /* OperatingState.swift */,
 				E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */,
 				E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */,
 				4D65E69E1FE02FE300034787 /* Paths.swift */,
 				E52A84621FF501D400F2408B /* Relationship.swift */,
 				4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */,
 				4D55FC461FDAF5CF001D91CE /* Session.swift */,
-				E555E697201CC555007754C0 /* OperatingState.swift */,
 				4D55FC561FDAF5CF001D91CE /* Status.swift */,
 				4D65E67C1FDFFA9200034787 /* Upload.swift */,
 				4D55FC411FDAF5CF001D91CE /* Utilities.swift */,

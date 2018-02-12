@@ -15,10 +15,6 @@ BartlebysCore's goal is to keep things simples and "Swifty" by Design.
 
 If your data can be totally loaded in Memory, Bartleby's Core is probably a good solution for your App. It will allow to use simple functional programming approach to manipulate your data synchronously very efficiently, and integrate easily with your RESTFul API.
 
-## Bartleby's core Data containers
-
-The collection, and the datapoint object registry can use[Károly Lőrentey's  Binary Trees](https://github.com/Bartlebys/BTree.git) implementation. To use the Binary trees set up : add `USE_BTREE` to your swift flags. Benchmarks are still in progress, but the BinaryTrees seems not to perform better than Array on real World object.
-
 
 # Installation
 
@@ -36,15 +32,15 @@ You need to create a workspace with
 
 ### 1. as an external target
 
-1. You create submodules in a repository `git submodule add -b master https://github.com/Bartlebys/BartlebysCore` & `git submodule add -b master https://github.com/Bartlebys/BTree`
-2. Drop the `BartlebysCore/Projects/BartlebysCore/BartlebysCore.xcodeproj` & `BTree/BTree.xcodeproj` files in your Xcode workspace
+1. You create submodules in a repository `git submodule add -b master https://github.com/Bartlebys/BartlebysCore` 
+2. Drop the `BartlebysCore/Projects/BartlebysCore/BartlebysCore.xcodeproj` file in your Xcode workspace
 3. Add `BartlebysCore.framework` as Linked Frameworks and libraries from the target general Tab.
 
 ### 2. integrated to your sources
 
 This approach may improve performance and can be suitable is you want to aggregate all the sources.
 
-1. You create submodules in a repository `git submodule add -b master https://github.com/Bartlebys/BartlebysCore` & `git submodule add -b master https://github.com/Bartlebys/BTree`
+1. You create submodules in a repository `git submodule add -b master https://github.com/Bartlebys/BartlebysCore` 
 2. Drop the source into your Workspace directly.
 3. You should add `-DUSE_EMBEDDED_MODULES` in the target Build Settings tab > Other swift flags.
 
@@ -62,7 +58,6 @@ import BartlebysCore
 Add in your Cartfile:
 
 ```
-github "Bartlebys/BTree"
 github "Bartlebys/BartlebysCore"
 ```
 

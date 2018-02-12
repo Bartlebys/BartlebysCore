@@ -8,16 +8,6 @@
 
 import Foundation
 
-#if USE_BTREE
-#if !USE_EMBEDDED_MODULES
-    import BTree
-#endif
-    fileprivate typealias _ContainerType = Map
-#else
-    fileprivate typealias _ContainerType = Dictionary
-#endif
-
-
 public enum DataPointError : Error{
     case invalidURL
     case voidURLRequest
@@ -38,7 +28,8 @@ public protocol DataPointLifeCycle{
     func collectionsDidFailToSave(dataPoint:DataPointProtocol,message:String)
 }
 
-// Abstract class
+
+
 open class DataPoint: Object,DataPointProtocol{
     
     // KVS keys
@@ -76,17 +67,20 @@ open class DataPoint: Object,DataPointProtocol{
     /// Contains all the data Point collections
     /// Populated by registerCollection
     /// - Returns: the data Point model collections
-    fileprivate var _collections:[FileSavable] = [FileSavable]()
+    fileprivate var _collections:[IndistinctCollection] = [IndistinctCollection]()
     
     /// The collection hashed per fileNam
-    fileprivate var _collectionsPerFileName = [String:FileSavable]()
+    fileprivate var _collectionsByFileName = [String:IndistinctCollection]()
+
+    // The collection by collection name
+    fileprivate var _collectionsByName = [String:IndistinctCollection]()
     
     /// The collection hashed by typeName
-    fileprivate var _collectionsPerCollectedTypeName = [String:FileSavable]()
+    fileprivate var _collectionsByCollectedTypeName = [String:IndistinctCollection]()
     
     // this centralized dictionary allows to access to any referenced object by its UID
     // Uses a binary tree
-    fileprivate var _instancesByUID=_ContainerType<UID,Any>()
+    fileprivate var _instancesByUID = Dictionary<UID,Any>()
     
     /// Defered Ownership
     /// If we receive a Instance that refers to an unexisting Owner
@@ -98,7 +92,9 @@ open class DataPoint: Object,DataPointProtocol{
     /// The pending Call operations
     fileprivate var _sortedPendingCalls:[CallSequence.Name:[CallOperationProtocol]] = [CallSequence.Name:[CallOperationProtocol]]()
     
-    
+    /// You can store CallSequence to characterize their behavior
+    fileprivate var _callSequences = [CallSequence]()
+
     /// The current number of Pending calls
     public var numberOfPendingCalls:Int{
         var n = 0
@@ -146,9 +142,10 @@ open class DataPoint: Object,DataPointProtocol{
         switch newState{
         case .online:
             // Resume
-            for sequ in self._sortedPendingCalls.keys{
-                self._sortedPendingCalls[sequ]?.first?.execute()
+            for callSequence in self._callSequences{
+                self.executeNextCallOperations(from: callSequence.name)
             }
+
         case .offline:
             // Cancel futures calls.
             for sequ in self._futureWorks.keys{
@@ -156,8 +153,9 @@ open class DataPoint: Object,DataPointProtocol{
             }
         }
     }
-    
-    
+
+
+
     // MARK: -
     
     /// Prepares the collections before loading the data in memory.
@@ -185,7 +183,11 @@ open class DataPoint: Object,DataPointProtocol{
         }catch{
             Logger.log("\(error)", category: .critical)
         }
-        
+
+        self.upsertCallSequence(CallSequence(name: CallSequence.data, bunchSize: 1))
+        self.upsertCallSequence(CallSequence(name: CallSequence.downloads, bunchSize: 1))
+        self.upsertCallSequence(CallSequence(name: CallSequence.uploads, bunchSize: 1))
+
         self._configureCollection(self.keyedDataCollection)
         
         // Special Call Operations (Downloads and Uploads)
@@ -237,16 +239,35 @@ open class DataPoint: Object,DataPointProtocol{
         // Reference the DataPoint
         collection.dataPoint = self
         self._collections.append(collection)
-        self._collectionsPerFileName[collection.fileName] = collection
-        self._collectionsPerCollectedTypeName[T.typeName] = collection
+        self._collectionsByFileName[collection.fileName] = collection
+        self._collectionsByCollectedTypeName[T.typeName] = collection
+        self._collectionsByName[collection.d_collectionName] = collection
     }
-    
+
+
+    // MARK : - CallSequence
+
+
+    /// Defines the call sequence.
+    /// Should be called during preparation
+    ///
+    /// - Parameter sequence: the sequence to add.
+    public final func upsertCallSequence(_ sequence:CallSequence){
+        if let index = self._callSequences.index(where: { $0.name == sequence.name }){
+            self._callSequences[index] = sequence
+        }else{
+            self._callSequences.append(sequence)
+        }
+    }
+
+    // MARK: -
+
     /// Returns the collection by its file name
     ///
     /// - Parameter fileName: the fileName of the searched collection
     /// - Returns: the CollectionOf
     public func collection<T>(with fileName:String)->CollectionOf<T>?{
-        return self._collectionsPerFileName[fileName] as? CollectionOf<T>
+        return self._collectionsByFileName[fileName] as? CollectionOf<T>
     }
     
     
@@ -335,7 +356,7 @@ open class DataPoint: Object,DataPointProtocol{
     public func provision<P, R>(_ operation:CallOperation<P, R>) throws{
         
         // Upsert the relevent call Operation collection
-        guard let collection = self._collectionsPerCollectedTypeName[CallOperation<P, R>.typeName] as? CollectionOf<CallOperation<P, R>> else{
+        guard let collection = self._collectionsByCollectedTypeName[CallOperation<P, R>.typeName] as? CollectionOf<CallOperation<P, R>> else{
             throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
         }
         
@@ -432,6 +453,148 @@ open class DataPoint: Object,DataPointProtocol{
         }
         
     }
+
+
+
+    /// Executes the next Pending Operations for a given the CallSequence
+    /// Notes:
+    /// - The call sequences are running in parallel
+    /// - Into each sequence you can define the execution bunchsize
+    /// - The operation are executed immediately or defered using AsyncWorks (on faults)
+    ///
+    /// - Parameter callSequenceName: the Call sequence name
+    public final func executeNextCallOperations(from callSequenceName:CallSequence.Name){
+
+        // Block the execution if we are explicitly offLine
+        guard self.currentState == .online else{
+            return
+        }
+
+        // We recover or create & upsert the call sequence
+        let sequence : CallSequence
+        if let found = self._callSequences.first(where: { $0.name == callSequenceName} ){
+            sequence = found
+        }else{
+            // We use 1 as bunchSize by default
+            sequence = CallSequence(name: callSequenceName, bunchSize: 1)
+            self.upsertCallSequence(sequence)
+        }
+
+        let bunchSize = sequence.bunchSize
+
+        let futuresWorks = self._futureWorks[callSequenceName] ?? [AsyncWork]()
+        let futuresWorksUIDs:[UID] = futuresWorks.map({$0.associatedUID})
+        let nbOfFutureWorks = futuresWorks.count
+
+
+        var runningCounter = 0
+        // Are there some running calls?
+        for uid in self.session.runningCallsUIDS{
+            if let callOperation = self.registredModelByUID(uid) as? CallOperationProtocol{
+                if callOperation.sequenceName == callSequenceName{
+                    runningCounter += 1
+                }
+            }
+        }
+
+        let useAsyncWorks = nbOfFutureWorks > 0
+        var maxFutureDelay:TimeInterval = 0
+        for work in futuresWorks{
+            if maxFutureDelay < work.delay{
+                maxFutureDelay = work.delay
+            }
+        }
+
+        // We try to maintain a concurrent bunch of CallOperation
+        if runningCounter + nbOfFutureWorks  < bunchSize{
+
+            guard let availableOperations = self._sortedPendingCalls[callSequenceName] else{
+                return
+            }
+
+            // Optimized filtering (we stop when we have reached the required number of operation)
+            // The availableOperations number may be very important.
+            var filteredOperations = [CallOperationProtocol]()
+            var filterCounter = 0
+            for operation in availableOperations{
+                // Filter the running and futures works
+                if !self.session.runningCallsUIDS.contains(operation.uid) &&
+                    !futuresWorksUIDs.contains(operation.uid){
+                    filteredOperations.append(operation)
+                    filterCounter += 1
+                }
+                if filterCounter == bunchSize{
+                    break
+                }
+            }
+
+
+            let numberOfOperations = filteredOperations.count
+            guard numberOfOperations > 0 else{
+                return
+            }
+            let nbOfIteration = min(bunchSize - runningCounter, numberOfOperations)
+            for i in 0..<nbOfIteration {
+                let callOperation = filteredOperations[i]
+                if useAsyncWorks{
+                    // Execute after the last future works
+                    self._runOperationInAsyncWork(callOperation, delay: maxFutureDelay)
+                }else{
+                    do{
+                        try callOperation.runIfProvisioned()
+                    }catch{
+                        Logger.log(error, category: .critical)
+                    }
+
+                }
+            }
+        }else{
+            // There are enough running or planified (AsyncWork) CallOperation
+        }
+    }
+
+    /// Used to determine if we should destroy some Operations
+    /// Returns a quota of operation to preserve for each sequence.
+    /// If the value is over the quota the older operations are destroyed
+    /// By default Bartleby "would prefer not to" that's why the preservationQuota respond Int.max by defaults
+    ///
+    /// - Parameter for: the CallSequence name
+    /// - Returns: the max number of call operations.
+    open func preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type)->Int{
+        // By default we keep all the call Operations
+        // But you can ovveride this method to limit the size of a call operation collection
+        return Int.max
+    }
+
+
+    /// Runs the operation in an AsyncWork
+    ///
+    /// - Parameters:
+    ///   - operation: the call operation to be ran
+    ///   - delay: the delay before its execution
+    fileprivate func _runOperationInAsyncWork(_ operation: CallOperationProtocol,delay:TimeInterval){
+        let workItem = DispatchWorkItem.init {
+            operation.execute()
+        }
+        let work = AsyncWork(dispatchWorkItem: workItem, delay: delay, associatedUID:operation.uid)
+        if !self._futureWorks.keys.contains(operation.sequenceName){
+            self._futureWorks[operation.sequenceName] = [AsyncWork]()
+        }
+        self._futureWorks[operation.sequenceName]?.append(work)
+    }
+
+
+
+    fileprivate func _cleanUpFutureWorks<P, R>(_ operation: CallOperation<P, R>){
+        // CleanUp the future works
+        if let index = self._futureWorks[operation.sequenceName]?.index(where: {$0.associatedUID == operation.uid}){
+            self._futureWorks[operation.sequenceName]?.remove(at: index)
+        }
+    }
+
+
+    // MARK: - SessionDelegate.CallOperationReceiver
+
     /// Implements Called on success
     ///
     /// - Parameters:
@@ -450,8 +613,7 @@ open class DataPoint: Object,DataPointProtocol{
 
         operation.hasBeenExecuted()
         try self.deleteCallOperation(operation)
-        self._executeNextCallOperation(from: operation.sequenceName)
-
+        self.executeNextCallOperations(from: operation.sequenceName)
     }
 
 
@@ -489,7 +651,7 @@ open class DataPoint: Object,DataPointProtocol{
                 Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
                 try self.deleteCallOperation(operation)
                 /// And then execute the next in the Call Sequence
-                self._executeNextCallOperation(from: sequenceName)
+                self.executeNextCallOperations(from: sequenceName)
             }else{
                 // Blocked & Not Destroyable
                 // The operation is Blocked
@@ -497,74 +659,18 @@ open class DataPoint: Object,DataPointProtocol{
             }
         }else{
             // The Operation is not blocked
-            // It means we can try to re-implement the running logic
+            // It means we can try to run again later
             if self.currentState == .online{
                 // Re-execution logic
                 //We double the reExecutionDelay (may be we should use another strategy)
                 operation.reExecutionDelay = operation.reExecutionDelay * 2
-                
-                let workItem = DispatchWorkItem.init {
-                    operation.execute()
-                }
-                let delay:TimeInterval = operation.reExecutionDelay
-                
-                let work = AsyncWork(dispatchWorkItem: workItem, delay: delay, associatedUID:operation.uid)
-                if !self._futureWorks.keys.contains(operation.sequenceName){
-                    self._futureWorks[operation.sequenceName] = [AsyncWork]()
-                }
-                self._futureWorks[operation.sequenceName]?.append(work)
+                self._runOperationInAsyncWork(operation,delay: operation.reExecutionDelay)
             }else{
                 // We are not running live
                 // So there is no reason to create an AsyncWork
             }
         }
     }
-    
-    fileprivate func _cleanUpFutureWorks<P, R>(_ operation: CallOperation<P, R>){
-        // CleanUp the future works
-        if let index = self._futureWorks[operation.sequenceName]?.index(where: {$0.associatedUID == operation.uid}){
-            self._futureWorks[operation.sequenceName]?.remove(at: index)
-        }
-    }
-    
-    
-    fileprivate func _futureWorksArePlanifiedFor(_ callSequenceName:CallSequence.Name)->Bool{
-        guard let futuresWorks = self._futureWorks[callSequenceName] else{
-            return false
-        }
-        return futuresWorks.count > 0
-    }
-    
-    /// Executes the next Pending Operations for a given the CallSequence Name
-    /// The call sequences are runing in parallel.
-    /// Called on success by the session or on failure in the DataPoint if the Operation is Blocked and Destroyable
-    ///
-    /// - Parameter callSequenceName: the Call sequence name
-    fileprivate func _executeNextCallOperation(from callSequenceName:CallSequence.Name){
-        // 1) we don't want to execute tasks if the session is not running live
-        // 2) We want to execute sequentially the items segmented per CallSequence
-        if self.currentState == .online && !self._futureWorksArePlanifiedFor(callSequenceName){
-            
-            // @todo @bpds IMPORTANT
-            self._sortedPendingCalls[callSequenceName]?.first?.execute()
-        }
-    }
-
-    /// Used to determine if we should destroy some Operations
-    /// Returns a quota of operation to preserve for each sequence.
-    /// If the value is over the quota the older operations are destroyed
-    /// By default Bartleby "would prefer not to" that's why the preservationQuota respond Int.max by defaults
-    ///
-    /// - Parameter for: the CallSequence name
-    /// - Returns: the max number of call operations.
-    open func preservationQuota<P,R>(callOperationType:CallOperation<P,R>.Type)->Int{
-        // By default we keep all the call Operations
-        // But you can ovveride this method to limit the size of a call operation collection
-        return Int.max
-    }
-
-
-
 
 
     // MARK: - Load and Save
@@ -579,7 +685,7 @@ open class DataPoint: Object,DataPointProtocol{
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
-            try collection.saveToFile()
+            try (collection as? FileSavable)?.saveToFile()
         }
     }
 
@@ -622,7 +728,29 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Returns: the collection
     open func collectionFor<T:Collectable & Codable> ()->CollectionOf<T>?{
-        return self._collectionsPerCollectedTypeName[T.typeName] as? CollectionOf<T>
+        return self._collectionsByCollectedTypeName[T.typeName] as? CollectionOf<T>
+    }
+
+
+    // MARK: - Dynamic collections & Dynamic Upsert (e.g: BartlebyKit Triggers)
+
+
+    /// Recover a collection from its name
+    ///
+    /// - Returns: the collection
+    open func collectionNamed (_ name:String)->IndistinctCollection?{
+        return self._collectionsByName[name]
+    }
+
+    /// Upsert the serialized data into a named collection.
+    ///
+    /// - Parameters:
+    ///   - data: a serialized item
+    ///   - named: the name of the collection
+    open func upsertItem (_ data:Data, intoCollection named:String){
+        if let collection = self.collectionNamed(named){
+            collection.upsertItem(data)
+        }
     }
 
 
@@ -652,13 +780,12 @@ open class DataPoint: Object,DataPointProtocol{
     /// Sorted by scheduledOrderOfExecution
     fileprivate func _recoverThePendingCallOperations(){
         for collection in self._collections{
-            if let collection = collection as? IndistinctCollection{
-                if let callOperations = collection.dynamicCallOperations{
-                    if let firstElement = callOperations.first{
-                        self._sortedPendingCalls[firstElement.sequenceName]?.append(contentsOf: callOperations)
-                    }
+            if let callOperations = collection.dynamicCallOperations{
+                if let firstElement = callOperations.first{
+                    self._sortedPendingCalls[firstElement.sequenceName]?.append(contentsOf: callOperations)
                 }
             }
+
         }
         for sequenceNamed in self._sortedPendingCalls.keys{
             self._sortedPendingCalls[sequenceNamed]?.sort { (lCalOp, rCalOp) -> Bool in
