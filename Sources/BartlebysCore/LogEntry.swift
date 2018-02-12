@@ -51,8 +51,8 @@ open class CommonLogEntry : Model, Payload, Result{
 	//Is the entry decorative or significant? decoration includes separators, etc...
 	open var decorative:Bool = false
 
-	//A session runUID identifyer
-	open var runUID:String = Session.runUID
+	//A runUID identifyer
+	open var runUID:String = DataPoint.runUID
 
 
     // MARK: - Codable
