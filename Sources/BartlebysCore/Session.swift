@@ -97,7 +97,7 @@ public class Session {
     public func execute<P, R>(_ operation:CallOperation<P, R>){
         self._provision(operation)
         if self.isRunningLive {
-            self.delegate.executeNextCallOperations(from: operation.sequenceName)
+            self.delegate.executeNextBunchOfCallOperations(from: operation.sequenceName)
         }
     }
 

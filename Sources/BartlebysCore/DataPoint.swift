@@ -143,13 +143,17 @@ open class DataPoint: Object,DataPointProtocol{
         case .online:
             // Resume
             for callSequence in self._callSequences{
-                self.executeNextCallOperations(from: callSequence.name)
+                self.executeNextBunchOfCallOperations(from: callSequence.name)
             }
 
         case .offline:
             // Cancel futures calls.
             for sequ in self._futureWorks.keys{
-                self._futureWorks[sequ]?.first?.cancel()
+                if let works = self._futureWorks[sequ]{
+                    for work in works{
+                        work.cancel()
+                    }
+                }
             }
         }
     }
@@ -455,15 +459,11 @@ open class DataPoint: Object,DataPointProtocol{
     }
 
 
-
-    /// Executes the next Pending Operations for a given the CallSequence
-    /// Notes:
+    /// Executes the next Bunch of call Operations for a given the CallSequence
     /// - The call sequences are running in parallel
-    /// - Into each sequence you can define the execution bunchsize
-    /// - The operation are executed immediately or defered using AsyncWorks (on faults)
     ///
     /// - Parameter callSequenceName: the Call sequence name
-    public final func executeNextCallOperations(from callSequenceName:CallSequence.Name){
+    public final func executeNextBunchOfCallOperations(from callSequenceName:CallSequence.Name){
 
         // Block the execution if we are explicitly offLine
         guard self.currentState == .online else{
@@ -613,7 +613,7 @@ open class DataPoint: Object,DataPointProtocol{
 
         operation.hasBeenExecuted()
         try self.deleteCallOperation(operation)
-        self.executeNextCallOperations(from: operation.sequenceName)
+        self.executeNextBunchOfCallOperations(from: operation.sequenceName)
     }
 
 
@@ -651,7 +651,7 @@ open class DataPoint: Object,DataPointProtocol{
                 Logger.log("Deleting \(operation.operationName) \(operation.uid) ", category: .standard)
                 try self.deleteCallOperation(operation)
                 /// And then execute the next in the Call Sequence
-                self.executeNextCallOperations(from: sequenceName)
+                self.executeNextBunchOfCallOperations(from: sequenceName)
             }else{
                 // Blocked & Not Destroyable
                 // The operation is Blocked
