@@ -107,18 +107,41 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       }
    }
 
+
+   /// The remove at implementation
+   /// Used by the other remove calls.
+   ///
+   /// - Parameter index: the index
+   /// - Returns: the removed item
    @discardableResult public func remove(at index: Int) -> T {
       self.hasChanged = true
-      return self._items.remove(at: index)
+      let r = self._items.remove(at: index)
+      // Unregisters
+      self.dataPoint?.unRegister(r)
+      return r
    }
    
    @discardableResult public func remove(_ item: T) -> Bool {
-      self.hasChanged = true
       if let index = self._items.index(of: item) {
-         self.remove(at: index)
+         let _ = self.remove(at: index)
          return true
       }
       return false
+   }
+
+   public func removeAll(){
+      for _ in 0..<self._items.count{
+         // Use the base implementation
+         self.remove(at: 0)
+      }
+   }
+
+   public func removeFirst()->T{
+      return self.remove(at: 0)
+   }
+
+   public func removeLast()->T{
+      return self.remove(at: self.count - 1)
    }
 
    public func append(_ newElement: T) {
@@ -171,10 +194,6 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    public var last: Element? { return self._items.last }
 
    public var count: Int { return self._items.count }
-
-   public func removeAll(){
-      self._items.removeAll()
-   }
 
    // MARK: - Extended behaviour
 
@@ -275,7 +294,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
          throw ErasingError.typeMissMatch
       }
       if let idx = self._items.index(where:{ return $0.id == castedItem.id }){
-         self._items.remove(at: idx)
+          let _ = self.remove(at: idx)
       }
    }
 
