@@ -1,0 +1,19 @@
+{
+    "name": "FilePath",
+    "definition": {
+        "explicitType":"Model",
+        "description": "Bartleby's Core: a file path reference",
+        "properties": {
+            "relativePath":{
+                "type": "string",
+                "description": "The file relative path",
+                "default": "$Default.NOT_SPECIFIED",
+                "required":true,
+                "supervisable": false,
+                "dynamic" : true
+            }
+        },
+        "metadata": {
+        }
+    }
+}

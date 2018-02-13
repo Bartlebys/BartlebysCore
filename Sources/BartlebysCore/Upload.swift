@@ -23,7 +23,7 @@ public class Upload : Model, Payload, Result  {
     ///   - downloadPath: the uploadPath
     /// - Returns: the operation
     public static func callOperation(dataPoint:DataPoint,operationName:String, operationPath: String, queryString: String,method: HTTPMethod, uploadPath:String)->CallOperation<FilePath, Upload>{
-        let payload = FilePath(relativePath: uploadPath)
+        let payload = FilePath(relativePath: uploadPath, dataPoint:dataPoint)
         let operation = CallOperation<FilePath,Upload>(dataPoint:dataPoint,operationName: operationName, operationPath: operationPath, queryString: queryString, method:method, resultIsACollection: false, payload: payload)
         operation.dataPoint = dataPoint
         operation.sequenceName = CallSequence.uploads
