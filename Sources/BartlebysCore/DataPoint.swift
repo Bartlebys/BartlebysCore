@@ -1016,15 +1016,7 @@ extension DataPoint{
     public func unRegister<T:  Codable & Collectable >(_ instance: T) {
         self._instancesByUID.removeValue(forKey: instance.id)
     }
-    
-    /// Removes the registred instances from the registry
-    ///
-    /// - Parameter instance: the instance
-    public func unRegister<T:  Codable & Collectable >(_ instances: [T]) {
-        for instance in instances{
-            self.unRegister(instance)
-        }
-    }
+
     
     // MARK: Generic level
     
@@ -1063,51 +1055,7 @@ extension DataPoint{
         }
         return items
     }
-    
-    // MARK: Model level
-    
-    /// Returns a Model by its UID
-    /// Those instance are not casted.
-    /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
-    /// - parameter UID:
-    /// - returns: the instance
-    public func registredModelByUID(_ UID: UID)-> Model? {
-        return try? self.registredObjectByUID(UID)
-    }
-    
-    /// Returns a collection of Model by UIDs
-    /// Those instance are not casted.
-    /// You should most of the time use : `registredObjectByUID<T: Collectable>(_ UID: String) throws-> T`
-    /// - parameter UID:
-    /// - returns: the instance
-    public func registredModelByUIDs(_ UIDs: [UID])-> [Model]? {
-        return try? self.registredObjectsByUIDs(UIDs)
-    }
-    
-    
-    // MARK: Opaque level
-    
-    /// Totaly opaque accessor
-    ///
-    /// - Parameter UID: the UID
-    /// - Returns: the opaque Instance
-    public func registredOpaqueInstanceByUID(_ UID: UID)-> Any? {
-        return self._instancesByUID[UID]
-    }
-    
-    /// Totaly opaque accessor
-    ///
-    /// - Parameter UID: the UID
-    /// - Returns: the opaque Instance
-    public func registredOpaqueInstancesByUIDs(_ UIDs: [UID])-> [Any] {
-        var items:[Any]=[Any]()
-        for UID in UIDs{
-            if let instance=self._instancesByUID[UID]{
-                items.append(instance)
-            }
-        }
-        return items
-    }
+
     
     // MARK: -
     

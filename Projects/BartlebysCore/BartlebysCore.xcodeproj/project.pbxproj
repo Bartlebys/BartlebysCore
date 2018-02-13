@@ -112,6 +112,11 @@
 		E5D6CDFE200142E000A3D975 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */; };
 		E5D6CDFF200142E000A3D975 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */; };
 		E5D6CE00200142E000A3D975 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */; };
+		E5D84E662032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */; };
+		E5D84E672032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */; };
+		E5D84E682032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */; };
+		E5D84E692032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */; };
+		E5D84E6A2032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */; };
 		E5DBB1D1200224770079F4C6 /* Aliased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D0200224770079F4C6 /* Aliased.swift */; };
 		E5DBB1D2200224980079F4C6 /* Aliased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D0200224770079F4C6 /* Aliased.swift */; };
 		E5DBB1D3200224980079F4C6 /* Aliased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D0200224770079F4C6 /* Aliased.swift */; };
@@ -521,6 +526,7 @@
 		E5D6CDF12001366900A3D975 /* KeyedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyedData.swift; sourceTree = "<group>"; };
 		E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+KeyValueStorage.swift"; sourceTree = "<group>"; };
 		E5D6CDFD200142E000A3D975 /* KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
+		E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+Helpers.swift"; sourceTree = "<group>"; };
 		E5DBB1D0200224770079F4C6 /* Aliased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliased.swift; sourceTree = "<group>"; };
 		E5DBB1D5200224C60079F4C6 /* AliasOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasOf.swift; sourceTree = "<group>"; };
 		E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -670,6 +676,7 @@
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */,
+				E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */,
 				E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */,
 				E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */,
 				4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */,
@@ -1253,6 +1260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5EC9FB71FF655FE008BF543 /* Model+Equatable.swift in Sources */,
+				E5D84E662032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5EC9FA81FF655FE008BF543 /* FilePath.swift in Sources */,
 				E5EC9F991FF655F9008BF543 /* FilePersistent.swift in Sources */,
 				E5EC9FA31FF655FE008BF543 /* Credentials.swift in Sources */,
@@ -1349,6 +1357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA00A1FF656AF008BF543 /* Model+Equatable.swift in Sources */,
+				E5D84E682032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5EC9FFB1FF656AF008BF543 /* FilePath.swift in Sources */,
 				E5EC9FEC1FF656AF008BF543 /* FilePersistent.swift in Sources */,
 				E5EC9FF61FF656AF008BF543 /* Credentials.swift in Sources */,
@@ -1445,6 +1454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA0631FF657A6008BF543 /* Model+Equatable.swift in Sources */,
+				E5D84E692032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5ECA0541FF657A6008BF543 /* FilePath.swift in Sources */,
 				E5ECA0451FF6579F008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA04F1FF657A6008BF543 /* Credentials.swift in Sources */,
@@ -1541,6 +1551,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5ECA0AC1FF65851008BF543 /* Model+Equatable.swift in Sources */,
+				E5D84E6A2032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5ECA09D1FF65851008BF543 /* FilePath.swift in Sources */,
 				E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA0981FF65851008BF543 /* Credentials.swift in Sources */,
@@ -1624,6 +1635,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5F3CDC3200D1C2000AB9A44 /* Model+Equatable.swift in Sources */,
+				E5D84E672032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5F3CDC4200D1C2000AB9A44 /* FilePath.swift in Sources */,
 				E5F3CDC5200D1C2000AB9A44 /* FilePersistent.swift in Sources */,
 				E5F3CDC6200D1C2000AB9A44 /* Credentials.swift in Sources */,

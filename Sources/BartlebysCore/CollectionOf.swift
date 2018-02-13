@@ -208,7 +208,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       self.hasChanged = true
       // We first determine if there is an element by using the dataPoint registry
       // It is faster than determining the index.
-      if let item = dataPoint.registredOpaqueInstanceByUID(element.uid) as? T {
+      if let item = dataPoint.registredModelByUID(element.uid) as? T {
          // We compute its possiuble 
          if let idx = self._items.index(where: {$0.uid == element.uid }){
             self[idx] = item
