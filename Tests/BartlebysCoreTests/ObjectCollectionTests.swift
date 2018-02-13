@@ -92,6 +92,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
 
 
         let m2 = dataPoint.new(type: Metrics.self)
+        let m2UID = m2.uid
         XCTAssert(collection.count == 1, "The collection should have exactly one element")
         do{
             try collection.removeItem(m2)
@@ -99,6 +100,10 @@ class ObjectCollectionTests: BaseDataPointTestCase{
             XCTFail("\(error)")
         }
         XCTAssert(collection.count == 0, "The collection should have exactly zero element")
+
+        if let _ = dataPoint.registredModelByUID(m2UID){
+            XCTFail("The m2 instance should not be regsitred any more")
+        }
 
         let typeMissMatch = dataPoint.new(type: LogEntry.self)
         do{
