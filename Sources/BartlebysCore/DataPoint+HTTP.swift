@@ -118,7 +118,7 @@ extension DataPoint{
                 }
 
                 do {
-                    let localFileURL = try localFilePath.urlFrom(dataPoint: self)
+                    let localFileURL = try localFilePath.fileUrlFor(dataPoint: self)
                     let directoryURL = localFileURL.deletingLastPathComponent()
                     try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
 
@@ -152,7 +152,7 @@ extension DataPoint{
         metrics.elapsed = self.elapsedTime
 
         do {
-            let localFileURL = try localFilePath.urlFrom(dataPoint:self)
+            let localFileURL = try localFilePath.fileUrlFor(dataPoint:self)
 
             let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
 

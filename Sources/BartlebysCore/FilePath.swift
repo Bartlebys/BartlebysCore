@@ -12,11 +12,19 @@ public class FilePath : Model, Payload, Result {
     
     public var relativePath: String = Default.NOT_SPECIFIED
 
-    // @BPDS @todo check if this method is still useful.
-    // its usage seems strange
-    func urlFrom(dataPoint: DataPoint) throws -> URL {
-        return URL(fileURLWithPath: self.relativePath)
+    /// Computes an absolute URL according to the App and Datapoint Context.
+    ///
+    /// - Parameter dataPoint: the dataPoint
+    /// - Returns: the file URL
+    /// - Throws: Paths issues
+    public func fileUrlFor(dataPoint: DataPoint) throws -> URL {
+        return try Paths.directoryURL(relativeFolderPath:dataPoint.sessionIdentifier+"/"+self.relativePath)
     }
+
+    public func absolutePath(dataPoint: DataPoint) throws -> String{
+        return try self.fileUrlFor(dataPoint: dataPoint).path
+    }
+
     
     public enum FilePathCodingKeys: String, CodingKey {
         case relativePath
