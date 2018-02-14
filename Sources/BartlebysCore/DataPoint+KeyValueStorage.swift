@@ -10,6 +10,7 @@ import Foundation
 
 public enum KeyValueStorageError:Error{
     case keyNotFound(key:String)
+    case noContainerRootValueNotFound
 }
 
 
@@ -33,7 +34,6 @@ extension DataPoint:KeyValueStorage{
         if collectionsTypes.contains(typeString){
             data = try JSON.encoder.encode(value)
         }else{
-
             data = try JSON.encoder.encode([DataPoint.noContainerRootKey:value])
         }
         let keyedData = KeyedData()
@@ -52,23 +52,32 @@ extension DataPoint:KeyValueStorage{
     /// - Parameter byKey: the identification key (must be unique)
     /// - Returns: the value
     /// - Throws: KeyValueStorageError.keyNotFound if the key is not set, and JSON coder error on decoding issue
-    public func getFromKVS<T:Codable>(key:String)throws ->T{
+    public func getFromKVS<T:Codable>(key:String) throws -> T {
         guard let keyedData = self.keyedDataCollection.first(where:{$0.key == key }) else {
             throw KeyValueStorageError.keyNotFound(key: key)
         }
         let data = keyedData.data
-        do{
+        
+        let collectionsTypes = Set(arrayLiteral: "Set", "Array", "Dictionary")
+        let typeString = String(describing: type(of: T.self))
+        if collectionsTypes.contains(typeString) {
             let instance = try JSON.decoder.decode(T.self, from: data)
+            if let model = instance as? Model {
+                self.register(model)
+            }
             return instance
-        }catch{
+        } else {
             let container:[String:T] = try JSON.decoder.decode([String:T].self, from: data)
-            if let instance = container[DataPoint.noContainerRootKey]{
+            if let instance = container[DataPoint.noContainerRootKey] {
+                if let model = instance as? Model {
+                    self.register(model)
+                }
                 return instance
-            }else{
-                // rethrow the original error
-                throw error
+            } else {
+                throw KeyValueStorageError.noContainerRootValueNotFound
             }
         }
+        
     }
 
     /// Recover the saved instance (For Tolerent instances)
