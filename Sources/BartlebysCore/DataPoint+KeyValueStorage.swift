@@ -10,7 +10,7 @@ import Foundation
 
 public enum KeyValueStorageError:Error{
     case keyNotFound(key:String)
-    case noContainerRootValueNotFound
+    case valueNotFound(key:String)
 }
 
 
@@ -29,13 +29,7 @@ extension DataPoint:KeyValueStorage{
         let data:Data
         // JSON need a container
         // single Int is Codable but is not a valid json
-        let collectionsTypes = Set(arrayLiteral: "Set", "Array", "Dictionary")
-        let typeString = String(describing: type(of: value))
-        if collectionsTypes.contains(typeString){
-            data = try JSON.encoder.encode(value)
-        }else{
-            data = try JSON.encoder.encode([DataPoint.noContainerRootKey:value])
-        }
+        data = try JSON.encoder.encode([value])
         let keyedData = KeyedData()
         keyedData.key = key
         keyedData.data = data
@@ -58,26 +52,16 @@ extension DataPoint:KeyValueStorage{
         }
         let data = keyedData.data
         
-        let collectionsTypes = Set(arrayLiteral: "Set", "Array", "Dictionary")
-        let typeString = String(describing: type(of: T.self))
-        if collectionsTypes.contains(typeString) {
-            let instance = try JSON.decoder.decode(T.self, from: data)
+        let container:[T] = try JSON.decoder.decode([T].self, from: data)
+        if let instance = container.first {
             if let model = instance as? Model {
                 self.register(model)
             }
             return instance
         } else {
-            let container:[String:T] = try JSON.decoder.decode([String:T].self, from: data)
-            if let instance = container[DataPoint.noContainerRootKey] {
-                if let model = instance as? Model {
-                    self.register(model)
-                }
-                return instance
-            } else {
-                throw KeyValueStorageError.noContainerRootValueNotFound
-            }
+            throw KeyValueStorageError.valueNotFound(key: key)
         }
-        
+
     }
 
     /// Recover the saved instance (For Tolerent instances)

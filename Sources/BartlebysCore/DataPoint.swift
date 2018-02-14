@@ -41,7 +41,6 @@ open class DataPoint: Object,DataPointProtocol{
     
     // KVS keys
     static public let sessionLastExecutionKVSKey = "sessionLastExecutionKVSKey"
-    static public let noContainerRootKey = "noContainerRootKey"
     
     public enum RelativePaths:String{
         case forCallOperations = "operations/"
