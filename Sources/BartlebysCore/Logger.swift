@@ -58,37 +58,39 @@ public struct Logger {
     }
 
     static public func log(_ message: Any, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line,decorative:Bool = false) {
-        
-        let entry: LogEntry = LogEntry()
-        entry.elapsedTime = getElapsedTime()
-        entry.message = "\(message)"
-        entry.category = category
-        entry.file = file
-        entry.function = function
-        entry.line = line
-        entry.counter = counter
-        entry.decorative = decorative
+        DispatchQueue.main.async{
+            let entry: LogEntry = LogEntry()
+            entry.elapsedTime = getElapsedTime()
+            entry.message = "\(message)"
+            entry.category = category
+            entry.file = file
+            entry.function = function
+            entry.line = line
+            entry.counter = counter
+            entry.decorative = decorative
 
-        while self.logsEntries.count > Logger.maxNumberOfEntries{
-            let _ = self.logsEntries.removeFirst()
+            while self.logsEntries.count > Logger.maxNumberOfEntries{
+                let _ = self.logsEntries.removeFirst()
+            }
+
+            logsEntries.append(entry)
+
+            if let delegate = self.delegate {
+                delegate.log(entry: entry)
+            }
+
+            self.counter += 1
+
+            func __syslog(priority : Int32, _ message : String, _ args : CVarArg...) {
+                #if os(iOS) || os(tvOS) || os(watchOS)
+                    // syslog not supported
+                #else
+                    withVaList(args) { vsyslog(priority, message, $0) }
+                #endif
+            }
+            __syslog(priority: entry.category.syslogPriority, entry.toString)
         }
 
-        logsEntries.append(entry)
-
-        if let delegate = self.delegate {
-            delegate.log(entry: entry)
-        }
-        
-        self.counter += 1
-
-        func __syslog(priority : Int32, _ message : String, _ args : CVarArg...) {
-            #if os(iOS) || os(tvOS) || os(watchOS)
-                // syslog not supported
-            #else
-                withVaList(args) { vsyslog(priority, message, $0) }
-            #endif
-        }
-        __syslog(priority: entry.category.syslogPriority, entry.toString)
 
     }
 
