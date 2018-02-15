@@ -33,9 +33,6 @@ open class CommonMetrics : Model, Payload, Result{
 	// The time interval in seconds from the time the request completed to the time response serialization completed.
 	open var serializationDuration:Double = 0
 
-	//The time interval in seconds from the time the request started to the time response serialization completed.
-	open var totalDuration:Double = 0
-
 	//the verification method
 	public enum StreamOrientation:String{
 		case upStream = "upStream"
@@ -52,7 +49,6 @@ open class CommonMetrics : Model, Payload, Result{
 		case elapsed
 		case requestDuration
 		case serializationDuration
-		case totalDuration
 		case streamOrientation
     }
 
@@ -64,7 +60,6 @@ open class CommonMetrics : Model, Payload, Result{
 			self.elapsed = try values.decode(Double.self,forKey:.elapsed)
 			self.requestDuration = try values.decode(Double.self,forKey:.requestDuration)
 			self.serializationDuration = try values.decode(Double.self,forKey:.serializationDuration)
-			self.totalDuration = try values.decode(Double.self,forKey:.totalDuration)
 			self.streamOrientation = Metrics.StreamOrientation(rawValue: try values.decode(String.self,forKey:.streamOrientation)) ?? .upStream
         }
     }
@@ -76,7 +71,6 @@ open class CommonMetrics : Model, Payload, Result{
 		try container.encode(self.elapsed,forKey:.elapsed)
 		try container.encode(self.requestDuration,forKey:.requestDuration)
 		try container.encode(self.serializationDuration,forKey:.serializationDuration)
-		try container.encode(self.totalDuration,forKey:.totalDuration)
 		try container.encode(self.streamOrientation.rawValue ,forKey:.streamOrientation)
     }
 
@@ -131,11 +125,6 @@ open class CommonMetrics : Model, Payload, Result{
     @objc override dynamic open var  serializationDuration : Double{
         set{ super.serializationDuration = newValue }
         get{ return super.serializationDuration }
-    }
-
-    @objc override dynamic open var  totalDuration : Double{
-        set{ super.totalDuration = newValue }
-        get{ return super.totalDuration }
     }
 }
 
