@@ -9,12 +9,13 @@
 import Foundation
 
 public class DataResponse<T> : HTTPResponse where T : Codable & Collectable {
-    
+
+    // The result dat
     public var result: Array<T>
 
-    required public init(result: Array<T>) {
+    required public init(result: Array<T>,content:Data?, metrics:Metrics, httpStatus:Status) {
         self.result = result
-        super.init()
+        super.init(metrics: metrics, httpStatus: httpStatus, content: content)
     }
 }
 

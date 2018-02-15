@@ -34,49 +34,35 @@ extension DataPoint{
                         if resultIsACollection{
                             let decoded = try self.operationsCoder.decodeArrayOf(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
-                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let dataResponse = DataResponse(result: decoded)
-                            dataResponse.metrics = metrics
-                            dataResponse.httpStatus = httpResponse.statusCode.status()
-                            dataResponse.content = data
-
+                            let dataResponse = DataResponse(result: decoded, content: data, metrics: metrics, httpStatus: httpResponse.statusCode.status())
                             syncOnMain {
                                 success(dataResponse)
                             }
                         }else{
                             let decoded = try self.operationsCoder.decode(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
-                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-                            let dataResponse = DataResponse(result: [decoded])
-                            dataResponse.metrics = metrics
-                            dataResponse.httpStatus = httpResponse.statusCode.status()
-                            dataResponse.content = data
-
+                            let dataResponse = DataResponse(result: [decoded], content: data, metrics: metrics, httpStatus: httpResponse.statusCode.status())
                             syncOnMain {
                                 success(dataResponse)
                             }
                         }
-
                     } catch {
                         syncOnMain {
-                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                            let dataResponse = DataResponse(result:Array<R>(), content: data, metrics: metrics, httpStatus: httpResponse.statusCode.status())
+                            failure(Failure(from : dataResponse, and: error))
                         }
                     }
                 } else {
                     // There is no data
                     if let error = error {
                         syncOnMain {
-                            failure(Failure(from : httpResponse.statusCode.status(), and: error))
+                            let dataResponse = DataResponse(result:Array<R>(), content: nil, metrics: metrics, httpStatus: httpResponse.statusCode.status())
+                            failure(Failure(from : dataResponse , and: error))
                         }
                     } else {
                         syncOnMain {
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
-                            metrics.totalDuration = (metrics.requestDuration +  metrics.serializationDuration)
-
-                            let dataResponse: DataResponse = DataResponse(result: Array<R>())
-                            dataResponse.httpStatus = httpResponse.statusCode.status()
-                            dataResponse.content = data
-                            dataResponse.metrics = metrics
+                            let dataResponse: DataResponse = DataResponse(result: Array<R>(),content: nil,metrics: metrics, httpStatus: httpResponse.statusCode.status())
                             success(dataResponse)
                         }
                     }
@@ -101,7 +87,6 @@ extension DataPoint{
 
             let serverHasRespondedTime = AbsoluteTimeGetCurrent()
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
-            metrics.totalDuration = metrics.requestDuration
 
             if let error = error {
                 syncOnMain {
@@ -110,29 +95,25 @@ extension DataPoint{
                 }
             } else if let httpURLResponse = response as? HTTPURLResponse {
 
+                let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
+
                 guard let tempURL = temporaryURL else {
                     syncOnMain {
-                        failure(Failure(from: httpURLResponse.statusCode.status(), and: SessionError.fileNotFound))
+                        failure(Failure(from: httpResponse, and: SessionError.fileNotFound))
                     }
                     return
                 }
-
                 do {
                     let localFileURL = try localFilePath.absoluteFileURL()
                     let directoryURL = localFileURL.deletingLastPathComponent()
                     try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
-
                     try FileManager.default.moveItem(at: tempURL, to: localFileURL)
-
-                    let httpResponse = HTTPResponse()
-                    httpResponse.httpStatus = httpURLResponse.statusCode.status()
-                    httpResponse.metrics = metrics
                     syncOnMain {
                         success(httpResponse)
                     }
                 } catch {
                     syncOnMain {
-                        failure(Failure(from: httpURLResponse.statusCode.status(), and: error))
+                        failure(Failure(from: httpResponse, and: error))
                     }
                 }
             }
@@ -158,7 +139,6 @@ extension DataPoint{
 
                 let serverHasRespondedTime = AbsoluteTimeGetCurrent()
                 metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
-                metrics.totalDuration = metrics.requestDuration
 
                 if let error = error {
                     syncOnMain {
@@ -166,18 +146,16 @@ extension DataPoint{
                         failure(Failure(from: fileError))
                     }
                 } else if let httpURLResponse = response as? HTTPURLResponse {
+                    let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
 
                     switch httpURLResponse.statusCode {
                     case 200...299:
-                        let httpResponse = HTTPResponse()
-                        httpResponse.httpStatus = httpURLResponse.statusCode.status()
-                        httpResponse.metrics = metrics
                         syncOnMain {
                             success(httpResponse)
                         }
                     default:
                         syncOnMain {
-                            failure(Failure(from: httpURLResponse.statusCode.status()))
+                            failure(Failure(from: httpResponse))
                         }
                     }
                 }
