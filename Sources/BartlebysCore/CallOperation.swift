@@ -100,6 +100,8 @@ public protocol CallOperationProtocol {
 
 }
 
+
+
 /// A CallOperation is:
 /// - a Network operation runnable in a Session.
 /// - that can persist until its execution (Codable)
@@ -107,6 +109,7 @@ public protocol CallOperationProtocol {
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
 public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result & Collectable{
+
 
 
     // The sequence name is used to segment the call operations.
@@ -164,6 +167,10 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
     public static var registrableCollection:CollectionOf<CallOperation<P, R>> {
         return CollectionOf<CallOperation<P, R>>()
     }
+
+
+    /// You can setup a debugHandler to debug :) the execution of a CallOperation
+    public var debugHandler:((CallOperation<P,R>,HTTPResponse?)->())?
 
     public required init(dataPoint:DataPoint, operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, payload: P?) {
         self.operationName = operationName

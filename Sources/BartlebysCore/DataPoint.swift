@@ -921,6 +921,9 @@ open class DataPoint: Object,DataPointProtocol{
                 }catch{
                     Logger.log(error, category: .critical)
                 }
+                if let debugHandler = operation.debugHandler{
+                    debugHandler(operation, response.httpResponse)
+                }
             }
         }
         switch R.self {
@@ -932,7 +935,7 @@ open class DataPoint: Object,DataPointProtocol{
 
             let successClosure: ((HTTPResponse) -> ()) = { response in
                 syncOnMain {
-                    self._onSuccessOf(operation)
+                    self._onSuccessOf(operation,response)
                 }
             }
 
@@ -945,7 +948,7 @@ open class DataPoint: Object,DataPointProtocol{
             self.call(request:request, resultType:R.self, resultIsACollection: operation.resultIsACollection, success: { response in
                 syncOnMain {
                     self.integrateResponse(response)
-                    self._onSuccessOf(operation)
+                    self._onSuccessOf(operation,response)
                 }
             }, failure: failureClosure)
         }
@@ -957,12 +960,15 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameters:
     ///   - operation: the callOperation
-    fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>){
+    fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>,_ httpResponse:HTTPResponse?){
         do{
             self._removeOperationFromRunningCalls(operation)
             try self.callOperationExecutionDidSucceed(operation)
         }catch{
             Logger.log("\(error)", category: .critical)
+        }
+        if let debugHandler = operation.debugHandler{
+            debugHandler(operation, httpResponse)
         }
     }
 
