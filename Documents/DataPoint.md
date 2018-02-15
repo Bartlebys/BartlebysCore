@@ -1,48 +1,63 @@
-# Datapoints
+# What is a Datapoint ?
 
-# CallOperation
+
+1. references, load and saves collections of Models.
+2. allow aliases, and relations resolution.
+3. deals with online and offline HTTP operations
+
+A Datapoint is equivalent to a Document.
+
+A `Datapoint` can use volatile storage to persist in memory only, or by default relies on a File Storage that handles efficiently persistency.
+
+[DataPoint.swift](https://github.com/Bartlebys/BartlebysCore/blob/master/Sources/BartlebysCore/DataPoint.swift):
+
+# What is a CallOperation ?
 
 - CallOperations are serializable reusable HTTP calls.
-- CallOperations are *grouped* by CallSequences
+- CallOperations are *grouped* by CallSequences 
+- CallOperations are executed by their parent DataPoint.
 
-## How to execute a CallOperation
+## How to execute a CallOperation?
 
 Use: 
 
 ```swift
 operation.execute()
 ```
-Or Invoke on the datapoint
+
+It will Invoke the datapoint's execution method.
 
 ```swift
 func execute<P, R>(_ operation: CallOperation<P, R>)
 ```
 
-# CallSequences
+## CallOperations are segmented by CallSequences
 
-Each call sequence runs in parallel. By default we add :
+Each call sequence runs in parallel. By default Bartleby's core creates 3 call sequences :
 
 - data
 - downloads
 - uploads
 
-But you can easily create your own Call Sequence.
+### You can easily create your own Call Sequence.
 
 
-You can configure a call Sequence by calling `upsertCallSequence(...)` generally during the preparation phase. E.g:
+1. You just need configure a call Sequence by calling `upsertCallSequence(...)` generally during the preparation phase. E.g: ` self.upsertCallSequence(CallSequence(name: CallSequence.history, bunchSize: 1))`
 
-```swift
-self.upsertCallSequence(CallSequence(name: CallSequence.downloads, bunchSize: 5))
-```
+2. and to declare the call sequence name of your operation on creation `operation.sequenceName = CallSequence.history` 
 
-By setting the *downloads* bunch size to `5` you allow to run download call operations by bunch of `5`. The call order will be preserved (with no guarantee of the result order)
 
-By default the bunchsize are set to `1` making Operation running sequentially.
+By setting the *downloads* bunch size to `5` you allow to run history call operations by bunch of `5`. 
+
+#### Notes:
+
+- By default the bunchsize are set to `1` making Operation running sequentially.
+- if the bunchsize > 1  The call order will be preserved (with no guarantee of the result order)
  
 
-# Debugging calls
+## How to Debug a CallOperation execution?
 
-You cannot easily know when to log or put a break point because the execution policy is determined by the DataPoint.The simplest solution is to add a debugHandler:
+You cannot easily know when to log or put a break point because the execution policy is determined by the DataPoint. The simplest solution is to add a debugHandler:
 
 
 Let's imagine we are executing an operation that gets resorts.
@@ -84,3 +99,5 @@ Let's imagine we are executing an operation that gets resorts.
 	}
 	getResorts.execute()
 ```
+
+**Tip** you can put a breakpoint in the operation.debugHandler.
