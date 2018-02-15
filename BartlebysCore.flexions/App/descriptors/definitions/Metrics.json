@@ -12,6 +12,13 @@
         "supervisable": false,
         "dynamic" : true
       },
+      "associatedURL":{
+        "explicitType": "URL",
+        "description": "The associated url",
+        "required":false,
+        "supervisable": false,
+        "dynamic" : true
+      },
       "elapsed":{
         "description":"The elasped time since app started up.",
         "type":"double",

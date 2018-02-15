@@ -20,9 +20,14 @@ extension DataPoint{
         ) {
 
         let metrics = Metrics()
+        metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
 
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+            defer{
+                self.report(metrics)
+            }
 
             let serverHasRespondedTime = AbsoluteTimeGetCurrent()
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
@@ -81,9 +86,14 @@ extension DataPoint{
         ) {
 
         let metrics = Metrics()
+        metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
 
         let task = URLSession.shared.downloadTask(with: request) { (temporaryURL, response, error) in
+
+            defer{
+                self.report(metrics)
+            }
 
             let serverHasRespondedTime = AbsoluteTimeGetCurrent()
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
@@ -130,12 +140,17 @@ extension DataPoint{
         ) {
 
         let metrics = Metrics()
+        metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
 
         do {
             let localFileURL = try localFilePath.absoluteFileURL()
 
             let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
+
+                defer{
+                    self.report(metrics)
+                }
 
                 let serverHasRespondedTime = AbsoluteTimeGetCurrent()
                 metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)

@@ -97,4 +97,9 @@ public protocol SessionDelegate:CallOperationReceiver {
     /// - Parameter callSequenceName: the Call sequence name
     func executeNextBunchOfCallOperations(from callSequenceName:CallSequence.Name)
 
+
+    /// This method is called by the execution engine for metrology
+    ///
+    /// - Parameter metrics: the metrics
+    func report(_ metrics:Metrics)
 }

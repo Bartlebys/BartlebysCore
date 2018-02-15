@@ -592,6 +592,14 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
+
+    /// This method is called by the execution engine for metrology
+    ///
+    /// - Parameter metrics: the metrics
+    open func report(_ metrics:Metrics){
+        // You can override this method in your datapoint for metrology
+    }
+
     /// Used to determine if we should destroy some Operations
     /// Returns a quota of operation to preserve for each sequence.
     /// If the value is over the quota the older operations are destroyed

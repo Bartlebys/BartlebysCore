@@ -24,6 +24,9 @@ open class CommonMetrics : Model, Payload, Result{
 	//The action name e.g: UpdateUser
 	open var operationName:String = Default.NO_NAME
 
+	//The associated url
+	open var associatedURL:URL?
+
 	//The elasped time since app started up.
 	open var elapsed:Double = 0
 
@@ -46,6 +49,7 @@ open class CommonMetrics : Model, Payload, Result{
 
     public enum MetricsCodingKeys: String,CodingKey{
 		case operationName
+		case associatedURL
 		case elapsed
 		case requestDuration
 		case serializationDuration
@@ -57,6 +61,7 @@ open class CommonMetrics : Model, Payload, Result{
         try self.quietThrowingChanges {
 			let values = try decoder.container(keyedBy: MetricsCodingKeys.self)
 			self.operationName = try values.decode(String.self,forKey:.operationName)
+			self.associatedURL = try values.decodeIfPresent(URL.self,forKey:.associatedURL)
 			self.elapsed = try values.decode(Double.self,forKey:.elapsed)
 			self.requestDuration = try values.decode(Double.self,forKey:.requestDuration)
 			self.serializationDuration = try values.decode(Double.self,forKey:.serializationDuration)
@@ -68,6 +73,7 @@ open class CommonMetrics : Model, Payload, Result{
 		try super.encode(to:encoder)
 		var container = encoder.container(keyedBy: MetricsCodingKeys.self)
 		try container.encode(self.operationName,forKey:.operationName)
+		try container.encodeIfPresent(self.associatedURL,forKey:.associatedURL)
 		try container.encode(self.elapsed,forKey:.elapsed)
 		try container.encode(self.requestDuration,forKey:.requestDuration)
 		try container.encode(self.serializationDuration,forKey:.serializationDuration)
@@ -110,6 +116,11 @@ open class CommonMetrics : Model, Payload, Result{
     @objc override dynamic open var  operationName : String{
         set{ super.operationName = newValue }
         get{ return super.operationName }
+    }
+
+    @objc override dynamic open var  associatedURL : URL?{
+        set{ super.associatedURL = newValue }
+        get{ return super.associatedURL }
     }
 
     @objc override dynamic open var  elapsed : Double{
