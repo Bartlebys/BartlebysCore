@@ -12,12 +12,59 @@ extension DataPoint{
 
     // MARK: - HTTP Engine (Request level)
 
+    /// Simple request call without deserialization
+    ///
+    /// - Parameters:
+    ///   - request: the request
+    ///   - success: the success call back
+    ///   - failure: the failure call back
+    public func call( request: URLRequest,
+                      success: @escaping (_ completion: HTTPResponse)->(),
+                      failure: @escaping (_ completion: Failure)->()){
+
+        let metrics = Metrics()
+        metrics.associatedURL = request.url
+        metrics.elapsed = self.elapsedTime
+
+        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+            defer{
+                self.report(metrics)
+            }
+
+            let serverHasRespondedTime = AbsoluteTimeGetCurrent()
+            metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
+
+            if let httpURLResponse = response as? HTTPURLResponse {
+                if let error = error {
+                    syncOnMain {
+                        let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: data)
+                        failure(Failure(from : httpResponse , and: error))
+                    }
+                } else {
+                    syncOnMain {
+                        let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: data)
+                        success(httpResponse)
+                    }
+                }
+            }
+        }
+        task.resume()
+    }
+
+    /// Request call with an attended ResultType
+    ///
+    /// - Parameters:
+    ///   - request: the request
+    ///   - resultType: the resultType
+    ///   - resultIsACollection: is the result a collection?
+    ///   - success: the success call back
+    ///   - failure: the failure call back
     public func call<R>(  request: URLRequest,
                           resultType: R.Type,
                           resultIsACollection:Bool,
                           success: @escaping (_ completion: DataResponse<R>)->(),
-                          failure: @escaping (_ completion: Failure)->()
-        ) {
+                          failure: @escaping (_ completion: Failure)->()) {
 
         let metrics = Metrics()
         metrics.associatedURL = request.url
@@ -78,12 +125,18 @@ extension DataPoint{
 
     }
 
-    public func callDownload<R>(  request: URLRequest,
-                                  resultType: R.Type,
-                                  localFilePath: FilePath,
-                                  success: @escaping (_ completion: HTTPResponse)->(),
-                                  failure: @escaping (_ completion: Failure)->()
-        ) {
+
+    /// Call a download task
+    ///
+    /// - Parameters:
+    ///   - request: the request
+    ///   - localFilePath: the local file path
+    ///   - success: the success call back
+    ///   - failure: the failure call back
+    public func callDownload(  request: URLRequest,
+                               localFilePath: FilePath,
+                               success: @escaping (_ completion: HTTPResponse)->(),
+                               failure: @escaping (_ completion: Failure)->()) {
 
         let metrics = Metrics()
         metrics.associatedURL = request.url
@@ -132,12 +185,18 @@ extension DataPoint{
         task.resume()
     }
 
-    public func callUpload<R>(  request: URLRequest,
-                                resultType: R.Type,
-                                localFilePath: FilePath,
-                                success: @escaping (_ completion: HTTPResponse)->(),
-                                failure: @escaping (_ completion: Failure)->()
-        ) {
+
+    /// Call a upload task
+    ///
+    /// - Parameters:
+    ///   - request: the request
+    ///   - localFilePath: the local file path
+    ///   - success: the success call back
+    ///   - failure: the failure call back
+    public func callUpload( request: URLRequest,
+                            localFilePath: FilePath,
+                            success: @escaping (_ completion: HTTPResponse)->(),
+                            failure: @escaping (_ completion: Failure)->()) {
 
         let metrics = Metrics()
         metrics.associatedURL = request.url

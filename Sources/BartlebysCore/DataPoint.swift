@@ -937,9 +937,9 @@ open class DataPoint: Object,DataPointProtocol{
             }
 
             if R.self is Download.Type {
-                self.callDownload(request: request, resultType: R.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
+                self.callDownload(request: request, localFilePath: filePath, success: successClosure, failure: failureClosure)
             } else {
-                self.callUpload(request: request, resultType: R.self, localFilePath: filePath, success: successClosure, failure: failureClosure)
+                self.callUpload(request: request, localFilePath: filePath, success: successClosure, failure: failureClosure)
             }
         default:
             self.call(request:request, resultType:R.self, resultIsACollection: operation.resultIsACollection, success: { response in
