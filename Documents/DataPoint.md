@@ -50,21 +50,37 @@ Let's imagine we are executing an operation that gets resorts.
 ```swift
 	 
 	let getResorts:CallOperation<VoidPayload, Resort> = ... 
-	getResorts.debugHandler = { operation, response in
-	
-		if let response = response{
-			// Usage1:  Typed result
-			if let response = response as? DataResponse<Resort>{
-			    if let firstResort = response.result.first{
-			        print("First resort: \(firstResort)\n")
-			    }
-			}
-			
-			// Usage2: response.prettyJSON or response.rawString
-			if let contentPrettyJSON = response.prettyJSON{
-			    print(contentPrettyJSON)
-			}
-		}
+	getResorts.debugHandler = { operation, response, error in
+
+        if let error = error{
+            // Analyze the error
+            print(error)
+        }
+
+        // Inspect the operation
+        print(operation.uid)
+
+        if let response = response{
+
+            // Access to the fully Typed result
+            if let response = response as? DataResponse<Resort>{
+                if let firstResort = response.result.first{
+                    print("First resort: \(firstResort)\n")
+                }
+            }
+
+            // use response.prettyJSON or response.rawString
+            if let contentPrettyJSON = response.prettyJSON{
+                print(contentPrettyJSON)
+            }
+
+            if let metrics = response.metrics{
+                // You can check the metrics.
+                print(metrics)
+            }
+            
+        }
+
 	}
 	getResorts.execute()
 ```

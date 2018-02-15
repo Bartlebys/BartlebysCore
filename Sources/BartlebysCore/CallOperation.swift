@@ -170,7 +170,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
 
     /// You can setup a debugHandler to debug :) the execution of a CallOperation
-    public var debugHandler:((CallOperation<P,R>,HTTPResponse?)->())?
+    public var debugHandler:((CallOperation<P,R>,HTTPResponse?,Error?)->())?
 
     public required init(dataPoint:DataPoint, operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, payload: P?) {
         self.operationName = operationName
