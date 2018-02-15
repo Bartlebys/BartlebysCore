@@ -39,3 +39,32 @@ By setting the *downloads* bunch size to `5` you allow to run download call oper
 
 By default the bunchsize are set to `1` making Operation running sequentially.
  
+
+# Debugging calls
+
+You cannot easily know when to log or put a break point because the execution policy is determined by the DataPoint.The simplest solution is to add a debugHandler:
+
+
+Let's imagine we are executing an operation that gets resorts.
+	
+```swift
+	 
+	let getResorts:CallOperation<VoidPayload, Resort> = ... 
+	getResorts.debugHandler = { operation, response in
+	
+		if let response = response{
+			// Usage1:  Typed result
+			if let response = response as? DataResponse<Resort>{
+			    if let firstResort = response.result.first{
+			        print("First resort: \(firstResort)\n")
+			    }
+			}
+			
+			// Usage2: response.prettyJSON or response.rawString
+			if let contentPrettyJSON = response.prettyJSON{
+			    print(contentPrettyJSON)
+			}
+		}
+	}
+	getResorts.execute()
+```
