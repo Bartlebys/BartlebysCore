@@ -69,7 +69,7 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
 
     // MARK: - NSCopy aka CopyingProtocol
 
-    public func copy(with zone: NSZone? = nil) -> Any {
+    open func copy(with zone: NSZone? = nil) -> Any {
         guard let data = try? JSON.encoder.encode(self) else {
             return Model()
         }

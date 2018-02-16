@@ -137,7 +137,7 @@ open class Model:CodableObject,Collectable{
 
     // MARK: - NSCopy aka CopyingProtocol
 
-    override public func copy(with zone: NSZone? = nil) -> Any {
+    override open func copy(with zone: NSZone? = nil) -> Any {
         return super.copy(with: zone)
     }
 
