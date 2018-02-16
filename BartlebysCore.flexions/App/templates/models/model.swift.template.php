@@ -110,6 +110,13 @@ while ( $d ->iterateOnProperties() === true ) {
     }
 ?>
 
+
+    // MARK: - NSCopy aka CopyingProtocol
+
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        return super.copy(with: zone)
+    }
+
 }
 
 

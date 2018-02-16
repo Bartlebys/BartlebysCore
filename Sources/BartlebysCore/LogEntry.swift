@@ -122,6 +122,13 @@ open class CommonLogEntry : Model, Payload, Result{
         return LogEntry.collectionName
     }
 
+
+    // MARK: - NSCopy aka CopyingProtocol
+
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        return super.copy(with: zone)
+    }
+
 }
 
 

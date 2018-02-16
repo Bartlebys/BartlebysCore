@@ -68,6 +68,13 @@ open class CommonFilePath : Model, Payload, Result{
         return FilePath.collectionName
     }
 
+
+    // MARK: - NSCopy aka CopyingProtocol
+
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        return super.copy(with: zone)
+    }
+
 }
 
 
