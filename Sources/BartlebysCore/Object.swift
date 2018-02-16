@@ -17,3 +17,7 @@ import Foundation
     open class Object : NSObject {}
 
 #endif
+
+public enum ObjectError:Error {
+    case message(message:String)
+}

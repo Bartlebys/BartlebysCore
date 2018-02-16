@@ -77,10 +77,19 @@ open class CommonKeyedData : Model, Payload, Result{
 
     // MARK: - NSCopy aka CopyingProtocol
 
+    /// Provides an unregistered copy (the instance is not held by the dataPoint)
+    ///
+    /// - Parameter zone: the zone
+    /// - Returns: the copy
     override open func copy(with zone: NSZone? = nil) -> Any {
-        return super.copy(with: zone)
+        guard let data = try? JSON.encoder.encode(self) else {
+            return ObjectError.message(message: "Encoding issue on copy of: \(KeyedData.typeName) \(self.uid)")
+        }
+        guard let copy = try? JSON.decoder.decode(type(of:self), from: data) else {
+            return ObjectError.message(message: "Decoding issue on copy of:\(KeyedData.typeName) \(self.uid)")
+        }
+        return copy
     }
-
 }
 
 
