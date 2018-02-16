@@ -100,4 +100,7 @@ Let's imagine we are executing an operation that gets resorts.
 	getResorts.execute()
 ```
 
-**Tip** you can put a breakpoint in the operation.debugHandler.
+### Notes :
+
+- the handler is called on live execution and not when runing from a Serialized state.
+- you can put a breakpoint in the operation.debugHandler.
