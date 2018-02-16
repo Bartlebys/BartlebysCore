@@ -110,6 +110,13 @@ while ( $d ->iterateOnProperties() === true ) {
     }
 ?>
 
+<?php
+
+$typeName = "";
+if (GenerativeHelperForSwift::getBaseClass($d) != "CodableObject"){
+    $typeName = "\($d->name.typeName)";
+}
+?>
 
     // MARK: - NSCopy aka CopyingProtocol
 
@@ -119,10 +126,10 @@ while ( $d ->iterateOnProperties() === true ) {
     /// - Returns: the copy
     override open func copy(with zone: NSZone? = nil) -> Any {
         guard let data = try? JSON.encoder.encode(self) else {
-            return ObjectError.message(message: "Encoding issue on copy of: \(<?php echo ucfirst($d->name);?>.typeName) \(self.uid)")
+            return ObjectError.message(message: "Encoding issue on copy of: <?php echo $typeName;?> \(self.uid)")
         }
         guard let copy = try? JSON.decoder.decode(type(of:self), from: data) else {
-            return ObjectError.message(message: "Decoding issue on copy of:\(<?php echo ucfirst($d->name);?>.typeName) \(self.uid)")
+            return ObjectError.message(message: "Decoding issue on copy of: <?php echo $typeName;?> \(self.uid)")
         }
         return copy
     }

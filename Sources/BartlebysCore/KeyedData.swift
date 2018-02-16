@@ -86,7 +86,7 @@ open class CommonKeyedData : Model, Payload, Result{
             return ObjectError.message(message: "Encoding issue on copy of: \(KeyedData.typeName) \(self.uid)")
         }
         guard let copy = try? JSON.decoder.decode(type(of:self), from: data) else {
-            return ObjectError.message(message: "Decoding issue on copy of:\(KeyedData.typeName) \(self.uid)")
+            return ObjectError.message(message: "Decoding issue on copy of: \(KeyedData.typeName) \(self.uid)")
         }
         return copy
     }
