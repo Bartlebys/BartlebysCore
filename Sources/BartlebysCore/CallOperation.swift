@@ -108,7 +108,7 @@ public protocol CallOperationProtocol {
 /// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public final class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result & Collectable{
+open class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result & Collectable{
 
 
 
@@ -189,14 +189,14 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
 
     /// Executes the call operation (using the execution engine)
     /// The execution may be defered according to CallSequence Load
-    public func execute(){
+    open func execute(){
         self.dataPoint?.execute(self)
     }
 
     /// Runs the call operation
     /// This method should normally not be called directly
     /// The call occurs immediately.
-    public func runIfProvisioned() throws{
+    open func runIfProvisioned() throws{
         guard self.scheduledOrderOfExecution > ORDER_OF_EXECUTION_UNDEFINED else{
             throw SessionError.unProvisionedOperation
         }
@@ -229,7 +229,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         case isDestroyable
     }
 
-    public required init(from decoder: Decoder) throws{
+    required public init(from decoder: Decoder) throws{
         try super.init(from: decoder)
         let values = try decoder.container(keyedBy: CallOperationCodingKeys.self)
         self.sequenceName = try values.decode(String.self,forKey:.sequenceName)
@@ -251,7 +251,7 @@ public final class CallOperation<P, R> : Model, CallOperationProtocol where P : 
         super.init()
     }
 
-    override public func encode(to encoder: Encoder) throws {
+    override open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CallOperationCodingKeys.self)
         try container.encode(self.sequenceName, forKey: .sequenceName)
         try container.encode(self.operationName,forKey:.operationName)
