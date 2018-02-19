@@ -116,8 +116,8 @@ open class DataPoint: Object,DataPointProtocol{
     public var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.collectionName,relativePath:"")
     
     // Special call Operations Donwloads and Uploads
-    public var downloads = CollectionOf<CallOperation<FilePath,Download>>()
-    public var uploads = CollectionOf<CallOperation<FilePath,Upload>>()
+    public let downloads = CollectionOf<CallOperation<FilePath,Download>>()
+    public let uploads = CollectionOf<CallOperation<FilePath,Upload>>()
 
 
     // A shared void Payload instance
