@@ -238,21 +238,23 @@ open class DataPoint: Object,DataPointProtocol{
         try self.registerCollection(collection: self.uploads)
         
         // Generated Models
-        try self.registerCallOperationsFor(type: Metrics.self)
-        try self.registerCallOperationsFor(type: KeyedData.self)
-        try self.registerCallOperationsFor(type: LogEntry.self)
+        try self.registerStandardCallOperationsFor(type: Metrics.self)
+        try self.registerStandardCallOperationsFor(type: KeyedData.self)
+        try self.registerStandardCallOperationsFor(type: LogEntry.self)
     }
     
     
-    /// Registers the CallOperations collections
+    /// Registers one upstream and one downstream CallOperation collections
     /// that provision the call for Off line support & fault tolerence
+    /// If your CallOperation requires a non-standard signature you should directly call registerCollection
+    /// with the registrable collection type
     ///
     /// - Parameter type: the call Payload and resultType
     /// - Throws: erros on collection registration.
-    open func registerCallOperationsFor<T:Payload & Result & Collectable>(type:T.Type) throws {
+    open func registerStandardCallOperationsFor<T:Payload & Result & Collectable>(type:T.Type) throws {
         //self._callOperationsTypes.append(type)
-        let upStreamOperations = CallOperation<T,VoidResult>.registrableCollection
-        let downStreamOperations = CallOperation<VoidPayload,T>.registrableCollection
+        let upStreamOperations = CallOperation<T,VoidResult>.registrableCollectionProxy
+        let downStreamOperations = CallOperation<VoidPayload,T>.registrableCollectionProxy
         try self.registerCollection(collection: upStreamOperations)
         try self.registerCollection(collection: downStreamOperations)
     }

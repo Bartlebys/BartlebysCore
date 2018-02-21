@@ -164,10 +164,9 @@ open class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload,
     public var isDestroyableWhenBlocked:Bool = false
 
     /// This collection is used to register the collection in the datapoint
-    public static var registrableCollection:CollectionOf<CallOperation<P, R>> {
+    public static var registrableCollectionProxy:CollectionOf<CallOperation<P, R>> {
         return CollectionOf<CallOperation<P, R>>()
     }
-
 
     /// You can setup a debugHandler to debug :) the execution of a CallOperation
     /// Note that the handler is called on live execution and not when runing from a Serialized state.
