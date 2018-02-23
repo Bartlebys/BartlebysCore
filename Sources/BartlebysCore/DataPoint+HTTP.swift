@@ -81,7 +81,7 @@ extension DataPoint{
 
             if let httpResponse = response as? HTTPURLResponse {
 
-                if let data = data, data.count > 0, !(resultType is VoidResult.Type) {
+                if let data = data, !(resultType is VoidResult.Type) {
                     do {
                         if resultIsACollection{
                             let decoded = try self.operationsCoder.decodeArrayOf(R.self, from: data)
