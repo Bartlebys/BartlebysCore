@@ -118,6 +118,7 @@ open class DataPoint: Object,DataPointProtocol{
     // Special call Operations Donwloads and Uploads
     public let downloads = CollectionOf<CallOperation<FilePath,Download>>()
     public let uploads = CollectionOf<CallOperation<FilePath,Upload>>()
+    public let simpleQueries = CollectionOf<CallOperation<VoidPayload,VoidResult>>() // usable for simple Query string encoded calls on any method.
 
 
     // A shared void Payload instance
@@ -236,7 +237,9 @@ open class DataPoint: Object,DataPointProtocol{
         // Special Call Operations (Downloads and Uploads)
         try self.registerCollection(collection: self.downloads)
         try self.registerCollection(collection: self.uploads)
-        
+        // Simple queries
+        try self.registerCollection(collection: self.simpleQueries)
+
         // Generated Models
         try self.registerStandardCallOperationsFor(type: Metrics.self)
         try self.registerStandardCallOperationsFor(type: KeyedData.self)
