@@ -69,6 +69,11 @@
 		E542EE0A2044202300041347 /* Patcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE072044202300041347 /* Patcher.swift */; };
 		E542EE0B2044202300041347 /* Patcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE072044202300041347 /* Patcher.swift */; };
 		E542EE0C2044202300041347 /* Patcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE072044202300041347 /* Patcher.swift */; };
+		E542EE0E20442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */; };
+		E542EE0F20442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */; };
+		E542EE1020442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */; };
+		E542EE1120442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */; };
+		E542EE1220442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */; };
 		E54826361FFBBB3700FB854E /* Default.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54826351FFBBB3700FB854E /* Default.swift */; };
 		E553813720035CFF0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
 		E553813820036C7C0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */; };
@@ -519,6 +524,7 @@
 		E540CB7E2011E99D00A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+HTTP.swift"; sourceTree = "<group>"; };
 		E542EE072044202300041347 /* Patcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Patcher.swift; sourceTree = "<group>"; };
+		E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionOf+Tolerent.swift"; sourceTree = "<group>"; };
 		E54826351FFBBB3700FB854E /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
 		E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+AliasesResolutions.swift"; sourceTree = "<group>"; };
@@ -689,6 +695,7 @@
 				E56AAA17201097080082D4D6 /* CodableObject.swift */,
 				E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */,
 				4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */,
+				E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */,
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
 				E553813620035CFF0023ED88 /* DataPoint+AliasesResolutions.swift */,
@@ -1341,6 +1348,7 @@
 				E5EC9FB61FF655FE008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5EC9F9A1FF655F9008BF543 /* HTTPOperation.swift in Sources */,
 				E5EC9F921FF655F9008BF543 /* Collectable.swift in Sources */,
+				E542EE0E20442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5EC9FAA1FF655FE008BF543 /* HTTPMethod.swift in Sources */,
 				E5D6CDEE2001329200A3D975 /* Selection.swift in Sources */,
 				E5EC9FA11FF655F9008BF543 /* Tolerent.swift in Sources */,
@@ -1441,6 +1449,7 @@
 				E5ECA0001FF656AF008BF543 /* JSON.swift in Sources */,
 				E5EC9FE71FF656AF008BF543 /* DataPointProtocol.swift in Sources */,
 				E5ECA0091FF656AF008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
+				E542EE1020442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5EC9FED1FF656AF008BF543 /* HTTPOperation.swift in Sources */,
 				E5EC9FE51FF656AF008BF543 /* Collectable.swift in Sources */,
 				E5EC9FFD1FF656AF008BF543 /* HTTPMethod.swift in Sources */,
@@ -1541,6 +1550,7 @@
 				E5ECA0591FF657A6008BF543 /* JSON.swift in Sources */,
 				E5ECA0401FF6579F008BF543 /* DataPointProtocol.swift in Sources */,
 				E5ECA0621FF657A6008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
+				E542EE1120442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5ECA0461FF6579F008BF543 /* HTTPOperation.swift in Sources */,
 				E5ECA03E1FF6579F008BF543 /* Collectable.swift in Sources */,
 				E5ECA0561FF657A6008BF543 /* HTTPMethod.swift in Sources */,
@@ -1641,6 +1651,7 @@
 				E5ECA0891FF6584A008BF543 /* DataPointProtocol.swift in Sources */,
 				E5ECA0AB1FF65851008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5ECA08F1FF6584A008BF543 /* HTTPOperation.swift in Sources */,
+				E542EE1220442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5ECA0871FF6584A008BF543 /* Collectable.swift in Sources */,
 				E5ECA09F1FF65851008BF543 /* HTTPMethod.swift in Sources */,
 				E5ECA0961FF6584A008BF543 /* Tolerent.swift in Sources */,
@@ -1727,6 +1738,7 @@
 				E5F3CDF6200D1C2000AB9A44 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5F3CDF7200D1C2000AB9A44 /* HTTPOperation.swift in Sources */,
 				E5F3CDF8200D1C2000AB9A44 /* Collectable.swift in Sources */,
+				E542EE0F20442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5F3CDF9200D1C2000AB9A44 /* HTTPMethod.swift in Sources */,
 				E5F3CDFA200D1C2000AB9A44 /* Selection.swift in Sources */,
 				E5F3CDFB200D1C2000AB9A44 /* Tolerent.swift in Sources */,
