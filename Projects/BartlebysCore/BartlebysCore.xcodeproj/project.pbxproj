@@ -11,6 +11,9 @@
 		4D51A5AE200756D300A66466 /* FileOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51A5AC200756D300A66466 /* FileOperationError.swift */; };
 		4D51A5AF200756D300A66466 /* FileOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51A5AC200756D300A66466 /* FileOperationError.swift */; };
 		4D51A5B0200756D300A66466 /* FileOperationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D51A5AC200756D300A66466 /* FileOperationError.swift */; };
+		4D6A763E2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */; };
+		4D6A763F2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */; };
+		4D6A76402043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */; };
 		E50C5C7A1FFD0C6B00A3C9DA /* ManagedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ManagedCollection.swift */; };
 		E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
 		E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
@@ -481,6 +484,7 @@
 		4D65E67B1FDFFA9200034787 /* Download.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		4D65E67C1FDFFA9200034787 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		4D65E69E1FE02FE300034787 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
+		4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncWorkTests.swift; sourceTree = "<group>"; };
 		E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
 		E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoder.swift; sourceTree = "<group>"; };
 		E51AF7CF201A4D5F009E1E0E /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -856,12 +860,13 @@
 		E5F3CDA8200CE50100AB9A44 /* BartlebysCoreTests */ = {
 			isa = PBXGroup;
 			children = (
-				E5F3CDA9200CE50100AB9A44 /* BaseDataPointTestCase.swift */,
-				E5F3CDAA200CE50100AB9A44 /* RelationsTests.swift */,
 				E5F3CDAB200CE50100AB9A44 /* AliasesTests.swift */,
-				E5F3CDAC200CE50100AB9A44 /* ObjectCollectionTests.swift */,
-				E5F3CDAD200CE50100AB9A44 /* DataPointTests.swift */,
+				4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */,
+				E5F3CDA9200CE50100AB9A44 /* BaseDataPointTestCase.swift */,
 				E5F3CDAE200CE50100AB9A44 /* DataPointKVS.swift */,
+				E5F3CDAD200CE50100AB9A44 /* DataPointTests.swift */,
+				E5F3CDAC200CE50100AB9A44 /* ObjectCollectionTests.swift */,
+				E5F3CDAA200CE50100AB9A44 /* RelationsTests.swift */,
 			);
 			name = BartlebysCoreTests;
 			path = ../../Tests/BartlebysCoreTests;
@@ -1352,6 +1357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5F3CDB8200CE50100AB9A44 /* ObjectCollectionTests.swift in Sources */,
+				4D6A763E2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */,
 				E5F3CDAF200CE50100AB9A44 /* BaseDataPointTestCase.swift in Sources */,
 				E5F3CDBB200CE50100AB9A44 /* DataPointTests.swift in Sources */,
 				E5F3CDBE200CE50100AB9A44 /* DataPointKVS.swift in Sources */,
@@ -1450,6 +1456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5F3CDB9200CE50100AB9A44 /* ObjectCollectionTests.swift in Sources */,
+				4D6A763F2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */,
 				E5F3CDB0200CE50100AB9A44 /* BaseDataPointTestCase.swift in Sources */,
 				E5F3CDBC200CE50100AB9A44 /* DataPointTests.swift in Sources */,
 				E5F3CDBF200CE50100AB9A44 /* DataPointKVS.swift in Sources */,
@@ -1548,6 +1555,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5F3CDBA200CE50100AB9A44 /* ObjectCollectionTests.swift in Sources */,
+				4D6A76402043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */,
 				E5F3CDB1200CE50100AB9A44 /* BaseDataPointTestCase.swift in Sources */,
 				E5F3CDBD200CE50100AB9A44 /* DataPointTests.swift in Sources */,
 				E5F3CDC0200CE50100AB9A44 /* DataPointKVS.swift in Sources */,

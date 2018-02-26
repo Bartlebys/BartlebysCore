@@ -6,5 +6,6 @@ XCTMain([
     testCase(ObjectCollectionTests.allTests),
     testCase(AliasesTests.allTests),
     testCase(RelationsTests.allTests),
-    testCase(DataPointKVS.allTests)
+    testCase(DataPointKVS.allTests),
+    testCase(AsyncWorkTests.allTests)
 ])
