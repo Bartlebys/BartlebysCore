@@ -15,6 +15,7 @@ public enum PatcherError : Error {
 
 open class Patcher{
 
+    public init(){}
 
     // MARK: - Tolerent Patches
 
