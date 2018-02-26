@@ -11,8 +11,7 @@ import Foundation
 // Tolerent Json encoder and decoder
 open class JSONCoder:ConcreteCoder{
 
-    open var patcher = Patcher()
-
+    static public var patcher = Patcher()
 
     // MARK : - ConcreteCoder
     /// Encodes the given top-level value and returns its representation.
@@ -40,7 +39,7 @@ open class JSONCoder:ConcreteCoder{
             // Try a to decode normally
             return try JSON.decoder.decode(T.self, from: data)
         }catch{
-            let patchedData = try self.patcher.patchObject(type, from: data)
+            let patchedData = try JSONCoder.patcher.patchObject(type, from: data)
             return try JSON.decoder.decode(T.self, from: patchedData)
 
         }
@@ -57,7 +56,7 @@ open class JSONCoder:ConcreteCoder{
             // Try a to decode normally
             return try JSON.decoder.decode([T].self, from: data)
         }catch{
-           let patchedData = try self.patcher.patchArrayOf(T.self, from: data)
+           let patchedData = try JSONCoder.patcher.patchArrayOf(T.self, from: data)
             return try JSON.decoder.decode([T].self, from: patchedData)
         }
     }
