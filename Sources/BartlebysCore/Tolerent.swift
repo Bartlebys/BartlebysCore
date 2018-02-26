@@ -24,5 +24,5 @@ public protocol Tolerent {
 
 
 public enum TolerentError:Error{
-    case isNotTolerent(decodingError:Error)
+    case isNotTolerent
 }
