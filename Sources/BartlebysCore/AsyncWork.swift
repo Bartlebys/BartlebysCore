@@ -17,7 +17,8 @@ public struct AsyncWork {
     public let delay: TimeInterval
 
     public var dispatchTime: DispatchTime {
-        return DispatchTime(uptimeNanoseconds: UInt64(self.delay * Double(NSEC_PER_SEC)))
+        let now: UInt64 = DispatchTime.now().uptimeNanoseconds
+        return DispatchTime(uptimeNanoseconds: now + UInt64(self.delay * Double(NSEC_PER_SEC)))
     }
 
 
