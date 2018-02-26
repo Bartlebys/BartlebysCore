@@ -22,7 +22,6 @@ extension CollectionOf:Tolerent{
         if let dictionaries = dictionary[CollectionOf.CollectionCodingKeys.items.rawValue] as? [Dictionary<String, Any>] {
             var patched: [Dictionary<String, Any>] =  [Dictionary<String, Any>]()
             for var dictionary in dictionaries{
-                //var mutableDictionary = dictionary
                 TolerentType.patchDictionary(&dictionary)
                 patched.append(dictionary)
             }
