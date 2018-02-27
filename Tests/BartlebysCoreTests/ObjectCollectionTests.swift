@@ -309,4 +309,36 @@ class ObjectCollectionTests: BaseDataPointTestCase{
     }
     #endif
     
+    /// This test verifies that upserted elements 
+    func test009_UnicityOnUpserts() {
+        
+        let dataPoint = self.getNewDataPoint()
+        let collection = dataPoint.metricsCollection
+        
+        let metrics1 = Metrics()
+        metrics1.operationName = "operation1"
+        
+        collection.upsert(metrics1)
+        Logger.log("Collection count = \(collection.count)")
+        XCTAssert(collection.count == 1, "The collection should have exactly one element")
+        
+        let metrics2 = Metrics()
+        let updatedOperationName = "operation2"
+        metrics2.operationName = updatedOperationName
+        metrics2.id = metrics1.id
+        
+        collection.upsert(metrics2)
+
+        if collection.count != 1 {
+            XCTFail("The metrics collection should have exactly one element")
+        }
+        
+        if let metrics = dataPoint.metricsCollection.first {
+            XCTAssert(metrics.operationName == updatedOperationName, "The metrics operation name should be: \(updatedOperationName), it is: \(metrics.operationName)")
+        } else {
+            XCTFail("The metrics collection should have one element")
+        }
+        
+    }
+
 }
