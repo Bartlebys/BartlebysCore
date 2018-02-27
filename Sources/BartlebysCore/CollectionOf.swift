@@ -202,18 +202,17 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    /// - Parameter element: the element to be upserted
    public func upsert(_ element: T) {
       guard let dataPoint = self.dataPoint else{
-         Logger.log("Undefined Datapoint", category:.critical)
+         Logger.log("Undefined Datapoint", category: .critical)
          return
       }
       self.hasChanged = true
       // We first determine if there is an element by using the dataPoint registry
       // It is faster than determining the index.
-      if let item = dataPoint.registredModelByUID(element.uid) as? T {
-         // We compute its possiuble 
-         if let idx = self._items.index(where: {$0.uid == element.uid }){
-            self[idx] = item
+      if let _ = dataPoint.registredModelByUID(element.uid) as? T {
+         if let idx = self._items.index(where: { $0.uid == element.uid }) {
+            self[idx] = element
             self.reference(element)
-         }else{
+         } else {
             self.append(element)
          }
       } else {
