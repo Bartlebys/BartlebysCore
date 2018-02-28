@@ -11,7 +11,7 @@ import Foundation
 
 public enum JSONPatcherError : Error {
     case decodingFailure(rawString:String)
-    case castingFailure(dataSize:Int)
+    case castingFailure(rawString:String)
 }
 open class JSONPatcher{
 
@@ -71,7 +71,8 @@ open class JSONPatcher{
                 resultType.patchDictionary(&jsonDictionary)
                 return try JSONSerialization.data(withJSONObject:jsonDictionary, options:[])
             }else{
-                throw JSONPatcherError.castingFailure(dataSize:data.count)
+                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                throw JSONPatcherError.castingFailure(rawString: rawString)
             }
         })
     }
@@ -82,7 +83,7 @@ open class JSONPatcher{
     ///   - data: the data
     ///   - resultType: the result type
     /// - Returns: the patched data
-     public final func applyPatchOnArrayOfObjects(data: Data, resultType: Tolerent.Type) throws -> Data {
+    public final func applyPatchOnArrayOfObjects(data: Data, resultType: Tolerent.Type) throws -> Data {
         return try syncOnMainAndReturn(execute: { () -> Data in
             var o:Any?
             do{
@@ -100,7 +101,8 @@ open class JSONPatcher{
                 }
                 return try JSONSerialization.data(withJSONObject: jsonObject, options:[])
             }else{
-                throw JSONPatcherError.castingFailure(dataSize:data.count)
+                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                throw JSONPatcherError.castingFailure(rawString: rawString)
             }
         })
     }
