@@ -11,7 +11,7 @@ import Foundation
 // Tolerent Json encoder and decoder
 open class JSONCoder:ConcreteCoder{
 
-    static public var patcher = Patcher()
+    static public var patcher = JSONPatcher()
 
     // MARK : - ConcreteCoder
     /// Encodes the given top-level value and returns its representation.

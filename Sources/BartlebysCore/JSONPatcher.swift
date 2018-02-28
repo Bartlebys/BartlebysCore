@@ -1,5 +1,5 @@
 //
-//  Patcher.swift
+//  JSONPatcher.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 26/02/2018.
@@ -9,11 +9,11 @@
 import Foundation
 
 
-public enum PatcherError : Error {
-    case encodingFailure
+public enum JSONPatcherError : Error {
+    case decodingFailure(rawString:String)
+    case castingFailure(dataSize:Int)
 }
-
-open class Patcher{
+open class JSONPatcher{
 
     public init(){}
 
@@ -60,11 +60,18 @@ open class Patcher{
     /// - Returns: the patched data
     public final func applyPatchOnObject(data: Data, resultType: Tolerent.Type) throws -> Data {
         return try syncOnMainAndReturn(execute: { () -> Data in
-            if var jsonDictionary = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Dictionary<String, Any> {
+            var o: Any?
+            do{
+                o = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers])
+            }catch{
+                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                throw JSONPatcherError.decodingFailure(rawString:rawString)
+            }
+            if var jsonDictionary = o as? Dictionary<String, Any> {
                 resultType.patchDictionary(&jsonDictionary)
                 return try JSONSerialization.data(withJSONObject:jsonDictionary, options:[])
             }else{
-                throw PatcherError.encodingFailure
+                throw JSONPatcherError.castingFailure(dataSize:data.count)
             }
         })
     }
@@ -77,7 +84,14 @@ open class Patcher{
     /// - Returns: the patched data
      public final func applyPatchOnArrayOfObjects(data: Data, resultType: Tolerent.Type) throws -> Data {
         return try syncOnMainAndReturn(execute: { () -> Data in
-            if var jsonObject = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers]) as? Array<Dictionary<String, Any>> {
+            var o:Any?
+            do{
+                o = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers])
+            }catch{
+                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                throw JSONPatcherError.decodingFailure(rawString:rawString)
+            }
+            if var jsonObject = o as? Array<Dictionary<String, Any>>{
                 var index = 0
                 for var jsonElement in jsonObject {
                     resultType.patchDictionary(&jsonElement)
@@ -86,7 +100,7 @@ open class Patcher{
                 }
                 return try JSONSerialization.data(withJSONObject: jsonObject, options:[])
             }else{
-                throw PatcherError.encodingFailure
+                throw JSONPatcherError.castingFailure(dataSize:data.count)
             }
         })
     }

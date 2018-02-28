@@ -36,7 +36,7 @@ class AsyncWorkTests : XCTestCase {
             expectation.fulfill()
         }
         
-        let work = AsyncWork(dispatchWorkItem: dispatchWorkItem, delay: delay, associatedUID: Utilities.createUID())
+        let _ = AsyncWork(dispatchWorkItem: dispatchWorkItem, delay: delay, associatedUID: Utilities.createUID())
         wait(for: [expectation], timeout: 2.0)
 
     }
