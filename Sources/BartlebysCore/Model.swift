@@ -152,6 +152,25 @@ open class Model:CodableObject,Collectable{
         return copy
     }
 
+
+
+    /// Prevent Bartleby's core Relationship properties to be encoding
+    ///
+    ///   Model.doWithoutEncodingRelations {
+    ///     // serialize...
+    ///   }
+    /// - Parameter toBeDone: the closure to run
+    public static func doWithoutEncodingRelations(toBeDone:()->()){
+        let encodeRelation = Model.encodeRelations
+        if encodeRelation == true{
+            Model.encodeRelations = false
+            toBeDone()
+            Model.encodeRelations = true
+        }else{
+            toBeDone()
+        }
+    }
+
 }
 
 
