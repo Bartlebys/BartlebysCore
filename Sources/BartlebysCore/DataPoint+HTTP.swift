@@ -141,6 +141,7 @@ extension DataPoint{
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
+        metrics.streamOrientation = .downStream
 
         let task = URLSession.shared.downloadTask(with: request) { (temporaryURL, response, error) in
 
