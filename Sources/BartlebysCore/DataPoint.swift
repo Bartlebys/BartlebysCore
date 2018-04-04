@@ -98,6 +98,9 @@ open class DataPoint: Object,DataPointProtocol{
     /// You can store CallSequence to characterize their behavior
     fileprivate var _callSequences = [CallSequence]()
 
+    /// Counts all HTTP errors
+    public internal(set) var errorCounter: Int = 0
+    
     /// The current number of Pending calls
     public var numberOfPendingCalls:Int{
         var n = 0

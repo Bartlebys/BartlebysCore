@@ -37,6 +37,7 @@ extension DataPoint{
 
             if let httpURLResponse = response as? HTTPURLResponse {
                 if let error = error {
+                    self.errorCounter += 1
                     syncOnMain {
                         let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: data)
                         failure(Failure(from : httpResponse , and: error))
@@ -83,14 +84,14 @@ extension DataPoint{
 
                 if let data = data, !(resultType is VoidResult.Type) {
                     do {
-                        if resultIsACollection{
+                        if resultIsACollection {
                             let decoded = try self.operationsCoder.decodeArrayOf(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             let dataResponse = DataResponse(result: decoded, content: data, metrics: metrics, httpStatus: httpResponse.statusCode.status())
                             syncOnMain {
                                 success(dataResponse)
                             }
-                        }else{
+                        } else {
                             let decoded = try self.operationsCoder.decode(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             let dataResponse = DataResponse(result: [decoded], content: data, metrics: metrics, httpStatus: httpResponse.statusCode.status())
@@ -99,6 +100,7 @@ extension DataPoint{
                             }
                         }
                     } catch {
+                        self.errorCounter += 1
                         syncOnMain {
                             let dataResponse = DataResponse(result:Array<R>(), content: data, metrics: metrics, httpStatus: httpResponse.statusCode.status())
                             failure(Failure(from : dataResponse, and: error))
@@ -107,6 +109,7 @@ extension DataPoint{
                 } else {
                     // There is no data
                     if let error = error {
+                        self.errorCounter += 1
                         syncOnMain {
                             let dataResponse = DataResponse(result:Array<R>(), content: nil, metrics: metrics, httpStatus: httpResponse.statusCode.status())
                             failure(Failure(from : dataResponse , and: error))
@@ -145,7 +148,7 @@ extension DataPoint{
 
         let task = URLSession.shared.downloadTask(with: request) { (temporaryURL, response, error) in
 
-            defer{
+            defer {
                 self.report(metrics)
             }
 
@@ -153,6 +156,7 @@ extension DataPoint{
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
 
             if let error = error {
+                self.errorCounter += 1
                 syncOnMain {
                     let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
                     failure(Failure(from: fileError))
@@ -162,6 +166,7 @@ extension DataPoint{
                 let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
 
                 guard let tempURL = temporaryURL else {
+                    self.errorCounter += 1
                     syncOnMain {
                         failure(Failure(from: httpResponse, and: SessionError.fileNotFound))
                     }
@@ -176,6 +181,7 @@ extension DataPoint{
                         success(httpResponse)
                     }
                 } catch {
+                    self.errorCounter += 1
                     syncOnMain {
                         failure(Failure(from: httpResponse, and: error))
                     }
@@ -208,7 +214,7 @@ extension DataPoint{
 
             let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
 
-                defer{
+                defer {
                     self.report(metrics)
                 }
 
@@ -216,6 +222,7 @@ extension DataPoint{
                 metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
 
                 if let error = error {
+                    self.errorCounter += 1
                     syncOnMain {
                         let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
                         failure(Failure(from: fileError))
@@ -230,6 +237,7 @@ extension DataPoint{
                         }
                     default:
                         syncOnMain {
+                            self.errorCounter += 1
                             failure(Failure(from: httpResponse))
                         }
                     }
@@ -237,6 +245,7 @@ extension DataPoint{
             }
             task.resume()
         } catch {
+            self.errorCounter += 1
             failure(Failure(from: error))
         }
 
