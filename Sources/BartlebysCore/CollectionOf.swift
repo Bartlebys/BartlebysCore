@@ -174,7 +174,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    }
 
    public func flatMap(_ transform: (T) throws -> String?) rethrows -> [String] {
-      return try self._items.flatMap(transform)
+      return try self._items.compactMap(transform)
    }
 
    public func flatMap<SegmentOfResult>(_ transform: (T) throws -> SegmentOfResult) rethrows -> [SegmentOfResult.Element] where SegmentOfResult : Sequence {
@@ -182,16 +182,16 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    }
 
    public func flatMap<ElementOfResult>(_ transform: (T) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
-      return try self._items.flatMap(transform)
+      return try self._items.compactMap(transform)
    }
 
    public func contains(where predicate: (T) throws -> Bool) rethrows -> Bool {
       return try self._items.contains(where: predicate)
    }
 
-   public var first: Element? { return self._items.first }
+   public var first: T? { return self._items.first }
 
-   public var last: Element? { return self._items.last }
+   public var last: T? { return self._items.last }
 
    public var count: Int { return self._items.count }
 
