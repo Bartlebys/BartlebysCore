@@ -160,18 +160,15 @@ open class Model:CodableObject,Collectable{
     ///     // serialize...
     ///   }
     /// - Parameter toBeDone: the closure to run
-    public static func doWithoutEncodingRelations(toBeDone:()->()){
+    public static func doWithoutEncodingRelations(toBeDone:() throws -> ()) throws {
         let encodeRelation = Model.encodeRelations
-        if encodeRelation == true{
+        if encodeRelation == true {
             Model.encodeRelations = false
-            toBeDone()
+            try toBeDone()
             Model.encodeRelations = true
-        }else{
-            toBeDone()
+        } else {
+            try toBeDone()
         }
     }
 
 }
-
-
-

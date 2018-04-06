@@ -375,7 +375,6 @@ open class DataPoint: Object,DataPointProtocol{
         return request
     }
     
-    
     /// Returns the configured URLrequest
     ///
     /// - Parameters:
@@ -384,20 +383,21 @@ open class DataPoint: Object,DataPointProtocol{
     ///   - method: the http Method
     /// - Returns: the URL request
     /// - Throws: issue on URL creation or Parameters deserialization
-    public final func requestFor<P:Payload>(path: String, queryString: String, method: HTTPMethod , parameter:P) throws -> URLRequest {
+    public final func requestFor<P : Payload>(path: String, queryString: String, method: HTTPMethod, parameter: P) throws -> URLRequest {
         
         var request = try self.requestFor(path: path, queryString: queryString, method: method)
         
         if !(parameter is VoidPayload) && !(parameter is FilePath) {
             // By default we encode the JSON parameter in the body
             // If the Parameter is not void
-            request.httpBody = try JSONEncoder().encode(parameter)
+
+            try Model.doWithoutEncodingRelations {
+                request.httpBody = try JSONEncoder().encode(parameter)
+            }
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
-        
         return request
     }
-    
     
     /// Provisions the operation in the relevent collection
     /// If the collection exceeds the preservationQuota destroys the first entries
