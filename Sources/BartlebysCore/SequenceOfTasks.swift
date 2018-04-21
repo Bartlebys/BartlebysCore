@@ -49,6 +49,9 @@ public class SequenceOfTasks<T:Any> {
 
     public fileprivate(set) var states:[TaskCompletionState] = [TaskCompletionState]()
 
+    public var totalCount: Int { return self._items.count }
+
+    public var completedCount: Int { return self.index - 1 }
 
     /// The referenced task handling closure used to proceed asynchronously a discreet task.
     /// on task completion you must call sequence.taskCompleted()
