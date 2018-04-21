@@ -160,6 +160,11 @@ open class DataPoint: Object,DataPointProtocol{
         return "v1.1.0"
     }
 
+
+    /// You can pause or resume using pause() & resume()
+    /// If isPaused is set to true the execution of future calls is suspended
+    public fileprivate (set) var isPaused: Bool = false
+
     
     /// Initializes the dataPoint
     /// - Throws: Children may throw while populating the collections
@@ -185,11 +190,9 @@ open class DataPoint: Object,DataPointProtocol{
         self.applyState()
         switch newState{
         case .online:
-            // Resume
-            for callSequence in self._callSequences{
-                self.executeNextBunchOfCallOperations(from: callSequence.name)
+            if self.isPaused == false{
+                self.resume()
             }
-
         case .offline:
             // Cancel futures calls.
             for sequ in self._futureWorks.keys{
@@ -202,6 +205,19 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
+    /// Pauses the future execution but wait for the current call operations to be completed.
+    public func pause(){
+        self.isPaused = true
+    }
+
+    /// Resume the call operations.
+    public func resume(){
+        self.isPaused = false
+        // Resume
+        for callSequence in self._callSequences{
+            self.executeNextBunchOfCallOperations(from: callSequence.name)
+        }
+    }
 
 
     // MARK: -
@@ -515,8 +531,8 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameter callSequenceName: the Call sequence name
     public final func executeNextBunchOfCallOperations(from callSequenceName:CallSequence.Name){
 
-        // Block the execution if we are explicitly offLine
-        guard self.currentState == .online else{
+        // Block the execution if we are explicitly offLine or paused
+        guard self.currentState == .online, self.isPaused == false else{
             return
         }
 
