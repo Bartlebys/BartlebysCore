@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Mimic UIBackgroundFetchResult
+/// Universal equivalent of iOS' UIBackgroundFetchResult
 ///
 /// - newData: UIBackgroundFetchResultNewData
 /// - noData: UIBackgroundFetchResultNoData
@@ -23,6 +23,7 @@ extension DataPoint{
 
     public func proceedToABunchOfBackGroundCalls(completionHandler: @escaping(BackGroundCallsResult)->()) -> () {
         // Place holder Always respond immediately .newData
+        // @todo provide an incremental data point calls
         completionHandler(BackGroundCallsResult.newData)
     }
 }
