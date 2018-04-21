@@ -21,7 +21,8 @@ public enum BackGroundCallsResult{
 
 extension DataPoint{
 
-    public func proceedToABunchOfBackGroundCalls(completionHandler: (BackGroundCallsResult)) -> () {
-
+    public func proceedToABunchOfBackGroundCalls(completionHandler: @escaping(BackGroundCallsResult)->()) -> () {
+        // Place holder Always respond immediately .newData
+        completionHandler(BackGroundCallsResult.newData)
     }
 }
