@@ -67,8 +67,6 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
-    /// When set to true on iOS the bunches of call operations are executed on the AppDelegate background handler
-    public var inBackground: Bool = false
 
     /// Contains all the data Point collections
     /// Populated by registerCollection
