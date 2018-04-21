@@ -8,7 +8,7 @@
 
 import Foundation
 
-// You can use a sequenece of tasks
+// You can use a sequence of tasks process asynchronously tasks.
 
 public enum TaskCompletionState{
     case success
@@ -18,11 +18,10 @@ public enum TaskCompletionState{
 
 public enum TaskCompletionError:Error{
     case unexistingIndex
-    case undefined
     case message(message:String)
 }
 
-/// We use a class an passes the items by references.
+/// We use a class and passe the items by references.
 public class SequenceOfTasks<T:Any> {
 
     /// The associated items list
@@ -48,28 +47,30 @@ public class SequenceOfTasks<T:Any> {
 
     public fileprivate(set) var states:[TaskCompletionState] = [TaskCompletionState]()
 
-    public fileprivate(set) var taskHandler:(_ item: inout T,_ index:Int, _ sequence: SequenceOfTasks<T> ) -> (TaskCompletionState)
 
-    public fileprivate(set) var onCompletion:((_ success:Bool)->())
+    /// The referenced task handling closure used to proceed asynchronously a discreet task.
+    public fileprivate(set) var taskHandler:(_ item: inout T, _ sequence: SequenceOfTasks<T> , _ taskCompletion: @escaping(TaskCompletionState)->()) -> ()
 
 
-    /// The designated constructor.
+    /// The reference sequence completion closure
+    public fileprivate(set) var onSequenceCompletion:((_ success:Bool)->())
+
+    /// The constructor.
     ///
     /// - Parameters:
     ///   - items: the items to be sequentially processed
     ///   - taskHandler: the handler that is called on each item
-    ///   - onCompletion: the completion handler
-    ///   - delayBetweenTasks: the execution delay between two tasks.
+    ///   - onSequenceCompletion: : the completion handler called when all the tasks of the sequence has been executed.
+    ///   - delayBetweenTasks: the execution delay between the end of the current tasks and its successor.
     public init( items: inout [T],
-                 taskHandler:@escaping(_ item: inout T, _ index: Int, _ sequence: SequenceOfTasks<T>) -> (TaskCompletionState),
-                 onCompletion:@escaping(_ success: Bool) -> () ,
+                 taskHandler: @escaping(_ item: inout T, _ sequence: SequenceOfTasks<T>, _ taskCompletion: @escaping(TaskCompletionState) ->()) -> (),
+                 onSequenceCompletion: @escaping(_ success: Bool) -> () ,
                  delayBetweenTasks: TimeInterval = 0) {
         self._items = items
         self.taskHandler = taskHandler
-        self.onCompletion = onCompletion
+        self.onSequenceCompletion = onSequenceCompletion
         self._delay = delayBetweenTasks
     }
-
 
 
     /// Starts the sequence
@@ -88,7 +89,7 @@ public class SequenceOfTasks<T:Any> {
             self.index += 1
             self.states.append(TaskCompletionState.cancelled)
         }
-        self.onCompletion(false)
+        self.onSequenceCompletion(false)
     }
 
 
@@ -100,36 +101,40 @@ public class SequenceOfTasks<T:Any> {
         if index == self._items.count{
             self._endOfTheSequence()
         }else{
-
-            let taskState: TaskCompletionState
-
             if index < self._items.count {
-                taskState = self.taskHandler(&self._items[index],index, self)
+                self.taskHandler(&self._items[index], self, { taskState in
+                    self._onTaskCompletion(taskState)
+                }
+                )
             }else{
                 // can occur on external mutation of the referenced items list.
-                taskState = .failure(withError: TaskCompletionError.unexistingIndex)
+                self._onTaskCompletion(.failure(withError: TaskCompletionError.unexistingIndex))
             }
+        }
+    }
 
-            self.states.append(taskState)
-            switch taskState{
-            case .success,.cancelled:
-                break
-            case .failure(withError:_):
-                // Should we cancel?
-                if self.cancelOnFailure{
-                    self.cancel()
-                    return
-                }
+    fileprivate func _onTaskCompletion(_ taskState:TaskCompletionState){
+        self.states.append(taskState)
+        switch taskState{
+        case .success,.cancelled:
+            break
+        case .failure(withError:_):
+            // Should we cancel?
+            if self.cancelOnFailure{
+                self.cancel()
+                return
             }
-            if self.chainTheTasksAutomatically{
-                if self._delay == 0 {
+        }
+        if self.chainTheTasksAutomatically{
+            if self._delay == 0 {
+                self.queue.async {
                     let _ = self.runNextTask()
-                }else{
-                    let delayInNanoS =  UInt64(self._delay * 1_000_000_000)
-                    let deadLine = DispatchTime.init(uptimeNanoseconds:delayInNanoS)
-                    self.queue.asyncAfter(deadline: deadLine) {
-                        let _ = self.runNextTask()
-                    }
+                }
+            }else{
+                let delayInNanoS =  UInt64(self._delay * 1_000_000_000)
+                let deadLine = DispatchTime.init(uptimeNanoseconds:delayInNanoS)
+                self.queue.asyncAfter(deadline: deadLine) {
+                    let _ = self.runNextTask()
                 }
             }
         }
@@ -160,17 +165,17 @@ public class SequenceOfTasks<T:Any> {
                     }
                 }
                 if isConsistent{
-                    self.onCompletion(true)
+                    self.onSequenceCompletion(true)
                 }else{
-                    self.onCompletion(false)
+                    self.onSequenceCompletion(false)
                 }
             case .failure(_):
-                self.onCompletion(false)
+                self.onSequenceCompletion(false)
             case .cancelled:
-                self.onCompletion(false)
+                self.onSequenceCompletion(false)
             }
         }else{
-            self.onCompletion(true)
+            self.onSequenceCompletion(true)
         }
     }
 
