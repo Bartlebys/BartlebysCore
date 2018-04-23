@@ -25,10 +25,10 @@ class SequenceOfTasksTests: XCTestCase {
     func test001_simple_sequence() {
         let expectation = XCTestExpectation(description: "Simple sequence validation")
 
-        var items = [ 1, 2, 3]
+        let items = [ 1, 2, 3]
         var result = 0
 
-        let tasks = SequenceOfTasks(items: &items, taskHandler: { (item, sequence) in
+        let tasks = SequenceOfTasks(items: items, taskHandler: { (item, sequence) in
             result += item
             sequence.taskCompleted(TaskCompletionState.success)
 
@@ -46,10 +46,10 @@ class SequenceOfTasksTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Simple sequence validation with a delay")
 
         let delay: TimeInterval = 1 / 3
-        var items = [ 1, 2, 3]
+        let items = [ 1, 2, 3]
         var result = 0
 
-        let tasks = SequenceOfTasks(items: &items, taskHandler: { (item, sequence) in
+        let tasks = SequenceOfTasks(items: items, taskHandler: { (item, sequence) in
             result += item
             sequence.taskCompleted(TaskCompletionState.success)
         }, onSequenceCompletion: { (success) in
@@ -72,7 +72,7 @@ class SequenceOfTasksTests: XCTestCase {
         var items = [ 1, 2, 3]
         var result = 0
 
-        let tasks = SequenceOfTasks(items: &items, taskHandler: { (item, sequence) in
+        let tasks = SequenceOfTasks(items: items, taskHandler: { (item, sequence) in
             let w = DispatchWorkItem(block: {
                 result += item
                 sequence.taskCompleted(TaskCompletionState.success)
@@ -86,33 +86,5 @@ class SequenceOfTasksTests: XCTestCase {
         tasks.start()
         wait(for: [expectation], timeout: 2.0)
     }
-
-    func test004_async_sequence_with_dataSource_mutation() {
-
-        let expectation = XCTestExpectation(description: "Async sequence with data source mutation validation")
-
-        var items = [ 1, 2, 3]
-        var result = 0
-
-        let tasks = SequenceOfTasks(items: &items, taskHandler: { (item, sequence) in
-            let w = DispatchWorkItem(block: {
-                if items.count == 3{
-                    // let's mutate once the data source
-                    items.append(4)
-                }
-                result += item
-                sequence.taskCompleted(TaskCompletionState.success)
-            })
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.init(uptimeNanoseconds: 1_000_000), execute: w)
-        }, onSequenceCompletion: { (success) in
-            XCTAssert(result == 10 , "Result should be equal to 10 current value: \(result)")
-            expectation.fulfill()
-        },delayBetweenTasks: 0.1)
-
-        tasks.start()
-        wait(for: [expectation], timeout: 2.0)
-    }
-
-
 
 }
