@@ -240,7 +240,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    ///   - completed: the call back on completion
    /// - Returns: the async merge tasks sequence.
    public func getAsynchronousMergeSequence(with items:[T],
-                                            delayBetweenUpserts: TimeInterval = 0.01,
+                                            delayBetweenUpserts: TimeInterval = 0.001,
                                             mergeHasBeenCompleted: @escaping()->()) -> SequenceOfTasks<T>{
       let tasks = SequenceOfTasks(items: items, taskHandler: { (item, sequence) in
          self.upsert(item)
