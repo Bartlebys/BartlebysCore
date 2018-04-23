@@ -163,6 +163,8 @@
 		E5DBB1E020022A1D0079F4C6 /* AliasOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D5200224C60079F4C6 /* AliasOf.swift */; };
 		E5DBB1E120022A1D0079F4C6 /* AliasOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DBB1D5200224C60079F4C6 /* AliasOf.swift */; };
 		E5DBB1E220022A1D0079F4C6 /* DataPoint+KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */; };
+		E5EC0446208DBAA800FE4EDF /* SequenceOfTasksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC0445208DBAA800FE4EDF /* SequenceOfTasksTests.swift */; };
+		E5EC0447208DBAA800FE4EDF /* SequenceOfTasksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC0445208DBAA800FE4EDF /* SequenceOfTasksTests.swift */; };
 		E5EC9F7F1FF655C4008BF543 /* BartlebysCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */; };
 		E5EC9F861FF655C4008BF543 /* BartlebysCore_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E5EC9F911FF655F4008BF543 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D55FC821FDAF688001D91CE /* Metrics.swift */; };
@@ -559,6 +561,7 @@
 		E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+Helpers.swift"; sourceTree = "<group>"; };
 		E5DBB1D0200224770079F4C6 /* Aliased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliased.swift; sourceTree = "<group>"; };
 		E5DBB1D5200224C60079F4C6 /* AliasOf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasOf.swift; sourceTree = "<group>"; };
+		E5EC0445208DBAA800FE4EDF /* SequenceOfTasksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceOfTasksTests.swift; sourceTree = "<group>"; };
 		E5EC9F761FF655C4008BF543 /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BartlebysCore_macOS.h; sourceTree = "<group>"; };
 		E5EC9F791FF655C4008BF543 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -891,6 +894,7 @@
 				E5F3CDAD200CE50100AB9A44 /* DataPointTests.swift */,
 				E5F3CDAC200CE50100AB9A44 /* ObjectCollectionTests.swift */,
 				E5F3CDAA200CE50100AB9A44 /* RelationsTests.swift */,
+				E5EC0445208DBAA800FE4EDF /* SequenceOfTasksTests.swift */,
 			);
 			name = BartlebysCoreTests;
 			path = ../../Tests/BartlebysCoreTests;
@@ -1388,6 +1392,7 @@
 				4D6A763E2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */,
 				E5F3CDAF200CE50100AB9A44 /* BaseDataPointTestCase.swift in Sources */,
 				E5F3CDBB200CE50100AB9A44 /* DataPointTests.swift in Sources */,
+				E5EC0446208DBAA800FE4EDF /* SequenceOfTasksTests.swift in Sources */,
 				E5F3CDBE200CE50100AB9A44 /* DataPointKVS.swift in Sources */,
 				E5F3CDB2200CE50100AB9A44 /* RelationsTests.swift in Sources */,
 				E5F3CDB5200CE50100AB9A44 /* AliasesTests.swift in Sources */,
@@ -1491,6 +1496,7 @@
 				4D6A763F2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */,
 				E5F3CDB0200CE50100AB9A44 /* BaseDataPointTestCase.swift in Sources */,
 				E5F3CDBC200CE50100AB9A44 /* DataPointTests.swift in Sources */,
+				E5EC0447208DBAA800FE4EDF /* SequenceOfTasksTests.swift in Sources */,
 				E5F3CDBF200CE50100AB9A44 /* DataPointKVS.swift in Sources */,
 				E5F3CDB3200CE50100AB9A44 /* RelationsTests.swift in Sources */,
 				E5F3CDB6200CE50100AB9A44 /* AliasesTests.swift in Sources */,

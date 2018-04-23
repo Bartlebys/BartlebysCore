@@ -6,7 +6,6 @@
 //  Copyright © 2018 Bartleby. All rights reserved.
 //
 
-import Foundation
 import XCTest
 #if !USE_EMBEDDED_MODULES
     @testable import BartlebysCore
@@ -20,7 +19,7 @@ class AsyncWorkTests : XCTestCase {
     
     func test001_delayValidation() {
         
-        let expectation = XCTestExpectation(description: "Save And ReloadADataPoint")
+        let expectation = XCTestExpectation(description: "Async work delay validation")
 
         let delay: TimeInterval = 1
         
