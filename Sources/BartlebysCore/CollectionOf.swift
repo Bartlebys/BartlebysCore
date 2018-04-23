@@ -69,8 +69,8 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    ///   - named: the name of the collection is also its fileName
    ///   - relativePath: a relative path to be able to group/classify collections.
    public required init(named name:String = T.collectionName, relativePath:String = DataPoint.RelativePaths.forCollections.rawValue ){
-         self.fileName = name
-         self.relativeFolderPath = relativePath
+      self.fileName = name
+      self.relativeFolderPath = relativePath
    }
 
 
@@ -231,20 +231,25 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
 
 
 
-   /// Merges asynchronously the items to reduce the insertion load on large merges.
+   /// Returns a Sequence of Tasks that merges asynchronously the items
+   /// used to reduce the insertion load on large merges.
    ///
    /// - Parameters:
    ///   - items: the items to be mergerd
    ///   - delayBetweenUpserts: the delay between unitary upserts
    ///   - completed: the call back on completion
-   public func mergeAsynchronously(with items:inout [T], delayBetweenUpserts: TimeInterval = 0.01, completed: @escaping()->()) {
+   /// - Returns: the async merge tasks sequence.
+   public func getAsynchronousMergeSequence(with items:inout [T],
+                                            delayBetweenUpserts: TimeInterval = 0.01,
+                                            mergeHasBeenCompleted:@escaping()->()) -> SequenceOfTasks<T>{
       let tasks = SequenceOfTasks(items: &items, taskHandler: { (item, sequence) in
          self.upsert(item)
          sequence.taskCompleted(TaskCompletionState.success)
       },onSequenceCompletion:{ (success) in
-         completed()
+         mergeHasBeenCompleted()
       }, delayBetweenTasks:delayBetweenUpserts)
-      tasks.start()
+      tasks.cancelOnFailure = false
+      return tasks
    }
 
 
@@ -311,7 +316,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
          throw ErasingError.typeMissMatch
       }
       if let idx = self._items.index(where:{ return $0.id == castedItem.id }){
-          let _ = self.remove(at: idx)
+         let _ = self.remove(at: idx)
       }
    }
 
