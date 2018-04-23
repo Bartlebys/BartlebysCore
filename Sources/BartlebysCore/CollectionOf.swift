@@ -230,6 +230,24 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    }
 
 
+
+   /// Merges asynchronously the items to reduce the insertion load on large merges.
+   ///
+   /// - Parameters:
+   ///   - items: the items to be mergerd
+   ///   - delayBetweenUpserts: the delay between unitary upserts
+   ///   - completed: the call back on completion
+   public func mergeAsynchronously(with items:inout [T], delayBetweenUpserts: TimeInterval = 0.01, completed: @escaping()->()) {
+      let tasks = SequenceOfTasks(items: &items, taskHandler: { (item, sequence) in
+         self.upsert(item)
+         sequence.taskCompleted(TaskCompletionState.success)
+      },onSequenceCompletion:{ (success) in
+         completed()
+      }, delayBetweenTasks:delayBetweenUpserts)
+      tasks.start()
+   }
+
+
    /// Append or update the serialized item
    /// Can be for example used by BartlebyKit to integrate Triggered data
    ///
