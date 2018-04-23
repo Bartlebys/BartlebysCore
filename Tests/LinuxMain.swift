@@ -8,4 +8,5 @@ XCTMain([
     testCase(RelationsTests.allTests),
     testCase(DataPointKVS.allTests),
     testCase(AsyncWorkTests.allTests)
+    testCase(SequenceOfTasksTests.allTests)
 ])
