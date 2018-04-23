@@ -21,9 +21,16 @@ public enum TaskCompletionError:Error{
     case message(message:String)
 }
 
+public protocol StartableSequence{
+    func start()
+}
+
 /// We use a class and passe the items by references.
 /// The tasks are executed on the main queue.
-public class SequenceOfTasks<T:Any> {
+public class SequenceOfTasks<T:Any>:StartableSequence {
+
+    /// Optional chainedSequence started after this sequence completion
+    public var chainedSequence:StartableSequence?
 
     /// The associated items list
     public var items: UnsafeMutablePointer<[T]>
@@ -39,7 +46,7 @@ public class SequenceOfTasks<T:Any> {
 
     /// Should the task be executed automatically?
     /// If not you can call
-    public var chainTheTasksAutomatically: Bool = true
+    public var runTheTasksAutomatically: Bool = true
 
     public fileprivate(set) var isPaused: Bool = false
 
@@ -157,7 +164,7 @@ public class SequenceOfTasks<T:Any> {
                 return
             }
         }
-        if self.chainTheTasksAutomatically && self.isPaused == false{
+        if self.runTheTasksAutomatically && self.isPaused == false{
             if self._delay == 0 {
                 let _ = self.runNextTask()
             }else{
@@ -196,6 +203,13 @@ public class SequenceOfTasks<T:Any> {
             }
         }else{
             self.onSequenceCompletion(true)
+        }
+
+        // Start the chained sequence if there is one.
+        if let chained = self.chainedSequence {
+            DispatchQueue.main.async {
+                chained.start()
+            }
         }
     }
 
