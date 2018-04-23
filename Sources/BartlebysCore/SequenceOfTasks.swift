@@ -22,6 +22,7 @@ public enum TaskCompletionError:Error{
 }
 
 /// We use a class and passe the items by references.
+/// The tasks are executed on the main queue.
 public class SequenceOfTasks<T:Any> {
 
     /// The associated items list
@@ -30,13 +31,8 @@ public class SequenceOfTasks<T:Any> {
     /// The current index
     public fileprivate(set) var index:Int = 0
 
-    // The delay between to tasks.
-    // If set to 0 we do not use GCD
-    // Else we dispatch Async on the execution queue.
+    // The delay between to tasks
     fileprivate var _delay: TimeInterval
-
-    /// The execution queue
-    public var queue:DispatchQueue = DispatchQueue.main
 
     /// If set to true the sequence will be cancelled on the first failure
     public var cancelOnFailure:Bool = false
@@ -163,13 +159,11 @@ public class SequenceOfTasks<T:Any> {
         }
         if self.chainTheTasksAutomatically && self.isPaused == false{
             if self._delay == 0 {
-                self.queue.async {
-                    let _ = self.runNextTask()
-                }
+                let _ = self.runNextTask()
             }else{
                 let delayInNanoS =  UInt64(self._delay * 1_000_000_000)
                 let deadLine = DispatchTime.init(uptimeNanoseconds:delayInNanoS)
-                self.queue.asyncAfter(deadline: deadLine) {
+                DispatchQueue.main.asyncAfter(deadline: deadLine) {
                     let _ = self.runNextTask()
                 }
             }
