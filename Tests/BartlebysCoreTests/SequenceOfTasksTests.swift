@@ -67,7 +67,7 @@ class SequenceOfTasksTests: XCTestCase {
 
     func test003_simple_async_sequence() {
 
-        let expectation = XCTestExpectation(description: "Simple sequence validation")
+        let expectation = XCTestExpectation(description: "Simple async sequence validation")
 
         var items = [ 1, 2, 3]
         var result = 0
@@ -89,7 +89,7 @@ class SequenceOfTasksTests: XCTestCase {
 
     func test004_async_sequence_with_dataSource_mutation() {
 
-        let expectation = XCTestExpectation(description: "Simple sequence validation")
+        let expectation = XCTestExpectation(description: "Async sequence with data source mutation validation")
 
         var items = [ 1, 2, 3]
         var result = 0
