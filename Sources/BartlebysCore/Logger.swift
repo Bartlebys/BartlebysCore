@@ -17,7 +17,6 @@ extension LogEntry{
         return "\(self.counter.paddedString()) \(elapsedSeconds) \(self.category)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
     }
 
-
 }
 
 extension LogEntry.Category{
@@ -73,7 +72,7 @@ public struct Logger {
                 let _ = self.logsEntries.removeFirst()
             }
 
-            logsEntries.append(entry)
+            self.logsEntries.append(entry)
 
             if let delegate = self.delegate {
                 delegate.log(entry: entry)
