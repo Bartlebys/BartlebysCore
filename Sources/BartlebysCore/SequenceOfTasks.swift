@@ -25,7 +25,7 @@ public enum TaskCompletionError:Error{
 public class SequenceOfTasks<T:Any> {
 
     /// The associated items list
-    fileprivate var _items: [T]
+    public var items: UnsafeMutablePointer<[T]>
 
     /// The current index
     public fileprivate(set) var index:Int = 0
@@ -49,7 +49,7 @@ public class SequenceOfTasks<T:Any> {
 
     public fileprivate(set) var states:[TaskCompletionState] = [TaskCompletionState]()
 
-    public var totalCount: Int { return self._items.count }
+    public var totalCount: Int { return self.items.pointee.count }
 
     public var completedCount: Int { return self.index - 1 }
 
@@ -74,7 +74,7 @@ public class SequenceOfTasks<T:Any> {
                  taskHandler: @escaping(_ item: T, _ sequence: SequenceOfTasks<T>)->(),
                  onSequenceCompletion: @escaping(_ success: Bool) -> () ,
                  delayBetweenTasks: TimeInterval = 0) {
-        self._items = items
+        self.items = UnsafeMutablePointer(&items)
         self._taskHandler = taskHandler
         self.onSequenceCompletion = onSequenceCompletion
         self._delay = delayBetweenTasks
@@ -84,7 +84,7 @@ public class SequenceOfTasks<T:Any> {
     /// Starts the sequence
     public func start(){
         if !self.isPaused {
-            if self._items.count > 0{
+            if self.items.pointee.count > 0{
                 let _ = self._runTask(at: self.index)
             }else{
                 self._endOfTheSequence()
@@ -107,7 +107,7 @@ public class SequenceOfTasks<T:Any> {
     /// Cancels the sequence
     /// and triggers a non successful completion.
     public func cancel(){
-        while self.index < self._items.count{
+        while self.index < self.items.pointee.count{
             self.index += 1
             self.states.append(TaskCompletionState.cancelled)
         }
@@ -127,7 +127,7 @@ public class SequenceOfTasks<T:Any> {
     public func runNextTask() -> Bool{
         self.index += 1
         self._runTask(at: self.index)
-        return self.index < self._items .count
+        return self.index < self.items.pointee.count
     }
 
 
@@ -137,11 +137,11 @@ public class SequenceOfTasks<T:Any> {
     ///
     /// - Parameter index: the index.
     fileprivate func _runTask(at index:Int){
-        if index == self._items.count{
+        if index == self.items.pointee.count{
             self._endOfTheSequence()
         }else{
-            if index < self._items.count {
-                self._taskHandler(self._items[index], self)
+            if index < self.items.pointee.count {
+                self._taskHandler(self.items.pointee[index], self)
             }else{
                 // can occur on external mutation of the referenced items list.
                 self._onTaskCompletion(.failure(withError: TaskCompletionError.unexistingIndex))
