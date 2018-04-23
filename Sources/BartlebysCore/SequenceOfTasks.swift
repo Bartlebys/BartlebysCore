@@ -55,7 +55,7 @@ public class SequenceOfTasks<T:Any> {
 
     /// The referenced task handling closure used to proceed asynchronously a discreet task.
     /// on task completion you must call sequence.taskCompleted()
-    fileprivate  var _taskHandler:(_ item: inout T, _ sequence: inout SequenceOfTasks<T>)->()
+    fileprivate  var _taskHandler:(_ item: T, _ sequence: SequenceOfTasks<T>)->()
 
     /// The reference sequence completion closure
     public fileprivate(set) var onSequenceCompletion:((_ success:Bool)->())
@@ -71,7 +71,7 @@ public class SequenceOfTasks<T:Any> {
     ///   - onSequenceCompletion: : the completion handler called when all the tasks of the sequence has been executed.
     ///   - delayBetweenTasks: the execution delay between the end of the current tasks and its successor.
     public init( items: inout [T],
-                 taskHandler: @escaping(_ item: inout T, _ sequence: inout SequenceOfTasks<T>)->(),
+                 taskHandler: @escaping(_ item: T, _ sequence: SequenceOfTasks<T>)->(),
                  onSequenceCompletion: @escaping(_ success: Bool) -> () ,
                  delayBetweenTasks: TimeInterval = 0) {
         self._items = items
@@ -137,12 +137,11 @@ public class SequenceOfTasks<T:Any> {
     ///
     /// - Parameter index: the index.
     fileprivate func _runTask(at index:Int){
-        var selfReference = self
         if index == self._items.count{
             self._endOfTheSequence()
         }else{
             if index < self._items.count {
-                self._taskHandler(&self._items[index], &selfReference)
+                self._taskHandler(self._items[index], self)
             }else{
                 // can occur on external mutation of the referenced items list.
                 self._onTaskCompletion(.failure(withError: TaskCompletionError.unexistingIndex))
