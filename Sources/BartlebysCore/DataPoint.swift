@@ -253,7 +253,9 @@ open class DataPoint: Object,DataPointProtocol{
         self.upsertCallSequence(CallSequence(name: CallSequence.uploads, bunchSize: 1))
 
         self._configureCollection(self.keyedDataCollection)
-        
+        // we want the keydata to be in the session folder
+        self.keyedDataCollection.relativeFolderPath = self.sessionIdentifier
+
         // Special Call Operations (Downloads and Uploads)
         try self.registerCollection(collection: self.downloads)
         try self.registerCollection(collection: self.uploads)
