@@ -52,7 +52,7 @@ public final class FileStorage{
     fileprivate var _observers=[CollectionProgressObserver]()
     
     /// We use a serial queue for all our IO
-    public fileprivate(set) var IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.CollectionIOQueue", qos: .utility, attributes: [])
+    public fileprivate(set) var IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.CollectionIOQueue", qos: .background, attributes: [])
 
     /// The observation queue (any progress message will be dispatched asynchronously on this queue)
     public var observationQueue:DispatchQueue = DispatchQueue.main
@@ -348,7 +348,7 @@ extension FileStorage: FileStorageProtocol{
         if self.isVolatile == true {
             return
         }
-        self.IOQueue.sync{
+        self.IOQueue.async {
             do{
                 let url = self.getURL(of: element)
                 if self.fileManager.fileExists(atPath: url.path) {
@@ -367,7 +367,7 @@ extension FileStorage: FileStorageProtocol{
         if self.isVolatile == true {
             return
         }
-        self.IOQueue.sync{
+        self.IOQueue.async{
             do{
                 let url = self.baseUrl
                 if self.fileManager.fileExists(atPath: url.path) {
@@ -384,16 +384,16 @@ extension FileStorage: FileStorageProtocol{
     ///
     /// - Parameter collection: the collection
     public func eraseFile(fileName:String,relativeFolderPath:String){
-        do{
-            let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
-            if self.fileManager.fileExists(atPath: url.path) {
-                try self.fileManager.removeItem(at: url)
+        self.IOQueue.async{
+            do{
+                let url = self.getURL(ofFile: fileName, within: relativeFolderPath)
+                if self.fileManager.fileExists(atPath: url.path) {
+                    try self.fileManager.removeItem(at: url)
+                }
+            }catch{
+                Logger.log("\(error)",category: .critical)
             }
-        }catch{
-            Logger.log("\(error)",category: .critical)
         }
     }
 
-
-    
 }
