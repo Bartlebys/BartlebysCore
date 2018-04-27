@@ -143,13 +143,16 @@ open class DataPoint: Object,DataPointProtocol{
     // A unique run identifier that changes on each launch
     open static let runUID: String = Utilities.createUID()
 
-    public fileprivate(set) var isRunningLive:Bool = true
+    /// Determine if the call are operated when the app is in Background mode.
+    public fileprivate(set) var isRunningInBackGround:Bool = true
 
     // We store the running call operations UIDS
     public fileprivate(set) var runningCallsUIDS = [UID]()
 
+    /// The absolutat current time on instantiation
     public let startTime = AbsoluteTimeGetCurrent()
 
+    /// The elapsed time from start.
     public var elapsedTime:Double {
         return AbsoluteTimeGetCurrent() - self.startTime
     }
@@ -158,10 +161,6 @@ open class DataPoint: Object,DataPointProtocol{
         return "v1.1.0"
     }
 
-
-    /// You can pause or resume using pause() & resume()
-    /// If isPaused is set to true the execution of future calls is suspended
-    public fileprivate (set) var isPaused: Bool = false
 
     
     /// Initializes the dataPoint
@@ -185,12 +184,9 @@ open class DataPoint: Object,DataPointProtocol{
             return
         }
         self.currentState = newState
-        self.applyState()
         switch newState{
         case .online:
-            if self.isPaused == false{
-                self.resume()
-            }
+           self._resumeCallSequences()
         case .offline:
             // Cancel futures calls.
             for sequ in self._futureWorks.keys{
@@ -203,20 +199,25 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
-    /// Pauses the future execution but wait for the current call operations to be completed.
-    public func pause(){
-        self.isPaused = true
+    /// Runs only one call operation per call sequence
+    /// The call operations are not chained anymore.
+    public func didEnterBackground(){
+        self.isRunningInBackGround = false
     }
 
-    /// Resume the call operations.
-    public func resume(){
-        self.isPaused = false
+    /// Return to chained call sequence mode.
+    public func willEnterForeground(){
+        self.isRunningInBackGround = true
+        self._resumeCallSequences()
+    }
+
+
+    fileprivate func _resumeCallSequences(){
         // Resume
         for callSequence in self._callSequences{
             self.executeNextBunchOfCallOperations(from: callSequence.name)
         }
     }
-
 
     // MARK: -
     
@@ -521,7 +522,7 @@ open class DataPoint: Object,DataPointProtocol{
         }else {
             throw DataPointError.callOperationIndexNotFound(named: operation.operationName)
         }
-        
+
     }
 
 
@@ -532,7 +533,7 @@ open class DataPoint: Object,DataPointProtocol{
     public final func executeNextBunchOfCallOperations(from callSequenceName:CallSequence.Name){
 
         // Block the execution if we are explicitly offLine or paused
-        guard self.currentState == .online, self.isPaused == false else{
+        guard self.currentState == .online, self.isRunningInBackGround == false else{
             return
         }
 
@@ -594,7 +595,6 @@ open class DataPoint: Object,DataPointProtocol{
                 }
             }
 
-
             let numberOfOperations = filteredOperations.count
             guard numberOfOperations > 0 else{
                 return
@@ -611,7 +611,6 @@ open class DataPoint: Object,DataPointProtocol{
                     }catch{
                         Logger.log(error, category: .critical)
                     }
-
                 }
             }
         }else{
@@ -807,21 +806,6 @@ open class DataPoint: Object,DataPointProtocol{
 
     // MARK: -
 
-
-    /// Applies the current delegate state
-    /// This is the only method to setup self.isRunningLive
-    /// It is called by the DataPoint on state transition
-    public func applyState(){
-        let newState = self.currentState
-        switch newState{
-        case .online:
-            self.isRunningLive = true
-        case .offline:
-            self.isRunningLive = false
-        }
-    }
-
-
     // MARK: - Dynamic collections & Dynamic Upsert (e.g: BartlebyKit Triggers)
 
 
@@ -910,9 +894,8 @@ open class DataPoint: Object,DataPointProtocol{
         }
 
         // Execute the next bunch
-        if self.isRunningLive {
-            self.executeNextBunchOfCallOperations(from: operation.sequenceName)
-        }
+        self.executeNextBunchOfCallOperations(from: operation.sequenceName)
+
     }
 
 
