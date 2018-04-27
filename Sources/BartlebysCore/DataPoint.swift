@@ -931,8 +931,8 @@ open class DataPoint: Object,DataPointProtocol{
                 }catch{
                     Logger.log(error, category: .critical)
                 }
-                if let debugHandler = operation.debugHandler{
-                    debugHandler(operation, response.httpResponse, response.error)
+                if let callHandler = operation.callHandler{
+                    callHandler(operation, response.httpResponse, response.error)
                 }
             }
         }
@@ -977,8 +977,8 @@ open class DataPoint: Object,DataPointProtocol{
         }catch{
             Logger.log("\(error)", category: .critical)
         }
-        if let debugHandler = operation.debugHandler{
-            debugHandler(operation, httpResponse,nil)
+        if let callHandler = operation.callHandler{
+            callHandler(operation, httpResponse,nil)
         }
     }
 

@@ -168,9 +168,9 @@ open class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload,
         return CollectionOf<CallOperation<P, R>>()
     }
 
-    /// You can setup a debugHandler to debug :) the execution of a CallOperation
-    /// Note that the handler is called on live execution and not when runing from a Serialized state.
-    public var debugHandler:((CallOperation<P,R>,HTTPResponse?,Error?)->())?
+    /// You can setup a callHandler to debug the execution of a CallOperation
+    /// Note that the handler is called per operation on live execution and not at all when re-running from a Serialized state.
+    public var callHandler:((CallOperation<P,R>,HTTPResponse?,Error?)->())?
 
     public required init(dataPoint:DataPoint, operationName:String, operationPath: String, queryString: String, method: HTTPMethod, resultIsACollection:Bool, payload: P?) {
         self.operationName = operationName

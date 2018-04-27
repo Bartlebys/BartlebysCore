@@ -57,15 +57,14 @@ By setting the *downloads* bunch size to `5` you allow to run history call opera
 
 ## How to Debug a CallOperation execution?
 
-You cannot easily know when to log or put a break point because the execution policy is determined by the DataPoint. The simplest solution is to add a debugHandler:
-
+You cannot easily know when to log or put a break point because the execution policy is determined by the DataPoint. The simplest solution is to add a callHandler:
 
 Let's imagine we are executing an operation that gets resorts.
 	
 ```swift
 	 
 	let getResorts:CallOperation<VoidPayload, Resort> = ... 
-	getResorts.debugHandler = { operation, response, error in
+	getResorts.callHandler = { operation, response, error in
 
         if let error = error{
             // Analyze the error
@@ -103,4 +102,4 @@ Let's imagine we are executing an operation that gets resorts.
 ### Notes :
 
 - the handler is called on live execution and not when runing from a Serialized state.
-- you can put a breakpoint in the operation.debugHandler.
+- you can put a breakpoint in the operation.callHandler.
