@@ -18,8 +18,7 @@ class SequenceOfTasksTests: XCTestCase {
     static var allTests = [
         ("test001_simple_sequence", test001_simple_sequence,
          "test002_simple_sequence_with_a_delay",test002_simple_sequence_with_a_delay,
-         "test003_simple_async_sequence",test003_simple_async_sequence,
-         "test004_async_sequence_with_dataSource_mutation",test004_async_sequence_with_dataSource_mutation),
+         "test003_simple_async_sequence",test003_simple_async_sequence),
         ]
 
     func test001_simple_sequence() {
@@ -69,7 +68,7 @@ class SequenceOfTasksTests: XCTestCase {
 
         let expectation = XCTestExpectation(description: "Simple async sequence validation")
 
-        var items = [ 1, 2, 3]
+        let items = [ 1, 2, 3]
         var result = 0
 
         let tasks = SequenceOfTasks(items: items, taskHandler: { (item, sequence) in
