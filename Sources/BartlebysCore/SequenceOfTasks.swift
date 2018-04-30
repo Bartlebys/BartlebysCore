@@ -38,9 +38,10 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
     /// The current index
     public fileprivate(set) var index:Int = -1
 
-
     /// Defines the amount of tasks to execute when running the next Pack of tasks.
     public var packSize:Int = 1
+
+    fileprivate var _startTime: Double = 0
 
     // The delay between to tasks
     fileprivate var _delay: TimeInterval
@@ -67,6 +68,10 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
     /// The reference sequence completion closure
     public fileprivate(set) var onSequenceCompletion:((_ success:Bool)->())
 
+    /// The elapsed time from start.
+    public var elapsedTime:Double {
+        return AbsoluteTimeGetCurrent() - self._startTime
+    }
 
     // MARK: - API
 
@@ -91,6 +96,9 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
     /// Starts the sequence
     public func start(){
         if !self.isPaused {
+            if self._startTime == 0 {
+                self._startTime = AbsoluteTimeGetCurrent()
+            }
             if self.items.count > 0{
                 let _ = self.runNextTasksPack()
             }else{
