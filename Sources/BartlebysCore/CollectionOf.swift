@@ -237,10 +237,12 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    /// - Parameters:
    ///   - items: the items to be mergerd
    ///   - delayBetweenUpserts: the delay between unitary upserts
+   ///   - packSize: the size of the task pack
    ///   - completed: the call back on completion
    /// - Returns: the async merge tasks sequence.
    public func getAsynchronousMergeSequence(with items:[T],
-                                            delayBetweenUpserts: TimeInterval = 0.001,
+                                            delayBetweenUpserts: TimeInterval = 1/10,
+                                            packSize: Int = 100,
                                             mergeHasBeenCompleted: @escaping()->()) -> SequenceOfTasks<T>{
       let tasks = SequenceOfTasks(items: items, taskHandler: { (item, sequence) in
          self.upsert(item)
@@ -249,6 +251,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
          mergeHasBeenCompleted()
       }, delayBetweenTasks:delayBetweenUpserts)
       tasks.cancelOnFailure = false
+      tasks.packSize = packSize
       return tasks
    }
 
