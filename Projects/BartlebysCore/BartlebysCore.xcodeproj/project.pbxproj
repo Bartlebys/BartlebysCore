@@ -116,6 +116,11 @@
 		E59ECD302046ACB60057645E /* JSONPatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59ECD2D2046ACB10057645E /* JSONPatcher.swift */; };
 		E59ECD312046ACB70057645E /* JSONPatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59ECD2D2046ACB10057645E /* JSONPatcher.swift */; };
 		E59ECD322046ACB80057645E /* JSONPatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59ECD2D2046ACB10057645E /* JSONPatcher.swift */; };
+		E5A554E120938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
+		E5A554E220938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
+		E5A554E320938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
+		E5A554E420938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
+		E5A554E520938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
 		E5A5F8C62089D080007B4D7C /* DataPoint+BackGroundProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A5F8C52089D080007B4D7C /* DataPoint+BackGroundProcessing.swift */; };
 		E5A5F8C72089D080007B4D7C /* DataPoint+BackGroundProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A5F8C52089D080007B4D7C /* DataPoint+BackGroundProcessing.swift */; };
 		E5A5F8C82089D080007B4D7C /* DataPoint+BackGroundProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A5F8C52089D080007B4D7C /* DataPoint+BackGroundProcessing.swift */; };
@@ -548,6 +553,7 @@
 		E59315F9200E335800680C07 /* FileStorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorageProtocol.swift; sourceTree = "<group>"; };
 		E59ECD2D2046ACB10057645E /* JSONPatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPatcher.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* DataPointProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPointProtocol.swift; sourceTree = "<group>"; };
+		E5A554E020938A33004D7511 /* ComposedCallHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposedCallHandler.swift; sourceTree = "<group>"; };
 		E5A5F8C52089D080007B4D7C /* DataPoint+BackGroundProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+BackGroundProcessing.swift"; sourceTree = "<group>"; };
 		E5A5F8C92089D311007B4D7C /* SequenceOfTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceOfTasks.swift; sourceTree = "<group>"; };
 		E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionIOObservers.swift; sourceTree = "<group>"; };
@@ -704,6 +710,7 @@
 				E5DBB1D5200224C60079F4C6 /* AliasOf.swift */,
 				E555E691201C99F6007754C0 /* AsyncWork.swift */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
+				E5A554E020938A33004D7511 /* ComposedCallHandler.swift */,
 				E555E68B201C8296007754C0 /* CallSequence.swift */,
 				E56AAA17201097080082D4D6 /* CodableObject.swift */,
 				E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */,
@@ -1311,6 +1318,7 @@
 				E5EC9F9E1FF655F9008BF543 /* RelationsResolution.swift in Sources */,
 				E5EC9FAC1FF655FE008BF543 /* Int+Padding.swift in Sources */,
 				E5EC9FC11FF655FE008BF543 /* FileStorage.swift in Sources */,
+				E5A554E120938A33004D7511 /* ComposedCallHandler.swift in Sources */,
 				E555E698201CC555007754C0 /* OperatingState.swift in Sources */,
 				E5EC9FC01FF655FE008BF543 /* Status.swift in Sources */,
 				E555E68C201C8296007754C0 /* CallSequence.swift in Sources */,
@@ -1415,6 +1423,7 @@
 				E5EC9FF11FF656AF008BF543 /* RelationsResolution.swift in Sources */,
 				E58A27761FFBDC5C00079CB5 /* ManagedCollection.swift in Sources */,
 				E5EC9FFF1FF656AF008BF543 /* Int+Padding.swift in Sources */,
+				E5A554E320938A33004D7511 /* ComposedCallHandler.swift in Sources */,
 				E555E69A201CC555007754C0 /* OperatingState.swift in Sources */,
 				E5ECA0141FF656AF008BF543 /* FileStorage.swift in Sources */,
 				E555E68E201C8296007754C0 /* CallSequence.swift in Sources */,
@@ -1563,6 +1572,7 @@
 				E5D6CDF02001329200A3D975 /* Selection.swift in Sources */,
 				E5ECA05A1FF657A6008BF543 /* JSONCoder.swift in Sources */,
 				E5ECA05D1FF657A6008BF543 /* Model+Relational.swift in Sources */,
+				E5A554E420938A33004D7511 /* ComposedCallHandler.swift in Sources */,
 				E5ECA06E1FF657A6008BF543 /* CollectionIOObservers.swift in Sources */,
 				E5EC044E208DDB6E00FE4EDF /* SequenceOfTasks.swift in Sources */,
 				E5ECA04C1FF6579F008BF543 /* SessionDelegate.swift in Sources */,
@@ -1665,6 +1675,7 @@
 				E5ECA0951FF6584A008BF543 /* SessionDelegate.swift in Sources */,
 				E5DBB1DE20022A170079F4C6 /* Selection.swift in Sources */,
 				E5DBB1DB20022A0B0079F4C6 /* Aliasable.swift in Sources */,
+				E5A554E520938A33004D7511 /* ComposedCallHandler.swift in Sources */,
 				E5ECA09C1FF65851008BF543 /* Failure.swift in Sources */,
 				E5EC044F208DDB7000FE4EDF /* SequenceOfTasks.swift in Sources */,
 				E5DBB1D4200224990079F4C6 /* Aliased.swift in Sources */,
@@ -1709,6 +1720,7 @@
 				E5F3CDC9200D1C2000AB9A44 /* RelationsResolution.swift in Sources */,
 				E5F3CDCA200D1C2000AB9A44 /* Int+Padding.swift in Sources */,
 				E5F3CDCB200D1C2000AB9A44 /* FileStorage.swift in Sources */,
+				E5A554E220938A33004D7511 /* ComposedCallHandler.swift in Sources */,
 				E555E699201CC555007754C0 /* OperatingState.swift in Sources */,
 				E5F3CDCC200D1C2000AB9A44 /* Status.swift in Sources */,
 				E555E68D201C8296007754C0 /* CallSequence.swift in Sources */,
