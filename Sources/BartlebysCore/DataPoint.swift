@@ -144,7 +144,7 @@ open class DataPoint: Object,DataPointProtocol{
     open static let runUID: String = Utilities.createUID()
 
     /// Determine if the call are operated when the app is in Background mode.
-    public fileprivate(set) var isRunningInBackGround:Bool = true
+    public fileprivate(set) var isRunningInBackGround: Bool = false
 
     // We store the running call operations UIDS
     public fileprivate(set) var runningCallsUIDS = [UID]()
@@ -202,12 +202,12 @@ open class DataPoint: Object,DataPointProtocol{
     /// Runs only one call operation per call sequence
     /// The call operations are not chained anymore.
     public func didEnterBackground(){
-        self.isRunningInBackGround = false
+        self.isRunningInBackGround = true
     }
 
     /// Return to chained call sequence mode.
     public func willEnterForeground(){
-        self.isRunningInBackGround = true
+        self.isRunningInBackGround = false
         self._resumeCallSequences()
     }
 
