@@ -36,7 +36,11 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
     public let items:[T]
 
     /// The current index
-    public fileprivate(set) var index:Int = 0
+    public fileprivate(set) var index:Int = -1
+
+
+    /// Defines the amount of tasks to execute when running the next Pack of tasks.
+    public var packSize:Int = 1
 
     // The delay between to tasks
     fileprivate var _delay: TimeInterval
@@ -88,7 +92,7 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
     public func start(){
         if !self.isPaused {
             if self.items.count > 0{
-                let _ = self._runTask(at: self.index)
+                let _ = self.runNextTasksPack()
             }else{
                 self._endOfTheSequence()
             }
@@ -125,18 +129,24 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
         self._onTaskCompletion(state)
     }
 
-    /// Runs the next task.
-    /// - Returns: true if there was a task.
-    public func runNextTask() -> Bool{
-        self.index += 1
-        self._runTask(at: self.index)
-        return self.index < self.items.count
+    /// Runs the next pack of Tasks.
+    /// By default the packSize is set to 1
+    /// - Returns: true if there was at least one task.
+    public func runNextTasksPack() -> Bool{
+        let taskFound  =  self.index + 1 < self.items.count
+        for _ in 0 ..< self.packSize{
+            self.index += 1
+            if self.index <= self.items.count{
+                self._runTask(at: self.index)
+            }
+        }
+        return taskFound
     }
 
 
     // MARK: - Task running logic
 
-    /// Runs the discreet task at a given index and stores its completion state.
+    /// Runs a discreet task at a given index and stores its completion state.
     ///
     /// - Parameter index: the index.
     fileprivate func _runTask(at index:Int){
@@ -166,12 +176,12 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
         }
         if self.runTheTasksAutomatically && self.isPaused == false{
             if self._delay == 0 {
-                let _ = self.runNextTask()
+                let _ = self.runNextTasksPack()
             }else{
                 let delayInNanoS =  UInt64(self._delay * 1_000_000_000)
                 let deadLine = DispatchTime.init(uptimeNanoseconds:delayInNanoS)
                 DispatchQueue.main.asyncAfter(deadline: deadLine) {
-                    let _ = self.runNextTask()
+                    let _ = self.runNextTasksPack()
                 }
             }
         }
