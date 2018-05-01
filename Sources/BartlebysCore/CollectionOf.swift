@@ -233,7 +233,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       }
    }
 
-   /// Merges the provided collection
+   /// Merge with the provided collection
    ///
    /// - Parameters:
    ///   - collection: the collection to be merged
@@ -243,6 +243,22 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
 
       /// Proceed to sequential upserts
       for item in collection {
+         self.upsert(item)
+      }
+
+      self._resetTheTemporaryUidsIndexes()
+   }
+
+   /// Merge with the provided array of items
+   ///
+   /// - Parameters:
+   ///   - collection: the collection to be merged
+   public func merge(with array: Array<T>) {
+
+      self._buildTemporaryUidsIndexes()
+
+      /// Proceed to sequential upserts
+      for item in array {
          self.upsert(item)
       }
 
