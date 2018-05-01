@@ -30,6 +30,8 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    public let uid: UID = Utilities.createUID()
 
    fileprivate var _items: Array<T> = Array<T>()
+   fileprivate var _uidIndexes: [UID : Int] = [UID : Int]()
+   fileprivate var _uidIndexesAreUpToDate: Bool = false
 
    // We expose the collection type
    public var collectedType:T.Type { return T.self }
@@ -152,6 +154,8 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
 
    public func append<S>(contentsOf newElements: S) where S : Sequence, Element == S.Element {
       self.hasChanged = true
+      // We don't use self._items.append(contentOf)
+      // but iterate to reference the newElements.
       for item in newElements {
          self.append(item)
       }
@@ -206,29 +210,77 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
          return
       }
       self.hasChanged = true
-      // We first determine if there is an element by using the dataPoint registry
-      // It is faster than determining the index.
-      if let _ = dataPoint.registredModelByUID(element.uid) as? T {
-         if let idx = self._items.index(where: { $0.uid == element.uid }) {
-            self[idx] = element
+      if self._uidIndexesAreUpToDate {
+         if let idx = self._uidIndexes[element.uid] {
+            self._items[idx] = element
             self.reference(element)
          } else {
             self.append(element)
          }
-      } else {
-         self.append(element)
+      }else{
+         // We first determine if there is an element by using the dataPoint registry
+         // It is faster than determining the index.
+         if let _ = dataPoint.registredModelByUID(element.uid) as? T {
+            if let idx = self._items.index(where: { $0.uid == element.uid }) {
+               self._items[idx] = element
+               self.reference(element)
+            } else {
+               self.append(element)
+            }
+         }else{
+            self.append(element)
+         }
       }
    }
 
-   /// Merge the provided collection
+   /// Merges the provided collection
    ///
-   /// - Parameter collection: a collection
+   /// - Parameters:
+   ///   - collection: the collection to be merged
    public func merge(with collection: CollectionOf<T>) {
+
+      self._buildTemporaryUidsIndexes()
+
+      /// Proceed to sequential upserts
       for item in collection {
          self.upsert(item)
       }
+
+      self._resetTheTemporaryUidsIndexes()
    }
 
+
+   /// Create indexes to perform faster Upserts
+   fileprivate func _buildTemporaryUidsIndexes(){
+      /// build a temporary index.
+      self._uidIndexes = [UID : Int]()
+      for (index,item) in self._items.enumerated(){
+         self._uidIndexes [item.uid] = index
+      }
+      /// Set up the indexes flag
+      self._uidIndexesAreUpToDate = true
+   }
+
+   /// Resets the indexes
+   fileprivate func _resetTheTemporaryUidsIndexes(){
+      // Reset the indexes
+      self._uidIndexes = [UID : Int]()
+      self._uidIndexesAreUpToDate = false
+   }
+
+
+
+   /// Merges the provided collection asynchronously on the main queue.
+   ///
+   /// - Parameters:
+   ///   - collection: the collection to be merged
+   ///   - mergeHasBeenCompleted: if set to true we build a temporary uid index before upserting.
+   public func asyncMerge(with collection:CollectionOf<T>, mergeHasBeenCompleted: @escaping()->()) -> (){
+      DispatchQueue.main.async {
+         self.merge(with: collection)
+         mergeHasBeenCompleted()
+      }
+   }
 
 
    /// Returns a Sequence of Tasks that merges asynchronously the items
