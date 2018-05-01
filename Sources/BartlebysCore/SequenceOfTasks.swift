@@ -26,8 +26,11 @@ public protocol StartableSequence{
 }
 
 /// We use a class and passe the items by references.
-/// The tasks are executed on the main queue.
+/// The tasks are executed on a specified dispatch queue
 public class SequenceOfTasks<T:Any>:StartableSequence {
+
+    /// The dispatchQueue
+    public var queue:DispatchQueue = DispatchQueue.main
 
     /// Optional chainedSequence started after this sequence completion
     public var chainedSequence:StartableSequence?
@@ -184,11 +187,13 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
         }
         if self.runTheTasksAutomatically && self.isPaused == false{
             if self._delay == 0 {
-                let _ = self.runNextTasksPack()
+                self.queue.async {
+                    let _ = self.runNextTasksPack()
+                }
             }else{
                 let delayInNanoS =  UInt64(self._delay * 1_000_000_000)
                 let deadLine = DispatchTime.init(uptimeNanoseconds:delayInNanoS)
-                DispatchQueue.main.asyncAfter(deadline: deadLine) {
+                self.queue.asyncAfter(deadline: deadLine) {
                     let _ = self.runNextTasksPack()
                 }
             }
@@ -225,7 +230,7 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
 
         // Start the chained sequence if there is one.
         if let chained = self.chainedSequence {
-            DispatchQueue.main.async {
+            self.queue.async {
                 chained.start()
             }
         }
