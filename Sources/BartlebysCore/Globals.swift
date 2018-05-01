@@ -34,6 +34,16 @@ public func getElapsedTime()->Double {
     return AbsoluteTimeGetCurrent() - _startTime
 }
 
+/// Measure the execution duration of a given block
+///
+///   - execute: the execution block to be evaluated
+/// - Returns: the execution time
+public func measure(_ execute: () -> Void) -> Double {
+    let ts = AbsoluteTimeGetCurrent()
+    execute()
+    return (AbsoluteTimeGetCurrent()-ts)
+}
+
 // MARK: - Main Thread 
 
 public func syncOnMain(execute block: () -> Void) {
