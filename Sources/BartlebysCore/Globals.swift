@@ -38,29 +38,22 @@ public func getElapsedTime()->Double {
 ///
 ///   - execute: the execution block to be evaluated
 /// - Returns: the execution time
-public func measure(_ execute: () -> Void) -> Double {
+public func measure(_ execute: () throws -> Void) rethrows -> Double {
     let ts = AbsoluteTimeGetCurrent()
-    execute()
+    try execute()
     return (AbsoluteTimeGetCurrent()-ts)
 }
 
 // MARK: - Main Thread 
 
-public func syncOnMain(execute block: () -> Void) {
-    if Thread.isMainThread {
-        block()
-    } else {
-        DispatchQueue.main.sync(execute: block)
-    }
-}
-
-public func syncThrowableOnMain(execute block: () throws -> Void) rethrows-> (){
+public func syncOnMain(execute block: () throws -> Void) rethrows-> (){
     if Thread.isMainThread {
         try block()
     } else {
         try DispatchQueue.main.sync(execute: block)
     }
 }
+
 
 public func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
     if Thread.isMainThread {
