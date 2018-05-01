@@ -57,7 +57,7 @@ public struct Logger {
     }
 
     static public func log(_ message: Any, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line,decorative:Bool = false) {
-        DispatchQueue.main.async{
+        syncOnMain {
             let entry: LogEntry = LogEntry()
             entry.elapsedTime = getElapsedTime()
             entry.message = "\(message)"
