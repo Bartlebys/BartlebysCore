@@ -316,7 +316,7 @@ open class DataPoint: Object,DataPointProtocol{
     }
 
 
-    // MARK : - CallSequence
+    // MARK: - CallSequence
 
 
     /// Defines the call sequence.
@@ -418,7 +418,39 @@ open class DataPoint: Object,DataPointProtocol{
         }
         return request
     }
-    
+
+
+
+
+    /// Returns the relevent request for a given call Operation
+    ///
+    /// - Parameter operation: the operation
+    /// - Returns: the URL request
+    /// - Throws: issue on URL creation and operation Parameters serialization
+    public final func requestFor<P, R>(_ operation: CallOperation<P, R>) throws -> URLRequest {
+
+        if R.self is Download.Type || R.self is Upload.Type {
+            guard let payload = operation.payload else {
+                throw DataPointError.payloadIsNil
+            }
+            guard (P.self is FilePath.Type) else {
+                throw DataPointError.payloadShouldBeOfFilePathType
+            }
+            // Return the Download or Upload base request
+            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
+        }
+
+        if let payload = operation.payload {
+            // There is a payload
+            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
+        }else{
+            // The payload is void
+            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method)
+        }
+    }
+
+    // MARK: -
+
     /// Provisions the operation in the relevent collection
     /// If the collection exceeds the preservationQuota destroys the first entries
     ///
@@ -438,13 +470,40 @@ open class DataPoint: Object,DataPointProtocol{
 
     }
 
+    /// Provisions efficiently the array of operations in the relevent collection
+    /// Optimized version of the unitary provisioning method
+    /// Uses an indexed merge that may be thousand of times faster when provisioning large amount of operations.
+    ///
+    /// - Parameter operations: the array of the call operations
+    /// - Throws: error if the collection hasn't be found or when appending to pending calls.
+    public func provision<P, R>(_ operations:[CallOperation<P, R>]) throws{
+
+        // Upsert the relevent call Operation collection
+        guard let collection = self._collectionsByCollectedTypeName[CallOperation<P, R>.typeName] as? CollectionOf<CallOperation<P, R>> else{
+            throw DataPointError.callOperationCollectionNotFound(named: CollectionOf<CallOperation<P, R>>.collectionName)
+        }
+
+        /// Store the call operation into the relevent collection
+        /// uses an efficient indexed merge function
+        collection.merge(with:operations)
+        for operation in operations{
+            try self._addToPendingCalls(operation)
+        }
+        try self._applyQuotaOn(collection)
+    }
+
+
+    /// Turning this to false improves the insertion time
+    /// May be used during development to check provisioning anomalies.
+    public var throwErrorOnMultipleProvisioningAttempts:Bool = false
 
     fileprivate func _addToPendingCalls<P,R>(_ operation:CallOperation<P, R>) throws {
         // Append the call operation to the pending Calls
         if !self._sortedPendingCalls.keys.contains(operation.sequenceName){
             self._sortedPendingCalls[operation.sequenceName] = [CallOperationProtocol]()
         }
-        if (self._sortedPendingCalls[operation.sequenceName]?.index(where: { return $0.uid == operation.uid }) != nil){
+        if self.throwErrorOnMultipleProvisioningAttempts
+            && (self._sortedPendingCalls[operation.sequenceName]?.index(where: { return $0.uid == operation.uid }) != nil){
             throw DataPointError.multipleProvisioningAttempt(of:operation)
         }else{
             self._sortedPendingCalls[operation.sequenceName]?.append(operation)
@@ -464,34 +523,6 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
-    
-    
-    /// Returns the relevent request for a given call Operation
-    ///
-    /// - Parameter operation: the operation
-    /// - Returns: the URL request
-    /// - Throws: issue on URL creation and operation Parameters serialization
-    public final func requestFor<P, R>(_ operation: CallOperation<P, R>) throws -> URLRequest {
-        
-        if R.self is Download.Type || R.self is Upload.Type {
-            guard let payload = operation.payload else {
-                throw DataPointError.payloadIsNil
-            }
-            guard (P.self is FilePath.Type) else {
-                throw DataPointError.payloadShouldBeOfFilePathType
-            }
-            // Return the Download or Upload base request
-            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
-        }
-        
-        if let payload = operation.payload {
-            // There is a payload
-            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method, parameter: payload)
-        }else{
-            // The payload is void
-            return try self.requestFor(path: operation.path, queryString: operation.queryString, method: operation.method)
-        }
-    }
     
     
     // MARK: - Data integration and Operation Life Cycle
@@ -871,32 +902,70 @@ open class DataPoint: Object,DataPointProtocol{
 
     // MARK: - CallOperations Level
 
-    /// Provisions the operation
+    /// Provisions the single operation
     /// The execution may occur immediately or not according to the current Load
     /// The order of the call are guaranted not the order of the Results if the Bunchsize is > 1
     ///
     /// - Parameter operation: the call operation
-    /// - Throws: error if the collection hasn't be found
     final internal func execute<P, R>(_ operation:CallOperation<P, R>){
 
-        // Provision the Operation
-        operation.sessionIdentifier = self.identifier
-        if operation.scheduledOrderOfExecution == ORDER_OF_EXECUTION_UNDEFINED{
-            self.lastExecutionOrder += 1
-            // Store the scheduledOrderOfExecution and the sessionIdentifier
-            operation.scheduledOrderOfExecution = self.lastExecutionOrder
-            do {
-                // Provision the call operation
-                try self.provision(operation)
-            } catch {
-                Logger.log("\(error)", category: .critical)
-            }
+        // Defines the order of execution
+        self._prepareExecutionOf(operation)
+
+        //Provision the operation.
+        do {
+            // Provision the call operation
+            try self.provision(operation)
+        } catch {
+            Logger.log("\(error)", category: .critical)
         }
 
         // Execute the next bunch
         self.executeNextBunchOfCallOperations(from: operation.sequenceName)
 
     }
+
+    /// Provides an optimized execution model when using large amounts of operations
+    /// The execution may occur immediately or not according to the current Load
+    ///
+    /// - Parameter operation: the array of call operations
+    final internal func execute<P, R>(_ operations:[CallOperation<P, R>]){
+
+        guard let firstOperation = operations.first else{
+            return
+        }
+
+        // Defines the order of execution and provision the operation.
+        for operation in operations{
+            self._prepareExecutionOf(operation)
+        }
+
+        //Provision the operation.
+        do {
+            // Provision the call operation
+            try self.provision(operations)
+        } catch {
+            Logger.log("\(error)", category: .critical)
+        }
+
+        // Execute the next bunch
+        self.executeNextBunchOfCallOperations(from: firstOperation.sequenceName)
+    }
+
+
+    /// Defines the order of execution and provision the operation.
+    ///
+    /// - Parameter operation: the call operation
+    final fileprivate func _prepareExecutionOf<P,R>( _ operation:CallOperation<P, R>){
+        // Provision the Operation
+        operation.sessionIdentifier = self.identifier
+        if operation.scheduledOrderOfExecution == ORDER_OF_EXECUTION_UNDEFINED{
+            self.lastExecutionOrder += 1
+            // Store the scheduledOrderOfExecution and the sessionIdentifier
+            operation.scheduledOrderOfExecution = self.lastExecutionOrder
+        }
+    }
+
 
 
 

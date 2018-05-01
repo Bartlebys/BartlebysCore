@@ -14,6 +14,11 @@
 		4D6A763E2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */; };
 		4D6A763F2043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */; };
 		4D6A76402043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */; };
+		E505023320986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
+		E505023420986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
+		E505023520986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
+		E505023620986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
+		E505023720986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
 		E50C5C7A1FFD0C6B00A3C9DA /* ManagedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ManagedCollection.swift */; };
 		E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
 		E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
@@ -510,6 +515,7 @@
 		4D65E67C1FDFFA9200034787 /* Upload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		4D65E69E1FE02FE300034787 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		4D6A763D2043FDE600ACEEFA /* AsyncWorkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncWorkTests.swift; sourceTree = "<group>"; };
+		E505023220986AB100679E00 /* CallOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallOperations.swift; sourceTree = "<group>"; };
 		E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogEntry.swift; sourceTree = "<group>"; };
 		E516FDFF1FDDA9A4001AB6A5 /* JSONCoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCoder.swift; sourceTree = "<group>"; };
 		E51AF7CF201A4D5F009E1E0E /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -710,6 +716,7 @@
 				E5DBB1D5200224C60079F4C6 /* AliasOf.swift */,
 				E555E691201C99F6007754C0 /* AsyncWork.swift */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
+				E505023220986AB100679E00 /* CallOperations.swift */,
 				E5A554E020938A33004D7511 /* ComposedCallHandler.swift */,
 				E555E68B201C8296007754C0 /* CallSequence.swift */,
 				E56AAA17201097080082D4D6 /* CodableObject.swift */,
@@ -1363,6 +1370,7 @@
 				E5EC9FA01FF655F9008BF543 /* SessionDelegate.swift in Sources */,
 				E5BAB6C0200120C900386A9B /* Aliasable.swift in Sources */,
 				E5EC9FA71FF655FE008BF543 /* Failure.swift in Sources */,
+				E505023320986AB100679E00 /* CallOperations.swift in Sources */,
 				E5EC9FBA1FF655FE008BF543 /* CollectionOf.swift in Sources */,
 				E5EC9FAD1FF655FE008BF543 /* JSON.swift in Sources */,
 				E5D6CDE420012F2800A3D975 /* Notify.swift in Sources */,
@@ -1468,6 +1476,7 @@
 				E5D6CDEF2001329200A3D975 /* Selection.swift in Sources */,
 				E5ECA0011FF656AF008BF543 /* JSONCoder.swift in Sources */,
 				E5ECA0041FF656AF008BF543 /* Model+Relational.swift in Sources */,
+				E505023520986AB100679E00 /* CallOperations.swift in Sources */,
 				E5ECA0151FF656AF008BF543 /* CollectionIOObservers.swift in Sources */,
 				E5EC9FF31FF656AF008BF543 /* SessionDelegate.swift in Sources */,
 				E5EC9FFA1FF656AF008BF543 /* Failure.swift in Sources */,
@@ -1584,6 +1593,7 @@
 				E5ECA0621FF657A6008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E542EE1120442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5ECA0461FF6579F008BF543 /* HTTPOperation.swift in Sources */,
+				E505023620986AB100679E00 /* CallOperations.swift in Sources */,
 				E5ECA03E1FF6579F008BF543 /* Collectable.swift in Sources */,
 				E5ECA0561FF657A6008BF543 /* HTTPMethod.swift in Sources */,
 				E5ECA04D1FF6579F008BF543 /* Tolerent.swift in Sources */,
@@ -1687,6 +1697,7 @@
 				E5ECA08F1FF6584A008BF543 /* HTTPOperation.swift in Sources */,
 				E542EE1220442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5ECA0871FF6584A008BF543 /* Collectable.swift in Sources */,
+				E505023720986AB100679E00 /* CallOperations.swift in Sources */,
 				E5ECA09F1FF65851008BF543 /* HTTPMethod.swift in Sources */,
 				E5ECA0961FF6584A008BF543 /* Tolerent.swift in Sources */,
 				E50C5C9F1FFD2EFC00A3C9DA /* LogEntry.swift in Sources */,
@@ -1765,6 +1776,7 @@
 				E5F3CDEF200D1C2000AB9A44 /* SessionDelegate.swift in Sources */,
 				E5F3CDF0200D1C2000AB9A44 /* Aliasable.swift in Sources */,
 				E5F3CDF1200D1C2000AB9A44 /* Failure.swift in Sources */,
+				E505023420986AB100679E00 /* CallOperations.swift in Sources */,
 				E5F3CDF2200D1C2000AB9A44 /* CollectionOf.swift in Sources */,
 				E5F3CDF3200D1C2000AB9A44 /* JSON.swift in Sources */,
 				E5F3CDF4200D1C2000AB9A44 /* Notify.swift in Sources */,
