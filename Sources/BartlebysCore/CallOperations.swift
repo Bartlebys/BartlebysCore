@@ -15,8 +15,13 @@ public struct CallOperations<P,R> where P : Payload, R : Result & Collectable{
 
     let dataPoint:DataPoint
 
+    public init(dataPoint: DataPoint, operations: [CallOperation<P,R>]) {
+        self.dataPoint = dataPoint
+        self.operations = operations
+    }
+
+     /// Uses an optimized execution model for multiple CallOperations
     public func execute() -> () {
-        /// Uses the optimized execution model for multiple CallOperations
         self.dataPoint.execute(self.operations)
     }
 
