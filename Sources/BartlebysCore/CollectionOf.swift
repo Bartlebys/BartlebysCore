@@ -283,31 +283,6 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    }
 
 
-   /// Returns a Sequence of Tasks that merges asynchronously the items
-   /// used to reduce the insertion load on large merges.
-   ///
-   /// - Parameters:
-   ///   - items: the items to be mergerd
-   ///   - delayBetweenUpserts: the delay between unitary upserts
-   ///   - packSize: the size of the task pack
-   ///   - completed: the call back on completion
-   /// - Returns: the async merge tasks sequence.
-   public func getAsynchronousMergeSequence(with items:[T],
-                                            delayBetweenUpserts: TimeInterval = 1/10,
-                                            packSize: Int = 100,
-                                            mergeHasBeenCompleted: @escaping()->()) -> SequenceOfTasks<T>{
-      let tasks = SequenceOfTasks(items: items, taskHandler: { (item, sequence) in
-         self.upsert(item)
-         sequence.taskCompleted(TaskCompletionState.success)
-      },onSequenceCompletion:{ (success) in
-         mergeHasBeenCompleted()
-      }, delayBetweenTasks:delayBetweenUpserts)
-      tasks.cancelOnFailure = false
-      tasks.packSize = packSize
-      return tasks
-   }
-
-
    /// Append or update the serialized item
    /// Can be for example used by BartlebyKit to integrate Triggered data
    ///
