@@ -203,7 +203,7 @@ extension FileStorage: FileStorageProtocol{
                 let url = self.getURL(of: collection)
 
                 var isDirectory: ObjCBool = true
-                if !self.fileManager.fileExists(atPath: directoryURL.absoluteString, isDirectory: &isDirectory) {
+                if !self.fileManager.fileExists(atPath: directoryURL.path, isDirectory: &isDirectory) {
                     try self.fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                 }
 
