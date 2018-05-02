@@ -39,6 +39,7 @@ public protocol DataPointLifeCycle{
 
 open class DataPoint: Object,DataPointProtocol{
     
+    
     // KVS keys
     static public let sessionLastExecutionKVSKey = "sessionLastExecutionKVSKey"
     
@@ -703,8 +704,9 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameters:
     ///   - operation: the faulting call operation
+    ///   - httpResponse: the http response
     ///   - error: the error
-    open func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws{
+    open func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>, httpResponse: HTTPResponse?) throws{
 
         defer{
             let notificationName = Notification.Name.CallOperation.didSucceed()
@@ -726,7 +728,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameters:
     ///   - operation: the faulting call operation
     ///   - error: the error
-    open func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?) throws {
+    open func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, httpResponse: HTTPResponse?, error:Error?) throws {
 
         defer{
             // Send a notification
@@ -990,18 +992,18 @@ open class DataPoint: Object,DataPointProtocol{
         self.runningCallsUIDS.append(operation.uid)
 
         let request: URLRequest = try self.requestFor(operation)
-        let failureClosure: ((Failure) -> ()) = { response in
+        let failureClosure: ((Failure) -> ()) = { failure in
             syncOnMain {
                 // Call the delegate
                 do{
                     self._removeOperationFromRunningCalls(operation)
                     // Relay the failure to the Data Point
-                    try self.callOperationExecutionDidFail(operation,error:response.error)
+                    try self.callOperationExecutionDidFail(operation, httpResponse: failure.httpResponse, error: failure.error)
                 }catch{
                     Logger.log(error, category: .critical)
                 }
                 if let callHandler = operation.callHandler{
-                    callHandler(operation, response.httpResponse, response.error)
+                    callHandler(operation, failure.httpResponse, failure.error)
                 }
             }
         }
@@ -1042,7 +1044,7 @@ open class DataPoint: Object,DataPointProtocol{
     fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>,_ httpResponse:HTTPResponse?){
         do{
             self._removeOperationFromRunningCalls(operation)
-            try self.callOperationExecutionDidSucceed(operation)
+            try self.callOperationExecutionDidSucceed(operation, httpResponse: httpResponse)
         }catch{
             Logger.log("\(error)", category: .critical)
         }
