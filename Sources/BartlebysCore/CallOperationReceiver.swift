@@ -16,17 +16,15 @@ public protocol CallOperationReceiver{
     ///
     /// - Parameters:
     ///   - operation: the faulting call operation
-    ///   - httpResponse: the http response, can be casted to DataResponse<R>
-    func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>, httpResponse: HTTPResponse?) throws
+    func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws
 
 
     /// Implements the faulting logic
     ///
     /// - Parameters:
     ///   - operation: the faulting call operation
-    ///   - httpResponse: the http response, can be casted to DataResponse<R>
     ///   - error: the error
-    func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, httpResponse: HTTPResponse?, error: Error?) throws
+    func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error: Error?) throws
 
 
 }

@@ -704,9 +704,8 @@ open class DataPoint: Object,DataPointProtocol{
     ///
     /// - Parameters:
     ///   - operation: the faulting call operation
-    ///   - httpResponse: the http response
     ///   - error: the error
-    open func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>, httpResponse: HTTPResponse?) throws{
+    open func callOperationExecutionDidSucceed<P, R>(_ operation: CallOperation<P, R>) throws{
 
         defer{
             let notificationName = Notification.Name.CallOperation.didSucceed()
@@ -728,7 +727,7 @@ open class DataPoint: Object,DataPointProtocol{
     /// - Parameters:
     ///   - operation: the faulting call operation
     ///   - error: the error
-    open func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, httpResponse: HTTPResponse?, error:Error?) throws {
+    open func callOperationExecutionDidFail<P, R>(_ operation: CallOperation<P, R>, error:Error?) throws {
 
         defer{
             // Send a notification
@@ -998,7 +997,7 @@ open class DataPoint: Object,DataPointProtocol{
                 do{
                     self._removeOperationFromRunningCalls(operation)
                     // Relay the failure to the Data Point
-                    try self.callOperationExecutionDidFail(operation, httpResponse: failure.httpResponse, error: failure.error)
+                    try self.callOperationExecutionDidFail(operation, error: failure.error)
                 }catch{
                     Logger.log(error, category: .critical)
                 }
@@ -1044,7 +1043,7 @@ open class DataPoint: Object,DataPointProtocol{
     fileprivate func _onSuccessOf<P,R>(_ operation:CallOperation<P,R>,_ httpResponse:HTTPResponse?){
         do{
             self._removeOperationFromRunningCalls(operation)
-            try self.callOperationExecutionDidSucceed(operation, httpResponse: httpResponse)
+            try self.callOperationExecutionDidSucceed(operation)
         }catch{
             Logger.log("\(error)", category: .critical)
         }
