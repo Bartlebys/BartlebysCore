@@ -51,11 +51,6 @@ public struct Logger {
     
     public static var delegate: LoggerDelegate?
 
-    
-    static public func log(_ message: Any, category: LogEntry.Category){
-        self.log(message, category: category, decorative: false)
-    }
-
     static public func log(_ message: Any, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line,decorative:Bool = false) {
         syncOnMain {
             let entry: LogEntry = LogEntry()
