@@ -240,7 +240,8 @@ open class DataPoint: Object,DataPointProtocol{
         }
         do{
             // The KVS collection is loaded synchronously and saved asynchronouly
-            let loadedKeyedDataCollection:CollectionOf<KeyedData> = try self.storage.loadSync(fileName: self.keyedDataCollection.fileName, relativeFolderPath: self.keyedDataCollection.relativeFolderPath)
+            // we want the keydata to be in the session folder
+            let loadedKeyedDataCollection:CollectionOf<KeyedData> = try self.storage.loadSync(fileName: self.keyedDataCollection.fileName, relativeFolderPath: self.sessionIdentifier)
             self.keyedDataCollection = loadedKeyedDataCollection
         }catch FileStorageError.notFound{
             // It may be the first time don't panic
@@ -255,8 +256,7 @@ open class DataPoint: Object,DataPointProtocol{
         self.upsertCallSequence(CallSequence(name: CallSequence.uploads, bunchSize: 1))
 
         self._configureCollection(self.keyedDataCollection)
-        // we want the keydata to be in the session folder
-        self.keyedDataCollection.relativeFolderPath = self.sessionIdentifier
+
 
         // Special Call Operations (Downloads and Uploads)
         try self.registerCollection(collection: self.downloads)
