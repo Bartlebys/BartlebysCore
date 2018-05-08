@@ -52,7 +52,7 @@ public final class FileStorage{
     fileprivate var _observers=[CollectionProgressObserver]()
     
     /// We use a serial queue for all our IO
-    public fileprivate(set) var IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.CollectionIOQueue", qos: .background, attributes: [])
+    public fileprivate(set) var IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.CollectionIOQueue", qos: .utility, attributes: [])
 
     /// The observation queue (any progress message will be dispatched asynchronously on this queue)
     public var observationQueue:DispatchQueue = DispatchQueue.main
