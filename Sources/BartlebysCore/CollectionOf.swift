@@ -454,7 +454,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    fileprivate let _selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
 
    // Recovers the selectedUIDS
-   fileprivate var _selectedUIDs:[UID]{
+   public fileprivate(set) var selectedUIDs:[UID]{
       set{
          syncOnMain {
             do{
@@ -482,7 +482,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       get{
          return syncOnMainAndReturn { () -> [T]? in
             do{
-               if let instances: [T] =  try self.dataPoint?.registredObjectsByUIDs(self._selectedUIDs){
+               if let instances: [T] =  try self.dataPoint?.registredObjectsByUIDs(self.selectedUIDs){
                   return instances
                }
             }catch{
@@ -493,7 +493,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       }
       set{
          syncOnMain {
-            self._selectedUIDs = newValue?.map{$0.uid} ?? [UID]()
+            self.selectedUIDs = newValue?.map{$0.uid} ?? [UID]()
             Notify<T>.postSelectionChanged()
          }
       }

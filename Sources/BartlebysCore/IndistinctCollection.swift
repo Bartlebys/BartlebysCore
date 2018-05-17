@@ -40,4 +40,7 @@ public protocol IndistinctCollection:UniversalType,Identifiable{
     // The number of items
     var count: Int { get }
 
+    // The selected UIDs
+    var selectedUIDs:[UID] { get }
+
 }
