@@ -22,6 +22,9 @@ public protocol IndistinctCollection:UniversalType,Identifiable{
     /// - Parameter item: the item
     func removeItem<C: Codable & Collectable>(_ item: C)throws->()
 
+    /// Removes all the items
+    func removeAll()
+
     /// Append or update the serialized element
     /// Can be for example used by BartlebyKit to integrate Triggered data
     ///
