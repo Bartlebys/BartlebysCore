@@ -343,11 +343,31 @@ open class DataPoint: Object,DataPointProtocol{
     }
     
     
-    public func collectionsCount() -> Int {
+    public var collectionsCount:Int {
         return self._collections.count
     }
+
+
+    public var collectionsNames:[String] {
+        return self._collections.map({$0.d_collectionName})
+    }
+
     
-    
+    /// Returns a
+    open var debugInformations: String {
+        var infos = "\n---------------"
+        infos += "\nDebug informations: \(Date())"
+        infos += "\nsessionIdentifier: \(self.sessionIdentifier)"
+        infos += "\nNumber of Collections: \(self.collectionsCount)"
+        for collectionName in self.collectionsNames.sorted(){
+            if let collection = self.collectionNamed(collectionName){
+                infos += "\n\(collectionName) \(collection.count)"
+            }
+        }
+        return infos
+    }
+
+
     // MARK: - DataPointProtocol
     
     // The current Host: e.g demo.bartlebys.org
