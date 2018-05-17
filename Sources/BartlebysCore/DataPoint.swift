@@ -361,7 +361,7 @@ open class DataPoint: Object,DataPointProtocol{
         infos += "\nNumber of Collections: \(self.collectionsCount)"
         for collectionName in self.collectionsNames.sorted(){
             if let collection = self.collectionNamed(collectionName){
-                infos += "\n\(collectionName) \(collection.count)"
+                infos += "\n\(collectionName) count: \(collection.count) selectedCount: \(collection.selectedUIDs.count)"
             }
         }
         return infos
