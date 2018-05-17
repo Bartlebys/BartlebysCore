@@ -259,8 +259,8 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                         XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
                     }else{
                         print("progress.totalUnitCount \(progress.totalUnitCount) progress.completedUnitCount  \(progress.completedUnitCount)")
-                        if progress.totalUnitCount > self.myDataPoint.collectionsCount(){
-                            XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.myDataPoint.collectionsCount())")
+                        if progress.totalUnitCount > self.myDataPoint.collectionsCount{
+                            XCTFail("progress.totalUnitCount \(progress.totalUnitCount) >  dataPoint.collectionsCount  \(self.myDataPoint.collectionsCount)")
                         }
                         if progress.completedUnitCount == progress.totalUnitCount{
                             // It is finished
