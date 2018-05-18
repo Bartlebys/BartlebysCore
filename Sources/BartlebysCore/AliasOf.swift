@@ -9,7 +9,7 @@
 import Foundation
 
 /// The generic alias class
-open class AliasOf<T:Aliasable>:Codable,Aliased{
+open class AliasOf<T:Aliasable>: Object, Codable,Aliased{
 
     public let uid:UID
     
