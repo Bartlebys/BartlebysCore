@@ -355,7 +355,7 @@ open class DataPoint: Object,DataPointProtocol{
     
     /// Returns a
     open var debugInformations: String {
-        var infos = "\n---------------"
+        var infos = "---------------"
         infos += "\nDebug informations: \(Date())"
         infos += "\nsessionIdentifier: \(self.sessionIdentifier)"
         infos += "\nNumber of Collections: \(self.collectionsCount)"
