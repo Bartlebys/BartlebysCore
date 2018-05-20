@@ -911,7 +911,6 @@ open class DataPoint: Object,DataPointProtocol{
                     self._sortedPendingCalls[firstElement.sequenceName]?.append(contentsOf: callOperations)
                 }
             }
-
         }
         for sequenceNamed in self._sortedPendingCalls.keys{
             self._sortedPendingCalls[sequenceNamed]?.sort { (lCalOp, rCalOp) -> Bool in

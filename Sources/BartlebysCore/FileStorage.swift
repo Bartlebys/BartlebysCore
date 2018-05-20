@@ -45,7 +45,7 @@ public final class FileStorage{
         self.isVolatile = true
     }
 
-    public let fileExtension: String = ".data"
+    public static let collectionFileExtension: String = ".data"
     
     /// You can / should register progress observers.
     /// to monitor the storage load and save.
@@ -333,7 +333,7 @@ extension FileStorage: FileStorageProtocol{
     ///   - relativeFolderPath: the relative folder path
     /// - Returns: the URL
     public func getURL(ofFile named:String,within relativeFolderPath:String) -> URL {
-        return self.baseUrl.appendingPathComponent(relativeFolderPath).appendingPathComponent(named + self.fileExtension)
+        return self.baseUrl.appendingPathComponent(relativeFolderPath).appendingPathComponent(named + FileStorage.collectionFileExtension)
     }
 
 
