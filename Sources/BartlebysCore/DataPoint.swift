@@ -118,7 +118,7 @@ open class DataPoint: Object,DataPointProtocol{
     // MARK: -
     
     /// A collection used to perform Key Value Storage
-    public var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.collectionName,relativePath:"")
+    public lazy var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.collectionName,relativePath:self.sessionIdentifier)
     
     // Special call Operations Donwloads and Uploads
     public let downloads = CollectionOf<CallOperation<FilePath,Download>>()
