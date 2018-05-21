@@ -201,7 +201,6 @@ extension FileStorage: FileStorageProtocol{
             do {
                 let directoryURL = self.baseUrl.appendingPathComponent(collection.relativeFolderPath)
                 let url = self.getURL(of: collection)
-
                 var isDirectory: ObjCBool = true
                 if !self.fileManager.fileExists(atPath: directoryURL.path, isDirectory: &isDirectory) {
                     try self.fileManager.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
@@ -211,9 +210,9 @@ extension FileStorage: FileStorageProtocol{
                 try data.write(to: url)
 
                 // The collection has been saved.
-                self._conclude(WorkNature.loadCollection(workUID: workUID),collection: collection, success: true, error: nil)
+                self._conclude(WorkNature.saveCollection(workUID: workUID),collection: collection, success: true, error: nil)
             } catch {
-                self._conclude(WorkNature.loadCollection(workUID: workUID),collection: collection, success: false, error: error)
+                self._conclude(WorkNature.saveCollection(workUID: workUID),collection: collection, success: false, error: error)
             }
         }
         self.dataQueue.async {
