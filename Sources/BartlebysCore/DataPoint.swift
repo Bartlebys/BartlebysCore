@@ -118,6 +118,7 @@ open class DataPoint: Object,DataPointProtocol{
     // MARK: -
     
     /// A collection used to perform Key Value Storage
+    // The KVS collection is loaded synchronously and saved asynchronouly
     public lazy var keyedDataCollection = CollectionOf<KeyedData>(named:KeyedData.collectionName,relativePath:self.sessionIdentifier)
     
     // Special call Operations Donwloads and Uploads
@@ -239,10 +240,12 @@ open class DataPoint: Object,DataPointProtocol{
             self.storage.becomeVolatile()
         }
         do{
-            // The KVS collection is loaded synchronously and saved asynchronouly
-            // we want the keydata to be in the session folder
-            let loadedKeyedDataCollection:CollectionOf<KeyedData> = try self.storage.loadSync(fileName: self.keyedDataCollection.fileName, relativeFolderPath: self.sessionIdentifier)
-            self.keyedDataCollection = loadedKeyedDataCollection
+            if !volatile{
+                // The KVS collection is loaded synchronously and saved asynchronouly
+                // we want the keydata to be in the session folder
+                let loadedKeyedDataCollection:CollectionOf<KeyedData> = try self.storage.loadSync(fileName: self.keyedDataCollection.fileName, relativeFolderPath: self.sessionIdentifier)
+                self.keyedDataCollection = loadedKeyedDataCollection
+            }
         }catch FileStorageError.notFound{
             // It may be the first time don't panic
         }catch{
@@ -804,9 +807,6 @@ open class DataPoint: Object,DataPointProtocol{
 
         // Store the state in KVS
         try self.storeInKVS(self.lastExecutionOrder, identifiedBy: DataPoint.sessionLastExecutionKVSKey)
-        // The KVS is loaded synchronously and saved asynchronouly
-        try self.storage.saveCollection(self.keyedDataCollection)
-
         // We add a saving delegate to relay the progression
         self.storage.addProgressObserver (observer: AutoRemovableSavingDelegate(dataPoint: self))
         for collection in self._collections {
