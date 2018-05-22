@@ -23,7 +23,7 @@ extension FilePath{
         guard let dataPoint = self.dataPoint else{
             throw FilePathError.undefinedDataPoint
         }
-        return try Paths.directoryURL(relativeFolderPath:dataPoint.sessionIdentifier+"/"+self.relativePath)
+        return try Paths.directoryURL(relativeFolderPath:dataPoint.sessionIdentifier).appendingPathComponent(self.relativePath)
     }
 
 

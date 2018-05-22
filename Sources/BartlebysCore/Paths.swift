@@ -38,7 +38,7 @@ public class Paths {
 
 
     /// Returns the URL of the valid default directory
-    /// On macOS, we write in Application Support/(applicationDirectoryName)/(relativeFolderPath)/file
+    /// On macOS, we write in Application Support/(applicationDirectoryName)/(relativeFolderPath)/
     ///
     /// - Parameter relativeFolderPath: the relative folder path
     /// - Returns: a directory URL
