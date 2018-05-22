@@ -189,7 +189,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
     }
     
     #if !os(Linux)
-    
+
     func test008_Selection_persistency(){
         
         let expectation = XCTestExpectation(description: "Selection")
@@ -244,16 +244,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                     XCTFail("DataPoint type Miss Match")
                     return
                 }
-                
-                // That's the main test
-                // The collection has been saved
-                // Let's reload after
-                // reseting the selectedItems
-                // cleaning up the key data Storage
-                
-                self.collection.selectedItems = [Metrics]()
-                self.myDataPoint.keyedDataCollection.removeAll()
-                
+
                 let reloadHandler = AutoRemovableStorageProgressHandler(dataPoint: dataPoint, handler: {  (fileName, success, message, progress) in
                     if !success{
                         XCTFail("datapoint.load() did fail: \(String(describing: message)) ")
@@ -279,10 +270,7 @@ class ObjectCollectionTests: BaseDataPointTestCase{
                 })
                 do{
                     
-                    
-                    
                     // Reload the metrics
-                    try self.myDataPoint.storage.loadCollection(on: self.myDataPoint.keyedDataCollection)
                     try self.myDataPoint.storage.loadCollection(on: self.myDataPoint.metricsCollection)
                     dataPoint.storage.addProgressObserver(observer: reloadHandler)
                 }catch{

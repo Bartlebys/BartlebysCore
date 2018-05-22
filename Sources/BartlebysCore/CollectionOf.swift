@@ -32,6 +32,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    fileprivate var _items: Array<T> = Array<T>()
    fileprivate var _uidIndexes: [UID : Int] = [UID : Int]()
    fileprivate var _uidIndexesAreUpToDate: Bool = false
+   public fileprivate(set) var selectedUIDs:[UID] = [UID]()
 
    // We expose the collection type
    public var collectedType:T.Type { return T.self }
@@ -416,6 +417,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       case items
       case fileName
       case relativeFolderPath
+      case selectedUIDs
    }
 
    required public init(from decoder: Decoder) throws {
@@ -423,6 +425,11 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       self._items = try values.decode(Array<T>.self, forKey:.items)
       self.fileName =  try values.decode(String.self, forKey:.fileName)
       self.relativeFolderPath = try values.decode(String.self,forKey:.relativeFolderPath)
+      if let selected: [UID] = try? values.decode([UID].self,forKey:.selectedUIDs){
+         // We use a tolerent approach to decode collections that were using the previous selection implementation
+         // - the persistency of the selection was using the KVS
+         self.selectedUIDs = selected
+      }
    }
 
    open func encode(to encoder: Encoder) throws {
@@ -430,6 +437,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       try container.encode(self._items, forKey:.items)
       try container.encode(self.fileName, forKey:.fileName)
       try container.encode(self.relativeFolderPath, forKey: .relativeFolderPath)
+      try container.encode(self.selectedUIDs, forKey: .selectedUIDs)
    }
 
 
@@ -450,33 +458,6 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
 
 
    // MARK: - Selection Support
-
-   fileprivate let _selectedUIDSKeys="selected\(T.collectionName)UIDSKeys"
-
-   // Recovers the selectedUIDS
-   public fileprivate(set) var selectedUIDs:[UID]{
-      set{
-         syncOnMain {
-            do{
-               try self.dataPoint?.storeInKVS(newValue, identifiedBy: self._selectedUIDSKeys)
-            }catch{
-               Logger.log("\(error)",category:.critical)
-            }
-         }
-      }
-      get{
-         return syncOnMainAndReturn{ () -> [UID] in
-            guard let dataPoint = self.dataPoint else {
-               return [UID]()
-            }
-            if let UIDs:[UID] = try? dataPoint.getFromKVS(key:self._selectedUIDSKeys){
-               return UIDs
-            }
-            return [UID]()
-         }
-      }
-   }
-
 
    public var selectedItems:[T]?{
       get{
