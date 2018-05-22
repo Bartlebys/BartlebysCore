@@ -8,13 +8,13 @@
 
 import Foundation
 
-open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
-
+open class CodableObject: Object,Codable,Identifiable,CopyingProtocol{
+    
     // The id
     public var id:UID = Utilities.createUID()
-
+    
     // MARK: Collectable.Identifiable
-
+    
     public var uid:UID {
         set{
             self.id = uid
@@ -23,20 +23,20 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
             return self.id
         }
     }
-
+    
     // MARK: - Initializable
-
+    
     required public override init() {
         super.init()
     }
-
+    
     // MARK: - Codable
-
+    
     public enum CodableModelCodingKeys: String,CodingKey{
         case id     // the concrete selected value is defined by MODELS_PRIMARY_KEY
         case _id    // the concrete selected value is defined by MODELS_PRIMARY_KEY
     }
-
+    
     public required init(from decoder: Decoder) throws{
         super.init()
         let values = try decoder.container(keyedBy: CodableModelCodingKeys.self)
@@ -45,15 +45,15 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
         // We admit not to have ownedBy and freeRelations Keys
         self.id = try values.decodeIfPresent(String.self,forKey:MODELS_PRIMARY_KEY) ?? Default.NO_UID + self.id
     }
-
+    
     open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodableModelCodingKeys.self)
         try container.encode(self.id,forKey:MODELS_PRIMARY_KEY)
     }
-
-
+    
+    
     /// MARK: - CustomStringConvertible
-
+    
     open override var description: String {
         do{
             let data =  try JSON.prettyEncoder.encode(self)
@@ -65,11 +65,11 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
         }
         return "Description is not available"
     }
-
-
+    
+    
     // MARK: - NSCopy aka CopyingProtocol
-
-
+    
+    
     /// Provides an unregistered copy (the instance is not held by the dataPoint)
     ///
     /// - Parameter zone: the zone
@@ -83,13 +83,13 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
         }
         return copy
     }
-
-
+    
+    
     // MARK: - Partial implementation of ProvisionChanges for Generative compatibility
-
+    
     ////Internal flag used not to propagate changes (for example during deserialization) -> Check + ProvisionChanges for detailled explanantions
     internal var _quietChanges:Bool = false
-
+    
     /// Performs the deserialization without invoking provisionChanges
     ///
     /// - parameter changes: the changes closure
@@ -98,13 +98,13 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
         try changes()
         self._quietChanges=false
     }
-
-
+    
+    
     /// the Accessor to the underlining quiet state
     public var wantsQuietChanges:Bool{
         return self._quietChanges
     }
-
+    
     /// Performs the deserialization without invoking provisionChanges
     ///
     /// - parameter changes: the changes closure
@@ -113,5 +113,5 @@ open class CodableObject:Object,Codable,Identifiable,CopyingProtocol{
         changes()
         self._quietChanges=false
     }
-
+    
 }
