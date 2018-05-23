@@ -155,10 +155,11 @@ extension FileStorage: FileStorageProtocol{
                     let data = try Data(contentsOf: url)
                     let collection = try self.coder.decode(CollectionOf<T>.self, from: data)
                     self.dataQueue.async {
+                        proxy.selectedUIDs = collection.selectedUIDs
                         proxy.append(contentsOf: collection)
                     }
                 }
-                // The collection has been saved.
+                // The collection has been loaded.
                 self._conclude(WorkNature.loadCollection(workUID: workUID), collection: proxy, success: true, error: nil)
             } catch {
                 self._conclude(WorkNature.loadCollection(workUID: workUID), collection: proxy, success: false, error: error)
