@@ -30,9 +30,10 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
    public let uid: UID = Utilities.createUID()
 
    fileprivate var _items: Array<T> = Array<T>()
-   fileprivate var _uidIndexes: [UID : Int] = [UID : Int]()
-   fileprivate var _uidIndexesAreUpToDate: Bool = false
-   public fileprivate(set) var selectedUIDs:[UID] = [UID]()
+   fileprivate var _uidIndexes: [UID : Int] = [UID : Int]() // Temporary Indexes used to fasten mergers
+   fileprivate var _uidIndexesAreUpToDate: Bool = false // Associate flags.
+
+   public var selectedUIDs:[UID] = [UID]()
 
    // We expose the collection type
    public var collectedType:T.Type { return T.self }
