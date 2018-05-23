@@ -247,6 +247,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
          self.upsert(item)
       }
 
+      self.selectedUIDs.append(contentsOf: collection.selectedUIDs)
       self._resetTheTemporaryUidsIndexes()
    }
 
@@ -262,7 +263,6 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       for item in array {
          self.upsert(item)
       }
-
       self._resetTheTemporaryUidsIndexes()
    }
 
