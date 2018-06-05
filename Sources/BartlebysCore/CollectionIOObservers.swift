@@ -61,7 +61,7 @@ public final class AutoRemovableStorageProgressHandler:BaseCollectionIOObserver{
     ///   - success: is it a success?
     ///   - message: a contextual messsage
     ///   - progress: the progress object
-    override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
+    override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         self.handler(fileName, success, message, progress)
         if progress.totalUnitCount == progress.completedUnitCount{
             self.dataPoint.storage.removeProgressObserver(observer: self)
@@ -89,7 +89,7 @@ internal final class AutoRemovableSavingDelegate:BaseCollectionIOObserver{
     ///   - success: is it a success?
     ///   - message: a contextual messsage
     ///   - progress: the progress object
-    override open func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
+    override public func onProgress(_ fileName: String, _ success: Bool, _ message: String?, _ progress: Progress) {
         if !success{
             self.dataPoint.collectionsDidFailToSave(dataPoint: self.dataPoint, message:message ?? "Failure when saving \(fileName)")
         }else if progress.totalUnitCount == progress.completedUnitCount{

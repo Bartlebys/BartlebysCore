@@ -14,7 +14,7 @@ public class Paths {
     
     /// Default application directory name, should be defined for each application
     /// On macOS, we write in Application Support/<applicationDirectoryName>/<relativeFolderPath>/file
-    open static var applicationDirectoryName: String =  Default.NO_NAME
+    public static var applicationDirectoryName: String =  Default.NO_NAME
 
 
     enum PathsError : Error {

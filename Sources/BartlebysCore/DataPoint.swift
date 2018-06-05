@@ -143,7 +143,7 @@ open class DataPoint: Object,DataPointProtocol{
     public fileprivate(set) var lastExecutionOrder:Int = ORDER_OF_EXECUTION_UNDEFINED
 
     // A unique run identifier that changes on each launch
-    open static let runUID: String = Utilities.createUID()
+    public static let runUID: String = Utilities.createUID()
 
     /// Determine if the call are operated when the app is in Background mode.
     public fileprivate(set) var isRunningInBackGround: Bool = false
