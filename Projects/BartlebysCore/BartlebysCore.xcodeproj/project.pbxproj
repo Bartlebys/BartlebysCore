@@ -121,6 +121,11 @@
 		E59ECD302046ACB60057645E /* JSONPatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59ECD2D2046ACB10057645E /* JSONPatcher.swift */; };
 		E59ECD312046ACB70057645E /* JSONPatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59ECD2D2046ACB10057645E /* JSONPatcher.swift */; };
 		E59ECD322046ACB80057645E /* JSONPatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59ECD2D2046ACB10057645E /* JSONPatcher.swift */; };
+		E5A0BF9820C7E6FA00149BFE /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */; };
+		E5A0BF9920C7E73C00149BFE /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */; };
+		E5A0BF9A20C7E73C00149BFE /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */; };
+		E5A0BF9B20C7E73D00149BFE /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */; };
+		E5A0BF9C20C7E73E00149BFE /* AsynchronousOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */; };
 		E5A554E120938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
 		E5A554E220938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
 		E5A554E320938A33004D7511 /* ComposedCallHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A554E020938A33004D7511 /* ComposedCallHandler.swift */; };
@@ -563,6 +568,7 @@
 		E58556CF200DF79700734D28 /* BartlebysCore.flexions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BartlebysCore.flexions; path = ../../BartlebysCore.flexions; sourceTree = "<group>"; };
 		E59315F9200E335800680C07 /* FileStorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStorageProtocol.swift; sourceTree = "<group>"; };
 		E59ECD2D2046ACB10057645E /* JSONPatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPatcher.swift; sourceTree = "<group>"; };
+		E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsynchronousOperation.swift; sourceTree = "<group>"; };
 		E5A0E0391FDBEAF300FB4DE3 /* DataPointProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPointProtocol.swift; sourceTree = "<group>"; };
 		E5A554E020938A33004D7511 /* ComposedCallHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposedCallHandler.swift; sourceTree = "<group>"; };
 		E5A5F8C52089D080007B4D7C /* DataPoint+BackGroundProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+BackGroundProcessing.swift"; sourceTree = "<group>"; };
@@ -721,6 +727,7 @@
 				E52527992000E4D600D9A148 /* Alias.swift */,
 				E5DBB1D5200224C60079F4C6 /* AliasOf.swift */,
 				E555E691201C99F6007754C0 /* AsyncWork.swift */,
+				E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */,
 				4D55FC421FDAF5CF001D91CE /* CallOperation.swift */,
 				E505023220986AB100679E00 /* CallOperations.swift */,
 				E5A554E020938A33004D7511 /* ComposedCallHandler.swift */,
@@ -1347,6 +1354,7 @@
 				E5EC9F951FF655F9008BF543 /* Identifiable.swift in Sources */,
 				E5EC9FB41FF655FE008BF543 /* Model.swift in Sources */,
 				E5EC9F9D1FF655F9008BF543 /* Relational.swift in Sources */,
+				E5A0BF9820C7E6FA00149BFE /* AsynchronousOperation.swift in Sources */,
 				4D51A5AD200756D300A66466 /* FileOperationError.swift in Sources */,
 				E50C5C7A1FFD0C6B00A3C9DA /* ManagedCollection.swift in Sources */,
 				E5EC9FB01FF655FE008BF543 /* Model+Erasure.swift in Sources */,
@@ -1454,6 +1462,7 @@
 				E5ECA0171FF656AF008BF543 /* Utilities.swift in Sources */,
 				E5EC9FE81FF656AF008BF543 /* Identifiable.swift in Sources */,
 				E5ECA0071FF656AF008BF543 /* Model.swift in Sources */,
+				E5A0BF9A20C7E73C00149BFE /* AsynchronousOperation.swift in Sources */,
 				4D51A5AE200756D300A66466 /* FileOperationError.swift in Sources */,
 				E5EC9FF01FF656AF008BF543 /* Relational.swift in Sources */,
 				E5ECA0031FF656AF008BF543 /* Model+Erasure.swift in Sources */,
@@ -1618,6 +1627,7 @@
 				E5ECA0691FF657A6008BF543 /* Relationship.swift in Sources */,
 				E53ADB2320332A22001A9A01 /* FilePath.swift in Sources */,
 				E59ECD312046ACB70057645E /* JSONPatcher.swift in Sources */,
+				E5A0BF9B20C7E73D00149BFE /* AsynchronousOperation.swift in Sources */,
 				E525279E2000E4D700D9A148 /* Alias.swift in Sources */,
 				E540F8AB2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */,
 			);
@@ -1723,6 +1733,7 @@
 				E5ECA0B21FF65851008BF543 /* Relationship.swift in Sources */,
 				E53ADB2420332A22001A9A01 /* FilePath.swift in Sources */,
 				E59ECD322046ACB80057645E /* JSONPatcher.swift in Sources */,
+				E5A0BF9C20C7E73E00149BFE /* AsynchronousOperation.swift in Sources */,
 				E525279F2000E4D700D9A148 /* Alias.swift in Sources */,
 				E540F8AC2031EA7D0016E8D3 /* DataPoint+HTTP.swift in Sources */,
 			);
@@ -1757,6 +1768,7 @@
 				E5F3CDD3200D1C2000AB9A44 /* Identifiable.swift in Sources */,
 				E5F3CDD4200D1C2000AB9A44 /* Model.swift in Sources */,
 				E5F3CDD5200D1C2000AB9A44 /* Relational.swift in Sources */,
+				E5A0BF9920C7E73C00149BFE /* AsynchronousOperation.swift in Sources */,
 				E5F3CDD6200D1C2000AB9A44 /* FileOperationError.swift in Sources */,
 				E5F3CDD7200D1C2000AB9A44 /* ManagedCollection.swift in Sources */,
 				E5F3CDD8200D1C2000AB9A44 /* Model+Erasure.swift in Sources */,
