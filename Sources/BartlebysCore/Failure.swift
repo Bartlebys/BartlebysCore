@@ -22,7 +22,7 @@ public struct Failure {
         self.error = nil
     }
 
-    public init(from response:HTTPResponse, and error:Error) {
+    public init(from response:HTTPResponse, and error:Error?) {
         self.httpResponse = response
         self.error = error
     }

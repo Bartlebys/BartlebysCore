@@ -10,13 +10,13 @@ import Foundation
 
 public enum DataPointHTTPError:Error{
     case invalidStatus(statusCode:Int)
-    case responseCastingError(response:URLResponse?)
+    case responseCastingError(response:URLResponse?, error: Error?)
 }
 
 extension DataPoint{
-
+    
     // MARK: - HTTP Engine (Request level)
-
+    
     /// Simple request call without deserialization
     ///
     /// - Parameters:
@@ -26,37 +26,37 @@ extension DataPoint{
     public func call( request: URLRequest,
                       success: @escaping (_ completion: HTTPResponse)->(),
                       failure: @escaping (_ completion: Failure)->()){
-
+        
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-
+            
             defer{
                 self.report(metrics)
             }
-
+            
             let serverHasRespondedTime = AbsoluteTimeGetCurrent()
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
-
+            
             guard let httpURLResponse = response as? HTTPURLResponse else{
                 self.errorCounter += 1
                 syncOnMain {
-                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response)))
+                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
                 }
                 return
             }
-
+            
             let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: data)
-
+            
             if let error = error {
                 self.errorCounter += 1
                 syncOnMain {
                     failure(Failure(from : httpResponse , and: error))
                 }
             }else{
-
+                
                 guard 200 ... 299 ~= httpURLResponse.statusCode else{
                     self.errorCounter += 1
                     syncOnMain {
@@ -64,17 +64,17 @@ extension DataPoint{
                     }
                     return
                 }
-
+                
                 // Success
                 syncOnMain {
                     success(httpResponse)
                 }
             }
-
+            
         }
         task.resume()
     }
-
+    
     /// Request call with an attended ResultType
     ///
     /// - Parameters:
@@ -88,28 +88,28 @@ extension DataPoint{
                           resultIsACollection:Bool,
                           success: @escaping (_ completion: DataResponse<R>)->(),
                           failure: @escaping (_ completion: Failure)->()) {
-
+        
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
-
+        
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-
+            
             defer{
                 self.report(metrics)
             }
-
+            
             let serverHasRespondedTime = AbsoluteTimeGetCurrent()
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
-
+            
             guard let httpURLResponse = response as? HTTPURLResponse else{
                 self.errorCounter += 1
                 syncOnMain {
-                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response)))
+                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
                 }
                 return
             }
-
+            
             if let error = error {
                 self.errorCounter += 1
                 syncOnMain {
@@ -117,7 +117,7 @@ extension DataPoint{
                     failure(Failure(from : dataResponse , and: error))
                 }
             }else{
-
+                
                 guard 200 ... 299 ~= httpURLResponse.statusCode else{
                     self.errorCounter += 1
                     syncOnMain {
@@ -126,7 +126,7 @@ extension DataPoint{
                     }
                     return
                 }
-
+                
                 if let data = data, !(resultType is VoidResult.Type) {
                     do {
                         if resultIsACollection {
@@ -160,13 +160,13 @@ extension DataPoint{
                     }
                 }
             }
-
+            
         }
         task.resume()
-
+        
     }
-
-
+    
+    
     /// Call a download task
     ///
     /// - Parameters:
@@ -178,29 +178,29 @@ extension DataPoint{
                                localFilePath: FilePath,
                                success: @escaping (_ completion: HTTPResponse)->(),
                                failure: @escaping (_ completion: Failure)->()) {
-
+        
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
         metrics.streamOrientation = .downStream
-
+        
         let task = URLSession.shared.downloadTask(with: request) { (temporaryURL, response, error) in
-
+            
             defer {
                 self.report(metrics)
             }
-
+            
             let serverHasRespondedTime = AbsoluteTimeGetCurrent()
             metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
-
+            
             guard let httpURLResponse = response as? HTTPURLResponse else{
                 self.errorCounter += 1
                 syncOnMain {
-                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response)))
+                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
                 }
                 return
             }
-
+            
             if let error = error {
                 self.errorCounter += 1
                 syncOnMain {
@@ -208,17 +208,17 @@ extension DataPoint{
                     failure(Failure(from: fileError))
                 }
             } else {
-
-
+                
+                
                 let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
-
+                
                 if let error = error {
                     self.errorCounter += 1
                     syncOnMain {
                         failure(Failure(from : httpResponse , and: error))
                     }
                 }else{
-
+                    
                     guard 200 ... 299 ~= httpURLResponse.statusCode else{
                         self.errorCounter += 1
                         syncOnMain {
@@ -226,7 +226,7 @@ extension DataPoint{
                         }
                         return
                     }
-
+                    
                     guard let tempURL = temporaryURL else {
                         self.errorCounter += 1
                         syncOnMain {
@@ -234,8 +234,8 @@ extension DataPoint{
                         }
                         return
                     }
-
-
+                    
+                    
                     do {
                         let localFileURL = try localFilePath.absoluteFileURL()
                         let directoryURL = localFileURL.deletingLastPathComponent()
@@ -251,13 +251,13 @@ extension DataPoint{
                         }
                     }
                 }
-
+                
             }
         }
         task.resume()
     }
-
-
+    
+    
     /// Call a upload task
     ///
     /// - Parameters:
@@ -269,31 +269,31 @@ extension DataPoint{
                             localFilePath: FilePath,
                             success: @escaping (_ completion: HTTPResponse)->(),
                             failure: @escaping (_ completion: Failure)->()) {
-
+        
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
-
+        
         do {
             let localFileURL = try localFilePath.absoluteFileURL()
-
+            
             let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
-
+                
                 defer {
                     self.report(metrics)
                 }
-
+                
                 let serverHasRespondedTime = AbsoluteTimeGetCurrent()
                 metrics.requestDuration = serverHasRespondedTime - (self.startTime + metrics.elapsed)
-
+                
                 guard let httpURLResponse = response as? HTTPURLResponse else{
                     self.errorCounter += 1
                     syncOnMain {
-                        failure(Failure(from : DataPointHTTPError.responseCastingError(response: response)))
+                        failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
                     }
                     return
                 }
-
+                
                 if let error = error {
                     self.errorCounter += 1
                     syncOnMain {
@@ -301,9 +301,9 @@ extension DataPoint{
                         failure(Failure(from: fileError))
                     }
                 } else {
-
+                    
                     let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
-
+                    
                     guard 200 ... 299 ~= httpURLResponse.statusCode else{
                         self.errorCounter += 1
                         syncOnMain {
@@ -311,19 +311,19 @@ extension DataPoint{
                         }
                         return
                     }
-
+                    
                     syncOnMain {
                         success(httpResponse)
                     }
                 }
-
+                
             }
             task.resume()
         } catch {
             self.errorCounter += 1
             failure(Failure(from: error))
         }
-
+        
     }
-
+    
 }
