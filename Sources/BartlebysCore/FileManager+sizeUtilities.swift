@@ -22,7 +22,7 @@ public extension FileManager{
     /// Return the available free space (in the volume that contains the current home directory)
     public var systemFreeSpace: Int64{
         do{
-            return try self.spaceInBytes(forPath: NSHomeDirectory(),fileAttributeKey: FileAttributeKey.systemFreeSize)
+            return try self._valueFor(path: NSHomeDirectory(),fileAttributeKey: FileAttributeKey.systemFreeSize)
         }catch{
             return FileManager.invalidFileSize
         }
@@ -31,7 +31,7 @@ public extension FileManager{
      /// Return the total space (in the volume that contains the current home directory)
     public var systemTotalSpace: Int64{
         do{
-            return try self.spaceInBytes(forPath: NSHomeDirectory(),fileAttributeKey: FileAttributeKey.systemSize)
+            return try self._valueFor(path: NSHomeDirectory(),fileAttributeKey: FileAttributeKey.systemSize)
         }catch{
             return FileManager.invalidFileSize
         }
@@ -52,30 +52,40 @@ public extension FileManager{
         var size:Int64 = 0
         let folderURL = URL(fileURLWithPath: path)
         let urls = try self.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [URLResourceKey.fileSizeKey], options: [])
-        for url in urls{
-            let attributes: [FileAttributeKey : Any] = try self.attributesOfItem(atPath: url.path)
-            if let fileSize: Int64 = attributes[FileAttributeKey.size] as? Int64{
-                size = size + fileSize
-            }
+        for url in urls {
+            let fileSize: Int64 = try self.sizeOfFile(filePath: url.path)
+            size = size + fileSize
         }
         return size
     }
 
-
-    fileprivate func spaceInBytes(forPath:String,fileAttributeKey:FileAttributeKey = FileAttributeKey.size) throws -> Int64{
-        let systemAttributes = try FileManager.default.attributesOfFileSystem(forPath: forPath)
+    /// Returns the file size of the file in bytes
+    ///
+    /// - Parameter filePath: a file path
+    /// - Returns: a size in bytes
+    /// - Throws: errors
+    public func sizeOfFile(filePath: String) throws -> Int64 {
+        do {
+            let dict = try FileManager.default.attributesOfItem(atPath: filePath) as NSDictionary
+            return Int64(dict.fileSize())
+        } catch {
+            throw FileSizeUtilitiesError.invalid(attribute: FileAttributeKey.size)
+        }
+    }
+    
+    fileprivate func _valueFor(path: String, fileAttributeKey: FileAttributeKey) throws -> Int64 {
+        let systemAttributes = try FileManager.default.attributesOfFileSystem(forPath: path)
         guard let space = (systemAttributes[fileAttributeKey] as? NSNumber)?.int64Value else{
             throw FileSizeUtilitiesError.invalid(attribute: fileAttributeKey)
         }
         return space
     }
-
+    
 }
-
 
 //MARK: - Int64 String facility
 
-public extension Int64{
+public extension Int64 {
 
     public var stringFileSize: String {
         return ByteCountFormatter.string(fromByteCount: self, countStyle:.file)
