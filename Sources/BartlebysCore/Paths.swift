@@ -32,21 +32,16 @@ public class Paths {
     }
 
     /// Returns the URL of the valid default directory
-    /// On macOS, we write in Application Support/(applicationDirectoryName)/(relativeFolderPath)/
     ///
     /// - Parameter relativeFolderPath: the relative folder path
     /// - Returns: a directory URL
     /// - Throws: issue on failure
     public static func directoryURL(relativeFolderPath: String?) throws -> URL {
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
-            let urls = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-            if let _url = urls.first {
-                let applicationDirectoryURL = _url.appendingPathComponent(Paths.legacyApplicationDirectoryName, isDirectory: true)
-                if let relativeFolderPath = relativeFolderPath {
-                    return applicationDirectoryURL.appendingPathComponent(relativeFolderPath, isDirectory: true)
-                } else {
-                    return applicationDirectoryURL
-                }
+            if let relativeFolderPath = relativeFolderPath {
+                return self.documentsDirectoryURL.appendingPathComponent(relativeFolderPath, isDirectory: true)
+            } else {
+                return self.documentsDirectoryURL
             }
         #elseif os(Linux)
             // linux @todo
@@ -54,7 +49,7 @@ public class Paths {
         throw PathsError.notFound
     }
 
-    // MARK: - Legacy
+    // MARK: - Legacy (Deprecated) @todo to be removed
     
     /// Default application directory name, should be defined for each application
     /// On macOS, we write in Application Support/<applicationDirectoryName>/<relativeFolderPath>/file
