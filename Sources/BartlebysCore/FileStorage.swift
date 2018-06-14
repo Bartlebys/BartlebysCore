@@ -98,7 +98,7 @@ public final class FileStorage{
     }
     
     /// The base url of the storage (can be reset if necessary)
-    public var baseUrl:URL = Paths.legacyBaseDirectoryURL
+    public var baseUrl:URL = Paths.documentsDirectoryURL
     
 }
 
