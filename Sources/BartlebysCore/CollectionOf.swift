@@ -475,7 +475,7 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       }
       set{
          syncOnMain {
-            self.selectedUIDs = newValue?.map{$0.uid} ?? [UID]()
+            self.selectedUIDs =? newValue?.map{$0.uid}
             Notify<T>.postSelectionChanged()
          }
       }
