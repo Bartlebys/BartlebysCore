@@ -7,7 +7,7 @@
 BarlebysCore is a framework written in Swift4, available for macOS, iOS, tvOS et Linux, that allows to :
 
 1. Insure the persistency Objects Collection, and `FilePersistent` Objects.
-2. Create serializable HTTP Operation (with off line support)
+2. Create serializable HTTP Operation (with off line support, fault tolerence, paralellizable sequences, ...)
 3. Deal efficiently with runtime [Object Relations resolution](https://github.com/Bartlebys/BartlebysCore/blob/master/Documents/RelationsBetweenModels.md)
 
 BartlebysCore's goal is to keep things simples and "Swifty" by Design.
@@ -73,6 +73,6 @@ github "Bartlebys/BartlebysCore"
 # Bartleby's Core License
 
 Bartleby's stack is Licensed under the [Apache License version 2.0](LICENSE)
-By [Benoit Pereira da Silva] (https://Pereira-da-Silva.com)
+By [Benoit Pereira da Silva](https://Pereira-da-Silva.com)
 
 
