@@ -14,14 +14,14 @@ Aliases have been designed to enable to simply link references.
 ### Characteristics:
 
 - Aliases are flexible: 
-	- [AliasOf] (../Sources/BartlebysCore/AliasOf.swift) is generic
-	- [Alias] (../Sources/BartlebysCore/Alias.swift)' type is erased
+	- [AliasOf](../Sources/BartlebysCore/AliasOf.swift) is generic
+	- [Alias](../Sources/BartlebysCore/Alias.swift)' type is erased
 - They are not dynamic, they are defined at modeling & compile time
 - They do not implement automatic cascading erasing logic
 
 ### AliasResolution
 
-[AliasesResolution.swift] (../Sources/BartlebysCore/AliasesResolution.swift) expose resolution API implemented in [Model+AliasesResolution.swift] (../Sources/BartlebysCore/Model+AliasesResolution.swift).
+[AliasesResolution.swift](../Sources/BartlebysCore/AliasesResolution.swift) expose resolution API implemented in [Model+AliasesResolution.swift](../Sources/BartlebysCore/Model+AliasesResolution.swift).
 
 - Resolution may be strict while using `func instance<T : Codable >(from alias:Aliased) throws -> T`
 - or permissive when using optional approaches `func optionalInstance<T : Codable >(from alias:Aliased) -> T?`
@@ -60,7 +60,7 @@ public enum Relationship:String{
 
 ### RelationsResolution
 
-[RelationsResolution.swift] (../Sources/BartlebysCore/RelationsResolution.swift) expose a rich dynamic resolution API implemented in [Model+RelationsResolution.swift] (../Sources/BartlebysCore/Model+RelationsResolution.swift)
+[RelationsResolution.swift](../Sources/BartlebysCore/RelationsResolution.swift) expose a rich dynamic resolution API implemented in [Model+RelationsResolution.swift](../Sources/BartlebysCore/Model+RelationsResolution.swift)
 
 
 
@@ -82,5 +82,5 @@ When a piece of code call `erase()` on a Model it is deleted (and it owners rela
 You can override `DataPoint.willErase` method to cleanup external dependencies on erasure e.g: files associated with an entity, BartlebyKit.BSFS
 
 ### Notes
-- Check: [Model+Erasure] (../Sources/BartlebysCore/Model+Erasure.swift) for implementation details.
+- Check: [Model+Erasure](../Sources/BartlebysCore/Model+Erasure.swift) for implementation details.
 - Each object has a unique creator. It can give ACL privileges in Children Framework like `BartlebyKit` but is not related to Bartleby Relationships mechanism!
