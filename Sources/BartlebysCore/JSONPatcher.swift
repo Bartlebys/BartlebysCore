@@ -10,8 +10,8 @@ import Foundation
 
 
 public enum JSONPatcherError : Error {
-    case decodingFailure(rawString:String)
-    case castingFailure(rawString:String)
+    case decodingFailure(rawString: String)
+    case castingFailure(rawString: String)
 }
 open class JSONPatcher{
 

@@ -12,17 +12,17 @@ open class Model:CodableObject,Collectable{
 
     // If set to false the ownedBy instances & freeRelations will not be serialized
     // Can be used to inject some Model into Systems that does not support Bartlebys Relational model
-    static public var encodeRelations:Bool = true
+    static public var encodeRelations: Bool = true
 
     // MARK: - Collectable
 
     // A reference to the holding dataPoint
-    public var dataPoint:DataPoint?
+    public var dataPoint: DataPoint?
 
     /// Sets the dataPoint Reference
     ///
     /// - Parameter dataPoint: the dataPoint
-    public func setDataPoint(_ dataPoint:DataPoint){
+    public func setDataPoint(_ dataPoint: DataPoint){
         self.dataPoint = dataPoint
     }
 
@@ -31,14 +31,14 @@ open class Model:CodableObject,Collectable{
     /// Registers the collection reference
     ///
     /// - Parameter collection: the collection
-    public func setCollection<CollectedType>(_ collection:CollectionOf<CollectedType>){
+    public func setCollection<CollectedType>(_ collection: CollectionOf<CollectedType>){
         self._collection = collection
     }
 
     /// Returns the collection
     ///
     /// - Returns: the collection
-    public func getCollection<CollectedType>()->CollectionOf<CollectedType>{
+    public func getCollection<CollectedType>() -> CollectionOf<CollectedType>{
         guard let collection = self._collection as? CollectionOf<CollectedType> else{
             // Return a proxy (should not normally occur)
             return CollectionOf<CollectedType>(named: "ProxyCollectionOf<\(CollectedType.typeName)>", relativePath: "")
@@ -47,21 +47,21 @@ open class Model:CodableObject,Collectable{
     }
 
     /// The type erased acceessor to a collection that support reference, remove & didChange
-    public var indistinctCollection:IndistinctCollection?{
+    public var indistinctCollection: IndistinctCollection?{
         return self._collection as? IndistinctCollection
     }
 
     // MARK: Collectable.UniversalType
 
-    open class var typeName:String{
+    open class var typeName: String{
         return "Model"
     }
 
-    open class var collectionName:String{
+    open class var collectionName: String{
         return "models"
     }
 
-    open var d_collectionName:String{
+    open var d_collectionName: String{
         return Model.collectionName
     }
 
@@ -69,18 +69,18 @@ open class Model:CodableObject,Collectable{
     // MARK: -
 
     // The collection reference.
-    fileprivate var _collection:Any?
+    fileprivate var _collection: Any?
 
 
     /// The type erased Collection part of BartlebyKit's Commitable procotol
-    public var managedCollection:ManagedCollection? {
+    public var managedCollection: ManagedCollection? {
         return self._collection as? ManagedCollection
     }
 
     // MARK: - Properties used for Relational Model
 
     //The UIDS of the owners
-    open var ownedBy:[UID] = [String]()  {
+    open var ownedBy: [UID] = [String]()  {
         didSet {
             if !self.wantsQuietChanges && ownedBy != oldValue {
                 self.indistinctCollection?.didChange()
@@ -89,7 +89,7 @@ open class Model:CodableObject,Collectable{
     }
 
     //The UIDS of the free relations
-    open var freeRelations:[UID] = [String]()  {
+    open var freeRelations: [UID] = [String]()  {
         didSet {
             if !self.wantsQuietChanges && ownedBy != oldValue {
                 self.indistinctCollection?.didChange()
@@ -98,7 +98,7 @@ open class Model:CodableObject,Collectable{
     }
 
     //The UIDS of the owned entities (Neither supervised nor serialized check appendToDeferredOwnershipsList for explanations)
-    open var owns:[UID] = [String]()
+    open var owns: [UID] = [String]()
 
 
 

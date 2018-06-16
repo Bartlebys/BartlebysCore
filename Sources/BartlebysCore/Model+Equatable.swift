@@ -20,7 +20,7 @@ extension Model{
     }
 }
 
-public func equalityOf(_ lhs: Model?, _ rhs: Model?)-> Bool {
+public func equalityOf(_ lhs: Model?, _ rhs: Model?) -> Bool {
     let equality = lhs?.uid == rhs?.uid
     return equality
 }

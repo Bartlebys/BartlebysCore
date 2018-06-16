@@ -51,7 +51,7 @@ public struct Logger {
     
     public static var delegate: LoggerDelegate?
 
-    static public func log(_ message: Any, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line,decorative:Bool = false) {
+    static public func log(_ message: Any, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line, decorative: Bool = false) {
         syncOnMain {
             let entry: LogEntry = LogEntry()
             entry.elapsedTime = getElapsedTime()
@@ -75,7 +75,7 @@ public struct Logger {
 
             self.counter += 1
 
-            func __syslog(priority : Int32, _ message : String, _ args : CVarArg...) {
+            func __syslog(priority: Int32, _ message: String, _ args: CVarArg...) {
                 #if os(iOS) || os(tvOS) || os(watchOS)
                     // syslog not supported
                 #else

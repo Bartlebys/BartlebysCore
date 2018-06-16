@@ -11,7 +11,7 @@ import Foundation
 // A bunch of preconfigured encoder and decoders
 open class JSON{
     
-    public static var encoder:JSONEncoder{
+    public static var encoder: JSONEncoder{
         get{
             let encoder = JSONEncoder()
             encoder.nonConformingFloatEncodingStrategy = .throw
@@ -27,20 +27,20 @@ open class JSON{
         }
     }
     
-    public static var prettyEncoder:JSONEncoder{
+    public static var prettyEncoder: JSONEncoder{
         let encoder = JSON.encoder
         encoder.outputFormatting = .prettyPrinted
         return encoder
     }
     
     
-    public static var base64Encoder:JSONEncoder{
+    public static var base64Encoder: JSONEncoder{
         let encoder = JSON.encoder
         encoder.dataEncodingStrategy = .base64
         return encoder
     }
     
-    public static var decoder:JSONDecoder{
+    public static var decoder: JSONDecoder{
         get{
             let decoder = JSONDecoder()
             decoder.nonConformingFloatDecodingStrategy = .throw
@@ -57,7 +57,7 @@ open class JSON{
     }
     
     
-    public static var base64Decoder:JSONDecoder{
+    public static var base64Decoder: JSONDecoder{
         let decoder = JSON.decoder
         decoder.dataDecodingStrategy = .base64
         return decoder

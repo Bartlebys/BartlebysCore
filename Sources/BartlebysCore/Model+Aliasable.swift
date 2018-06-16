@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Model + Aliasable
 
-extension Model:Aliasable{
+extension Model: Aliasable{
 
     /// Creates a `Codable` type erased alias that encapsulates the serialized Identifiable UID
     ///

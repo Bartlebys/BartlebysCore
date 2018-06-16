@@ -36,7 +36,7 @@ public class HTTPResponse {
     }
 
 
-    public init(metrics:Metrics, httpStatus:Status,content:Data?) {
+    public init(metrics: Metrics, httpStatus: Status, content: Data?) {
         self.metrics = metrics
         self.httpStatus = httpStatus
         self.content = content

@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension Model:AliasesResolution{
+extension Model: AliasesResolution{
 
     /// Resolves the alias
     ///
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
-    public func instance<T : Codable & Collectable >(from alias:Aliased) throws -> T{
+    public func instance<T: Codable & Collectable>(from alias: Aliased) throws -> T{
         guard let dataPoint = self.dataPoint else{
             throw AliasResolverError.undefinedContainer
         }
@@ -31,7 +31,7 @@ extension Model:AliasesResolution{
     /// - Parameter aliases: the aliases
     /// - Returns: the references
     /// - Throws: AliasResolverError
-    public func instances<T : Codable  & Collectable  >(from aliases:[Aliased]) throws -> [T] {
+    public func instances<T: Codable  & Collectable  >(from aliases: [Aliased]) throws -> [T] {
         guard let dataPoint = self.dataPoint else{
             throw AliasResolverError.undefinedContainer
         }
@@ -45,7 +45,7 @@ extension Model:AliasesResolution{
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
-    public func optionalInstance<T : Codable  & Collectable >(from alias:Aliased) -> T?{
+    public func optionalInstance<T : Codable  & Collectable >(from alias: Aliased) -> T?{
         guard let dataPoint = self.dataPoint else{
             return nil
         }
@@ -57,7 +57,7 @@ extension Model:AliasesResolution{
     /// - Parameter alias: the alias
     /// - Returns: the reference
     /// - Throws: AliasResolverError
-    public func optionalInstance<T : Codable & Collectable>(from alias:Aliased?) -> T?{
+    public func optionalInstance<T: Codable & Collectable>(from alias: Aliased?) -> T?{
         guard let alias = alias,let dataPoint = self.dataPoint else{
             return nil
         }
@@ -68,7 +68,7 @@ extension Model:AliasesResolution{
     ///
     /// - Parameter aliases: the aliases
     /// - Returns: the references
-    public func optionalInstances<T : Codable >(from aliases:[Aliased]) -> [T]{
+    public func optionalInstances<T: Codable>(from aliases: [Aliased]) -> [T]{
         guard let dataPoint = self.dataPoint else{
             return [T]()
         }

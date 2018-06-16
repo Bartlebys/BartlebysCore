@@ -19,7 +19,7 @@ public class Paths {
     /// The document directory URL
     /// On macOS, we write in /Documents/
     /// - Returns: the base directory URL
-    public static var documentsDirectoryURL:URL {
+    public static var documentsDirectoryURL: URL {
         #if os(iOS) || os(macOS) || os(tvOS) || os(watchOS)
         let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         if let url = urls.first {

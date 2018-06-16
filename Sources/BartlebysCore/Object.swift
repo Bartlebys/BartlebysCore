@@ -19,5 +19,5 @@ import Foundation
 #endif
 
 public enum ObjectError:Error {
-    case message(message:String)
+    case message(message: String)
 }

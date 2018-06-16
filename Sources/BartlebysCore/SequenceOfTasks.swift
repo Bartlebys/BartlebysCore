@@ -27,22 +27,22 @@ public protocol StartableSequence{
 
 /// We use a class and passe the items by references.
 /// The tasks are executed on a specified dispatch queue
-public class SequenceOfTasks<T:Any>:StartableSequence {
+public class SequenceOfTasks<T:Any>: StartableSequence {
 
     /// The dispatchQueue
     public var queue:DispatchQueue = DispatchQueue.main
 
     /// Optional chainedSequence started after this sequence completion
-    public var chainedSequence:StartableSequence?
+    public var chainedSequence: StartableSequence?
 
     /// The associated items list
-    public let items:[T]
+    public let items: [T]
 
     /// The current index
-    public fileprivate(set) var index:Int = -1
+    public fileprivate(set) var index: Int = -1
 
     /// Defines the amount of tasks to execute when running the next Pack of tasks.
-    public var packSize:Int = 1
+    public var packSize: Int = 1
 
     fileprivate var _startTime: Double = 0
 
@@ -50,7 +50,7 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
     fileprivate var _delay: TimeInterval
 
     /// If set to true the sequence will be cancelled on the first failure
-    public var cancelOnFailure:Bool = false
+    public var cancelOnFailure: Bool = false
 
     /// Should the task be executed automatically?
     /// If not you can call
@@ -72,7 +72,7 @@ public class SequenceOfTasks<T:Any>:StartableSequence {
     public fileprivate(set) var onSequenceCompletion:((_ success:Bool)->())
 
     /// The elapsed time from start.
-    public var elapsedTime:Double {
+    public var elapsedTime: Double {
         return AbsoluteTimeGetCurrent() - self._startTime
     }
 

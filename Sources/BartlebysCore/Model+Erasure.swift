@@ -9,7 +9,7 @@
 import Foundation
 
 
-public enum ErasingError:Error {
+public enum ErasingError: Error {
     case undefinedContainer
     case typeMissMatch
 }
@@ -29,7 +29,7 @@ extension Model{
     ///   - commit: set to true by default (used byFully Managed Framework e.g: BarlebyKit commit is set to false not to commit triggered Deletion)
     ///   - eraserUID: the eraser UID (used by recursive calls to determinate if co-owned children must be erased)
     /// - Returns: N/A
-    public func erase(commit:Bool=true,eraserUID:String="NO_UID")throws->(){
+    public func erase(commit: Bool = true,eraserUID: String = "NO_UID")throws->(){
         
         guard let dataPoint=self.dataPoint else{
             throw ErasingError.undefinedContainer

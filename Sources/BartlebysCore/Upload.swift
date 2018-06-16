@@ -22,9 +22,9 @@ public class Upload : Model, Payload, Result  {
     ///   - method: the HTTP method (POST, PUT, PATCH)
     ///   - downloadPath: the uploadPath
     /// - Returns: the operation
-    public static func callOperation(dataPoint:DataPoint,operationName:String, operationPath: String, queryString: String,method: HTTPMethod, uploadPath:String)->CallOperation<FilePath, Upload>{
+    public static func callOperation(dataPoint: DataPoint, operationName: String, operationPath: String, queryString: String, method: HTTPMethod, uploadPath: String) -> CallOperation<FilePath, Upload>{
         let payload = FilePath(relativePath: uploadPath, dataPoint:dataPoint)
-        let operation = CallOperation<FilePath,Upload>(dataPoint:dataPoint,operationName: operationName, operationPath: operationPath, queryString: queryString, method:method, resultIsACollection: false, payload: payload)
+        let operation = CallOperation<FilePath,Upload>(dataPoint: dataPoint, operationName: operationName, operationPath: operationPath, queryString: queryString, method: method, resultIsACollection: false, payload: payload)
         operation.dataPoint = dataPoint
         operation.sequenceName = CallSequence.uploads
         operation.isDestroyableWhenBlocked = false

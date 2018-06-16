@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Relationship:String{
+public enum Relationship: String{
 
     /// Serialized into the Object
     case free = "free"
