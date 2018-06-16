@@ -11,10 +11,10 @@ BarlebysCore is a framework written in Swift4, available for macOS, iOS, tvOS et
 3. Deal efficiently with runtime [Object Relations resolution](https://github.com/Bartlebys/BartlebysCore/blob/master/Documents/RelationsBetweenModels.md)
 
 BartlebysCore's goal is to keep things simples and "Swifty" by Design.
-**BartlebysCore** is the core Engine of [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit) but is suitable for various usages.
+**BartlebysCore** is the core Engine of  [**BartlebyKit**](https://github.com/Bartlebys/BartlebyKit) but is suitable for other usages. 
+I will replace [Bartleby](https://github.com/Bartlebys/Bartleby) 
 
 If your data can be totally loaded in Memory, Bartleby's Core is probably a good solution for your App. It will allow to use simple functional programming approach to manipulate your data synchronously very efficiently, and integrate easily with your RESTFul API.
-
 
 # Installation
 
