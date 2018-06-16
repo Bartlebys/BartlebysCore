@@ -15,9 +15,9 @@ public class HTTPResponse {
     public var content: Data?
 
 
-    /// Encodes the content to an utf8 String
+    /// Encodes the content to a String
     public var rawString: String? {
-        return self.content != nil ? String(data: self.content!, encoding: .utf8) : nil
+        return self.content != nil ? String(data: self.content!, encoding: Default.STRING_ENCODING) : nil
     }
 
 
@@ -29,7 +29,7 @@ public class HTTPResponse {
         do{
             let container = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions.allowFragments)
             let reEncodedJSON = try JSONSerialization.data(withJSONObject: container, options: JSONSerialization.WritingOptions.prettyPrinted)
-            return String(data:reEncodedJSON,encoding:.utf8)
+            return String(data:reEncodedJSON,encoding: Default.STRING_ENCODING)
         }catch{
             return "\(error)"
         }

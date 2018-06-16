@@ -37,7 +37,7 @@ class AliasesTests: BaseDataPointTestCase{
 
         let kd = KeyedData()
         kd.key = "theKey"
-        kd.data = "theValue".data(using: .utf8)!
+        kd.data = "theValue".data(using: Default.STRING_ENCODING)!
 
 
         let o = TestObject()
@@ -59,7 +59,7 @@ class AliasesTests: BaseDataPointTestCase{
 
         let kd = KeyedData()
         kd.key = "theKey"
-        kd.data = "theValue".data(using: .utf8)!
+        kd.data = "theValue".data(using: Default.STRING_ENCODING)!
         datapoint.keyedDataCollection.append(kd)
 
         let o = TestObject()
@@ -82,7 +82,7 @@ class AliasesTests: BaseDataPointTestCase{
 
         let kd = KeyedData()
         kd.key = "theKey"
-        kd.data = "theValue".data(using: .utf8)!
+        kd.data = "theValue".data(using: Default.STRING_ENCODING)!
         datapoint.keyedDataCollection.append(kd)
 
         let o = TestObject()
@@ -315,7 +315,7 @@ class AliasesTests: BaseDataPointTestCase{
         
         do {
             let data = try JSON.encoder.encode(aliases)
-            let str = String(data: data, encoding: .utf8)
+            let str = String(data: data, encoding: Default.STRING_ENCODING)
             print("data = \(String(describing: str))")
             let decodedAliases = try JSON.decoder.decode([AliasOf<TestObject>].self, from: data)
             if let first = decodedAliases.first {

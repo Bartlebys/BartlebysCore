@@ -17,8 +17,8 @@ public struct Utilities {
         
         if BASE64_ENCODED_UIDS {
             let uid = UUID.init().uuidString
-            let utf8 = uid.data(using: .utf8)!
-            return utf8.base64EncodedString()
+            let encoded = uid.data(using: Default.STRING_ENCODING)!
+            return encoded.base64EncodedString()
         } else {
             let uid = UUID.init().uuidString.replacingOccurrences(of: "-", with: "")
             return uid

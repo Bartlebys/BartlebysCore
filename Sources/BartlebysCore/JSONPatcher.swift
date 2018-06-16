@@ -64,14 +64,14 @@ open class JSONPatcher{
             do{
                 o = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers])
             }catch{
-                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                let rawString = String(data: data, encoding: Default.STRING_ENCODING) ?? Default.VOID_STRING
                 throw JSONPatcherError.decodingFailure(rawString:rawString)
             }
             if var jsonDictionary = o as? Dictionary<String, Any> {
                 resultType.patchDictionary(&jsonDictionary)
                 return try JSONSerialization.data(withJSONObject:jsonDictionary, options:[])
             }else{
-                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                let rawString = String(data: data, encoding: Default.STRING_ENCODING) ?? Default.VOID_STRING
                 throw JSONPatcherError.castingFailure(rawString: rawString)
             }
         })
@@ -89,7 +89,7 @@ open class JSONPatcher{
             do{
                 o = try JSONSerialization.jsonObject(with: data, options: [JSONSerialization.ReadingOptions.allowFragments, JSONSerialization.ReadingOptions.mutableLeaves, JSONSerialization.ReadingOptions.mutableContainers])
             }catch{
-                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                let rawString = String(data: data, encoding: Default.STRING_ENCODING) ?? Default.VOID_STRING
                 throw JSONPatcherError.decodingFailure(rawString:rawString)
             }
             if var jsonObject = o as? Array<Dictionary<String, Any>>{
@@ -101,7 +101,7 @@ open class JSONPatcher{
                 }
                 return try JSONSerialization.data(withJSONObject: jsonObject, options:[])
             }else{
-                let rawString = String(data: data, encoding: .utf8) ?? Default.VOID_STRING
+                let rawString = String(data: data, encoding: Default.STRING_ENCODING) ?? Default.VOID_STRING
                 throw JSONPatcherError.castingFailure(rawString: rawString)
             }
         })
