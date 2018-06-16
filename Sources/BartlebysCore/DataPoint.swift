@@ -68,6 +68,9 @@ open class DataPoint: Object,DataPointProtocol{
         }
     }
 
+    // We multiply by 2 the delay betweeen each execution
+    // This is the max re execution delay
+    public var maxReexecutionDelayInSecond:TimeInterval = 60
 
     /// Contains all the data Point collections
     /// Populated by registerCollection
@@ -791,7 +794,7 @@ open class DataPoint: Object,DataPointProtocol{
             if self.currentState == .online{
                 // Re-execution logic
                 //We double the reExecutionDelay (may be we should use another strategy)
-                operation.reExecutionDelay = operation.reExecutionDelay * 2
+                operation.reExecutionDelay = min (operation.reExecutionDelay * 2 , self.maxReexecutionDelayInSecond)
                 self._runOperationInAsyncWork(operation,delay: operation.reExecutionDelay)
             }else{
                 // We are not running live
