@@ -466,6 +466,11 @@
 		E5F3CE04200D1C2000AB9A44 /* Relationship.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A84621FF501D400F2408B /* Relationship.swift */; };
 		E5F3CE05200D1C2000AB9A44 /* Alias.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52527992000E4D600D9A148 /* Alias.swift */; };
 		E5F3CE08200D1C2000AB9A44 /* BartlebysCore_macOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E5EC9F781FF655C4008BF543 /* BartlebysCore_macOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E5FA568B20D53D5D00B4ED9E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FA568A20D53D5D00B4ED9E /* Reachability.swift */; };
+		E5FA568C20D53D5D00B4ED9E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FA568A20D53D5D00B4ED9E /* Reachability.swift */; };
+		E5FA568D20D53D5D00B4ED9E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FA568A20D53D5D00B4ED9E /* Reachability.swift */; };
+		E5FA568E20D53D5D00B4ED9E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FA568A20D53D5D00B4ED9E /* Reachability.swift */; };
+		E5FA568F20D53D5D00B4ED9E /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FA568A20D53D5D00B4ED9E /* Reachability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -615,6 +620,7 @@
 		E5F3CDAD200CE50100AB9A44 /* DataPointTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPointTests.swift; sourceTree = "<group>"; };
 		E5F3CDAE200CE50100AB9A44 /* DataPointKVS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPointKVS.swift; sourceTree = "<group>"; };
 		E5F3CE0D200D1C2000AB9A44 /* BartlebysCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BartlebysCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5FA568A20D53D5D00B4ED9E /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -773,6 +779,7 @@
 				E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */,
 				E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */,
 				4D65E69E1FE02FE300034787 /* Paths.swift */,
+				E5FA568A20D53D5D00B4ED9E /* Reachability.swift */,
 				E52A84621FF501D400F2408B /* Relationship.swift */,
 				4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */,
 				E5A5F8C92089D311007B4D7C /* SequenceOfTasks.swift */,
@@ -1394,6 +1401,7 @@
 				E5EC9FB61FF655FE008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5EC9F9A1FF655F9008BF543 /* HTTPOperation.swift in Sources */,
 				E5EC9F921FF655F9008BF543 /* Collectable.swift in Sources */,
+				E5FA568B20D53D5D00B4ED9E /* Reachability.swift in Sources */,
 				E542EE0E20442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5EC9FAA1FF655FE008BF543 /* HTTPMethod.swift in Sources */,
 				E5D6CDEE2001329200A3D975 /* Selection.swift in Sources */,
@@ -1502,6 +1510,7 @@
 				E5ECA0001FF656AF008BF543 /* JSON.swift in Sources */,
 				E5EC9FE71FF656AF008BF543 /* DataPointProtocol.swift in Sources */,
 				E5ECA0091FF656AF008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
+				E5FA568D20D53D5D00B4ED9E /* Reachability.swift in Sources */,
 				E542EE1020442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5EC9FED1FF656AF008BF543 /* HTTPOperation.swift in Sources */,
 				E5EC9FE51FF656AF008BF543 /* Collectable.swift in Sources */,
@@ -1549,6 +1558,7 @@
 				E5D84E692032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5ECA0451FF6579F008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA04F1FF657A6008BF543 /* Credentials.swift in Sources */,
+				E5FA568E20D53D5D00B4ED9E /* Reachability.swift in Sources */,
 				E53ADB2920332A46001A9A01 /* FiletPath+Absolute.swift in Sources */,
 				E52527AB2000E54700D9A148 /* IndistinctCollection.swift in Sources */,
 				E5DBB1E020022A1D0079F4C6 /* AliasOf.swift in Sources */,
@@ -1655,6 +1665,7 @@
 				E5D84E6A2032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA0981FF65851008BF543 /* Credentials.swift in Sources */,
+				E5FA568F20D53D5D00B4ED9E /* Reachability.swift in Sources */,
 				E53ADB2A20332A46001A9A01 /* FiletPath+Absolute.swift in Sources */,
 				E52527AC2000E54700D9A148 /* IndistinctCollection.swift in Sources */,
 				E553813B20036C890023ED88 /* KeyedData.swift in Sources */,
@@ -1808,6 +1819,7 @@
 				E5F3CDF6200D1C2000AB9A44 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5F3CDF7200D1C2000AB9A44 /* HTTPOperation.swift in Sources */,
 				E5F3CDF8200D1C2000AB9A44 /* Collectable.swift in Sources */,
+				E5FA568C20D53D5D00B4ED9E /* Reachability.swift in Sources */,
 				E542EE0F20442F2F00041347 /* CollectionOf+Tolerent.swift in Sources */,
 				E5F3CDF9200D1C2000AB9A44 /* HTTPMethod.swift in Sources */,
 				E5F3CDFA200D1C2000AB9A44 /* Selection.swift in Sources */,
