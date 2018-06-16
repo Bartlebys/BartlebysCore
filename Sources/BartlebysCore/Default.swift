@@ -29,6 +29,6 @@ public class Default{
     static public let NO_QUERY_STRING: String = "NO_QUERY_STRING"
     static public let NO_SUGAR: String = "NO_SUGAR"
     static public let NOT_SPECIFIED: String = "NOT_SPECIFIED"
-    static public let STRING_ENCODING = String.Encoding.utf8
+    static public let STRING_ENCODING: String.Encoding = .utf8
 
 }

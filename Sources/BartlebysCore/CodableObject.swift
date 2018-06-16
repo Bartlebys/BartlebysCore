@@ -57,7 +57,7 @@ open class CodableObject: Object,Codable,Identifiable,CopyingProtocol{
     open override var description: String {
         do{
             let data =  try JSON.prettyEncoder.encode(self)
-            if let json = String(data:data,encoding:.utf8){
+            if let json = String(data:data,encoding:Default.STRING_ENCODING){
                 return json
             }
         }catch{

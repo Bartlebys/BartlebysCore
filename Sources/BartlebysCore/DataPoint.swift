@@ -413,7 +413,7 @@ open class DataPoint: Object,DataPointProtocol{
         switch self.authenticationMethod {
         case .basicHTTPAuth:
             let loginString = "\(self.credentials.username):\(self.credentials.password)"
-            if let loginData: Data = loginString.data(using: .utf8) {
+            if let loginData: Data = loginString.data(using: Default.STRING_ENCODING) {
                 let base64LoginString: String = loginData.base64EncodedString()
                 request.setValue("Basic " + base64LoginString, forHTTPHeaderField: "Authorization")
             }
