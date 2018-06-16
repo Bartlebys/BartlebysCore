@@ -377,15 +377,15 @@ open class DataPoint: Object,DataPointProtocol{
     // MARK: - DataPointProtocol
     
     // The current Host: e.g demo.bartlebys.org
-    open var host: String = "NO_HOST"
+    open lazy var host: String = Default.NOT_SPECIFIED
     
     // The api base path: e.g /api/v1
-    open var apiBasePath: String = "NO_BASE_API_PATH"
+    open lazy var apiBasePath: String = Default.NOT_SPECIFIED
     
     // MARK: -  SessionDelegate
     
     /// The credentials should generaly not change during the session
-    open var credentials: Credentials = Credentials(username: Default.NO_NAME, password: Default.NO_PASSWORD)
+    open lazy var credentials: Credentials = Credentials(username: Default.NO_NAME, password: Default.NO_PASSWORD)
     
     /// The authentication method
     open var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
@@ -1204,17 +1204,5 @@ extension DataPoint{
             Logger.log("\(error)", category: .critical)
         }
         return ORDER_OF_EXECUTION_UNDEFINED
-    }
-}
-
-// MARK: - Download / Uploads
-
-extension DataPoint{
-    
-    public func cancelUploads(){
-        self.downloads.removeAll()
-    }
-    public func cancelDownloads(){
-        self.uploads.removeAll()
     }
 }

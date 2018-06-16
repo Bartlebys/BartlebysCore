@@ -327,3 +327,16 @@ extension DataPoint{
     }
     
 }
+
+// MARK: - Download / Uploads
+
+extension DataPoint{
+
+    public func cancelUploads(){
+        self.downloads.removeAll()
+    }
+    public func cancelDownloads(){
+        self.uploads.removeAll()
+    }
+}
+
