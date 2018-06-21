@@ -54,8 +54,8 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
 
    // Saving flag
    public fileprivate(set) var isSaving: Bool = false
-   public func startSaving() { self.isLoading = true }
-   public func didSave() { self.isLoading = false }
+   public func startSaving() { self.isSaving = true }
+   public func didSave() { self.isSaving = false }
 
    // You must setup a relativeFolderPath
    public lazy var relativeFolderPath: String = Default.NO_PATH
