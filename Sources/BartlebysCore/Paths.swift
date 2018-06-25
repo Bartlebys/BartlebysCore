@@ -46,7 +46,7 @@ public class Paths {
         #elseif os(Linux)
             // linux @todo
         #endif
-        throw PathsError.notFound
+        //throw PathsError.notFound
     }
 
     // MARK: - Legacy (Deprecated) @todo to be removed
