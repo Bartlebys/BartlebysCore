@@ -167,6 +167,10 @@ open class CollectionOf<T> : Collection, Sequence, IndistinctCollection, Codable
       return try self._items.filter(isIncluded)
    }
 
+   public func first(where predicate: (T) throws -> Bool) rethrows -> T? {
+      return try self._items.first(where: predicate)
+   }
+
    public func map<T>(_ transform: (Element) throws -> T) rethrows -> [T] {
       return try self._items.map(transform)
    }
