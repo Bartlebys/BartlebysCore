@@ -43,11 +43,11 @@ public protocol LoggerDelegate {
 
 public struct Logger {
     
-    public static fileprivate(set) var counter: Int = 0
+    public static var counter: Int = 0
 
     public static var maxNumberOfEntries = 1_000
     
-    public static fileprivate(set) var logsEntries: [LogEntry] = []
+    public static var logsEntries: [LogEntry] = []
     
     public static var delegate: LoggerDelegate?
 
@@ -60,7 +60,7 @@ public struct Logger {
             entry.file = file
             entry.function = function
             entry.line = line
-            entry.counter = counter
+            entry.counter = self.counter
             entry.decorative = decorative
 
             while self.logsEntries.count > Logger.maxNumberOfEntries{
