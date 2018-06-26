@@ -43,11 +43,11 @@ public protocol LoggerDelegate {
 
 public struct Logger {
     
-    static var counter: Int = 0
+    public static fileprivate(set) var counter: Int = 0
 
-    static var maxNumberOfEntries = 1_000
+    public static var maxNumberOfEntries = 1_000
     
-    public static var logsEntries: [LogEntry] = []
+    public static fileprivate(set) var logsEntries: [LogEntry] = []
     
     public static var delegate: LoggerDelegate?
 
@@ -84,7 +84,6 @@ public struct Logger {
             }
             __syslog(priority: entry.category.syslogPriority, entry.toString)
         }
-
 
     }
 
