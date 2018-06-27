@@ -148,6 +148,9 @@ open class DataPoint: Object,DataPointProtocol{
     // A unique run identifier that changes on each launch
     public static let runUID: String = Utilities.createUID()
 
+    // Background operation co
+    public var allowBackgroundOperations: Bool = true
+
     /// Determine if the call are operated when the app is in Background mode.
     public fileprivate(set) var isRunningInBackGround: Bool = false
 
@@ -213,7 +216,10 @@ open class DataPoint: Object,DataPointProtocol{
     /// Return to chained call sequence mode.
     public func willEnterForeground(){
         self.isRunningInBackGround = false
-        self._resumeCallSequences()
+        if !self.allowBackgroundOperations{
+            self._resumeCallSequences()
+        }
+
     }
 
 
@@ -591,7 +597,11 @@ open class DataPoint: Object,DataPointProtocol{
     public final func executeNextBunchOfCallOperations(from callSequenceName:CallSequence.Name){
 
         // Block the execution if we are explicitly offLine or paused
-        guard self.currentState == .online, self.isRunningInBackGround == false else{
+        guard self.currentState == .online else{
+            return
+        }
+
+        if !self.allowBackgroundOperations && self.isRunningInBackGround == true{
             return
         }
 
