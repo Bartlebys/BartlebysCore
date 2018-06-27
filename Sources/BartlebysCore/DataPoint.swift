@@ -37,7 +37,7 @@ public protocol DataPointLifeCycle{
 }
 
 
-open class DataPoint: Object,DataPointProtocol{
+open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
     
     
     // KVS keys
@@ -148,8 +148,29 @@ open class DataPoint: Object,DataPointProtocol{
     // A unique run identifier that changes on each launch
     public static let runUID: String = Utilities.createUID()
 
-    // Background operation co
-    public var allowBackgroundOperations: Bool = true
+    // Allow Background operation (currently not supported @todo implementation required
+    public var allowBackgroundOperations: Bool = false
+
+    // The URL session used for the operations
+    public var urlSession: URLSession {
+        if self.allowBackgroundOperations{
+            if let session = self._backgroundURLSession {
+                return session
+            }
+            let config = URLSessionConfiguration.background(withIdentifier: "BartlebysCore-\(Utilities.createUID())")
+            config.isDiscretionary = true
+            #if os(iOS) || os(tvOS) || os(watchOS)
+            config.sessionSendsLaunchEvents = true
+            #endif
+            self._backgroundURLSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+            return self._backgroundURLSession!
+        }else{
+            // Use shared
+            return URLSession.shared
+        }
+    }
+
+    fileprivate var _backgroundURLSession: URLSession?
 
     /// Determine if the call are operated when the app is in Background mode.
     public fileprivate(set) var isRunningInBackGround: Bool = false
@@ -219,7 +240,6 @@ open class DataPoint: Object,DataPointProtocol{
         if !self.allowBackgroundOperations{
             self._resumeCallSequences()
         }
-
     }
 
 

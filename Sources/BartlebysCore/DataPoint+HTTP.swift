@@ -31,7 +31,7 @@ extension DataPoint{
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = self.urlSession.dataTask(with: request) { (data, response, error) in
             
             defer{
                 self.report(metrics)
@@ -93,7 +93,7 @@ extension DataPoint{
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
         
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = self.urlSession.dataTask(with: request) { (data, response, error) in
             
             defer{
                 self.report(metrics)
@@ -184,7 +184,7 @@ extension DataPoint{
         metrics.elapsed = self.elapsedTime
         metrics.streamOrientation = .downStream
         
-        let task = URLSession.shared.downloadTask(with: request) { (temporaryURL, response, error) in
+        let task = self.urlSession.downloadTask(with: request) { (temporaryURL, response, error) in
             
             defer {
                 self.report(metrics)
@@ -277,7 +277,7 @@ extension DataPoint{
         do {
             let localFileURL = try localFilePath.absoluteFileURL()
             
-            let task = URLSession.shared.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
+            let task = self.urlSession.uploadTask(with: request, fromFile: localFileURL) { (data, response, error) in
                 
                 defer {
                     self.report(metrics)
