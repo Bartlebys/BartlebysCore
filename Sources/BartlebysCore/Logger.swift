@@ -42,7 +42,13 @@ public protocol LoggerDelegate {
 }
 
 public struct Logger {
-    
+
+    // If set to true the entries will be immediately printed
+    public static var printEntriesOnDebug: Bool = true
+
+    // If set to true the entries will be relayed if possible to the sys log
+    public static var relayToSysLog: Bool = true
+
     public static var counter: Int = 0
 
     public static var maxNumberOfEntries = 1_000
@@ -70,7 +76,11 @@ public struct Logger {
             self.logsEntries.append(entry)
 
             self.delegate?.log(entry: entry)
-
+            #if DEBUG
+            if Logger.printEntriesOnDebug{
+                print(entry.toString)
+            }
+            #endif
             self.counter += 1
 
             func __syslog(priority: Int32, _ message: String, _ args: CVarArg...) {
@@ -80,9 +90,16 @@ public struct Logger {
                     withVaList(args) { vsyslog(priority, message, $0) }
                 #endif
             }
-            __syslog(priority: entry.category.syslogPriority, entry.toString)
+            if Logger.relayToSysLog{
+                __syslog(priority: entry.category.syslogPriority, entry.toString)
+            }
         }
-
     }
 
 }
+
+#if DEBUG
+public let IS_RUNNING_IN_DEBUGGER: Bool = true
+#else
+public let IS_RUNNING_IN_DEBUGGER: Bool = false
+#endif
