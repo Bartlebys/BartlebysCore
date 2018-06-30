@@ -14,7 +14,7 @@ extension LogEntry{
     open var toString: String {
         let filestr: NSString = NSString(string: self.file)
         let elapsedSeconds = Int(self.elapsedTime).paddedString(8)
-        return "\(self.counter.paddedString()) \(elapsedSeconds) \(self.category)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
+        return "\(self.counter.paddedString()) \(elapsedSeconds) \(Date()) \(self.category)-\(filestr.lastPathComponent).\(self.line).\(self.function): \(self.message)"
     }
 
 }
