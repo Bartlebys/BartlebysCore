@@ -49,7 +49,13 @@ public struct Logger {
     
     public static var logsEntries: [LogEntry] = []
     
-    public static var delegate: LoggerDelegate?
+    public static var delegate: LoggerDelegate? {
+        didSet{
+            if let d = delegate{
+                print("Set \(d) as Log delegate")
+            }
+        }
+    }
 
     static public func log(_ message: Any, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line, decorative: Bool = false) {
         syncOnMain {
