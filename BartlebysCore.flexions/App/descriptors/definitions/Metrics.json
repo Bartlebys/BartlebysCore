@@ -1,46 +1,54 @@
 {
   "name": "Metrics",
   "definition": {
-    "explicitType":"Model",
+    "explicitType": "Model",
     "description": "Bartleby's Core: a value object used to record metrics",
     "properties": {
-      "operationName":{
+      "operationName": {
         "type": "string",
         "description": "The action name e.g: UpdateUser",
         "default": "$Default.NO_NAME",
-        "required":true,
+        "required": true,
         "supervisable": false,
-        "dynamic" : true
+        "dynamic": true
       },
-      "associatedURL":{
+      "associatedURL": {
         "explicitType": "URL",
         "description": "The associated url",
-        "required":false,
+        "required": false,
         "supervisable": false,
-        "dynamic" : true
+        "dynamic": true
       },
-      "elapsed":{
-        "description":"The elasped time since app started up.",
-        "type":"double",
-        "default":0,
+      "callCounter": {
+        "type": "integer",
+        "description": "Allows to identify each call by their execution counter.",
+        "default": 0,
+        "required": true,
         "supervisable": false,
-        "dynamic" : true
+        "dynamic": true
       },
-      "requestDuration":{
-        "description":"The time interval in seconds from the time the request started to the time the request completed.",
-        "type":"double",
-        "default":"0",
+      "elapsed": {
+        "description": "The elasped time since app started up.",
+        "type": "double",
+        "default": 0,
         "supervisable": false,
-        "dynamic" : true
+        "dynamic": true
       },
-      "serializationDuration":{
-        "description":" The time interval in seconds from the time the request completed to the time response serialization completed.",
-        "type":"double",
-        "default":"0",
+      "requestDuration": {
+        "description": "The time interval in seconds from the time the request started to the time the request completed.",
+        "type": "double",
+        "default": "0",
         "supervisable": false,
-        "dynamic" : true
-      }
-      ,"streamOrientation": {
+        "dynamic": true
+      },
+      "serializationDuration": {
+        "description": " The time interval in seconds from the time the request completed to the time response serialization completed.",
+        "type": "double",
+        "default": "0",
+        "supervisable": false,
+        "dynamic": true
+      },
+      "streamOrientation": {
         "type": "enum",
         "instanceOf": "string",
         "enumPreciseType": "Metrics.StreamOrientation",
@@ -51,7 +59,7 @@
         ],
         "default": ".upStream",
         "supervisable": false,
-        "dynamic" : true
+        "dynamic": true
       }
     },
     "metadata": {
