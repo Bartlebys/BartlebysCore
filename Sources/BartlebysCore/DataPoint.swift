@@ -72,6 +72,14 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
     // This is the max re execution delay
     public var maxReexecutionDelayInSecond:TimeInterval = 60
 
+    /// Incremented on each call
+    public var callsCounter: Int = 0
+
+    /// Probes are traces stored on HTTP Call errors
+    /// You can set to true to keep track of any fault
+    public var enableProbes: Bool = false
+    public var probeDelegate: ProbeDelegate?
+
     /// Contains all the data Point collections
     /// Populated by registerCollection
     /// - Returns: the data Point model collections

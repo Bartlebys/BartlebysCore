@@ -26,7 +26,9 @@ extension DataPoint{
     public func call( request: URLRequest,
                       success: @escaping (_ completion: HTTPResponse)->(),
                       failure: @escaping (_ completion: Failure)->()){
-        
+
+        self.callsCounter += 1
+
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
@@ -88,7 +90,9 @@ extension DataPoint{
                           resultIsACollection:Bool,
                           success: @escaping (_ completion: DataResponse<R>)->(),
                           failure: @escaping (_ completion: Failure)->()) {
-        
+
+        self.callsCounter += 1
+
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
@@ -178,7 +182,9 @@ extension DataPoint{
                                localFilePath: FilePath,
                                success: @escaping (_ completion: HTTPResponse)->(),
                                failure: @escaping (_ completion: Failure)->()) {
-        
+
+        self.callsCounter += 1
+
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
@@ -269,7 +275,9 @@ extension DataPoint{
                             localFilePath: FilePath,
                             success: @escaping (_ completion: HTTPResponse)->(),
                             failure: @escaping (_ completion: Failure)->()) {
-        
+
+        self.callsCounter += 1
+
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
