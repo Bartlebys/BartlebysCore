@@ -32,6 +32,7 @@ extension DataPoint{
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
+        metrics.callCounter = self.callsCounter
         
         let task = self.urlSession.dataTask(with: request) { (data, response, error) in
             
@@ -45,7 +46,8 @@ extension DataPoint{
             guard let httpURLResponse = response as? HTTPURLResponse else{
                 self.errorCounter += 1
                 syncOnMain {
-                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
+                    let issue: Failure = Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error))
+                    self.probe(issue, relay: failure)
                 }
                 return
             }
@@ -55,21 +57,23 @@ extension DataPoint{
             if let error = error {
                 self.errorCounter += 1
                 syncOnMain {
-                    failure(Failure(from : httpResponse , and: error))
+                    let issue: Failure = Failure(from : httpResponse , and: error)
+                    self.probe(issue, relay: failure)
                 }
             }else{
                 
                 guard 200 ... 299 ~= httpURLResponse.statusCode else{
                     self.errorCounter += 1
                     syncOnMain {
-                        failure(Failure(from : httpResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode)))
+                        let issue: Failure = Failure(from : httpResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode))
+                        self.probe(issue, relay: failure)
                     }
                     return
                 }
                 
                 // Success
                 syncOnMain {
-                    success(httpResponse)
+                    self.probe(httpResponse, relay: success)
                 }
             }
             
@@ -96,7 +100,8 @@ extension DataPoint{
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
-        
+        metrics.callCounter = self.callsCounter
+
         let task = self.urlSession.dataTask(with: request) { (data, response, error) in
             
             defer{
@@ -109,7 +114,8 @@ extension DataPoint{
             guard let httpURLResponse = response as? HTTPURLResponse else{
                 self.errorCounter += 1
                 syncOnMain {
-                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
+                    let issue: Failure = Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error))
+                    self.probe(issue, relay: failure)
                 }
                 return
             }
@@ -118,7 +124,8 @@ extension DataPoint{
                 self.errorCounter += 1
                 syncOnMain {
                     let dataResponse = DataResponse(result:Array<R>(), content: nil, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
-                    failure(Failure(from : dataResponse , and: error))
+                    let issue: Failure = Failure(from : dataResponse , and: error)
+                    self.probe(issue, relay: failure)
                 }
             }else{
                 
@@ -126,7 +133,8 @@ extension DataPoint{
                     self.errorCounter += 1
                     syncOnMain {
                         let dataResponse = DataResponse(result: Array<R>(), content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
-                        failure(Failure(from : dataResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode)))
+                        let issue: Failure = Failure(from : dataResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode))
+                        self.probe(issue, relay: failure)
                     }
                     return
                 }
@@ -138,21 +146,22 @@ extension DataPoint{
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             let dataResponse = DataResponse(result: decoded, content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
                             syncOnMain {
-                                success(dataResponse)
+                                self.probe(dataResponse, relay: success)
                             }
                         } else {
                             let decoded = try self.operationsCoder.decode(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                             let dataResponse = DataResponse(result: [decoded], content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
                             syncOnMain {
-                                success(dataResponse)
+                                self.probe(dataResponse, relay: success)
                             }
                         }
                     } catch {
                         self.errorCounter += 1
                         syncOnMain {
                             let dataResponse = DataResponse(result:Array<R>(), content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
-                            failure(Failure(from : dataResponse, and: error))
+                            let issue: Failure = Failure(from : dataResponse, and: error)
+                            self.probe(issue, relay: failure)
                         }
                     }
                 } else {
@@ -160,7 +169,7 @@ extension DataPoint{
                     syncOnMain {
                         metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
                         let dataResponse: DataResponse = DataResponse(result: Array<R>(),content: nil,metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
-                        success(dataResponse)
+                        self.probe(dataResponse, relay: success)
                     }
                 }
             }
@@ -189,7 +198,8 @@ extension DataPoint{
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
         metrics.streamOrientation = .downStream
-        
+        metrics.callCounter = self.callsCounter
+
         let task = self.urlSession.downloadTask(with: request) { (temporaryURL, response, error) in
             
             defer {
@@ -202,7 +212,8 @@ extension DataPoint{
             guard let httpURLResponse = response as? HTTPURLResponse else{
                 self.errorCounter += 1
                 syncOnMain {
-                    failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
+                    let issue: Failure = Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error))
+                    self.probe(issue, relay: failure)
                 }
                 return
             }
@@ -211,7 +222,8 @@ extension DataPoint{
                 self.errorCounter += 1
                 syncOnMain {
                     let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
-                    failure(Failure(from: fileError))
+                    let issue: Failure = Failure(from: fileError)
+                    self.probe(issue, relay: failure)
                 }
             } else {
                 
@@ -221,14 +233,16 @@ extension DataPoint{
                 if let error = error {
                     self.errorCounter += 1
                     syncOnMain {
-                        failure(Failure(from : httpResponse , and: error))
+                        let issue: Failure = Failure(from : httpResponse , and: error)
+                        self.probe(issue, relay: failure)
                     }
                 }else{
                     
                     guard 200 ... 299 ~= httpURLResponse.statusCode else{
                         self.errorCounter += 1
                         syncOnMain {
-                            failure(Failure(from : httpResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode)))
+                            let issue: Failure = Failure(from : httpResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode))
+                            self.probe(issue, relay: failure)
                         }
                         return
                     }
@@ -236,7 +250,8 @@ extension DataPoint{
                     guard let tempURL = temporaryURL else {
                         self.errorCounter += 1
                         syncOnMain {
-                            failure(Failure(from: httpResponse, and: SessionError.fileNotFound))
+                            let issue: Failure = Failure(from: httpResponse, and: SessionError.fileNotFound)
+                            self.probe(issue, relay: failure)
                         }
                         return
                     }
@@ -248,12 +263,13 @@ extension DataPoint{
                         try FileManager.default.createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
                         try FileManager.default.moveItem(at: tempURL, to: localFileURL)
                         syncOnMain {
-                            success(httpResponse)
+                            self.probe(httpResponse, relay: success)
                         }
                     } catch {
                         self.errorCounter += 1
                         syncOnMain {
-                            failure(Failure(from: httpResponse, and: error))
+                            let issue: Failure = Failure(from: httpResponse, and: error)
+                            self.probe(issue, relay: failure)
                         }
                     }
                 }
@@ -281,6 +297,7 @@ extension DataPoint{
         let metrics = Metrics()
         metrics.associatedURL = request.url
         metrics.elapsed = self.elapsedTime
+        metrics.callCounter = self.callsCounter
         
         do {
             let localFileURL = try localFilePath.absoluteFileURL()
@@ -297,7 +314,8 @@ extension DataPoint{
                 guard let httpURLResponse = response as? HTTPURLResponse else{
                     self.errorCounter += 1
                     syncOnMain {
-                        failure(Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error)))
+                        let issue: Failure = Failure(from : DataPointHTTPError.responseCastingError(response: response, error: error))
+                        self.probe(issue, relay: failure)
                     }
                     return
                 }
@@ -306,7 +324,8 @@ extension DataPoint{
                     self.errorCounter += 1
                     syncOnMain {
                         let fileError = FileOperationError.errorOn(filePath: localFilePath, error: error)
-                        failure(Failure(from: fileError))
+                        let issue: Failure = Failure(from: fileError)
+                        self.probe(issue, relay: failure)
                     }
                 } else {
                     
@@ -315,13 +334,14 @@ extension DataPoint{
                     guard 200 ... 299 ~= httpURLResponse.statusCode else{
                         self.errorCounter += 1
                         syncOnMain {
-                            failure(Failure(from : httpResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode)))
+                            let issue: Failure = Failure(from : httpResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode))
+                            self.probe(issue, relay: failure)
                         }
                         return
                     }
                     
                     syncOnMain {
-                        success(httpResponse)
+                        self.probe(httpResponse, relay: success)
                     }
                 }
                 

@@ -75,9 +75,8 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
     /// Incremented on each call
     public var callsCounter: Int = 0
 
-    /// Probes are traces stored on HTTP Call errors
-    /// You can set to true to keep track of any fault
-    public var enableProbes: Bool = false
+    /// Probes are traces stored on HTTP Call
+    /// The probeDelegate can filter & record the calls
     public var probeDelegate: ProbeDelegate?
 
     /// Contains all the data Point collections

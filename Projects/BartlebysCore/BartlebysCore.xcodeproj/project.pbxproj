@@ -95,6 +95,11 @@
 		E555E69A201CC555007754C0 /* OperatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E697201CC555007754C0 /* OperatingState.swift */; };
 		E555E69B201CC555007754C0 /* OperatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E697201CC555007754C0 /* OperatingState.swift */; };
 		E555E69C201CC555007754C0 /* OperatingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E555E697201CC555007754C0 /* OperatingState.swift */; };
+		E557C612210B53FF00F36BD3 /* DataPoint+Probes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557C611210B53FF00F36BD3 /* DataPoint+Probes.swift */; };
+		E557C613210B558100F36BD3 /* DataPoint+Probes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557C611210B53FF00F36BD3 /* DataPoint+Probes.swift */; };
+		E557C614210B558100F36BD3 /* DataPoint+Probes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557C611210B53FF00F36BD3 /* DataPoint+Probes.swift */; };
+		E557C615210B558200F36BD3 /* DataPoint+Probes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557C611210B53FF00F36BD3 /* DataPoint+Probes.swift */; };
+		E557C616210B558300F36BD3 /* DataPoint+Probes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557C611210B53FF00F36BD3 /* DataPoint+Probes.swift */; };
 		E55E8A402014DD8F00910D31 /* OSCompatibilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */; };
 		E55E8A412014DD8F00910D31 /* OSCompatibilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */; };
 		E55E8A422014DD8F00910D31 /* OSCompatibilty.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */; };
@@ -566,6 +571,7 @@
 		E555E68B201C8296007754C0 /* CallSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallSequence.swift; sourceTree = "<group>"; };
 		E555E691201C99F6007754C0 /* AsyncWork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncWork.swift; sourceTree = "<group>"; };
 		E555E697201CC555007754C0 /* OperatingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingState.swift; sourceTree = "<group>"; };
+		E557C611210B53FF00F36BD3 /* DataPoint+Probes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+Probes.swift"; sourceTree = "<group>"; };
 		E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCompatibilty.swift; sourceTree = "<group>"; };
 		E56AAA17201097080082D4D6 /* CodableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableObject.swift; sourceTree = "<group>"; };
 		E56AAA1D2010A0710082D4D6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
@@ -749,6 +755,7 @@
 				E5D84E652032D6ED009D2804 /* DataPoint+Helpers.swift */,
 				E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */,
 				E5D6CDF92001391700A3D975 /* DataPoint+KeyValueStorage.swift */,
+				E557C611210B53FF00F36BD3 /* DataPoint+Probes.swift */,
 				4D55FC4F1FDAF5CF001D91CE /* DataResponse.swift */,
 				E54826351FFBBB3700FB854E /* Default.swift */,
 				4D65E67B1FDFFA9200034787 /* Download.swift */,
@@ -1411,6 +1418,7 @@
 				E5BAB6C2200120E400386A9B /* AliasesResolution.swift in Sources */,
 				E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */,
 				E5A5F8C62089D080007B4D7C /* DataPoint+BackGroundProcessing.swift in Sources */,
+				E557C612210B53FF00F36BD3 /* DataPoint+Probes.swift in Sources */,
 				E5EC9FA61FF655FE008BF543 /* Download.swift in Sources */,
 				E5AE11F3201A104700D7E179 /* VoidResult.swift in Sources */,
 				E52E5E32202D95BE00D25B61 /* CallOperationReceiver.swift in Sources */,
@@ -1520,6 +1528,7 @@
 				E5EC9FF41FF656AF008BF543 /* Tolerent.swift in Sources */,
 				E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */,
 				E5A5F8C82089D080007B4D7C /* DataPoint+BackGroundProcessing.swift in Sources */,
+				E557C614210B558100F36BD3 /* DataPoint+Probes.swift in Sources */,
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E51AF60E201A45EC009E1E0E /* VoidResult.swift in Sources */,
 				E52E5E34202D9A0D00D25B61 /* CallOperationReceiver.swift in Sources */,
@@ -1572,6 +1581,7 @@
 				E5ECA05B1FF657A6008BF543 /* Logger.swift in Sources */,
 				E5ECA06A1FF657A6008BF543 /* Schemes.swift in Sources */,
 				E5ECA0651FF657A6008BF543 /* Object.swift in Sources */,
+				E557C615210B558200F36BD3 /* DataPoint+Probes.swift in Sources */,
 				E5DBB1DA20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
 				E555E695201C99F6007754C0 /* AsyncWork.swift in Sources */,
 				E5ECA0551FF657A6008BF543 /* Globals.swift in Sources */,
@@ -1679,6 +1689,7 @@
 				E5ECA0B51FF65851008BF543 /* Status.swift in Sources */,
 				E5ECA0A41FF65851008BF543 /* Logger.swift in Sources */,
 				E5ECA0B31FF65851008BF543 /* Schemes.swift in Sources */,
+				E557C616210B558300F36BD3 /* DataPoint+Probes.swift in Sources */,
 				E5ECA0AE1FF65851008BF543 /* Object.swift in Sources */,
 				E555E696201C99F6007754C0 /* AsyncWork.swift in Sources */,
 				E5ECA09E1FF65851008BF543 /* Globals.swift in Sources */,
@@ -1829,6 +1840,7 @@
 				E5F3CDFC200D1C2000AB9A44 /* AliasesResolution.swift in Sources */,
 				E5F3CDFD200D1C2000AB9A44 /* LogEntry.swift in Sources */,
 				E5A5F8C72089D080007B4D7C /* DataPoint+BackGroundProcessing.swift in Sources */,
+				E557C613210B558100F36BD3 /* DataPoint+Probes.swift in Sources */,
 				E5F3CDFE200D1C2000AB9A44 /* Download.swift in Sources */,
 				E51AF60D201A45EB009E1E0E /* VoidResult.swift in Sources */,
 				E52E5E33202D9A0300D25B61 /* CallOperationReceiver.swift in Sources */,
