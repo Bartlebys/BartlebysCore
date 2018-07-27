@@ -27,6 +27,9 @@ open class CommonMetrics : Model, Payload, Result{
 	//The associated url
 	open var associatedURL:URL?
 
+	//Allows to identify each call by their execution counter.
+	open var callCounter:Int = 0
+
 	//The elasped time since app started up.
 	open var elapsed:Double = 0
 
@@ -50,6 +53,7 @@ open class CommonMetrics : Model, Payload, Result{
     public enum MetricsCodingKeys: String,CodingKey{
 		case operationName
 		case associatedURL
+		case callCounter
 		case elapsed
 		case requestDuration
 		case serializationDuration
@@ -62,6 +66,7 @@ open class CommonMetrics : Model, Payload, Result{
 			let values = try decoder.container(keyedBy: MetricsCodingKeys.self)
 			self.operationName = try values.decode(String.self,forKey:.operationName)
 			self.associatedURL = try values.decodeIfPresent(URL.self,forKey:.associatedURL)
+			self.callCounter = try values.decode(Int.self,forKey:.callCounter)
 			self.elapsed = try values.decode(Double.self,forKey:.elapsed)
 			self.requestDuration = try values.decode(Double.self,forKey:.requestDuration)
 			self.serializationDuration = try values.decode(Double.self,forKey:.serializationDuration)
@@ -74,6 +79,7 @@ open class CommonMetrics : Model, Payload, Result{
 		var container = encoder.container(keyedBy: MetricsCodingKeys.self)
 		try container.encode(self.operationName,forKey:.operationName)
 		try container.encodeIfPresent(self.associatedURL,forKey:.associatedURL)
+		try container.encode(self.callCounter,forKey:.callCounter)
 		try container.encode(self.elapsed,forKey:.elapsed)
 		try container.encode(self.requestDuration,forKey:.requestDuration)
 		try container.encode(self.serializationDuration,forKey:.serializationDuration)
@@ -137,6 +143,11 @@ open class CommonMetrics : Model, Payload, Result{
     @objc override dynamic open var  associatedURL : URL?{
         set{ super.associatedURL = newValue }
         get{ return super.associatedURL }
+    }
+
+    @objc override dynamic open var  callCounter : Int{
+        set{ super.callCounter = newValue }
+        get{ return super.callCounter }
     }
 
     @objc override dynamic open var  elapsed : Double{
