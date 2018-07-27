@@ -11,9 +11,9 @@ import Foundation
 
 public protocol ProbeDelegate {
 
-    func recordProbe(_ httpResponse: HTTPResponse)
-    func recordProbe<R>(_ httpResponse: DataResponse<R>)
-    func recordProbe(_ failure: Failure)
+    func recordProbe(for request: URLRequest, response httpResponse: HTTPResponse)
+    func recordProbe<R>(for request: URLRequest, response httpResponse: DataResponse<R>)
+    func recordProbe(for request: URLRequest, failure: Failure)
     
 }
 
@@ -24,10 +24,11 @@ extension DataPoint{
     /// Then relays to the success closure.
     ///
     /// - Parameters:
+    ///   - request: the original request
     ///   - httpResponse: the response
     ///   - relay: the succes closure
-    public func probe(_ httpResponse: HTTPResponse, relay: @escaping (_ completion: HTTPResponse) -> ()) {
-        self.probeDelegate?.recordProbe(httpResponse)
+    public func probe(request: URLRequest, response httpResponse: HTTPResponse, relay: @escaping (_ completion: HTTPResponse) -> ()) {
+        self.probeDelegate?.recordProbe(for: request, response: httpResponse)
         relay(httpResponse)
     }
 
@@ -36,10 +37,11 @@ extension DataPoint{
     /// Then relays to the success closure.
     ///
     /// - Parameters:
+    ///   - request: the original request
     ///   - httpResponse: the response
     ///   - relay: the succes closure
-    public func probe<R>(_ dataResponse: DataResponse<R>, relay: @escaping (_ completion: DataResponse<R>) -> ()) {
-        self.probeDelegate?.recordProbe(dataResponse)
+    public func probe<R>(request: URLRequest, response dataResponse: DataResponse<R>, relay: @escaping (_ completion: DataResponse<R>) -> ()) {
+        self.probeDelegate?.recordProbe(for: request, response: dataResponse)
         relay(dataResponse)
     }
 
@@ -48,10 +50,11 @@ extension DataPoint{
     /// Then relay the failure to the failure closure.
     ///
     /// - Parameters:
+    ///   - request: the original request
     ///   - failure: the failure description
     ///   - relay: the failure closure
-    public func probe(_ failure: Failure, relay: @escaping (_ completion: Failure) -> ()) {
-        self.probeDelegate?.recordProbe(failure)
+    public func probe(request: URLRequest, failure: Failure, relay: @escaping (_ completion: Failure) -> ()) {
+        self.probeDelegate?.recordProbe(for: request, failure: failure)
         relay(failure)
     }
 
