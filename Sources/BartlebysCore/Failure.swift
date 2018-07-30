@@ -10,7 +10,7 @@ import Foundation
 
 
 public enum FailureError:Error{
-    case message(_ message: String)
+    case message(message: String)
 }
 
 public class Failure: Codable {
@@ -49,7 +49,7 @@ public class Failure: Codable {
         self.httpResponse = try values.decode(HTTPResponse.self,forKey:.httpResponse)
         // We decode/encode the error to a FailureError via a String
         let stringError = try values.decode(String.self,forKey:.error)
-        self.error = FailureError.message(stringError)
+        self.error = FailureError.message(message: stringError)
     }
 
     public func encode(to encoder: Encoder) throws {

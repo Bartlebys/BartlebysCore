@@ -155,6 +155,16 @@
 		E5D18CDF210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
 		E5D18CE0210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
 		E5D18CE1210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
+		E5D18CE3210F3BE2008BC65B /* HTTProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE2210F3BE2008BC65B /* HTTProbe.swift */; };
+		E5D18CE4210F3BE2008BC65B /* HTTProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE2210F3BE2008BC65B /* HTTProbe.swift */; };
+		E5D18CE5210F3BE2008BC65B /* HTTProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE2210F3BE2008BC65B /* HTTProbe.swift */; };
+		E5D18CE6210F3BE2008BC65B /* HTTProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE2210F3BE2008BC65B /* HTTProbe.swift */; };
+		E5D18CE7210F3BE2008BC65B /* HTTProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE2210F3BE2008BC65B /* HTTProbe.swift */; };
+		E5D18CE9210F3E4A008BC65B /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE8210F3E4A008BC65B /* Trace.swift */; };
+		E5D18CEA210F3E4A008BC65B /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE8210F3E4A008BC65B /* Trace.swift */; };
+		E5D18CEB210F3E4A008BC65B /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE8210F3E4A008BC65B /* Trace.swift */; };
+		E5D18CEC210F3E4A008BC65B /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE8210F3E4A008BC65B /* Trace.swift */; };
+		E5D18CED210F3E4A008BC65B /* Trace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CE8210F3E4A008BC65B /* Trace.swift */; };
 		E5D6CDE420012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
 		E5D6CDE520012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
 		E5D6CDE620012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
@@ -596,6 +606,8 @@
 		E5BAB6C1200120E400386A9B /* AliasesResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasesResolution.swift; sourceTree = "<group>"; };
 		E5BC2D121FF133C200EC45F6 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
 		E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableURLRequest.swift; sourceTree = "<group>"; };
+		E5D18CE2210F3BE2008BC65B /* HTTProbe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTProbe.swift; sourceTree = "<group>"; };
+		E5D18CE8210F3E4A008BC65B /* Trace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trace.swift; sourceTree = "<group>"; };
 		E5D6CDE320012F2800A3D975 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		E5D6CDED2001329200A3D975 /* Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selection.swift; sourceTree = "<group>"; };
 		E5D6CDF12001366900A3D975 /* KeyedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyedData.swift; sourceTree = "<group>"; };
@@ -773,6 +785,7 @@
 				E5EF060E1FEFB87800E57AA2 /* FileStorage.swift */,
 				4D55FC501FDAF5CF001D91CE /* Globals.swift */,
 				4D55FC4B1FDAF5CF001D91CE /* HTTPMethod.swift */,
+				E5D18CE2210F3BE2008BC65B /* HTTProbe.swift */,
 				4D65E6731FDFF9CA00034787 /* HTTPResponse.swift */,
 				4D55FC4C1FDAF5CF001D91CE /* Int+Padding.swift */,
 				4D55FC4A1FDAF5CF001D91CE /* JSON.swift */,
@@ -792,6 +805,7 @@
 				E555E697201CC555007754C0 /* OperatingState.swift */,
 				E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */,
 				E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */,
+				E5D18CE8210F3E4A008BC65B /* Trace.swift */,
 				4D65E69E1FE02FE300034787 /* Paths.swift */,
 				E5FA568A20D53D5D00B4ED9E /* Reachability.swift */,
 				E52A84621FF501D400F2408B /* Relationship.swift */,
@@ -1365,6 +1379,7 @@
 				E5EC9FC01FF655FE008BF543 /* Status.swift in Sources */,
 				E555E68C201C8296007754C0 /* CallSequence.swift in Sources */,
 				E5EC9FAF1FF655FE008BF543 /* Logger.swift in Sources */,
+				E5D18CE3210F3BE2008BC65B /* HTTProbe.swift in Sources */,
 				E5EC9FBE1FF655FE008BF543 /* Schemes.swift in Sources */,
 				E5D6CDF22001366900A3D975 /* KeyedData.swift in Sources */,
 				E5EC9FB91FF655FE008BF543 /* Object.swift in Sources */,
@@ -1430,6 +1445,7 @@
 				E5EC9FA61FF655FE008BF543 /* Download.swift in Sources */,
 				E5AE11F3201A104700D7E179 /* VoidResult.swift in Sources */,
 				E52E5E32202D95BE00D25B61 /* CallOperationReceiver.swift in Sources */,
+				E5D18CE9210F3E4A008BC65B /* Trace.swift in Sources */,
 				E5EC9FC51FF655FE008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA0200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5D6CDFE200142E000A3D975 /* KeyValueStorage.swift in Sources */,
@@ -1476,6 +1492,7 @@
 				E5ECA0141FF656AF008BF543 /* FileStorage.swift in Sources */,
 				E555E68E201C8296007754C0 /* CallSequence.swift in Sources */,
 				E5ECA0131FF656AF008BF543 /* Status.swift in Sources */,
+				E5D18CE5210F3BE2008BC65B /* HTTProbe.swift in Sources */,
 				E5ECA0021FF656AF008BF543 /* Logger.swift in Sources */,
 				E5ECA0111FF656AF008BF543 /* Schemes.swift in Sources */,
 				E5ECA00C1FF656AF008BF543 /* Object.swift in Sources */,
@@ -1541,6 +1558,7 @@
 				E5EC9FF91FF656AF008BF543 /* Download.swift in Sources */,
 				E51AF60E201A45EC009E1E0E /* VoidResult.swift in Sources */,
 				E52E5E34202D9A0D00D25B61 /* CallOperationReceiver.swift in Sources */,
+				E5D18CEB210F3E4A008BC65B /* Trace.swift in Sources */,
 				E5ECA0181FF656AF008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA1200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5D6CDE520012F2800A3D975 /* Notify.swift in Sources */,
@@ -1597,6 +1615,7 @@
 				E55E8A432014DD8F00910D31 /* OSCompatibilty.swift in Sources */,
 				E5ECA0701FF657A6008BF543 /* Utilities.swift in Sources */,
 				E5ECA0411FF6579F008BF543 /* Identifiable.swift in Sources */,
+				E5D18CE6210F3BE2008BC65B /* HTTProbe.swift in Sources */,
 				E5A9B9C920A9722100305FF7 /* FileManager+sizeUtilities.swift in Sources */,
 				E5ECA0601FF657A6008BF543 /* Model.swift in Sources */,
 				4D51A5AF200756D300A66466 /* FileOperationError.swift in Sources */,
@@ -1653,6 +1672,7 @@
 				E5ECA0711FF657A6008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA2200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5D6CDE620012F2800A3D975 /* Notify.swift in Sources */,
+				E5D18CEC210F3E4A008BC65B /* Trace.swift in Sources */,
 				E5ECA0421FF6579F008BF543 /* Initializable.swift in Sources */,
 				E5ECA0691FF657A6008BF543 /* Relationship.swift in Sources */,
 				E53ADB2320332A22001A9A01 /* FilePath.swift in Sources */,
@@ -1706,6 +1726,7 @@
 				E55E8A442014DD8F00910D31 /* OSCompatibilty.swift in Sources */,
 				E5ECA0B91FF65851008BF543 /* Utilities.swift in Sources */,
 				E5ECA08A1FF6584A008BF543 /* Identifiable.swift in Sources */,
+				E5D18CE7210F3BE2008BC65B /* HTTProbe.swift in Sources */,
 				E5A9B9CA20A9722100305FF7 /* FileManager+sizeUtilities.swift in Sources */,
 				4D51A5B0200756D300A66466 /* FileOperationError.swift in Sources */,
 				E5ECA0A91FF65851008BF543 /* Model.swift in Sources */,
@@ -1762,6 +1783,7 @@
 				E5ECA0BA1FF65851008BF543 /* VoidPayload.swift in Sources */,
 				E5F3CDA3200CA74B00AB9A44 /* FileSavable.swift in Sources */,
 				E5D6CDE720012F2800A3D975 /* Notify.swift in Sources */,
+				E5D18CED210F3E4A008BC65B /* Trace.swift in Sources */,
 				E5ECA08B1FF6584A008BF543 /* Initializable.swift in Sources */,
 				E5ECA0B21FF65851008BF543 /* Relationship.swift in Sources */,
 				E53ADB2420332A22001A9A01 /* FilePath.swift in Sources */,
@@ -1791,6 +1813,7 @@
 				E5F3CDCC200D1C2000AB9A44 /* Status.swift in Sources */,
 				E555E68D201C8296007754C0 /* CallSequence.swift in Sources */,
 				E5F3CDCD200D1C2000AB9A44 /* Logger.swift in Sources */,
+				E5D18CE4210F3BE2008BC65B /* HTTProbe.swift in Sources */,
 				E5F3CDCE200D1C2000AB9A44 /* Schemes.swift in Sources */,
 				E5F3CDCF200D1C2000AB9A44 /* KeyedData.swift in Sources */,
 				E5F3CDD0200D1C2000AB9A44 /* Object.swift in Sources */,
@@ -1856,6 +1879,7 @@
 				E5F3CDFE200D1C2000AB9A44 /* Download.swift in Sources */,
 				E51AF60D201A45EB009E1E0E /* VoidResult.swift in Sources */,
 				E52E5E33202D9A0300D25B61 /* CallOperationReceiver.swift in Sources */,
+				E5D18CEA210F3E4A008BC65B /* Trace.swift in Sources */,
 				E5F3CE00200D1C2000AB9A44 /* VoidPayload.swift in Sources */,
 				E5F3CE01200D1C2000AB9A44 /* FileSavable.swift in Sources */,
 				E5F3CE02200D1C2000AB9A44 /* KeyValueStorage.swift in Sources */,

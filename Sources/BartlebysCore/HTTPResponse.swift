@@ -14,12 +14,13 @@ public class HTTPResponse: Codable {
     public var httpStatus: Status = Status.undefined
     public var content: Data?
 
+    /// The accessor to the call counter.
+    public var callCounter:Int { return self.metrics?.callCounter ?? -1 }
 
     /// Encodes the content to a String
     public var rawString: String? {
         return self.content != nil ? String(data: self.content!, encoding: Default.STRING_ENCODING) : nil
     }
-
 
     /// Encodes the content to a Pretty JSON
     public var prettyJSON: String? {
@@ -55,11 +56,10 @@ public class HTTPResponse: Codable {
     public required  init(from decoder: Decoder) throws{
         let values = try decoder.container(keyedBy: HTTPResponseCodingKeys.self)
         self.metrics = try values.decode(Metrics.self,forKey:.metrics)
-        let status = try values.decode(Int.self,forKey:.httpStatus)
-        if let httpStatus:Status = Status(rawValue:status){
+        let intStatus = try values.decode(Int.self,forKey:.httpStatus)
+        if let httpStatus:Status = Status(rawValue:intStatus){
             self.httpStatus = httpStatus
         }
-
         self.content = try values.decodeIfPresent(Data.self,forKey:.content)
 
     }
