@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class HTTProbe: ProbeDelegate{
+public class HTTPProbe: ProbeDelegate{
 
     public var folderPath: String
 
