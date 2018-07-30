@@ -150,6 +150,11 @@
 		E5AE11F3201A104700D7E179 /* VoidResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AE11F2201A104700D7E179 /* VoidResult.swift */; };
 		E5BAB6C0200120C900386A9B /* Aliasable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6BF200120C900386A9B /* Aliasable.swift */; };
 		E5BAB6C2200120E400386A9B /* AliasesResolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAB6C1200120E400386A9B /* AliasesResolution.swift */; };
+		E5D18CDD210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
+		E5D18CDE210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
+		E5D18CDF210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
+		E5D18CE0210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
+		E5D18CE1210F1FF8008BC65B /* CodableURLRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */; };
 		E5D6CDE420012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
 		E5D6CDE520012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
 		E5D6CDE620012F2800A3D975 /* Notify.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D6CDE320012F2800A3D975 /* Notify.swift */; };
@@ -590,6 +595,7 @@
 		E5BAB6BF200120C900386A9B /* Aliasable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliasable.swift; sourceTree = "<group>"; };
 		E5BAB6C1200120E400386A9B /* AliasesResolution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasesResolution.swift; sourceTree = "<group>"; };
 		E5BC2D121FF133C200EC45F6 /* StorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocol.swift; sourceTree = "<group>"; };
+		E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableURLRequest.swift; sourceTree = "<group>"; };
 		E5D6CDE320012F2800A3D975 /* Notify.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notify.swift; sourceTree = "<group>"; };
 		E5D6CDED2001329200A3D975 /* Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Selection.swift; sourceTree = "<group>"; };
 		E5D6CDF12001366900A3D975 /* KeyedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyedData.swift; sourceTree = "<group>"; };
@@ -745,6 +751,7 @@
 				E5A554E020938A33004D7511 /* ComposedCallHandler.swift */,
 				E555E68B201C8296007754C0 /* CallSequence.swift */,
 				E56AAA17201097080082D4D6 /* CodableObject.swift */,
+				E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */,
 				E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */,
 				4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */,
 				E542EE0D20442F2F00041347 /* CollectionOf+Tolerent.swift */,
@@ -1405,6 +1412,7 @@
 				E5D6CDE420012F2800A3D975 /* Notify.swift in Sources */,
 				E5EC9F941FF655F9008BF543 /* DataPointProtocol.swift in Sources */,
 				E51AF7D0201A4D5F009E1E0E /* Result.swift in Sources */,
+				E5D18CDD210F1FF8008BC65B /* CodableURLRequest.swift in Sources */,
 				E5EC9FB61FF655FE008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5EC9F9A1FF655F9008BF543 /* HTTPOperation.swift in Sources */,
 				E5EC9F921FF655F9008BF543 /* Collectable.swift in Sources */,
@@ -1515,6 +1523,7 @@
 				E5EC9FFA1FF656AF008BF543 /* Failure.swift in Sources */,
 				E5ECA00D1FF656AF008BF543 /* CollectionOf.swift in Sources */,
 				E51AF7D2201A4D5F009E1E0E /* Result.swift in Sources */,
+				E5D18CDF210F1FF8008BC65B /* CodableURLRequest.swift in Sources */,
 				E5ECA0001FF656AF008BF543 /* JSON.swift in Sources */,
 				E5EC9FE71FF656AF008BF543 /* DataPointProtocol.swift in Sources */,
 				E5ECA0091FF656AF008BF543 /* Model+DictionaryRepresentation.swift in Sources */,
@@ -1611,6 +1620,7 @@
 				E58A27701FFBDC4E00079CB5 /* Default.swift in Sources */,
 				E553813920036C7C0023ED88 /* DataPoint+AliasesResolutions.swift in Sources */,
 				E52527A62000E4D700D9A148 /* Model+AliasesResolution.swift in Sources */,
+				E5D18CE0210F1FF8008BC65B /* CodableURLRequest.swift in Sources */,
 				E5ECA0471FF6579F008BF543 /* Payload.swift in Sources */,
 				E5ECA0511FF657A6008BF543 /* DataResponse.swift in Sources */,
 				E5ECA05E1FF657A6008BF543 /* Model+RelationsResolution.swift in Sources */,
@@ -1719,6 +1729,7 @@
 				E5ECA0901FF6584A008BF543 /* Payload.swift in Sources */,
 				E5ECA09A1FF65851008BF543 /* DataResponse.swift in Sources */,
 				E5ECA0A71FF65851008BF543 /* Model+RelationsResolution.swift in Sources */,
+				E5D18CE1210F1FF8008BC65B /* CodableURLRequest.swift in Sources */,
 				E5ECA0B81FF65851008BF543 /* Upload.swift in Sources */,
 				E52527A32000E4D700D9A148 /* Model+Aliasable.swift in Sources */,
 				E5DBB1DC20022A0B0079F4C6 /* AliasesResolution.swift in Sources */,
@@ -1827,6 +1838,7 @@
 				E5F3CDF4200D1C2000AB9A44 /* Notify.swift in Sources */,
 				E5F3CDF5200D1C2000AB9A44 /* DataPointProtocol.swift in Sources */,
 				E51AF7D1201A4D5F009E1E0E /* Result.swift in Sources */,
+				E5D18CDE210F1FF8008BC65B /* CodableURLRequest.swift in Sources */,
 				E5F3CDF6200D1C2000AB9A44 /* Model+DictionaryRepresentation.swift in Sources */,
 				E5F3CDF7200D1C2000AB9A44 /* HTTPOperation.swift in Sources */,
 				E5F3CDF8200D1C2000AB9A44 /* Collectable.swift in Sources */,
