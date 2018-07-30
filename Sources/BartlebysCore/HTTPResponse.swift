@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class HTTPResponse {
+public class HTTPResponse: Codable {
 
     public var metrics: Metrics?
     public var httpStatus: Status = Status.undefined
@@ -40,6 +40,35 @@ public class HTTPResponse {
         self.metrics = metrics
         self.httpStatus = httpStatus
         self.content = content
+    }
+
+
+    // MARK: - Codable
+
+
+    public enum HTTPResponseCodingKeys: String,CodingKey{
+        case metrics
+        case httpStatus
+        case content
+    }
+
+    public required  init(from decoder: Decoder) throws{
+        let values = try decoder.container(keyedBy: HTTPResponseCodingKeys.self)
+        self.metrics = try values.decode(Metrics.self,forKey:.metrics)
+        let status = try values.decode(Int.self,forKey:.httpStatus)
+        if let httpStatus:Status = Status(rawValue:status){
+            self.httpStatus = httpStatus
+        }
+
+        self.content = try values.decodeIfPresent(Data.self,forKey:.content)
+
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: HTTPResponseCodingKeys.self)
+        try container.encode(self.metrics, forKey: .metrics)
+        try container.encode(self.httpStatus.rawValue, forKey: .httpStatus)
+        try container.encodeIfPresent(self.content,forKey:.content)
     }
 
 }
