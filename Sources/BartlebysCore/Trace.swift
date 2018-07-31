@@ -12,8 +12,8 @@ import Foundation
 /// Used by HTTPProbe to serialize the requests and responses.
 public struct Trace:Codable {
 
-    let callCounter: Int
-    let request: CodableURLRequest
-    let response: Data
+    public let callCounter: Int
+    public let request: CodableURLRequest
+    public let response: Data
 
 }

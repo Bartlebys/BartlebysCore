@@ -9,7 +9,7 @@
 import Foundation
 
 
-class CodableURLRequest: Codable {
+public class CodableURLRequest: Codable {
 
     /// The URL of the receiver.
     public var url: URL?
