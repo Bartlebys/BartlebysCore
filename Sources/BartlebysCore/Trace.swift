@@ -16,4 +16,9 @@ public struct Trace:Codable {
     public let request: CodableURLRequest
     public let response: Data
 
+
+    public static func from(_ url: URL) throws -> Trace{
+        let traceData = try Data.init(contentsOf: url)
+        return try JSON.decoder.decode(Trace.self, from: traceData)
+    }
 }
