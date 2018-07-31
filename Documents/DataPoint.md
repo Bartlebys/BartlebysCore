@@ -83,9 +83,9 @@ Let's imagine we are executing an operation that gets resorts.
                 }
             }
 
-            // use response.prettyJSON or response.rawString
-            if let contentPrettyJSON = response.prettyJSON{
-                print(contentPrettyJSON)
+            // use response.prettyContent or response.rawString
+            if let prettyContent = response.prettyContent{
+                print(prettyContent)
             }
 
             if let metrics = response.metrics{

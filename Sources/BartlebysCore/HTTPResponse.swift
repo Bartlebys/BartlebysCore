@@ -23,7 +23,7 @@ public class HTTPResponse: Codable {
     }
 
     /// Encodes the content to a Pretty JSON
-    public var prettyJSON: String? {
+    public var prettyContent: String? {
         guard let data = self.content else{
             return nil
         }
