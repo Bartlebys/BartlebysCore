@@ -77,8 +77,7 @@ public class HTTPProbe: ProbeDelegate{
         let url: URL = self.folderURL.appendingPathComponent("\(fileName)")
         HTTPProbe.IOQueue.async {
             do{
-                try? data.write(to: url)
-                print("\(url.absoluteString) exists: \(FileManager().fileExists(atPath: url.path))")
+                try data.write(to: url)
             }catch{
                 Logger.log(error)
             }
