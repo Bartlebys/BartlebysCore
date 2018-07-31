@@ -10,23 +10,30 @@ import Foundation
 
 public class HTTPProbe: ProbeDelegate{
 
-    public var folderPath: String
+    public var relativeFolderPath: String
 
     /// We use a serial queue for all our IO
-    public fileprivate(set) var IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.HTTPProbe", qos: .utility, attributes: [])
+    public static let IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.HTTPProbe", qos: .utility, attributes: [])
 
-    init(folderPath: String) {
-        self.folderPath = folderPath
+    public init(relativeFolderPath: String) {
+        self.relativeFolderPath = relativeFolderPath
     }
 
+    fileprivate var _folderAsBeenTested:Bool = false
+
+    public var folderURL:URL { return Paths.documentsDirectoryURL.appendingPathComponent("probes\(self.relativeFolderPath)") }
 
     /// Cleans up all the serialized probes.
-    public func reset(){
-        self.IOQueue.async {
+    public static func resetAll(){
+        HTTPProbe.IOQueue.async {
             let fm = FileManager()
-            try? fm.removeItem(atPath: self.folderPath)
+            let folder = Paths.documentsDirectoryURL.appendingPathComponent("probes")
+            try? fm.removeItem(at:folder)
+            try? fm.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
         }
     }
+
+
 
     // MARK: - ProbeDelegate
 
@@ -59,12 +66,23 @@ public class HTTPProbe: ProbeDelegate{
     ///
     /// - Parameter trace: the serialized trace
     public func record(_ trace:Trace){
-        let urlMethod: String = trace.request.httpMethod ?? "NO_METHOD"
-        let urlString: String = trace.request.url?.absoluteString ?? "NO_URL"
+        if self._folderAsBeenTested == false{
+            HTTPProbe.IOQueue.async {
+                let fm = FileManager()
+                try? fm.createDirectory(at: self.folderURL, withIntermediateDirectories: true, attributes: nil)
+            }
+        }
         let data: Data = (try? JSON.prettyEncoder.encode(trace)) ?? "Trace serialization did fail".data(using: .utf8)!
-        let fileName : String = "\(trace.callCounter.paddedString(6)).\(urlMethod).\(urlString).json"
-        let url: URL = URL(fileURLWithPath: self.folderPath+"/" + fileName )
-        self.IOQueue.async {try? data.write(to: url) }
+        let fileName : String = "\(trace.callCounter.paddedString(6))"
+        let url: URL = self.folderURL.appendingPathComponent("\(fileName)")
+        HTTPProbe.IOQueue.async {
+            do{
+                try? data.write(to: url)
+                print("\(url.absoluteString) exists: \(FileManager().fileExists(atPath: url.path))")
+            }catch{
+                Logger.log(error)
+            }
+        }
     }
 
 }
