@@ -24,9 +24,11 @@ public struct Trace: Codable {
     // The response
     public let response: Data
 
-    // The HTTP
+    // The HTTP status
     public let httpStatus: Int
 
+    // The size of the response expressed in Bytes
+    public let sizeOfResponse: Int
 
     /// Loads the Trace from a file.
     ///
