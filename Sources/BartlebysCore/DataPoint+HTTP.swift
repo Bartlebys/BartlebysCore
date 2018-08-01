@@ -228,7 +228,7 @@ extension DataPoint{
             } else {
 
                 var contentData: Data?
-                if Default.TRACE_DOWNLOADED_RESOURCES_IN_HTTPPROBE{
+                if Default.TRACE_DOWNLOADED_RESOURCES_IN_HTTPPROBE, let tempURL:URL = temporaryURL{
                     if let data = try? Data(contentsOf: tempURL){
                         contentData = data
                     }
