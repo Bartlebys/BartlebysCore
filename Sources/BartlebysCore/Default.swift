@@ -31,4 +31,9 @@ public class Default{
     static public let NOT_SPECIFIED: String = "NOT_SPECIFIED"
     static public let STRING_ENCODING: String.Encoding = .utf8
 
+
+    /// If set to true the downloaded files are stored in Traces
+    /// Should be generally set to false for better performances.
+    static public var TRACE_DOWNLOADED_RESOURCES_IN_HTTPPROBE: Bool = false
+
 }

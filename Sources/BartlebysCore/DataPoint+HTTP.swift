@@ -226,9 +226,17 @@ extension DataPoint{
                     self.probe(request: request, failure: issue, relay: failure)
                 }
             } else {
-                
-                
-                let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
+
+                var contentData: Data?
+                if Default.TRACE_DOWNLOADED_RESOURCES_IN_HTTPPROBE{
+                    if let fileUrl = try? localFilePath.absoluteFileURL(){
+                        if let data = try? Data(contentsOf: fileUrl){
+                            contentData = data
+                        }
+                    }
+                }
+
+                let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: contentData)
                 
                 if let error = error {
                     self.errorCounter += 1
@@ -328,7 +336,6 @@ extension DataPoint{
                         self.probe(request: request, failure: issue, relay: failure)
                     }
                 } else {
-                    
                     let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
                     
                     guard 200 ... 299 ~= httpURLResponse.statusCode else{
