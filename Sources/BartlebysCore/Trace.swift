@@ -10,10 +10,10 @@ import Foundation
 
 
 /// Used by HTTPProbe to serialize the requests and responses.
-public struct Trace:Codable {
+public struct Trace: Codable {
 
-    // You can use the claasifier to split traces for example per session (runUID)
-    public var classifier: UID? = Default.NO_UID
+    // You can use the claasifier to split traces per session
+    public var classifier: UID = Default.NO_UID
 
     // The request call counter
     public let callCounter: Int
@@ -24,18 +24,8 @@ public struct Trace:Codable {
     // The response
     public let response: Data
 
-
-    /// The constructor
-    ///
-    /// - Parameters:
-    ///   - callCounter: the call counter
-    ///   - request: the associated request state
-    ///   - response: the HTTP response.
-    public init ( callCounter: Int, request: CodableURLRequest, response: Data){
-        self.callCounter = callCounter
-        self.request = request
-        self.response = response
-    }
+    // The HTTP
+    public let httpStatus: Int
 
 
     /// Loads the Trace from a file.
