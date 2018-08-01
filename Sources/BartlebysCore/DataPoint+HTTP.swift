@@ -229,10 +229,8 @@ extension DataPoint{
 
                 var contentData: Data?
                 if Default.TRACE_DOWNLOADED_RESOURCES_IN_HTTPPROBE{
-                    if let fileUrl = try? localFilePath.absoluteFileURL(){
-                        if let data = try? Data(contentsOf: fileUrl){
-                            contentData = data
-                        }
+                    if let data = try? Data(contentsOf: tempURL){
+                        contentData = data
                     }
                 }
 
