@@ -9,23 +9,23 @@
 import Foundation
 
 public class HTTPProbe: ProbeDelegate{
-    
+
     public fileprivate (set) var relativeFolderPath: String
-    
+
     public let classifier: String
-    
+
     /// We use a serial queue for all our IO
     public static let IOQueue:DispatchQueue = DispatchQueue(label: "org.bartlebys.HTTPProbe", qos: .utility, attributes: [])
-    
+
     public init(relativeFolderPath: String) {
         self.relativeFolderPath = relativeFolderPath
         self.classifier = URL(fileURLWithPath: relativeFolderPath).lastPathComponent
     }
-    
+
     fileprivate var _folderAsBeenTested:Bool = false
-    
+
     public var folderURL:URL { return Paths.documentsDirectoryURL.appendingPathComponent("probes\(self.relativeFolderPath)") }
-    
+
     /// Cleans up all the serialized probes.
     public static func resetAll(){
         HTTPProbe.IOQueue.async {
@@ -35,15 +35,15 @@ public class HTTPProbe: ProbeDelegate{
             try? fm.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
         }
     }
-    
-    
-    
+
+
+
     // MARK: - ProbeDelegate
-    
+
     public func recordProbe(for request: URLRequest, response httpResponse: HTTPResponse) {
         let codableRequest: CodableURLRequest =  CodableURLRequest.from(request)
         let responseData:Data = (try? JSON.prettyEncoder.encode(httpResponse)) ?? "HTTPResponse serialization did fail".data(using:.utf8)!
-        
+
         let trace: Trace = Trace(classifier: self.classifier,
                                  callCounter: httpResponse.callCounter,
                                  request: codableRequest,
@@ -52,20 +52,20 @@ public class HTTPProbe: ProbeDelegate{
                                  sizeOfResponse: responseData.count)
         self.record(trace)
     }
-    
+
     public func recordProbe<R>(for request: URLRequest, response httpResponse: DataResponse<R>) where R : Collectable, R : Decodable, R : Encodable {
         let codableRequest: CodableURLRequest =  CodableURLRequest.from(request)
         let responseData:Data = (try? JSON.prettyEncoder.encode(httpResponse)) ?? "DataResponse serialization did fail".data(using:.utf8)!
-        
+
         let trace: Trace = Trace(classifier: self.classifier,
                                  callCounter: httpResponse.callCounter,
                                  request: codableRequest,
                                  response: responseData,
                                  httpStatus: httpResponse.httpStatus.rawValue,
-                                 sizeOfResponse: responseData.count)
+                                 sizeOfResponse: httpResponse.content?.count ?? -1)
         self.record(trace)
     }
-    
+
     public func recordProbe(for request: URLRequest, failure: Failure) {
         let codableRequest: CodableURLRequest =  CodableURLRequest.from(request)
         let responseData:Data = (try? JSON.prettyEncoder.encode(failure)) ?? "Failure serialization did fail".data(using:.utf8)!
@@ -74,14 +74,14 @@ public class HTTPProbe: ProbeDelegate{
                                  request: codableRequest,
                                  response: responseData,
                                  httpStatus: failure.httpResponse?.httpStatus.rawValue ?? Status.undefined.rawValue,
-                                 sizeOfResponse: responseData.count)
+                                 sizeOfResponse: failure.httpResponse?.content?.count ?? -1)
         self.record(trace)
     }
-    
-    
+
+
     // MARK : - Probe
-    
-    
+
+
     /// Records the trace
     ///
     /// - Parameter trace: the serialized trace
@@ -103,5 +103,5 @@ public class HTTPProbe: ProbeDelegate{
             }
         }
     }
-    
+
 }
