@@ -10,6 +10,8 @@ import Foundation
 
 public class HTTPProbe: ProbeDelegate{
 
+    static fileprivate let _fileManager: FileManager = FileManager()
+
     public fileprivate (set) var relativeFolderPath: String
 
     public let classifier: String
@@ -20,19 +22,25 @@ public class HTTPProbe: ProbeDelegate{
     public init(relativeFolderPath: String) {
         self.relativeFolderPath = relativeFolderPath
         self.classifier = URL(fileURLWithPath: relativeFolderPath).lastPathComponent
+        HTTPProbe.IOQueue.async{
+            do{
+                try HTTPProbe._fileManager.createDirectory(at: self.folderURL, withIntermediateDirectories: true, attributes: nil)
+            }catch{
+                Logger.log(error, category: .warning)
+            }
+        }
     }
 
     fileprivate var _folderAsBeenTested:Bool = false
 
-    public var folderURL:URL { return Paths.documentsDirectoryURL.appendingPathComponent("probes\(self.relativeFolderPath)") }
+    public var folderURL:URL { return Paths.documentsDirectoryURL.appendingPathComponent("\(Paths.PROBES_FOLDER_NAME)\(self.relativeFolderPath)") }
 
     /// Cleans up all the serialized probes.
-    public static func resetAll(then `do`:@escaping ()->()){
-        HTTPProbe.IOQueue.sync{
-            let fm = FileManager()
-            let folder = Paths.documentsDirectoryURL.appendingPathComponent("probes")
-            try? fm.removeItem(at:folder)
-            try? fm.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+    public static func resetAll(then `do`: @escaping ()->()){
+        HTTPProbe.IOQueue.async{
+            let folder = Paths.documentsDirectoryURL.appendingPathComponent(Paths.PROBES_FOLDER_NAME)
+            try? HTTPProbe._fileManager.removeItem(at:folder)
+            try? HTTPProbe._fileManager.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
             syncOnMain {
                 `do`()
             }
@@ -89,12 +97,6 @@ public class HTTPProbe: ProbeDelegate{
     ///
     /// - Parameter trace: the serialized trace
     public func record(_ trace:Trace){
-        if self._folderAsBeenTested == false{
-            HTTPProbe.IOQueue.async {
-                let fm = FileManager()
-                try? fm.createDirectory(at: self.folderURL, withIntermediateDirectories: true, attributes: nil)
-            }
-        }
         let data: Data = (try? JSON.prettyEncoder.encode(trace)) ?? "Trace serialization did fail".data(using: .utf8)!
         let fileName : String = "\(trace.callCounter.paddedString(6))"
         let url: URL = self.folderURL.appendingPathComponent("\(fileName)")
