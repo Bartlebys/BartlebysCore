@@ -27,12 +27,15 @@ public class HTTPProbe: ProbeDelegate{
     public var folderURL:URL { return Paths.documentsDirectoryURL.appendingPathComponent("probes\(self.relativeFolderPath)") }
 
     /// Cleans up all the serialized probes.
-    public static func resetAll(){
-        HTTPProbe.IOQueue.async {
+    public static func resetAll(then `do`:@escaping ()->()){
+        HTTPProbe.IOQueue.sync{
             let fm = FileManager()
             let folder = Paths.documentsDirectoryURL.appendingPathComponent("probes")
             try? fm.removeItem(at:folder)
             try? fm.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+            syncOnMain {
+                `do`()
+            }
         }
     }
 
