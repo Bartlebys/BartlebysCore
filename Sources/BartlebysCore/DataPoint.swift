@@ -1119,130 +1119,6 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
             self.runningCallsUIDS.remove(at: indexOfOperation)
         }
     }
-}
-
-
-// MARK: - Centralized Instances Registration
-
-extension DataPoint{
-    
-    // The number of registred object
-    public var numberOfRegistredObject: Int {
-        get {
-            return self._instancesByUID.count
-        }
-    }
-    
-    /// Registers an instance
-    ///
-    /// - Parameter instance: the instance to be registered
-    public func register<T:  Codable & Collectable >(_ instance: T) {
-        // Store the instance by its UID
-        self._instancesByUID[instance.id]=instance
-        
-        // Check if some deferred Ownership has been recorded
-        if let owneesUIDS = self._deferredOwnerships[instance.id] {
-            /// This situation occurs for example
-            /// when the ownee has been triggered but not the owner
-            // or the deserialization of the ownee preceeds the owner
-            if let o=instance as? Model{
-                for owneeUID in  owneesUIDS{
-                    if let _ = self.registredModelByUID(owneeUID){
-                        // Add the owns entry
-                        if !o.owns.contains(owneeUID){
-                            o.owns.append(owneeUID)
-                        }
-                    }else{
-                        Logger.log("Deferred ownership has failed to found \(owneeUID) for \(o.id)", category: .critical)
-                    }
-                }
-            }
-            self._deferredOwnerships.removeValue(forKey: instance.id)
-        }
-    }
-    
-    
-    /// Removes the registred instance from the registry
-    ///
-    /// - Parameter instance: the instance
-    public func unRegister<T:  Codable & Collectable >(_ instance: T) {
-        self._instancesByUID.removeValue(forKey: instance.id)
-    }
-
-    
-    // MARK: Generic level
-    
-    /// Returns the registred instance of by its UID
-    ///
-    /// - Parameter UID: the instance unique identifier
-    /// - Returns: the instance
-    public func registredObjectByUID<T: Codable & Collectable>(_ UID: UID) throws-> T {
-        if let instance=self._instancesByUID[UID]{
-            if let casted=instance as? T{
-                return casted
-            }else{
-                throw DataPointError.instanceTypeMissMatch
-            }
-        }else{
-            throw DataPointError.instanceNotFound
-        }
-    }
-    
-    ///  Returns the registred instance of by UIDs
-    ///
-    /// - Parameter UIDs: the UIDs
-    /// - Returns: the registred Instances
-    public func registredObjectsByUIDs<T: Codable & Collectable >(_ UIDs: [UID]) throws-> [T] {
-        var items:[T]=[T]()
-        for UID in UIDs{
-            if let instance=self._instancesByUID[UID]{
-                if let casted=instance as? T{
-                    items.append(casted)
-                }else{
-                    throw DataPointError.instanceTypeMissMatch
-                }
-            }else{
-                throw DataPointError.instanceNotFound
-            }
-        }
-        return items
-    }
-
-    
-    // MARK: -
-    
-    /// Stores the ownee when the owner is not already available
-    /// This situation may occur for example on collection deserialization
-    /// when the owner is deserialized before the ownee.
-    ///
-    /// - Parameters:
-    ///   - ownee: the ownee
-    ///   - ownerUID: the currently unavailable owner UID
-    public func appendToDeferredOwnershipsList<T:Codable & Collectable>(_ ownee:T,ownerUID:UID){
-        if self._deferredOwnerships.keys.contains(ownerUID) {
-            self._deferredOwnerships[ownerUID]?.append(ownee.id)
-        }else{
-            self._deferredOwnerships[ownerUID]=[ownee.id]
-        }
-    }
-    
-    
-    // MARK: - Private plumbing
-    
-    fileprivate func _getLastOrderOfExecution()->Int{
-        do{
-            if let order:Int = try self.getFromKVS(key: DataPoint.sessionLastExecutionKVSKey){
-                return order
-            }
-        }catch KeyValueStorageError.keyNotFound(_){
-            // it may be the first time
-        }catch{
-            // That's not normal
-            Logger.log("\(error)", category: .critical)
-        }
-        return ORDER_OF_EXECUTION_UNDEFINED
-    }
-
 
     // MARK: - HTTP Engine (Request level)
 
@@ -1253,8 +1129,8 @@ extension DataPoint{
     ///   - success: the success call back
     ///   - failure: the failure call back
     open func call( request: URLRequest,
-                      success: @escaping (_ completion: HTTPResponse)->(),
-                      failure: @escaping (_ completion: Failure)->()){
+                    success: @escaping (_ completion: HTTPResponse)->(),
+                    failure: @escaping (_ completion: Failure)->()){
 
         self.callsCounter += 1
 
@@ -1319,10 +1195,10 @@ extension DataPoint{
     ///   - success: the success call back
     ///   - failure: the failure call back
     open func call<R>(  request: URLRequest,
-                          resultType: R.Type,
-                          resultIsACollection:Bool,
-                          success: @escaping (_ completion: DataResponse<R>)->(),
-                          failure: @escaping (_ completion: Failure)->()) {
+                        resultType: R.Type,
+                        resultIsACollection:Bool,
+                        success: @escaping (_ completion: DataResponse<R>)->(),
+                        failure: @escaping (_ completion: Failure)->()) {
 
         self.callsCounter += 1
 
@@ -1417,9 +1293,9 @@ extension DataPoint{
     ///   - success: the success call back
     ///   - failure: the failure call back
     open func callDownload(  request: URLRequest,
-                               localFilePath: FilePath,
-                               success: @escaping (_ completion: HTTPResponse)->(),
-                               failure: @escaping (_ completion: Failure)->()) {
+                             localFilePath: FilePath,
+                             success: @escaping (_ completion: HTTPResponse)->(),
+                             failure: @escaping (_ completion: Failure)->()) {
 
         self.callsCounter += 1
 
@@ -1586,5 +1462,128 @@ extension DataPoint{
             failure(Failure(from: error))
         }
 
+    }
+}
+
+
+// MARK: - Centralized Instances Registration
+
+extension DataPoint{
+    
+    // The number of registred object
+    public var numberOfRegistredObject: Int {
+        get {
+            return self._instancesByUID.count
+        }
+    }
+    
+    /// Registers an instance
+    ///
+    /// - Parameter instance: the instance to be registered
+    public func register<T:  Codable & Collectable >(_ instance: T) {
+        // Store the instance by its UID
+        self._instancesByUID[instance.id]=instance
+        
+        // Check if some deferred Ownership has been recorded
+        if let owneesUIDS = self._deferredOwnerships[instance.id] {
+            /// This situation occurs for example
+            /// when the ownee has been triggered but not the owner
+            // or the deserialization of the ownee preceeds the owner
+            if let o=instance as? Model{
+                for owneeUID in  owneesUIDS{
+                    if let _ = self.registredModelByUID(owneeUID){
+                        // Add the owns entry
+                        if !o.owns.contains(owneeUID){
+                            o.owns.append(owneeUID)
+                        }
+                    }else{
+                        Logger.log("Deferred ownership has failed to found \(owneeUID) for \(o.id)", category: .critical)
+                    }
+                }
+            }
+            self._deferredOwnerships.removeValue(forKey: instance.id)
+        }
+    }
+    
+    
+    /// Removes the registred instance from the registry
+    ///
+    /// - Parameter instance: the instance
+    public func unRegister<T:  Codable & Collectable >(_ instance: T) {
+        self._instancesByUID.removeValue(forKey: instance.id)
+    }
+
+    
+    // MARK: Generic level
+    
+    /// Returns the registred instance of by its UID
+    ///
+    /// - Parameter UID: the instance unique identifier
+    /// - Returns: the instance
+    public func registredObjectByUID<T: Codable & Collectable>(_ UID: UID) throws-> T {
+        if let instance=self._instancesByUID[UID]{
+            if let casted=instance as? T{
+                return casted
+            }else{
+                throw DataPointError.instanceTypeMissMatch
+            }
+        }else{
+            throw DataPointError.instanceNotFound
+        }
+    }
+    
+    ///  Returns the registred instance of by UIDs
+    ///
+    /// - Parameter UIDs: the UIDs
+    /// - Returns: the registred Instances
+    public func registredObjectsByUIDs<T: Codable & Collectable >(_ UIDs: [UID]) throws-> [T] {
+        var items:[T]=[T]()
+        for UID in UIDs{
+            if let instance=self._instancesByUID[UID]{
+                if let casted=instance as? T{
+                    items.append(casted)
+                }else{
+                    throw DataPointError.instanceTypeMissMatch
+                }
+            }else{
+                throw DataPointError.instanceNotFound
+            }
+        }
+        return items
+    }
+
+    
+    // MARK: -
+    
+    /// Stores the ownee when the owner is not already available
+    /// This situation may occur for example on collection deserialization
+    /// when the owner is deserialized before the ownee.
+    ///
+    /// - Parameters:
+    ///   - ownee: the ownee
+    ///   - ownerUID: the currently unavailable owner UID
+    public func appendToDeferredOwnershipsList<T:Codable & Collectable>(_ ownee:T,ownerUID:UID){
+        if self._deferredOwnerships.keys.contains(ownerUID) {
+            self._deferredOwnerships[ownerUID]?.append(ownee.id)
+        }else{
+            self._deferredOwnerships[ownerUID]=[ownee.id]
+        }
+    }
+    
+    
+    // MARK: - Private plumbing
+    
+    fileprivate func _getLastOrderOfExecution()->Int{
+        do{
+            if let order:Int = try self.getFromKVS(key: DataPoint.sessionLastExecutionKVSKey){
+                return order
+            }
+        }catch KeyValueStorageError.keyNotFound(_){
+            // it may be the first time
+        }catch{
+            // That's not normal
+            Logger.log("\(error)", category: .critical)
+        }
+        return ORDER_OF_EXECUTION_UNDEFINED
     }
 }
