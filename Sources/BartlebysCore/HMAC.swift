@@ -9,7 +9,7 @@
 import Foundation
 import CommonCrypto
 
-enum HMACAlgorithms {
+public enum HMACAlgorithms {
 
     case md5, sha1, sha224, sha256, sha384, sha512
 
@@ -43,7 +43,7 @@ public struct HMAC {
     ///   - string: the string to digest
     ///   - algo: the algorythm to use
     /// - Returns: the digest string
-    static func digestString(_ string: String, algo: HMACAlgorithms) -> String {
+    static func digestHexString(_ string: String, algo: HMACAlgorithms) -> String {
         if let stringData = string.data(using: String.Encoding.utf8, allowLossyConversion: false){
             let digest = HMAC._digest(stringData, algo: algo)
             return HMAC._hexStringFromData(digest)
@@ -54,10 +54,10 @@ public struct HMAC {
     /// Return the digest
     ///
     /// - Parameters:
-    ///   - string: the Data to digest
+    ///   - data: the Data to digest
     ///   - algo: the algorythm to use
     /// - Returns: the digest string
-    static func digestData(_ data: Data, algo: HMACAlgorithms) -> String {
+    static func digestHexString(_ data: Data, algo: HMACAlgorithms) -> String {
         let digest = HMAC._digest(data, algo: algo)
         return HMAC._hexStringFromData(digest)
     }
@@ -125,31 +125,62 @@ public struct HMAC {
 
 }
 
+// MARK: - String extension
 
 public extension String {
 
     var md5: String {
-        return HMAC.digestString(self, algo: HMACAlgorithms.md5)
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.md5)
     }
 
     var sha1: String {
-        return HMAC.digestString(self, algo: HMACAlgorithms.sha1)
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha1)
     }
 
     var sha224: String {
-        return HMAC.digestString(self, algo: HMACAlgorithms.sha224)
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha224)
     }
 
     var sha256: String {
-        return HMAC.digestString(self, algo: HMACAlgorithms.sha256)
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha256)
     }
 
     var sha384: String {
-        return HMAC.digestString(self, algo: HMACAlgorithms.sha384)
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha384)
     }
 
     var sha512: String {
-        return HMAC.digestString(self, algo: HMACAlgorithms.sha512)
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha512)
+    }
+
+}
+
+// MARK: - Data extension
+
+public extension Data {
+
+    var md5: String {
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.md5)
+    }
+
+    var sha1: String {
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha1)
+    }
+
+    var sha224: String {
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha224)
+    }
+
+    var sha256: String {
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha256)
+    }
+
+    var sha384: String {
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha384)
+    }
+
+    var sha512: String {
+        return HMAC.digestHexString(self, algo: HMACAlgorithms.sha512)
     }
 
 }
