@@ -1398,7 +1398,7 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
     ///   - localFilePath: the local file path
     ///   - success: the success call back
     ///   - failure: the failure call back
-    public func callUpload( request: URLRequest,
+    open func callUpload( request: URLRequest,
                             localFilePath: FilePath,
                             success: @escaping (_ completion: HTTPResponse)->(),
                             failure: @escaping (_ completion: Failure)->()) {
