@@ -67,4 +67,33 @@ public class CodableURLRequest: Codable {
         try container.encodeIfPresent(self.httpBody,forKey:.httpBody)
     }
 
+
+    public var decodedBody: String?{
+        guard let data = self.httpBody else {
+            return nil
+        }
+        // Temporary for debug purposes @todo a serious implementation
+        if let encoding:String = self.allHTTPHeaderFields?["Content-Type"]{
+            switch encoding{
+            case "application/x-www-form-urlencoded":
+                return String(data: data, encoding: String.Encoding.ascii)
+            case "text/html; charset=utf-8":
+                return String(data: data, encoding: String.Encoding.utf8)
+            case "application/json":
+                do{
+                    let container:Any = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                    let reEncodedJSON: Data = try JSONSerialization.data(withJSONObject: container, options: JSONSerialization.WritingOptions.prettyPrinted)
+                    return String(data:reEncodedJSON,encoding: Default.STRING_ENCODING)
+                }catch{
+                    return "\(error)"
+                }
+            default:
+                return String(data: data, encoding: String.Encoding.utf8)
+            }
+        }else{
+            return String(data: data, encoding: String.Encoding.utf8)
+        }
+
+    }
+
 }

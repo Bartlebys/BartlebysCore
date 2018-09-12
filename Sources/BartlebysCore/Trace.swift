@@ -39,4 +39,16 @@ public struct Trace: Codable {
         let traceData = try Data.init(contentsOf: url)
         return try JSON.decoder.decode(Trace.self, from: traceData)
     }
+
+
+    /// Encodes the response to a Pretty JSON
+    public var prettyJsonResponse: String? {
+        do{
+            let container:Any = try JSONSerialization.jsonObject(with: self.response, options: JSONSerialization.ReadingOptions.allowFragments)
+            let reEncodedJSON: Data = try JSONSerialization.data(withJSONObject: container, options: JSONSerialization.WritingOptions.prettyPrinted)
+            return String(data:reEncodedJSON,encoding: Default.STRING_ENCODING)
+        }catch{
+            return "\(error)"
+        }
+    }
 }

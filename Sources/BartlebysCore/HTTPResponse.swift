@@ -23,13 +23,13 @@ public class HTTPResponse: Codable {
     }
 
     /// Encodes the content to a Pretty JSON
-    public var prettyContent: String? {
+    public var prettyJsonContent: String? {
         guard let data = self.content else{
             return nil
         }
         do{
-            let container = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions.allowFragments)
-            let reEncodedJSON = try JSONSerialization.data(withJSONObject: container, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let container:Any = try JSONSerialization.jsonObject(with:data, options: JSONSerialization.ReadingOptions.allowFragments)
+            let reEncodedJSON:Data = try JSONSerialization.data(withJSONObject: container, options: JSONSerialization.WritingOptions.prettyPrinted)
             return String(data:reEncodedJSON,encoding: Default.STRING_ENCODING)
         }catch{
             return "\(error)"
