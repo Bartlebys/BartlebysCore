@@ -1147,7 +1147,8 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                 return
             }
 
-            let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: data)
+            let allHTTPHeaderFields: [String:String]? = httpURLResponse.allHeaderFields as? [String:String]
+            let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(),allHTTPHeaderFields: allHTTPHeaderFields, content: data)
 
             if let error = error {
                 self.errorCounter += 1
@@ -1215,10 +1216,13 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                 return
             }
 
+            let allHTTPHeaderFields: [String:String]? = httpURLResponse.allHeaderFields as? [String:String]
+
             if let error = error {
                 self.errorCounter += 1
                 syncOnMain {
-                    let dataResponse = DataResponse(result:Array<R>(), content: nil, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
+
+                    let dataResponse = DataResponse(result:Array<R>(), content: nil, metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields)
                     let issue: Failure = Failure(from : dataResponse , and: error)
                     self.probe(request: request, failure: issue, relay: failure)
                 }
@@ -1227,7 +1231,7 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                 guard 200 ... 299 ~= httpURLResponse.statusCode else{
                     self.errorCounter += 1
                     syncOnMain {
-                        let dataResponse = DataResponse(result: Array<R>(), content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
+                        let dataResponse = DataResponse(result: Array<R>(), content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields)
                         let issue: Failure = Failure(from : dataResponse , and: DataPointHTTPError.invalidStatus(statusCode: httpURLResponse.statusCode))
                         self.probe(request: request, failure: issue, relay: failure)
                     }
@@ -1239,14 +1243,14 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                         if resultIsACollection {
                             let decoded = try self.operationsCoder.decodeArrayOf(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
-                            let dataResponse = DataResponse(result: decoded, content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
+                            let dataResponse = DataResponse(result: decoded, content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields)
                             syncOnMain {
                                 self.probe(request: request, response: dataResponse, relay: success)
                             }
                         } else {
                             let decoded = try self.operationsCoder.decode(R.self, from: data)
                             metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
-                            let dataResponse = DataResponse(result: [decoded], content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
+                            let dataResponse = DataResponse(result: [decoded], content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields)
                             syncOnMain {
                                 self.probe(request: request, response: dataResponse, relay: success)
                             }
@@ -1254,7 +1258,7 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                     } catch {
                         self.errorCounter += 1
                         syncOnMain {
-                            let dataResponse = DataResponse(result:Array<R>(), content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
+                            let dataResponse = DataResponse(result:Array<R>(), content: data, metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields)
                             let issue: Failure = Failure(from : dataResponse, and: error)
                             self.probe(request: request, failure: issue, relay: failure)
                         }
@@ -1263,7 +1267,7 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                     // There is no data
                     syncOnMain {
                         metrics.serializationDuration = AbsoluteTimeGetCurrent() - serverHasRespondedTime
-                        let dataResponse: DataResponse = DataResponse(result: Array<R>(),content: nil,metrics: metrics, httpStatus: httpURLResponse.statusCode.status())
+                        let dataResponse: DataResponse = DataResponse(result: Array<R>(),content: nil,metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields)
                         self.probe(request: request, response: dataResponse, relay: success)
                     }
                 }
@@ -1322,6 +1326,8 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                 }
             } else {
 
+                let allHTTPHeaderFields: [String:String]? = httpURLResponse.allHeaderFields as? [String:String]
+
                 var contentData: Data?
                 if Default.TRACE_DOWNLOADED_RESOURCES_IN_HTTPPROBE, let tempURL:URL = temporaryURL{
                     if let data = try? Data(contentsOf: tempURL){
@@ -1329,7 +1335,9 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                     }
                 }
 
-                let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: contentData)
+
+
+                let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields, content: contentData)
 
                 if let error = error {
                     self.errorCounter += 1
@@ -1421,6 +1429,8 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                     return
                 }
 
+                let allHTTPHeaderFields: [String:String]? = httpURLResponse.allHeaderFields as? [String:String]
+
                 if let error = error {
                     self.errorCounter += 1
                     syncOnMain {
@@ -1429,7 +1439,7 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
                         self.probe(request: request, failure: issue, relay: failure)
                     }
                 } else {
-                    let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), content: nil)
+                    let httpResponse = HTTPResponse(metrics: metrics, httpStatus: httpURLResponse.statusCode.status(), allHTTPHeaderFields: allHTTPHeaderFields, content: nil)
 
                     guard 200 ... 299 ~= httpURLResponse.statusCode else{
                         self.errorCounter += 1
