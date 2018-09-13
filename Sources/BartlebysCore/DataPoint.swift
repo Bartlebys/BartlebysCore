@@ -222,7 +222,7 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
         self.currentState = newState
         switch newState{
         case .online:
-           self._resumeCallSequences()
+            self._resumeCallSequences()
         case .offline:
             // Cancel futures calls.
             for sequ in self._futureWorks.keys{
@@ -419,12 +419,11 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
     
     /// The credentials should generaly not change during the session
     open lazy var credentials: Credentials = Credentials(username: Default.NO_NAME, password: Default.NO_PASSWORD)
-    
-    /// The authentication method
-    open var authenticationMethod: AuthenticationMethod = AuthenticationMethod.basicHTTPAuth
-    
+
     /// The current Scheme .https is a must
     open var scheme: Schemes = Schemes.https
+
+
     
     ///  Returns the configured URLrequest
     ///  This func is public not open
@@ -442,15 +441,6 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
         
         var request: URLRequest = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        
-        switch self.authenticationMethod {
-        case .basicHTTPAuth:
-            let loginString = "\(self.credentials.username):\(self.credentials.password)"
-            if let loginData: Data = loginString.data(using: Default.STRING_ENCODING) {
-                let base64LoginString: String = loginData.base64EncodedString()
-                request.setValue("Basic " + base64LoginString, forHTTPHeaderField: "Authorization")
-            }
-        }
         
         return request
     }
@@ -1399,9 +1389,9 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
     ///   - success: the success call back
     ///   - failure: the failure call back
     open func callUpload( request: URLRequest,
-                            localFilePath: FilePath,
-                            success: @escaping (_ completion: HTTPResponse)->(),
-                            failure: @escaping (_ completion: Failure)->()) {
+                          localFilePath: FilePath,
+                          success: @escaping (_ completion: HTTPResponse)->(),
+                          failure: @escaping (_ completion: Failure)->()) {
 
         self.callsCounter += 1
 

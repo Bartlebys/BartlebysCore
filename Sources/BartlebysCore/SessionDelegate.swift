@@ -7,10 +7,6 @@
 //
 import Foundation
 
-public enum AuthenticationMethod {
-    case basicHTTPAuth
-}
-
 
 /// Base Session Delegate check also DataPointProtocol
 public protocol SessionDelegate:CallOperationReceiver {
@@ -23,9 +19,6 @@ public protocol SessionDelegate:CallOperationReceiver {
 
     /// The credentials should generaly not change during the session
     var credentials:Credentials { get set }
-
-    /// The authentication method
-    var authenticationMethod: AuthenticationMethod { get }
 
     /// The current Scheme .https is a must
     var scheme:Schemes { get }
