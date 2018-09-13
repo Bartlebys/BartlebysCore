@@ -11,8 +11,15 @@ import Foundation
 public class HTTPResponse: Codable {
 
     public var metrics: Metrics?
+
     public var httpStatus: Status = Status.undefined
+
+    /// A dictionary containing all the HTTP header fields of the
+    /// receiver.
+    public var allHTTPHeaderFields: [String : String]?
+
     public var content: Data?
+
 
     /// The accessor to the call counter.
     public var callCounter:Int { return self.metrics?.callCounter ?? -1 }
@@ -37,9 +44,10 @@ public class HTTPResponse: Codable {
     }
 
 
-    public init(metrics: Metrics, httpStatus: Status, content: Data?) {
+    public init(metrics: Metrics, httpStatus: Status, allHTTPHeaderFields: [String:String]? , content: Data?) {
         self.metrics = metrics
         self.httpStatus = httpStatus
+        self.allHTTPHeaderFields = allHTTPHeaderFields
         self.content = content
     }
 
@@ -50,6 +58,7 @@ public class HTTPResponse: Codable {
     public enum HTTPResponseCodingKeys: String,CodingKey{
         case metrics
         case httpStatus
+        case allHTTPHeaderFields
         case content
     }
 
@@ -60,6 +69,7 @@ public class HTTPResponse: Codable {
         if let httpStatus:Status = Status(rawValue:intStatus){
             self.httpStatus = httpStatus
         }
+        self.allHTTPHeaderFields = try values.decodeIfPresent([String : String].self,forKey:.allHTTPHeaderFields)
         self.content = try values.decodeIfPresent(Data.self,forKey:.content)
 
     }
@@ -68,6 +78,7 @@ public class HTTPResponse: Codable {
         var container = encoder.container(keyedBy: HTTPResponseCodingKeys.self)
         try container.encode(self.metrics, forKey: .metrics)
         try container.encode(self.httpStatus.rawValue, forKey: .httpStatus)
+        try container.encodeIfPresent(self.allHTTPHeaderFields,forKey:.allHTTPHeaderFields)
         try container.encodeIfPresent(self.content,forKey:.content)
     }
 

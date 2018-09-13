@@ -13,9 +13,9 @@ public class DataResponse<T> : HTTPResponse where T : Codable & Collectable {
     // The result
     public var result: Array<T>
 
-    required public init(result: Array<T>,content:Data?, metrics:Metrics, httpStatus:Status) {
+    required public init(result: Array<T>, content:Data?, metrics:Metrics, httpStatus:Status, allHTTPHeaderFields: [String:String]?) {
         self.result = result
-        super.init(metrics: metrics, httpStatus: httpStatus, content: content)
+        super.init(metrics: metrics, httpStatus: httpStatus, allHTTPHeaderFields: allHTTPHeaderFields, content: content)
     }
 
     // MARK: - Codable
