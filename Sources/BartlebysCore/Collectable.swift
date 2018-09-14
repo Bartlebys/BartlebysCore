@@ -15,7 +15,7 @@ public protocol Incorporated{
 
 }
 
-public protocol Collectable : AnyObject,Incorporated, UniversalType, Hashable, Identifiable, Initializable {
+public protocol Collectable : Incorporated, UniversalType, Hashable, Identifiable, Initializable {
 
     // Universally Unique identifier (check Globals.swift for details on the primary key MODELS_PRIMARY_KEY)
     var id:String { get set }
