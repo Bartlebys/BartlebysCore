@@ -1,5 +1,5 @@
 //
-//  DataPoint+Probes.swift
+//  ProbeDelegator.swift
 //  BartlebysCore
 //
 //  Created by Benoit Pereira da silva on 27/07/2018.
@@ -9,15 +9,19 @@
 import Foundation
 
 
+public protocol ProbeDelegator{
+    var probeDelegate: ProbeDelegate? { get }
+}
+
 public protocol ProbeDelegate {
 
     func recordProbe(for request: URLRequest, response httpResponse: HTTPResponse)
     func recordProbe<R>(for request: URLRequest, response httpResponse: DataResponse<R>)
     func recordProbe(for request: URLRequest, failure: Failure)
-    
+
 }
 
-extension DataPoint{
+extension ProbeDelegator{
 
 
     /// Probes If necessary the response for analysis

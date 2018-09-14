@@ -37,7 +37,7 @@ public protocol DataPointLifeCycle{
 }
 
 
-open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
+open class DataPoint: Object, DataPointProtocol, URLSessionDelegate, ProbeDelegator {
     
     
     // KVS keys
