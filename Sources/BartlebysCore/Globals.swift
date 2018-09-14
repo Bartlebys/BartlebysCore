@@ -13,6 +13,7 @@ import Dispatch
 // In Most context Model.ModelCodingKeys.id is relevant.
 public var MODELS_PRIMARY_KEY: CodableObject.CodableModelCodingKeys = CodableObject.CodableModelCodingKeys.id
 
+
 // the explicit UID type used for expressivity
 public typealias UID = String
 
@@ -61,5 +62,22 @@ public func syncOnMainAndReturn<T>(execute work: () throws -> T) rethrows -> T {
     } else {
         return try DispatchQueue.main.sync(execute: work)
     }
+}
+
+
+public func combineHashes(_ hashes: [Int]) -> Int {
+    return hashes.reduce(0, combineHashValues)
+}
+
+public func combineHashValues(_ initial: Int, _ other: Int) -> Int {
+    #if arch(x86_64) || arch(arm64)
+    let magic: UInt = 0x9e3779b97f4a7c15
+    #elseif arch(i386) || arch(arm)
+    let magic: UInt = 0x9e3779b9
+    #endif
+    var lhs = UInt(bitPattern: initial)
+    let rhs = UInt(bitPattern: other)
+    lhs ^= rhs &+ magic &+ (lhs << 6) &+ (lhs >> 2)
+    return Int(bitPattern: lhs)
 }
 

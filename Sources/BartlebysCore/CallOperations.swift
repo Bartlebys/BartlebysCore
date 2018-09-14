@@ -9,7 +9,7 @@
 import Foundation
 
 /// This struct should be used to execute efficiently multiple CallOperations.
-public struct CallOperations<P,R> where P : Payload, R : Result & Collectable{
+public struct CallOperations<P,R> where P : Payload , R : Result & Collectable{
 
     let operations:[CallOperation<P,R>]
 

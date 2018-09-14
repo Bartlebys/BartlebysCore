@@ -9,7 +9,7 @@
 import Foundation
 
 
-class ComposedCallHandler<P, R>  where P : Payload, R : Result & Collectable{
+class ComposedCallHandler<P, R>  where P : Payload , R : Result & Collectable{
 
     fileprivate var _composedHandlers:[(CallOperation,HTTPResponse?,Error?)->()] = [(CallOperation<P,R>,HTTPResponse?,Error?)->()]()
 
