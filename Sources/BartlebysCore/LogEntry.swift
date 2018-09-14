@@ -10,14 +10,10 @@
 
 import Foundation
 
-#if os(macOS) && USE_COCOA_BINDINGS
-public typealias LogEntry = DynamicLogEntry
-#else
-public typealias LogEntry = CommonLogEntry
-#endif
+#if !USE_COCOA_BINDINGS
 
 // MARK: Bartleby's Core: A single Log entry
-open class CommonLogEntry : Model, Payload, Result{
+open class LogEntry : Model, Payload, Result{
 
     public typealias CollectedType = LogEntry
 
@@ -139,55 +135,129 @@ open class CommonLogEntry : Model, Payload, Result{
         return copy
     }
 }
+#else
+
+// MARK: Bartleby's Core: A single Log entry
+open class LogEntry : Model, Payload, Result{
+
+    public typealias CollectedType = LogEntry
+
+	//The print entry counter
+	@objc dynamic open var counter:Int = -1
+
+	//The referent line
+	@objc dynamic open var line:Int = -1
+
+	//The elasped duration
+	@objc dynamic open var elapsedTime:Double = -1
+
+	//the message
+	@objc dynamic open var message:String = Default.NO_MESSAGE
+
+	//the file
+	@objc dynamic open var file:String = Default.NO_FILE
+
+	//the function
+	@objc dynamic open var function:String = Default.NO_FUNCTION
+
+	//the log category
+	public enum Category:String{
+		case critical = "critical"
+		case warning = "warning"
+		case standard = "standard"
+		case temporary = "temporary"
+	}
+	open var category:Category = .standard
+
+	//Is the entry decorative or significant? decoration includes separators, etc...
+	@objc dynamic open var decorative:Bool = false
+
+	//A runUID identifyer
+	@objc dynamic open var runUID:String = DataPoint.runUID
 
 
+    // MARK: - Codable
 
-#if os(macOS) && USE_COCOA_BINDINGS
 
-// You Can use Dynamic Override to support Cocoa Bindings
-// This class can be used in a CollectionOf<T>
-
-@objc open class DynamicLogEntry:CommonLogEntry{
-
-    @objc override dynamic open var  counter : Int{
-        set{ super.counter = newValue }
-        get{ return super.counter }
+    public enum LogEntryCodingKeys: String,CodingKey{
+		case counter
+		case line
+		case elapsedTime
+		case message
+		case file
+		case function
+		case category
+		case decorative
+		case runUID
     }
 
-    @objc override dynamic open var  line : Int{
-        set{ super.line = newValue }
-        get{ return super.line }
+    required public init(from decoder: Decoder) throws{
+		try super.init(from: decoder)
+        try self.quietThrowingChanges {
+			let values = try decoder.container(keyedBy: LogEntryCodingKeys.self)
+			self.counter = try values.decode(Int.self,forKey:.counter)
+			self.line = try values.decode(Int.self,forKey:.line)
+			self.elapsedTime = try values.decode(Double.self,forKey:.elapsedTime)
+			self.message = try values.decode(String.self,forKey:.message)
+			self.file = try values.decode(String.self,forKey:.file)
+			self.function = try values.decode(String.self,forKey:.function)
+			self.category = LogEntry.Category(rawValue: try values.decode(String.self,forKey:.category)) ?? .standard
+			self.decorative = try values.decode(Bool.self,forKey:.decorative)
+			self.runUID = try values.decode(String.self,forKey:.runUID)
+        }
     }
 
-    @objc override dynamic open var  elapsedTime : Double{
-        set{ super.elapsedTime = newValue }
-        get{ return super.elapsedTime }
+    override open func encode(to encoder: Encoder) throws {
+		try super.encode(to:encoder)
+		var container = encoder.container(keyedBy: LogEntryCodingKeys.self)
+		try container.encode(self.counter,forKey:.counter)
+		try container.encode(self.line,forKey:.line)
+		try container.encode(self.elapsedTime,forKey:.elapsedTime)
+		try container.encode(self.message,forKey:.message)
+		try container.encode(self.file,forKey:.file)
+		try container.encode(self.function,forKey:.function)
+		try container.encode(self.category.rawValue ,forKey:.category)
+		try container.encode(self.decorative,forKey:.decorative)
+		try container.encode(self.runUID,forKey:.runUID)
     }
 
-    @objc override dynamic open var  message : String{
-        set{ super.message = newValue }
-        get{ return super.message }
+
+
+    // MARK: - Initializable
+
+    required public init() {
+        super.init()
     }
 
-    @objc override dynamic open var  file : String{
-        set{ super.file = newValue }
-        get{ return super.file }
+    // MARK: - UniversalType
+
+    override  open class var typeName:String{
+        return "LogEntry"
     }
 
-    @objc override dynamic open var  function : String{
-        set{ super.function = newValue }
-        get{ return super.function }
+    override  open class var collectionName:String{
+        return "logEntries"
     }
 
-    @objc override dynamic open var  decorative : Bool{
-        set{ super.decorative = newValue }
-        get{ return super.decorative }
+    override  open var d_collectionName:String{
+        return LogEntry.collectionName
     }
 
-    @objc override dynamic open var  runUID : String{
-        set{ super.runUID = newValue }
-        get{ return super.runUID }
+
+    // MARK: - NSCopy aka CopyingProtocol
+
+    /// Provides an unregistered copy (the instance is not held by the dataPoint)
+    ///
+    /// - Parameter zone: the zone
+    /// - Returns: the copy
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        guard let data = try? JSON.encoder.encode(self) else {
+            return ObjectError.message(message: "Encoding issue on copy of: \(LogEntry.typeName) \(self.uid)")
+        }
+        guard let copy = try? JSON.decoder.decode(type(of:self), from: data) else {
+            return ObjectError.message(message: "Decoding issue on copy of: \(LogEntry.typeName) \(self.uid)")
+        }
+        return copy
     }
 }
-
 #endif

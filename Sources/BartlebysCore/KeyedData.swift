@@ -10,14 +10,10 @@
 
 import Foundation
 
-#if os(macOS) && USE_COCOA_BINDINGS
-public typealias KeyedData = DynamicKeyedData
-#else
-public typealias KeyedData = CommonKeyedData
-#endif
+#if !USE_COCOA_BINDINGS
 
 // MARK: A simple wrapper to associate a key and a Data (used by core KVS)
-open class CommonKeyedData : Model, Payload, Result{
+open class KeyedData : Model, Payload, Result{
 
     public typealias CollectedType = KeyedData
 
@@ -91,25 +87,81 @@ open class CommonKeyedData : Model, Payload, Result{
         return copy
     }
 }
+#else
+
+// MARK: A simple wrapper to associate a key and a Data (used by core KVS)
+open class KeyedData : Model, Payload, Result{
+
+    public typealias CollectedType = KeyedData
+
+	//The key
+	@objc dynamic open var key:String = Default.NO_KEY
+
+	//The Data
+	@objc dynamic open var data:Data = Data()
 
 
+    // MARK: - Codable
 
-#if os(macOS) && USE_COCOA_BINDINGS
 
-// You Can use Dynamic Override to support Cocoa Bindings
-// This class can be used in a CollectionOf<T>
-
-@objc open class DynamicKeyedData:CommonKeyedData{
-
-    @objc override dynamic open var  key : String{
-        set{ super.key = newValue }
-        get{ return super.key }
+    public enum KeyedDataCodingKeys: String,CodingKey{
+		case key
+		case data
     }
 
-    @objc override dynamic open var  data : Data{
-        set{ super.data = newValue }
-        get{ return super.data }
+    required public init(from decoder: Decoder) throws{
+		try super.init(from: decoder)
+        try self.quietThrowingChanges {
+			let values = try decoder.container(keyedBy: KeyedDataCodingKeys.self)
+			self.key = try values.decode(String.self,forKey:.key)
+			self.data = try values.decode(Data.self,forKey:.data)
+        }
+    }
+
+    override open func encode(to encoder: Encoder) throws {
+		try super.encode(to:encoder)
+		var container = encoder.container(keyedBy: KeyedDataCodingKeys.self)
+		try container.encode(self.key,forKey:.key)
+		try container.encode(self.data,forKey:.data)
+    }
+
+
+
+    // MARK: - Initializable
+
+    required public init() {
+        super.init()
+    }
+
+    // MARK: - UniversalType
+
+    override  open class var typeName:String{
+        return "KeyedData"
+    }
+
+    override  open class var collectionName:String{
+        return "keyedDatas"
+    }
+
+    override  open var d_collectionName:String{
+        return KeyedData.collectionName
+    }
+
+
+    // MARK: - NSCopy aka CopyingProtocol
+
+    /// Provides an unregistered copy (the instance is not held by the dataPoint)
+    ///
+    /// - Parameter zone: the zone
+    /// - Returns: the copy
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        guard let data = try? JSON.encoder.encode(self) else {
+            return ObjectError.message(message: "Encoding issue on copy of: \(KeyedData.typeName) \(self.uid)")
+        }
+        guard let copy = try? JSON.decoder.decode(type(of:self), from: data) else {
+            return ObjectError.message(message: "Decoding issue on copy of: \(KeyedData.typeName) \(self.uid)")
+        }
+        return copy
     }
 }
-
 #endif

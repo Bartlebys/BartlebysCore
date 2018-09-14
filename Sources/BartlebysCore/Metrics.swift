@@ -10,14 +10,10 @@
 
 import Foundation
 
-#if os(macOS) && USE_COCOA_BINDINGS
-public typealias Metrics = DynamicMetrics
-#else
-public typealias Metrics = CommonMetrics
-#endif
+#if !USE_COCOA_BINDINGS
 
 // MARK: Bartleby's Core: a value object used to record metrics
-open class CommonMetrics : Model, Payload, Result{
+open class Metrics : Model, Payload, Result{
 
     public typealias CollectedType = Metrics
 
@@ -125,45 +121,115 @@ open class CommonMetrics : Model, Payload, Result{
         return copy
     }
 }
+#else
+
+// MARK: Bartleby's Core: a value object used to record metrics
+open class Metrics : Model, Payload, Result{
+
+    public typealias CollectedType = Metrics
+
+	//The action name e.g: UpdateUser
+	@objc dynamic open var operationName:String = Default.NO_NAME
+
+	//The associated url
+	@objc dynamic open var associatedURL:URL?
+
+	//Allows to identify each call by their execution counter.
+	@objc dynamic open var callCounter:Int = 0
+
+	//The elasped time since app started up.
+	@objc dynamic open var elapsed:Double = 0
+
+	//The time interval in seconds from the time the request started to the time the request completed.
+	@objc dynamic open var requestDuration:Double = 0
+
+	// The time interval in seconds from the time the request completed to the time response serialization completed.
+	@objc dynamic open var serializationDuration:Double = 0
+
+	//the verification method
+	public enum StreamOrientation:String{
+		case upStream = "upStream"
+		case downStream = "downStream"
+	}
+	open var streamOrientation:StreamOrientation = .upStream
 
 
+    // MARK: - Codable
 
-#if os(macOS) && USE_COCOA_BINDINGS
 
-// You Can use Dynamic Override to support Cocoa Bindings
-// This class can be used in a CollectionOf<T>
-
-@objc open class DynamicMetrics:CommonMetrics{
-
-    @objc override dynamic open var  operationName : String{
-        set{ super.operationName = newValue }
-        get{ return super.operationName }
+    public enum MetricsCodingKeys: String,CodingKey{
+		case operationName
+		case associatedURL
+		case callCounter
+		case elapsed
+		case requestDuration
+		case serializationDuration
+		case streamOrientation
     }
 
-    @objc override dynamic open var  associatedURL : URL?{
-        set{ super.associatedURL = newValue }
-        get{ return super.associatedURL }
+    required public init(from decoder: Decoder) throws{
+		try super.init(from: decoder)
+        try self.quietThrowingChanges {
+			let values = try decoder.container(keyedBy: MetricsCodingKeys.self)
+			self.operationName = try values.decode(String.self,forKey:.operationName)
+			self.associatedURL = try values.decodeIfPresent(URL.self,forKey:.associatedURL)
+			self.callCounter = try values.decode(Int.self,forKey:.callCounter)
+			self.elapsed = try values.decode(Double.self,forKey:.elapsed)
+			self.requestDuration = try values.decode(Double.self,forKey:.requestDuration)
+			self.serializationDuration = try values.decode(Double.self,forKey:.serializationDuration)
+			self.streamOrientation = Metrics.StreamOrientation(rawValue: try values.decode(String.self,forKey:.streamOrientation)) ?? .upStream
+        }
     }
 
-    @objc override dynamic open var  callCounter : Int{
-        set{ super.callCounter = newValue }
-        get{ return super.callCounter }
+    override open func encode(to encoder: Encoder) throws {
+		try super.encode(to:encoder)
+		var container = encoder.container(keyedBy: MetricsCodingKeys.self)
+		try container.encode(self.operationName,forKey:.operationName)
+		try container.encodeIfPresent(self.associatedURL,forKey:.associatedURL)
+		try container.encode(self.callCounter,forKey:.callCounter)
+		try container.encode(self.elapsed,forKey:.elapsed)
+		try container.encode(self.requestDuration,forKey:.requestDuration)
+		try container.encode(self.serializationDuration,forKey:.serializationDuration)
+		try container.encode(self.streamOrientation.rawValue ,forKey:.streamOrientation)
     }
 
-    @objc override dynamic open var  elapsed : Double{
-        set{ super.elapsed = newValue }
-        get{ return super.elapsed }
+
+
+    // MARK: - Initializable
+
+    required public init() {
+        super.init()
     }
 
-    @objc override dynamic open var  requestDuration : Double{
-        set{ super.requestDuration = newValue }
-        get{ return super.requestDuration }
+    // MARK: - UniversalType
+
+    override  open class var typeName:String{
+        return "Metrics"
     }
 
-    @objc override dynamic open var  serializationDuration : Double{
-        set{ super.serializationDuration = newValue }
-        get{ return super.serializationDuration }
+    override  open class var collectionName:String{
+        return "metrics"
+    }
+
+    override  open var d_collectionName:String{
+        return Metrics.collectionName
+    }
+
+
+    // MARK: - NSCopy aka CopyingProtocol
+
+    /// Provides an unregistered copy (the instance is not held by the dataPoint)
+    ///
+    /// - Parameter zone: the zone
+    /// - Returns: the copy
+    override open func copy(with zone: NSZone? = nil) -> Any {
+        guard let data = try? JSON.encoder.encode(self) else {
+            return ObjectError.message(message: "Encoding issue on copy of: \(Metrics.typeName) \(self.uid)")
+        }
+        guard let copy = try? JSON.decoder.decode(type(of:self), from: data) else {
+            return ObjectError.message(message: "Decoding issue on copy of: \(Metrics.typeName) \(self.uid)")
+        }
+        return copy
     }
 }
-
 #endif
