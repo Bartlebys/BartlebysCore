@@ -10,12 +10,12 @@ import Foundation
 
 // A Collection with erased Collected types
 // Can be Used to perform operations that requires type erasure
-public protocol IndistinctCollection:UniversalType,Identifiable{
+public protocol IndistinctCollection: UniversalType, Identifiable{
 
     /// References the element into the dataPoint registry
     ///
     /// - Parameter item: the item
-    func reference<T:  Codable & Collectable >(_ item:T)
+    func reference<T: Codable & Collectable >(_ item:T)
 
     /// Removes the item from the collection
     ///
@@ -44,6 +44,6 @@ public protocol IndistinctCollection:UniversalType,Identifiable{
     var count: Int { get }
 
     // The selected UIDs
-    var selectedUIDs:[UID] { get }
+    var selectedUIDs: [UID] { get }
 
 }

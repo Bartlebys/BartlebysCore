@@ -8,5 +8,5 @@
 
 import Foundation
 
-public protocol Aliased:Identifiable {
+public protocol Aliased: Identifiable {
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 /// The type erased alias struct
-public struct Alias:Codable,Aliased{
+public struct Alias: Codable, Aliased{
 
     // We use
     public let uid:UID
