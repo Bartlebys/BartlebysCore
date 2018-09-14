@@ -9,7 +9,7 @@
 import Foundation
 
 // A bunch of preconfigured encoder and decoders
-open class JSON{
+public struct JSON{
     
     public static var encoder: JSONEncoder{
         get{

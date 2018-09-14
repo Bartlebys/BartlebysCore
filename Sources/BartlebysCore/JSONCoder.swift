@@ -9,7 +9,7 @@
 import Foundation
 
 // Tolerent Json encoder and decoder
-open class JSONCoder:ConcreteCoder{
+public struct JSONCoder:ConcreteCoder{
 
     static public var patcher = JSONPatcher()
 

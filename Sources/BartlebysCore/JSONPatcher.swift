@@ -13,7 +13,7 @@ public enum JSONPatcherError : Error {
     case decodingFailure(rawString: String)
     case castingFailure(rawString: String)
 }
-open class JSONPatcher{
+public struct JSONPatcher{
 
     public init(){}
 
@@ -26,7 +26,7 @@ open class JSONPatcher{
     ///   - data: the daa
     /// - Returns: the patched data
     /// - Throws: TolerentError & PatcherError
-    open func patchObject<T>(_ type: T.Type, from data: Data) throws -> Data{
+    public func patchObject<T>(_ type: T.Type, from data: Data) throws -> Data{
 
         guard let TolerentType = T.self as? Tolerent.Type else{
             throw TolerentError.isNotTolerent
@@ -43,7 +43,7 @@ open class JSONPatcher{
     ///   - data: the daa
     /// - Returns: the patched data
     /// - Throws: TolerentError & PatcherError
-    open func patchArrayOf<T>(_ type: T.Type, from data: Data) throws -> Data where T : Decodable{
+    public func patchArrayOf<T>(_ type: T.Type, from data: Data) throws -> Data where T : Decodable{
         guard let TolerentType = T.self as? Tolerent.Type else{
             throw TolerentError.isNotTolerent
         }
@@ -58,7 +58,7 @@ open class JSONPatcher{
     ///   - data: the data
     ///   - resultType: the result type
     /// - Returns: the patched data
-    public final func applyPatchOnObject(data: Data, resultType: Tolerent.Type) throws -> Data {
+    public func applyPatchOnObject(data: Data, resultType: Tolerent.Type) throws -> Data {
         return try syncOnMainAndReturn(execute: { () -> Data in
             var o: Any?
             do{
@@ -83,7 +83,7 @@ open class JSONPatcher{
     ///   - data: the data
     ///   - resultType: the result type
     /// - Returns: the patched data
-    public final func applyPatchOnArrayOfObjects(data: Data, resultType: Tolerent.Type) throws -> Data {
+    public  func applyPatchOnArrayOfObjects(data: Data, resultType: Tolerent.Type) throws -> Data {
         return try syncOnMainAndReturn(execute: { () -> Data in
             var o:Any?
             do{
