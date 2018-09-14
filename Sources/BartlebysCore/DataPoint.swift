@@ -1587,3 +1587,12 @@ extension DataPoint{
         return ORDER_OF_EXECUTION_UNDEFINED
     }
 }
+
+// MARK: - AliasesResolution
+
+extension DataPoint: AliasesResolution{
+
+    // The reference to the dataPoint
+    public var dataPoint:DataPoint? { return self }
+
+}
