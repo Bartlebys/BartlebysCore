@@ -8,7 +8,17 @@
 
 import Foundation
 
-public protocol Relational:Identifiable, Incorporated{
+public protocol Relational: Identifiable, Incorporated{
+
+
+    //The UIDS of the owners
+    var ownedBy: [UID] { get set }
+
+    //The UIDS of the free relations
+    var freeRelations: [UID] { get set }
+
+    //The UIDS of the owned entities check the implementation for details.
+    var owns: [UID] { get set }
 
 
     // MARK: - Relationships Declaration
@@ -62,3 +72,4 @@ public protocol Relational:Identifiable, Incorporated{
     func getContractedRelations(_ relationship:Relationship)->[UID]
 
 }
+
