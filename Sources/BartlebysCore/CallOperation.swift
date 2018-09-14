@@ -11,7 +11,7 @@ import Foundation
 public extension Notification.Name {
 
     public struct CallOperation {
-        
+
         public static let operationKey = "callOperation"
         public static let filePathKey = "filePath"
         public static let errorKey = "error"
@@ -101,24 +101,6 @@ public protocol CallOperationProtocol {
 }
 
 
-public extension CallOperation where P : Payload, R : Result & Collectable{
-
-    // We have encountered serious QUIRKS With `Equatable` + OBJC runtime (with swift 4)
-    // Such inconsistencies or bugs where very difficult to debug o
-    // So we have decided to create global functions equalityOf(...)
-    // The Equatable implementation relies on this function
-
-    public static func ==(lhs: CallOperation<P, R>, rhs: CallOperation<P, R>) -> Bool {
-        return equalityOfCallOperations(lhs, rhs)
-    }
-}
-
-public func equalityOfCallOperations< P : Payload, R : Result & Collectable>(_ lhs: CallOperation<P, R>?, _ rhs: CallOperation<P, R>?) -> Bool {
-    let equality = lhs?.uid == rhs?.uid
-    return equality
-}
-
-
 
 /// A CallOperation is:
 /// - a Network operation runnable in a Session.
@@ -126,9 +108,8 @@ public func equalityOfCallOperations< P : Payload, R : Result & Collectable>(_ l
 /// - runs without call back, and result closure.
 /// - the session engine uses Notifications notify the result.
 /// Check Session.swift for execution details.
-public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol where P : Payload , R : Result & Collectable{
+open class CallOperation<P, R> : Model, CallOperationProtocol where P : Payload, R : Result & Collectable{
 
-    // MARK: -
 
     // The sequence name is used to segment the call operations.
     // Each sequence is sequential when a Call operation is finished it runs the next.
@@ -197,6 +178,7 @@ public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol w
         self.method = method
         self.resultIsACollection = resultIsACollection
         self.payload = payload
+        super.init()
         self.dataPoint = dataPoint
     }
 
@@ -229,8 +211,6 @@ public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol w
     // MARK: - Codable
 
     public enum CallOperationCodingKeys: String, CodingKey {
-        case id     // the concrete selected value is defined by PRIMARY_CALL_OPERATION_KEY
-        case _id    // the concrete selected value is defined by PRIMARY_CALL_OPERATION_KEY
         case sequenceName
         case operationName
         case path
@@ -248,11 +228,8 @@ public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol w
     }
 
     required public init(from decoder: Decoder) throws{
+        try super.init(from: decoder)
         let values = try decoder.container(keyedBy: CallOperationCodingKeys.self)
-        // We want to be resilient to external omissions
-        // So we discriminate the invalid UIDs by prefixing NO_UID
-        // We admit not to have ownedBy and freeRelations Keys
-        self.id = try values.decodeIfPresent(String.self,forKey: CallOperation.CallOperationCodingKeys(rawValue: MODELS_PRIMARY_KEY.rawValue)!) ?? Default.NO_UID + self.id
         self.sequenceName = try values.decode(String.self,forKey:.sequenceName)
         self.operationName = try values.decode(String.self,forKey:.operationName)
         self.path = try values.decode(String.self,forKey:.path)
@@ -268,9 +245,12 @@ public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol w
         self.isDestroyableWhenBlocked = try values.decode(Bool.self, forKey: .isDestroyable)
     }
 
-    open func encode(to encoder: Encoder) throws {
+    required public init() {
+        super.init()
+    }
+
+    override open func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CallOperationCodingKeys.self)
-        try container.encode(self.id,forKey: CallOperation.CallOperationCodingKeys(rawValue: MODELS_PRIMARY_KEY.rawValue)!)
         try container.encode(self.sequenceName, forKey: .sequenceName)
         try container.encode(self.operationName,forKey:.operationName)
         try container.encode(self.path,forKey:.path)
@@ -286,112 +266,22 @@ public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol w
         try container.encode(self.isDestroyableWhenBlocked,forKey:.isDestroyable)
     }
 
-
-    // MARK : - Interoperability
-
-
-    /// The hash value.
-    ///
-    /// Hash values are not guaranteed to be equal across different executions of
-    /// your program. Do not save hash values to use during a future execution.
-    public var hashValue: Int {
-        return combineHashes([
-            self.id.hashValue,
-            self.sequenceName.hashValue,
-            self.operationName.hashValue,
-            self.path.hashValue,
-            self.queryString.hashValue,
-            self.method.hashValue,
-            self.resultIsACollection.hashValue,
-            self.payload.hashValue,
-            self.executionCounter.hashValue,
-            self.lastAttemptDate.hashValue,
-            self.reExecutionDelay.hashValue,
-            self.maxNumberOfAttempts.hashValue,
-            self.isBlocking.hashValue,
-            self.isDestroyableWhenBlocked.hashValue
-            ])
-    }
-
-
-    // MARK: - Collectable
-
-    // The id
-    public var id:UID = Utilities.createUID()
-
-    public var uid:UID {
-        set{
-            self.id = uid
-        }
-        get{
-            return self.id
-        }
-    }
-    // A reference to the holding dataPoint
-    public var dataPoint: DataPoint?
-
-    /// Sets the dataPoint Reference
-    ///
-    /// - Parameter dataPoint: the dataPoint
-    public func setDataPoint(_ dataPoint: DataPoint){
-        self.dataPoint = dataPoint
-    }
-
-    // MARK:  Initializable
-
-    required public init() {}
-
-
     // MARK: UniversalType (Collectable)
 
-    open class var typeName:String{
+    open override class var typeName:String{
         let Pname = String(describing: type(of: P.self)).replacingOccurrences(of: ".Type", with: "")
         let Rname = String(describing: type(of: R.self)).replacingOccurrences(of: ".Type", with: "")
         return "OP_\(Pname)_\(Rname)"
     }
 
-    open class var collectionName:String{
+    open override class var collectionName:String{
         return "CL_\(typeName)"
     }
 
-    open var d_collectionName:String{
+    open override var d_collectionName:String{
         return CallOperation.collectionName
     }
 
 
-    public typealias CollectedType = CallOperation<P, R>
-
-    /// Registers the collection reference
-    ///
-    /// - Parameter collection: the collection
-    public func setCollection<CollectedType>(_ collection: CollectionOf<CollectedType>){
-        self._collection = collection
-    }
-
-    /// Returns the collection
-    ///
-    /// - Returns: the collection
-    public func getCollection<CollectedType>() -> CollectionOf<CollectedType>{
-        guard let collection = self._collection as? CollectionOf<CollectedType> else{
-            // Return a proxy (should not normally occur)
-            return CollectionOf<CollectedType>(named: "ProxyCollectionOf<\(CollectedType.typeName)>", relativePath: "")
-        }
-        return collection
-    }
-
-    /// The type erased acceessor to a collection that support reference, remove & didChange
-    public var indistinctCollection: IndistinctCollection?{
-        return self._collection as? IndistinctCollection
-    }
-    // MARK: -
-
-    // The collection reference.
-    fileprivate var _collection: Any?
-
-
-    /// The type erased Collection part of BartlebyKit's Commitable procotol
-    public var managedCollection: ManagedCollection? {
-        return self._collection as? ManagedCollection
-    }
-
 }
+
