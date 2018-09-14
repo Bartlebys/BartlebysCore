@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class Paths {
+public struct Paths {
 
     public static let PROBES_FOLDER_NAME: String = "probes"
 

@@ -9,7 +9,7 @@
 import Foundation
 import Dispatch
 
-// Bartleby 1.0 for MongodB (can be set-up uses Model.ModelCodingKeys._id)
+// Bartleby 1.0 for MongodB (can be set-up uses CodableObject.CodableModelCodingKeys._id)
 // In Most context Model.ModelCodingKeys.id is relevant.
 public var MODELS_PRIMARY_KEY: CodableObject.CodableModelCodingKeys = CodableObject.CodableModelCodingKeys.id
 

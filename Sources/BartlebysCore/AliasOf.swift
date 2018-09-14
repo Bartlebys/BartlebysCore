@@ -19,7 +19,7 @@ open class AliasOf<T:Aliasable>: Object, Codable,Aliased{
 
     // MARK: - Codable
 
-    // We use the Model.ModelCodingKeys because we want to be able define if the id is encoded as `_id` or `id`
+    // We use the MODELS_PRIMARY_KEY because we want to be able define if the id is encoded as `_id` or `id`
 
     public required init(from decoder: Decoder) throws{
         let values = try decoder.container(keyedBy: CodableObject.CodableModelCodingKeys.self)

@@ -110,6 +110,11 @@
 		E5A5F8C82089D080007B4D7C /* DataPoint+BackGroundProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A5F8C52089D080007B4D7C /* DataPoint+BackGroundProcessing.swift */; };
 		E5A5F8CA2089D311007B4D7C /* SequenceOfTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A5F8C92089D311007B4D7C /* SequenceOfTasks.swift */; };
 		E5A5F8CC2089D311007B4D7C /* SequenceOfTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A5F8C92089D311007B4D7C /* SequenceOfTasks.swift */; };
+		E5A68F31214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A68F30214BEB780056B3C7 /* CollectionOf+Tolerent.swift */; };
+		E5A68F32214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A68F30214BEB780056B3C7 /* CollectionOf+Tolerent.swift */; };
+		E5A68F33214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A68F30214BEB780056B3C7 /* CollectionOf+Tolerent.swift */; };
+		E5A68F34214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A68F30214BEB780056B3C7 /* CollectionOf+Tolerent.swift */; };
+		E5A68F35214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A68F30214BEB780056B3C7 /* CollectionOf+Tolerent.swift */; };
 		E5A9B9C620A9722100305FF7 /* FileManager+sizeUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9B9C520A9722100305FF7 /* FileManager+sizeUtilities.swift */; };
 		E5A9B9C820A9722100305FF7 /* FileManager+sizeUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9B9C520A9722100305FF7 /* FileManager+sizeUtilities.swift */; };
 		E5A9B9C920A9722100305FF7 /* FileManager+sizeUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9B9C520A9722100305FF7 /* FileManager+sizeUtilities.swift */; };
@@ -587,6 +592,7 @@
 		E5A554E020938A33004D7511 /* ComposedCallHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposedCallHandler.swift; sourceTree = "<group>"; };
 		E5A5F8C52089D080007B4D7C /* DataPoint+BackGroundProcessing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+BackGroundProcessing.swift"; sourceTree = "<group>"; };
 		E5A5F8C92089D311007B4D7C /* SequenceOfTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceOfTasks.swift; sourceTree = "<group>"; };
+		E5A68F30214BEB780056B3C7 /* CollectionOf+Tolerent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CollectionOf+Tolerent.swift"; sourceTree = "<group>"; };
 		E5A9B9C520A9722100305FF7 /* FileManager+sizeUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+sizeUtilities.swift"; sourceTree = "<group>"; };
 		E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionIOObservers.swift; sourceTree = "<group>"; };
 		E5AE11F2201A104700D7E179 /* VoidResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoidResult.swift; sourceTree = "<group>"; };
@@ -755,6 +761,7 @@
 				E5D18CDC210F1FF8008BC65B /* CodableURLRequest.swift */,
 				E5ADBAFB1FF242F300B6AA28 /* CollectionIOObservers.swift */,
 				4D55FC491FDAF5CF001D91CE /* CollectionOf.swift */,
+				E5A68F30214BEB780056B3C7 /* CollectionOf+Tolerent.swift */,
 				E5A554E020938A33004D7511 /* ComposedCallHandler.swift */,
 				4D55FC5A1FDAF5CF001D91CE /* Credentials.swift */,
 				4D55FC531FDAF5CF001D91CE /* DataPoint.swift */,
@@ -1359,6 +1366,7 @@
 				E5EC9FB71FF655FE008BF543 /* Model+Equatable.swift in Sources */,
 				E5D84E662032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5D7D9C1214659870098984B /* HMAC.swift in Sources */,
+				E5A68F31214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */,
 				E5EC9F991FF655F9008BF543 /* FilePersistent.swift in Sources */,
 				E5EC9FA31FF655FE008BF543 /* Credentials.swift in Sources */,
 				E53ADB2620332A46001A9A01 /* FiletPath+Absolute.swift in Sources */,
@@ -1470,6 +1478,7 @@
 				E5ECA00A1FF656AF008BF543 /* Model+Equatable.swift in Sources */,
 				E5D84E682032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5D7D9C3214659870098984B /* HMAC.swift in Sources */,
+				E5A68F33214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */,
 				E5EC9FEC1FF656AF008BF543 /* FilePersistent.swift in Sources */,
 				E5EC9FF61FF656AF008BF543 /* Credentials.swift in Sources */,
 				E53ADB2820332A46001A9A01 /* FiletPath+Absolute.swift in Sources */,
@@ -1581,6 +1590,7 @@
 				E5ECA0631FF657A6008BF543 /* Model+Equatable.swift in Sources */,
 				E5D84E692032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5D7D9C4214659870098984B /* HMAC.swift in Sources */,
+				E5A68F34214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */,
 				E5ECA0451FF6579F008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA04F1FF657A6008BF543 /* Credentials.swift in Sources */,
 				E5FA568E20D53D5D00B4ED9E /* Reachability.swift in Sources */,
@@ -1691,6 +1701,7 @@
 				E5ECA0AC1FF65851008BF543 /* Model+Equatable.swift in Sources */,
 				E5D84E6A2032D6ED009D2804 /* DataPoint+Helpers.swift in Sources */,
 				E5D7D9C5214659870098984B /* HMAC.swift in Sources */,
+				E5A68F35214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */,
 				E5ECA08E1FF6584A008BF543 /* FilePersistent.swift in Sources */,
 				E5ECA0981FF65851008BF543 /* Credentials.swift in Sources */,
 				E5FA568F20D53D5D00B4ED9E /* Reachability.swift in Sources */,
@@ -1787,6 +1798,7 @@
 				E5FB98F021105B4000CFF0F4 /* Notify.swift in Sources */,
 				E5F3CDC5200D1C2000AB9A44 /* FilePersistent.swift in Sources */,
 				E5D7D9C2214659870098984B /* HMAC.swift in Sources */,
+				E5A68F32214BEB780056B3C7 /* CollectionOf+Tolerent.swift in Sources */,
 				E5FB98D621105B4000CFF0F4 /* DataPoint+Probes.swift in Sources */,
 				E5FB98CB21105B4000CFF0F4 /* CodableURLRequest.swift in Sources */,
 				E5FB98C621105B4000CFF0F4 /* CallOperation.swift in Sources */,
