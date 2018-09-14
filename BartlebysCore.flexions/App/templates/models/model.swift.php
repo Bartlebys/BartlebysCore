@@ -146,7 +146,11 @@ import Foundation
 #endif";
 }
 
+Registry::Instance()->defineVariables(['blockRepresentation'=>$d, 'codableBlock'=>$codableBlock,'inheritancePrefix'=>$inheritancePrefix, 'superInit'=>$superInit,'useCocoaBindings' => false]);
+$noBindingsBlocks=stringFromFile(__DIR__.DIRECTORY_SEPARATOR.'model.swift.block.php');
 
+Registry::Instance()->defineVariables(['blockRepresentation'=>$d, 'codableBlock'=>$codableBlock,'inheritancePrefix'=>$inheritancePrefix, 'superInit'=>$superInit,'useCocoaBindings' => true]);
+$blocksWithCocoaBindings=stringFromFile(__DIR__.DIRECTORY_SEPARATOR.'model.swift.block.php');
 //////////////////
 // TEMPLATE
 //////////////////
