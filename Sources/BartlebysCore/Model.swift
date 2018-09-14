@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class Model:CodableObject,Collectable{
+open class Model: CodableObject, Collectable, Aliasable, AliasesResolution{
 
     // If set to false the ownedBy instances & freeRelations will not be serialized
     // Can be used to inject some Model into Systems that does not support Bartlebys Relational model

@@ -128,7 +128,6 @@ class BaseDataPointTestCase: XCTestCase,DataPointLifeCycle {
     func getNewDataPoint(volatile: Bool = false) -> MyDataPoint {
         let dataPoint = MyDataPoint()
         dataPoint.sessionIdentifier = Utilities.createUID()
-        dataPoint.authenticationMethod = .basicHTTPAuth
         dataPoint.host = "demo.bartlebys.org"
         dataPoint.apiBasePath =  "www/v1/api/"
         BaseDataPointTestCase.associatedDataPoints.append(dataPoint)

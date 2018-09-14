@@ -848,7 +848,7 @@ open class DataPoint: Object, DataPointProtocol, URLSessionDelegate {
     /// You should override this method to perform for example associated files deletions...
     ///
     /// - Parameter instance: the managedModelx
-    open func willErase(_ instance:Model){}
+    open func willErase(_ instance: Relational){}
 
 
 

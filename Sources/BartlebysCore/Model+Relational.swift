@@ -27,7 +27,7 @@ import Foundation
 // N -> N
 
 
-extension Model:Relational{
+extension Model: Relational{
  
     // MARK: - Relationships Declaration
 

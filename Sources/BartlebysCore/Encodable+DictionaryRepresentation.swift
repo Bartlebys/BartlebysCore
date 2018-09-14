@@ -1,5 +1,5 @@
 //
-//  Model+DictionaryRepresentation.swift
+//  Encodable+DictionaryRepresentation.swift
 //  BartlebyCore
 //
 //  Created by Laurent Morvillier on 05/12/2017.
@@ -8,8 +8,7 @@
 
 import Foundation
 
-public extension Model {
-
+public extension Encodable {
 
     /// Returns a dictionary representation of the Model
     ///

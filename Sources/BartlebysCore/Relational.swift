@@ -8,7 +8,8 @@
 
 import Foundation
 
-public protocol Relational:Identifiable{
+public protocol Relational:Identifiable, Incorporated{
+
 
     // MARK: - Relationships Declaration
 

@@ -8,7 +8,14 @@
 
 import Foundation
 
-public protocol Collectable : AnyObject, UniversalType, Hashable, Identifiable, Initializable {
+public protocol Incorporated{
+
+    // The reference to the dataPoint
+    var dataPoint:DataPoint? { get }
+
+}
+
+public protocol Collectable : AnyObject,Incorporated, UniversalType, Hashable, Identifiable, Initializable {
 
     // Universally Unique identifier (check Globals.swift for details on the primary key MODELS_PRIMARY_KEY)
     var id:String { get set }
@@ -16,8 +23,6 @@ public protocol Collectable : AnyObject, UniversalType, Hashable, Identifiable, 
     // The Associated "CollectedType" is the Collectable type
     associatedtype CollectedType
 
-    // The reference to the dataPoint
-    var dataPoint:DataPoint? { get }
 
     /// Sets the dataPoint Reference
     ///

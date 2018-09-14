@@ -23,3 +23,23 @@ public protocol Aliasable:Identifiable{
     func aliasOf<T>()->AliasOf<T>
 
 }
+
+extension Aliasable{
+
+    /// Creates a `Codable` type erased alias that encapsulates the serialized Identifiable UID
+    ///
+    /// - Returns: the Aliased entity
+
+    public func alias()->Alias{
+        return Alias(uid:self.uid)
+    }
+
+
+    /// Create a `Codable` typed alias that encapsulttes the serialized Identifiable UID
+    ///
+    /// - Returns:  the Aliased entity
+    public func aliasOf<T>()->AliasOf<T>{
+        return AliasOf(uid:self.uid)
+    }
+
+}
