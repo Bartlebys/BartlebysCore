@@ -8,14 +8,12 @@
 
 import Foundation
 
-open class CodableObject: Object,Codable,Identifiable,CopyingProtocol{
-    
+open class CodableObject: Object, Codable, Identifiable, CopyingProtocol{
+
     // The id
-    public var id:UID = Utilities.createUID()
-    
-    // MARK: Collectable.Identifiable
-    
-    public var uid:UID {
+    public var id: UID = Utilities.createUID()
+
+    public var uid: UID {
         set{
             self.id = uid
         }
@@ -23,7 +21,7 @@ open class CodableObject: Object,Codable,Identifiable,CopyingProtocol{
             return self.id
         }
     }
-    
+
     // MARK: - Initializable
     
     required public override init() {

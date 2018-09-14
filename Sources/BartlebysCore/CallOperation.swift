@@ -314,6 +314,51 @@ public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol w
     }
 
 
+    // MARK: - Collectable
+
+    // The id
+    public var id:UID = Utilities.createUID()
+
+    public var uid:UID {
+        set{
+            self.id = uid
+        }
+        get{
+            return self.id
+        }
+    }
+    // A reference to the holding dataPoint
+    public var dataPoint: DataPoint?
+
+    /// Sets the dataPoint Reference
+    ///
+    /// - Parameter dataPoint: the dataPoint
+    public func setDataPoint(_ dataPoint: DataPoint){
+        self.dataPoint = dataPoint
+    }
+
+    // MARK:  Initializable
+
+    required public init() {}
+
+
+    // MARK: UniversalType (Collectable)
+
+    open class var typeName:String{
+        let Pname = String(describing: type(of: P.self)).replacingOccurrences(of: ".Type", with: "")
+        let Rname = String(describing: type(of: R.self)).replacingOccurrences(of: ".Type", with: "")
+        return "OP_\(Pname)_\(Rname)"
+    }
+
+    open class var collectionName:String{
+        return "CL_\(typeName)"
+    }
+
+    open var d_collectionName:String{
+        return CallOperation.collectionName
+    }
+
+
     public typealias CollectedType = CallOperation<P, R>
 
     /// Registers the collection reference
@@ -349,55 +394,4 @@ public class CallOperation<P, R> : Codable, Collectable, CallOperationProtocol w
         return self._collection as? ManagedCollection
     }
 
-
-
-    // MARK: - Collectable
-
-    // A reference to the holding dataPoint
-    public var dataPoint: DataPoint?
-
-    /// Sets the dataPoint Reference
-    ///
-    /// - Parameter dataPoint: the dataPoint
-    public func setDataPoint(_ dataPoint: DataPoint){
-        self.dataPoint = dataPoint
-    }
-
-
-
-    // The id
-    public var id:UID = Utilities.createUID()
-
-    // MARK: Collectable.Identifiable
-
-    public var uid:UID {
-        set{
-            self.id = uid
-        }
-        get{
-            return self.id
-        }
-    }
-
-    // MARK: - Initializable
-
-    required public init() {
-    }
-
-
-    // MARK: UniversalType (Collectable)
-
-    open class var typeName:String{
-        let Pname = String(describing: type(of: P.self)).replacingOccurrences(of: ".Type", with: "")
-        let Rname = String(describing: type(of: R.self)).replacingOccurrences(of: ".Type", with: "")
-        return "OP_\(Pname)_\(Rname)"
-    }
-
-    open class var collectionName:String{
-        return "CL_\(typeName)"
-    }
-
-    open var d_collectionName:String{
-        return CallOperation.collectionName
-    }
 }

@@ -15,33 +15,32 @@ public protocol Incorporated{
 
 }
 
-public protocol Collectable : Incorporated, UniversalType, Hashable, Identifiable, Initializable {
+public protocol Collectable : Hashable, Incorporated, UniversalType, Identifiable, Initializable {
 
     // Universally Unique identifier (check Globals.swift for details on the primary key MODELS_PRIMARY_KEY)
-    var id:String { get set }
+    var id: UID { get set }
 
     // The Associated "CollectedType" is the Collectable type
     associatedtype CollectedType
 
-
     /// Sets the dataPoint Reference
     ///
     /// - Parameter dataPoint: the dataPoint
-    func setDataPoint(_ dataPoint:DataPoint)
+    func setDataPoint(_ dataPoint: DataPoint)
 
     /// Registers its collection reference
     ///
     /// - Parameter collection: the collection
-    func setCollection<CollectedType>(_ collection:CollectionOf<CollectedType>)
+    func setCollection<CollectedType>(_ collection: CollectionOf<CollectedType>)
 
 
     /// Returns the collection
     ///
     /// - Returns: the collection
-    func getCollection<CollectedType>()->CollectionOf<CollectedType>
+    func getCollection<CollectedType>() -> CollectionOf<CollectedType>
 
 
     /// The type erased acceessor to a collection that support reference, remove & didChange
-    var indistinctCollection:IndistinctCollection? { get }
+    var indistinctCollection: IndistinctCollection? { get }
 
 }
