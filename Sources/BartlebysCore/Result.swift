@@ -8,8 +8,6 @@
 
 import Foundation
 
-/// An informal protocol used to allow a Codable to be considerate has a result.
-public protocol Result : Codable {
-
+/// An informal protocol used to allow a Codable & Hashable to be considerate has a result.
+public protocol Result : Codable & Hashable {
 }
-

@@ -9,7 +9,6 @@
 import Foundation
 
 
-/// An informal protocol used to allow a Codable to be passed as Payload
+/// An informal protocol used to allow a Codable & Hashable to be passed as Payload
 public protocol Payload : Codable & Hashable{
-    
 }
