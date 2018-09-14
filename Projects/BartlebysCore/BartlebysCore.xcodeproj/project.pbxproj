@@ -743,6 +743,7 @@
 			isa = PBXGroup;
 			children = (
 				4D55FC801FDAF65A001D91CE /* generated */,
+				4D55FC811FDAF672001D91CE /* Protocols */,
 				E52527992000E4D600D9A148 /* Alias.swift */,
 				E5DBB1D5200224C60079F4C6 /* AliasOf.swift */,
 				E5A0BF9720C7E6FA00149BFE /* AsynchronousOperation.swift */,
@@ -791,7 +792,6 @@
 				E52ED5C61FEAD75D00D9F7A2 /* Operators.swift */,
 				E55E8A3F2014DD8F00910D31 /* OSCompatibilty.swift */,
 				4D65E69E1FE02FE300034787 /* Paths.swift */,
-				4D55FC811FDAF672001D91CE /* Protocols */,
 				E5FA568A20D53D5D00B4ED9E /* Reachability.swift */,
 				E52A84621FF501D400F2408B /* Relationship.swift */,
 				4D55FC3E1FDAF5CF001D91CE /* Schemes.swift */,
