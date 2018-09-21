@@ -18,7 +18,7 @@ public var MODELS_PRIMARY_KEY: CodableObject.CodableModelCodingKeys = CodableObj
 public typealias UID = String
 
 // By default, the UIDs are base64 encoded to be compliant with MongodB ids
-public var BASE64_ENCODED_UIDS = true
+public var BASE64_ENCODED_UIDS:Bool = true
 
 // A flag to distinguish non provisioned call operation
 public let ORDER_OF_EXECUTION_UNDEFINED:Int = -1
@@ -26,7 +26,7 @@ public let ORDER_OF_EXECUTION_UNDEFINED:Int = -1
 // MARK: - Time
 
 // The start Time is define when launching.
-fileprivate let _startTime = AbsoluteTimeGetCurrent()
+fileprivate let _startTime: Double = AbsoluteTimeGetCurrent()
 
 /// Returns the elapsed time since launch time.
 ///
@@ -40,7 +40,7 @@ public func getElapsedTime()->Double {
 ///   - execute: the execution block to be evaluated
 /// - Returns: the execution time
 public func measure(_ execute: () throws -> Void) rethrows -> Double {
-    let ts = AbsoluteTimeGetCurrent()
+    let ts: Double = AbsoluteTimeGetCurrent()
     try execute()
     return (AbsoluteTimeGetCurrent()-ts)
 }
