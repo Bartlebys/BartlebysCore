@@ -1,15 +1,7 @@
 {
   "object": {
     "pins": [
-      {
-        "package": "BTree",
-        "repositoryURL": "https://github.com/Bartlebys/BTree",
-        "state": {
-          "branch": null,
-          "revision": "3ea87772e0b74c4551605a39d483dbe04102b89c",
-          "version": "4.1.2"
-        }
-      }
+
     ]
   },
   "version": 1

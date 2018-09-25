@@ -8,13 +8,13 @@ let package = Package(
     name: "BartlebysCore",
     products: [
         .library(name: "BartlebysCore", targets: ["BartlebysCore"]),
-        ],
+    ],
     dependencies: [
         //.package(url: "https://github.com/Bartlebys/BTree", from: "4.1.2"),
-        ],
+    ],
     targets: [
-        /.target(name: "BartlebysCore", dependencies: [])
+        .target(name: "BartlebysCore", dependencies: []),
         //.target(name: "BartlebysCore", dependencies: ["BTree"]),
         .testTarget( name: "BartlebysCoreTests", dependencies: ["BartlebysCore"]),
-        ]
+    ]
 )
