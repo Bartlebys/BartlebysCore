@@ -78,6 +78,17 @@ open class HTTPProbe: ProbeDelegate{
     }
 
     open func recordProbe(for request: URLRequest, failure: Failure) {
+        self.record(self.getTraceFor(request: request, failure: failure))
+    }
+
+
+    /// Returns a failure trace from a request and a failure state
+    ///
+    /// - Parameters:
+    ///   - request: the request
+    ///   - failure: the failure state
+    /// - Returns: the trace
+    open func getTraceFor(request: URLRequest, failure: Failure) -> Trace{
         let codableRequest: CodableURLRequest =  CodableURLRequest.from(request)
         let responseData:Data = (try? JSON.prettyEncoder.encode(failure)) ?? "Failure serialization did fail".data(using:.utf8)!
         let trace: Trace = Trace(classifier: self.classifier,
@@ -86,7 +97,7 @@ open class HTTPProbe: ProbeDelegate{
                                  response: responseData,
                                  httpStatus: failure.httpResponse?.httpStatus.rawValue ?? Status.undefined.rawValue,
                                  sizeOfResponse: failure.httpResponse?.content?.count ?? -1)
-        self.record(trace)
+        return trace
     }
 
 
