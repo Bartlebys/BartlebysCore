@@ -107,7 +107,7 @@ open class HTTPProbe: ProbeDelegate{
     /// Records the trace
     ///
     /// - Parameter trace: the serialized trace
-    public func record(_ trace:Trace){
+    open func record(_ trace:Trace){
         let data: Data = (try? JSON.prettyEncoder.encode(trace)) ?? "Trace serialization did fail".data(using: .utf8)!
         let fileName : String = "\(trace.callCounter.paddedString(6))"
         let url: URL = self.folderURL.appendingPathComponent("\(fileName)")
