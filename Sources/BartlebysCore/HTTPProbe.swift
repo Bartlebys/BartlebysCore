@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class HTTPProbe: ProbeDelegate{
+open class HTTPProbe: ProbeDelegate{
 
     static fileprivate let _fileManager: FileManager = FileManager()
 
@@ -51,7 +51,7 @@ public class HTTPProbe: ProbeDelegate{
 
     // MARK: - ProbeDelegate
 
-    public func recordProbe(for request: URLRequest, response httpResponse: HTTPResponse) {
+    open func recordProbe(for request: URLRequest, response httpResponse: HTTPResponse) {
         let codableRequest: CodableURLRequest =  CodableURLRequest.from(request)
         let responseData:Data = (try? JSON.prettyEncoder.encode(httpResponse)) ?? "HTTPResponse serialization did fail".data(using:.utf8)!
 
@@ -64,7 +64,7 @@ public class HTTPProbe: ProbeDelegate{
         self.record(trace)
     }
 
-    public func recordProbe<R>(for request: URLRequest, response httpResponse: DataResponse<R>) where R : Collectable, R : Decodable, R : Encodable {
+    open func recordProbe<R>(for request: URLRequest, response httpResponse: DataResponse<R>) where R : Collectable, R : Decodable, R : Encodable {
         let codableRequest: CodableURLRequest =  CodableURLRequest.from(request)
         let responseData:Data = (try? JSON.prettyEncoder.encode(httpResponse)) ?? "DataResponse serialization did fail".data(using:.utf8)!
 
@@ -77,7 +77,7 @@ public class HTTPProbe: ProbeDelegate{
         self.record(trace)
     }
 
-    public func recordProbe(for request: URLRequest, failure: Failure) {
+    open func recordProbe(for request: URLRequest, failure: Failure) {
         let codableRequest: CodableURLRequest =  CodableURLRequest.from(request)
         let responseData:Data = (try? JSON.prettyEncoder.encode(failure)) ?? "Failure serialization did fail".data(using:.utf8)!
         let trace: Trace = Trace(classifier: self.classifier,
