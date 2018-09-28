@@ -562,11 +562,6 @@
 		E53ADB1F20332A22001A9A01 /* FilePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilePath.swift; sourceTree = "<group>"; };
 		E53ADB2520332A46001A9A01 /* FiletPath+Absolute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FiletPath+Absolute.swift"; sourceTree = "<group>"; };
 		E540CB732011DCF600A531A9 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../../Package.swift; sourceTree = "<group>"; };
-		E540CB762011E97C00A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E540CB782011E98800A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E540CB7A2011E99000A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E540CB7C2011E99700A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E540CB7E2011E99D00A531A9 /* BTree.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = BTree.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E540F8A72031EA7D0016E8D3 /* DataPoint+HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataPoint+HTTP.swift"; sourceTree = "<group>"; };
 		E54826351FFBBB3700FB854E /* Default.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Default.swift; sourceTree = "<group>"; };
 		E549A3EE1FF1390200178ECA /* FilePersistent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePersistent.swift; sourceTree = "<group>"; };
@@ -854,11 +849,6 @@
 		E540CB742011E97C00A531A9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E540CB7E2011E99D00A531A9 /* BTree.framework */,
-				E540CB7C2011E99700A531A9 /* BTree.framework */,
-				E540CB7A2011E99000A531A9 /* BTree.framework */,
-				E540CB782011E98800A531A9 /* BTree.framework */,
-				E540CB762011E97C00A531A9 /* BTree.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
