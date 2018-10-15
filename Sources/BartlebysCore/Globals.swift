@@ -81,3 +81,12 @@ public func combineHashValues(_ initial: Int, _ other: Int) -> Int {
     return Int(bitPattern: lhs)
 }
 
+
+
+public func doCatchLog(_ block: @escaping() throws -> Void, category: LogEntry.Category = .standard, file: String = #file, function: String = #function, line: Int = #line, decorative: Bool = false){
+    do{
+        try block()
+    } catch{
+        Logger.log("\(error)", category: category,file: file,function: function, line: line,decorative: decorative)
+    }
+}
