@@ -18,6 +18,7 @@
 		E505023520986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
 		E505023620986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
 		E505023720986AB100679E00 /* CallOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505023220986AB100679E00 /* CallOperations.swift */; };
+		E5068E4F21B66F2B0085D957 /* SequenceOfTasksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5EC0445208DBAA800FE4EDF /* SequenceOfTasksTests.swift */; };
 		E50C5C7A1FFD0C6B00A3C9DA /* ManagedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A847C1FF5294500F2408B /* ManagedCollection.swift */; };
 		E50C5C8C1FFD193C00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
 		E50C5C9D1FFD2EFB00A3C9DA /* LogEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50C5C8B1FFD193B00A3C9DA /* LogEntry.swift */; };
@@ -1669,6 +1670,7 @@
 				4D6A76402043FDE600ACEEFA /* AsyncWorkTests.swift in Sources */,
 				E5F3CDB1200CE50100AB9A44 /* BaseDataPointTestCase.swift in Sources */,
 				E5F3CDBD200CE50100AB9A44 /* DataPointTests.swift in Sources */,
+				E5068E4F21B66F2B0085D957 /* SequenceOfTasksTests.swift in Sources */,
 				E5F3CDC0200CE50100AB9A44 /* DataPointKVS.swift in Sources */,
 				E5F3CDB4200CE50100AB9A44 /* RelationsTests.swift in Sources */,
 				E5F3CDB7200CE50100AB9A44 /* AliasesTests.swift in Sources */,
