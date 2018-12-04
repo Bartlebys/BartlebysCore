@@ -36,6 +36,7 @@
  POSSIBILITY OF SUCH DAMAGE.
  */
 
+#if !os(watchOS)
 import SystemConfiguration
 import Foundation
 
@@ -332,3 +333,4 @@ fileprivate extension Reachability {
         }
     }
 }
+#endif

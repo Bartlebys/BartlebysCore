@@ -16,8 +16,8 @@ extension Int {
     
 }
 
-// Status Completions are Based on HTTP status Codes
-// But can be used in any situation.
+// Completions Status are Based on HTTP status Codes
+// but can be used in any situation.
 public enum Status : Int {
     
     // Error
