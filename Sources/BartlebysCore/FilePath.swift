@@ -24,21 +24,21 @@ open class FilePath : Model, Payload, Result{
     // MARK: - Codable
 
 
-    public enum CodingKeys: String,CodingKey{
+    public enum FilePathCodingKeys: String,CodingKey{
 		case relativePath
     }
 
     required public init(from decoder: Decoder) throws{
 		try super.init(from: decoder)
         try self.quietThrowingChanges {
-			let values = try decoder.container(keyedBy: CodingKeys.self)
+			let values = try decoder.container(keyedBy: FilePathCodingKeys.self)
 			self.relativePath = try values.decode(String.self,forKey:.relativePath)
         }
     }
 
     override open func encode(to encoder: Encoder) throws {
 		try super.encode(to:encoder)
-		var container = encoder.container(keyedBy: CodingKeys.self)
+		var container = encoder.container(keyedBy: FilePathCodingKeys.self)
 		try container.encode(self.relativePath,forKey:.relativePath)
     }
 
@@ -95,21 +95,21 @@ open class FilePath : Model, Payload, Result{
     // MARK: - Codable
 
 
-    public enum CodingKeys: String,CodingKey{
+    public enum FilePathCodingKeys: String,CodingKey{
 		case relativePath
     }
 
     required public init(from decoder: Decoder) throws{
 		try super.init(from: decoder)
         try self.quietThrowingChanges {
-			let values = try decoder.container(keyedBy: CodingKeys.self)
+			let values = try decoder.container(keyedBy: FilePathCodingKeys.self)
 			self.relativePath = try values.decode(String.self,forKey:.relativePath)
         }
     }
 
     override open func encode(to encoder: Encoder) throws {
 		try super.encode(to:encoder)
-		var container = encoder.container(keyedBy: CodingKeys.self)
+		var container = encoder.container(keyedBy: FilePathCodingKeys.self)
 		try container.encode(self.relativePath,forKey:.relativePath)
     }
 

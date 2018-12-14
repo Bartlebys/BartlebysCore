@@ -46,7 +46,7 @@ open class Metrics : Model, Payload, Result{
     // MARK: - Codable
 
 
-    public enum CodingKeys: String,CodingKey{
+    public enum MetricsCodingKeys: String,CodingKey{
 		case operationName
 		case associatedURL
 		case callCounter
@@ -59,7 +59,7 @@ open class Metrics : Model, Payload, Result{
     required public init(from decoder: Decoder) throws{
 		try super.init(from: decoder)
         try self.quietThrowingChanges {
-			let values = try decoder.container(keyedBy: CodingKeys.self)
+			let values = try decoder.container(keyedBy: MetricsCodingKeys.self)
 			self.operationName = try values.decode(String.self,forKey:.operationName)
 			self.associatedURL = try values.decodeIfPresent(URL.self,forKey:.associatedURL)
 			self.callCounter = try values.decode(Int.self,forKey:.callCounter)
@@ -72,7 +72,7 @@ open class Metrics : Model, Payload, Result{
 
     override open func encode(to encoder: Encoder) throws {
 		try super.encode(to:encoder)
-		var container = encoder.container(keyedBy: CodingKeys.self)
+		var container = encoder.container(keyedBy: MetricsCodingKeys.self)
 		try container.encode(self.operationName,forKey:.operationName)
 		try container.encodeIfPresent(self.associatedURL,forKey:.associatedURL)
 		try container.encode(self.callCounter,forKey:.callCounter)
@@ -157,7 +157,7 @@ open class Metrics : Model, Payload, Result{
     // MARK: - Codable
 
 
-    public enum CodingKeys: String,CodingKey{
+    public enum MetricsCodingKeys: String,CodingKey{
 		case operationName
 		case associatedURL
 		case callCounter
@@ -170,7 +170,7 @@ open class Metrics : Model, Payload, Result{
     required public init(from decoder: Decoder) throws{
 		try super.init(from: decoder)
         try self.quietThrowingChanges {
-			let values = try decoder.container(keyedBy: CodingKeys.self)
+			let values = try decoder.container(keyedBy: MetricsCodingKeys.self)
 			self.operationName = try values.decode(String.self,forKey:.operationName)
 			self.associatedURL = try values.decodeIfPresent(URL.self,forKey:.associatedURL)
 			self.callCounter = try values.decode(Int.self,forKey:.callCounter)
@@ -183,7 +183,7 @@ open class Metrics : Model, Payload, Result{
 
     override open func encode(to encoder: Encoder) throws {
 		try super.encode(to:encoder)
-		var container = encoder.container(keyedBy: CodingKeys.self)
+		var container = encoder.container(keyedBy: MetricsCodingKeys.self)
 		try container.encode(self.operationName,forKey:.operationName)
 		try container.encodeIfPresent(self.associatedURL,forKey:.associatedURL)
 		try container.encode(self.callCounter,forKey:.callCounter)

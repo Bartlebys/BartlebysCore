@@ -27,7 +27,7 @@ open class KeyedData : Model, Payload, Result{
     // MARK: - Codable
 
 
-    public enum CodingKeys: String,CodingKey{
+    public enum KeyedDataCodingKeys: String,CodingKey{
 		case key
 		case data
     }
@@ -35,7 +35,7 @@ open class KeyedData : Model, Payload, Result{
     required public init(from decoder: Decoder) throws{
 		try super.init(from: decoder)
         try self.quietThrowingChanges {
-			let values = try decoder.container(keyedBy: CodingKeys.self)
+			let values = try decoder.container(keyedBy: KeyedDataCodingKeys.self)
 			self.key = try values.decode(String.self,forKey:.key)
 			self.data = try values.decode(Data.self,forKey:.data)
         }
@@ -43,7 +43,7 @@ open class KeyedData : Model, Payload, Result{
 
     override open func encode(to encoder: Encoder) throws {
 		try super.encode(to:encoder)
-		var container = encoder.container(keyedBy: CodingKeys.self)
+		var container = encoder.container(keyedBy: KeyedDataCodingKeys.self)
 		try container.encode(self.key,forKey:.key)
 		try container.encode(self.data,forKey:.data)
     }
@@ -104,7 +104,7 @@ open class KeyedData : Model, Payload, Result{
     // MARK: - Codable
 
 
-    public enum CodingKeys: String,CodingKey{
+    public enum KeyedDataCodingKeys: String,CodingKey{
 		case key
 		case data
     }
@@ -112,7 +112,7 @@ open class KeyedData : Model, Payload, Result{
     required public init(from decoder: Decoder) throws{
 		try super.init(from: decoder)
         try self.quietThrowingChanges {
-			let values = try decoder.container(keyedBy: CodingKeys.self)
+			let values = try decoder.container(keyedBy: KeyedDataCodingKeys.self)
 			self.key = try values.decode(String.self,forKey:.key)
 			self.data = try values.decode(Data.self,forKey:.data)
         }
@@ -120,7 +120,7 @@ open class KeyedData : Model, Payload, Result{
 
     override open func encode(to encoder: Encoder) throws {
 		try super.encode(to:encoder)
-		var container = encoder.container(keyedBy: CodingKeys.self)
+		var container = encoder.container(keyedBy: KeyedDataCodingKeys.self)
 		try container.encode(self.key,forKey:.key)
 		try container.encode(self.data,forKey:.data)
     }
